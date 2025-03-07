@@ -1,0 +1,13 @@
+{
+  "name": "@ui-primitives-hub/utils",
+  "version": "0.0.1",
+  "devDependencies": {
+    "@types/postcss-js": "^4.0.4",
+    "@ui-primitives-hub/types": "workspace:*",
+    "typescript": "~5.7.2",
+    "postcss": "^8.5.3"
+  },
+  "dependencies": {
+    "postcss-js": "^4.0.1"
+  }
+}

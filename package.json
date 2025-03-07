@@ -1,0 +1,13 @@
+{
+  "name": "ui-primitives-hub",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "start cmd /k \"pnpm --filter fe dev\" && start cmd /k \"pnpm --filter be dev\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
