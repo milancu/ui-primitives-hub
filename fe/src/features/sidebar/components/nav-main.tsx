@@ -1,6 +1,5 @@
 "use client";
 
-import { type LucideIcon } from "lucide-react";
 
 import {
   SidebarMenu,
@@ -14,7 +13,6 @@ export function NavMain({
   items: {
     title: string;
     url: string;
-    icon: LucideIcon;
     isActive?: boolean;
   }[];
 }) {
@@ -24,7 +22,6 @@ export function NavMain({
         <SidebarMenuItem key={item.title}>
           <SidebarMenuButton asChild isActive={item.isActive}>
             <a href={item.url}>
-              <item.icon />
               <span>{item.title}</span>
             </a>
           </SidebarMenuButton>

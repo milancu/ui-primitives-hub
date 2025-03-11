@@ -6,26 +6,31 @@ import {
 } from "@/components/ui/sidebar";
 import { SidebarLeft } from "@/features/sidebar/components/sidebar-left.tsx";
 import { SidebarRight } from "@/features/sidebar/components/sidebar-right.tsx";
+import { ModeToggle } from "@/components/mode-toggle.tsx";
+import { useCurrentComponent } from "@/components/CurrentComponentProvider.tsx";
 
 export const Route = createRootRoute({
   component: RootComponent,
 });
 
 function RootComponent() {
+  const { component } = useCurrentComponent();
+
   return (
     <SidebarProvider>
       <SidebarLeft />
       <SidebarInset>
-        <header className="sticky top-0 flex h-14 shrink-0 items-center gap-2 border-b border-neutral-200 bg-white">
-          <div className="flex flex-1 items-center gap-2 px-3">
+        <header className="bg-background sticky top-0 flex h-14 shrink-0 items-center gap-2 border-b">
+          <div className="flex flex-1 items-center justify-between gap-2 px-3">
             <SidebarTrigger />
+            <ModeToggle />
           </div>
         </header>
-        <div className={"p-4"}>
+        <div className={"h-full"}>
           <Outlet />
         </div>
       </SidebarInset>
-      <SidebarRight />
+      {component && <SidebarRight />}
     </SidebarProvider>
   );
 }

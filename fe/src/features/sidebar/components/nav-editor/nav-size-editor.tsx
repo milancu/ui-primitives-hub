@@ -6,8 +6,11 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar.tsx";
 import InputWithIcon from "@/components/ui/input-with-icon.tsx";
+import { useCurrentComponent } from "@/components/CurrentComponentProvider.tsx";
 
 const NavSizeEditor = () => {
+  const { currentStyle } = useCurrentComponent();
+
   return (
     <SidebarGroup>
       <SidebarGroupLabel>Size properties</SidebarGroupLabel>
@@ -19,6 +22,7 @@ const NavSizeEditor = () => {
               character={"W"}
               type={"number"}
               min={0}
+              value={currentStyle?.width}
             />
           </SidebarMenuItem>
           <SidebarMenuItem>
@@ -27,6 +31,7 @@ const NavSizeEditor = () => {
               character={"W"}
               type={"number"}
               min={0}
+              value={currentStyle?.minWidth}
             />
           </SidebarMenuItem>
           <SidebarMenuItem>
@@ -35,6 +40,7 @@ const NavSizeEditor = () => {
               character={"W"}
               type={"number"}
               min={0}
+              value={currentStyle?.maxWidth}
             />
           </SidebarMenuItem>
           <SidebarMenuItem>
@@ -43,6 +49,7 @@ const NavSizeEditor = () => {
               character={"H"}
               type={"number"}
               min={0}
+              value={currentStyle?.height}
             />
           </SidebarMenuItem>
         </SidebarMenu>

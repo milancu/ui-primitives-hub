@@ -21,8 +21,7 @@ admin.initializeApp({
     auth_provider_x509_cert_url: process.env.FIREBASE_AUTH_PROVIDER_X509_CERT_URL,
     client_x509_cert_url: process.env.FIREBASE_CLIENT_X509_CERT_URL,
     "universe_domain": "googleapis.com"
-  }),
-  databaseURL: process.env.FIREBASE_DATABASE_URL
+  }), databaseURL: process.env.FIREBASE_DATABASE_URL
 });
 
 const db = admin.database();
@@ -46,12 +45,10 @@ const getAttributes = (root) => {
 
 
 function addDataPrefix(input, key) {
-  return (
-    input
+  return (input
       .split(/\s+/)
       .map((word) => `data-[${key}]:${word}`)
-      .join(" ") + " "
-  );
+      .join(" ") + " ");
 }
 
 const getRawTailwindClasses = (style) => {
@@ -66,41 +63,51 @@ const getRawTailwindClasses = (style) => {
   return result;
 };
 
-const getAccordionClasses = async ()=>{
+const getAccordionClasses = async () => {
   const ref = db.ref("accordion");
   const snapshot = await ref.once("value");
   const accordion = snapshot.val();
 
-  return  Object.keys(accordion).reduce((acc, key) => {
+  return Object.keys(accordion).reduce((acc, key) => {
     acc[key] = {
-      raw: getRawTailwindClasses(accordion[key]),
-      attributes: getAttributes(accordion[key])
+      name: key, raw: getRawTailwindClasses(accordion[key]), attributes: getAttributes(accordion[key])
     };
     return acc;
   }, {});
 }
 
+
 app.get("/accordion", async (req, res) => {
+  const accordion = {
+    hierarchy: {
+      name: "root", children: [{
+        name: "item", children: [{
+          name: "header", children: [{name: "trigger"}],
+        }, {name: "panel"},],
+      },],
+    }, parts: await getAccordionClasses()
+  }
+
   try {
-    res.json(await getAccordionClasses());
+    res.json(accordion);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({error: error.message});
   }
 });
 
 app.put("/accordion", async (req, res) => {
-  const { id, data } = req.body;
+  const {id, data} = req.body;
 
   if (!id || !data) {
-    return res.status(400).json({ error: "ID nebo data chybí" });
+    return res.status(400).json({error: "ID nebo data chybí"});
   }
 
   try {
-    const ref = db.ref(`accordion/${id}`);
+    const ref = db.ref(`accordion/parts/${id}`);
     await ref.update(data);
-    res.status(200).json({ message: "Úspěšně aktualizováno" });
+    res.status(200).json({message: "Úspěšně aktualizováno"});
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({error: error.message});
   }
 });
 

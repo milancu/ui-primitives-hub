@@ -181,3 +181,8 @@ export const styleToString = (style: Style): string => {
     )
     .join("\n");
 };
+
+export const convertStringToStyle = (style: string):Style => {
+  const resultCss = getConvertedClasses(style);
+  return(convertFromCssToJss(resultCss));
+};

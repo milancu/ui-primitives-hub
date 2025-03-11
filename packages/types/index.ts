@@ -1,5 +1,27 @@
 export type CSSUnit = `${number}${"px" | "%" | "em" | "rem" | "vh" | "vw"}`;
 
+export type ComponentPart = {
+  name: string;
+  raw: string;
+  attributes: {
+    [attribute: string]: string;
+  };
+};
+
+export type ComponentHierarchy = {
+  name: string;
+  children: ComponentHierarchy[];
+};
+
+export type Component = {
+  hierarchy: ComponentHierarchy;
+  parts: {
+    [key: string]: ComponentPart;
+  };
+};
+
+
+
 export interface Style {
   width?: CSSUnit;
   maxWidth?: CSSUnit;

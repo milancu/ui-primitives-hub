@@ -1,9 +1,26 @@
 import { useQuery } from "@tanstack/react-query";
 import { fetchAccordionStyles } from "@/features/accordion/api/queries";
+import { useEffect } from "react";
+import { Component } from "@ui-primitives-hub/types";
 
-export const useAccordionStyles = () => {
-  return useQuery({
+type UseAccordionStylesParams = {
+  onDataLoaded?: () => void;
+};
+
+export const useAccordionStyles = ({
+  onDataLoaded,
+}: UseAccordionStylesParams) => {
+  const query = useQuery<Component>({
     queryKey: ["accordion"],
     queryFn: fetchAccordionStyles,
   });
+
+  useEffect(() => {
+    if (!onDataLoaded) return;
+    if (query.data) {
+      onDataLoaded();
+    }
+  }, [query.data]);
+
+  return query;
 };

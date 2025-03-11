@@ -1,27 +1,12 @@
 "use client";
 
 import * as React from "react";
-import {
-  Blocks,
-  Calendar,
-  Home,
-  Inbox,
-  MessageCircleQuestion,
-  Search,
-  Settings2,
-  Sparkles,
-  Trash2,
-} from "lucide-react";
 
 import { NavMain } from "@/features/sidebar/components/nav-main.tsx";
 import { NavSecondary } from "@/features/sidebar/components/nav-secondary.tsx";
-import {
-  Sidebar,
-  SidebarContent,
-  SidebarFooter,
-  SidebarHeader,
-} from "@/components/ui/sidebar.tsx";
+import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader } from "@/components/ui/sidebar.tsx";
 import { NavUser } from "@/features/sidebar/components/nav-user.tsx";
+import { Separator } from "@/components/ui/separator";
 
 const data = {
   user: {
@@ -31,53 +16,36 @@ const data = {
   },
   navMain: [
     {
-      title: "Search",
-      url: "#",
-      icon: Search,
-    },
-    {
-      title: "Ask AI",
-      url: "#",
-      icon: Sparkles,
-    },
-    {
-      title: "Home",
-      url: "#",
-      icon: Home,
-      isActive: true,
-    },
-    {
-      title: "Inbox",
-      url: "#",
-      icon: Inbox,
-      badge: "10",
-    },
-  ],
-  navSecondary: [
-    {
       title: "Accordion",
       url: "/accordion",
-      icon: Calendar,
     },
     {
-      title: "Settings",
-      url: "#",
-      icon: Settings2,
+      title: "Avatar",
+      url: "/avatar",
     },
     {
-      title: "Templates",
-      url: "#",
-      icon: Blocks,
+      title: "Dialog",
+      url: "/dialog",
     },
     {
-      title: "Trash",
-      url: "#",
-      icon: Trash2,
+      title: "Field",
+      url: "/fiel",
     },
     {
-      title: "Help",
-      url: "#",
-      icon: MessageCircleQuestion,
+      title: "Fieldset",
+      url: "/fieldset",
+    },
+    {
+      title: "Input",
+      url: "/input"
+    },
+    {
+      title: "Menu",
+      url: "/menu"
+    },
+    {
+      title: "Number field",
+      url: "/number-field"
     },
   ],
 };
@@ -90,8 +58,9 @@ export function SidebarLeft({
       <SidebarHeader>
         <NavMain items={data.navMain} />
       </SidebarHeader>
+      <Separator />
       <SidebarContent>
-        <NavSecondary items={data.navSecondary} />
+        <NavSecondary className={"mt-auto"} />
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={data.user} />

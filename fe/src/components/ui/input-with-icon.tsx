@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Input } from "./input";
 import { LoaderCircle, type LucideIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -6,26 +6,56 @@ import { cn } from "@/lib/utils";
 type InputWithIconProps = React.ComponentProps<typeof Input> & {
   icon?: LucideIcon;
   character?: string;
+  triggerChange: (newValue: string) => void;
 };
+
 const InputWithIcon = ({
   className,
   icon: IconComponent,
   character,
+  triggerChange,
+  value,
   ...props
 }: InputWithIconProps) => {
-  const [inputValue, setInputValue] = useState("");
+  const [inputValue, setInputValue] = useState(value);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  useEffect(() => {
-    if (inputValue) {
-      setIsLoading(true);
-      const timer = setTimeout(() => {
-        setIsLoading(false);
-      }, 500);
-      return () => clearTimeout(timer);
-    }
-    setIsLoading(false);
-  }, [inputValue]);
+  // useEffect(() => {
+  //   setInputValue(value);
+  // }, [value]);
+
+  // useEffect(() => {
+  //   if (inputValue) {
+  //     setIsLoading(true);
+  //     const timer = setTimeout(() => {
+  //       setIsLoading(false);
+  //     }, 500);
+  //     return () => clearTimeout(timer);
+  //   }
+  //   setIsLoading(false);
+  // }, [inputValue]);
+  //
+  // useEffect(() => {
+  //   return () => {
+  //     if (timeoutRef.current) {
+  //       clearTimeout(timeoutRef.current);
+  //     }
+  //   };
+  // }, []);
+
+  const handleChangeValue = (newValue: string) => {
+    setInputValue(newValue);
+    triggerChange(newValue)
+
+    // if (timeoutRef.current) {
+    //   clearTimeout(timeoutRef.current);
+    // }
+    //
+    // timeoutRef.current = setTimeout(() => {
+    //   triggerChange(newValue);
+    // }, 500);
+  };
 
   const renderIconOrCharacter = () => {
     if (isLoading) {
@@ -58,7 +88,7 @@ const InputWithIcon = ({
           {...props}
           className={cn("peer ps-9", className)}
           value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
+          onChange={(e) => handleChangeValue(e.target.value)}
         />
         <div className="text-muted-foreground/80 pointer-events-none absolute inset-y-0 start-0 flex items-center justify-center ps-3 peer-disabled:opacity-50">
           {renderIconOrCharacter()}

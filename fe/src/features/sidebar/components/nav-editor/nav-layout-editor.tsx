@@ -17,22 +17,35 @@ import {
   StretchHorizontal,
   StretchVertical,
 } from "lucide-react";
-import { useCallback, useState } from "react";
 import InputWithIcon from "@/components/ui/input-with-icon.tsx";
+import { useCurrentComponent } from "@/components/CurrentComponentProvider.tsx";
+import { styleToString } from "@ui-primitives-hub/utils/src";
+import { Style } from "@ui-primitives-hub/types";
+import { CssToTailwindTranslator } from "css-to-tailwind-translator";
+import { useUpdateAccordionStyle } from "@/features/accordion/hooks/mutations/useUpdateAccordionStyle.ts";
 
 const NavLayoutEditor = () => {
-  const [selectedLayout, setSelectedLayout] = useState<string | undefined>();
-  const [selectedWrappingProperty, setSelectedWrappingProperty] = useState<
-    string | undefined
-  >();
+  const { currentStyle, componentPartName, activeState } = useCurrentComponent();
+  const { mutate } = useUpdateAccordionStyle();
 
-  const handleLayoutChange = useCallback((newLayout: string) => {
-    setSelectedLayout(newLayout);
-  }, []);
 
-  const handleWrappingChange = useCallback((newWrappingProperty: string) => {
-    setSelectedWrappingProperty(newWrappingProperty);
-  }, []);
+  const handleChange = (key: keyof Style, value: any) => {
+    const newStyle = { ...currentStyle, [key]: value } as Style;
+
+    const css = styleToString(newStyle);
+    const conversionResult = CssToTailwindTranslator(`
+    component {
+    ${css}
+    }
+    `);
+    const resultVal = conversionResult.data[0].resultVal;
+
+    mutate({
+      name: componentPartName,
+      attribute: activeState,
+      value: resultVal,
+    });
+  };
 
   return (
     <SidebarGroup>
@@ -42,15 +55,14 @@ const NavLayoutEditor = () => {
           <SidebarMenuItem>
             <RadioGroup
               className="grid grid-cols-2 gap-1"
-              defaultValue={selectedLayout}
-              onValueChange={handleLayoutChange}
+              value={currentStyle?.display}
             >
               <label className="border-input has-[:focus-visible]:outline-ring/70 relative flex cursor-pointer flex-col items-center gap-3 rounded-lg border px-2 py-3 text-center shadow-sm shadow-black/5 outline-offset-2 transition-colors has-[:focus-visible]:outline-2 has-[[data-disabled]]:cursor-not-allowed has-[[data-disabled]]:opacity-50 has-[[data-state=checked]]:border-blue-500 has-[[data-state=checked]]:bg-blue-500/10 has-[[data-state=checked]]:text-blue-500">
                 <RadioGroupItem
                   value={"flex"}
                   className="sr-only after:absolute after:inset-0"
                 />
-                <Grid2x2Plus />
+                <Grid2x2Plus size={16} />
                 <p className="text-sm leading-none font-medium">Flex</p>
               </label>
               <label className="border-input has-[:focus-visible]:outline-ring/70 relative flex cursor-pointer flex-col items-center gap-3 rounded-lg border px-2 py-3 text-center shadow-sm shadow-black/5 outline-offset-2 transition-colors has-[:focus-visible]:outline-2 has-[[data-disabled]]:cursor-not-allowed has-[[data-disabled]]:opacity-50 has-[[data-state=checked]]:border-blue-500 has-[[data-state=checked]]:bg-blue-500/10 has-[[data-state=checked]]:text-blue-500">
@@ -58,54 +70,52 @@ const NavLayoutEditor = () => {
                   value={"block"}
                   className="sr-only after:absolute after:inset-0"
                 />
-                <BrickWall />
+                <BrickWall size={16} />
                 <p className="text-sm leading-none font-medium">Block</p>
               </label>
             </RadioGroup>
           </SidebarMenuItem>
-          {selectedLayout === "flex" && (
+          {currentStyle?.display === "flex" && (
             <SidebarMenuItem>
               <RadioGroup
                 className="grid grid-cols-2 gap-1"
-                defaultValue={selectedWrappingProperty}
-                onValueChange={handleWrappingChange}
+                value={currentStyle.flexDirection}
               >
                 <label className="border-input has-[:focus-visible]:outline-ring/70 relative flex cursor-pointer flex-col items-center gap-3 rounded-lg border px-2 py-3 text-center shadow-sm shadow-black/5 outline-offset-2 transition-colors has-[:focus-visible]:outline-2 has-[[data-disabled]]:cursor-not-allowed has-[[data-disabled]]:opacity-50 has-[[data-state=checked]]:border-blue-500 has-[[data-state=checked]]:bg-blue-500/10 has-[[data-state=checked]]:text-blue-500">
                   <RadioGroupItem
-                    value={"flex"}
+                    value={"column"}
                     className="sr-only after:absolute after:inset-0"
                   />
-                  <StretchHorizontal />
+                  <StretchHorizontal size={16} />
                   <p className="text-sm leading-none font-medium">Column</p>
                 </label>
                 <label className="border-input has-[:focus-visible]:outline-ring/70 relative flex cursor-pointer flex-col items-center gap-3 rounded-lg border px-2 py-3 text-center shadow-sm shadow-black/5 outline-offset-2 transition-colors has-[:focus-visible]:outline-2 has-[[data-disabled]]:cursor-not-allowed has-[[data-disabled]]:opacity-50 has-[[data-state=checked]]:border-blue-500 has-[[data-state=checked]]:bg-blue-500/10 has-[[data-state=checked]]:text-blue-500">
                   <RadioGroupItem
-                    value={"block"}
+                    value={"row"}
                     className="sr-only after:absolute after:inset-0"
                   />
-                  <StretchVertical />
+                  <StretchVertical size={16} />
                   <p className="text-sm leading-none font-medium">Row</p>
                 </label>
               </RadioGroup>
             </SidebarMenuItem>
           )}
-          {selectedLayout === "flex" && (
+          {currentStyle?.display === "flex" && (
             <SidebarMenuItem>
               <RadioGroup
                 className="grid grid-cols-2 gap-1"
-                defaultValue={selectedWrappingProperty}
-                onValueChange={handleWrappingChange}
+                value={currentStyle.flexWrap}
               >
                 <label className="border-input has-[:focus-visible]:outline-ring/70 relative flex cursor-pointer flex-col items-center gap-3 rounded-lg border px-2 py-3 text-center shadow-sm shadow-black/5 outline-offset-2 transition-colors has-[:focus-visible]:outline-2 has-[[data-disabled]]:cursor-not-allowed has-[[data-disabled]]:opacity-50 has-[[data-state=checked]]:border-blue-500 has-[[data-state=checked]]:bg-blue-500/10 has-[[data-state=checked]]:text-blue-500">
                   <RadioGroupItem
-                    value={"flex"}
+                    value={"wrap"}
                     className="sr-only after:absolute after:inset-0"
                   />
                   <p className="text-sm leading-none font-medium">Wrap</p>
                 </label>
                 <label className="border-input has-[:focus-visible]:outline-ring/70 relative flex cursor-pointer flex-col items-center gap-3 rounded-lg border px-2 py-3 text-center shadow-sm shadow-black/5 outline-offset-2 transition-colors has-[:focus-visible]:outline-2 has-[[data-disabled]]:cursor-not-allowed has-[[data-disabled]]:opacity-50 has-[[data-state=checked]]:border-blue-500 has-[[data-state=checked]]:bg-blue-500/10 has-[[data-state=checked]]:text-blue-500">
                   <RadioGroupItem
-                    value={"block"}
+                    value={"nowrap"}
                     className="sr-only after:absolute after:inset-0"
                   />
                   <p className="text-sm leading-none font-medium">No Wrap</p>
@@ -113,28 +123,31 @@ const NavLayoutEditor = () => {
               </RadioGroup>
             </SidebarMenuItem>
           )}
-          {selectedLayout === "flex" && (
+          {currentStyle?.display === "flex" && (
             <SidebarMenuItem>
               <fieldset className={"mt-2 space-y-1"}>
                 <legend className={"text-sidebar-foreground/70 text-xs"}>
                   Gap
                 </legend>
                 <InputWithIcon
+                  value={currentStyle?.gap}
                   placeholder={"gap"}
                   character={"G"}
-                  type={"number"}
-                  min={0}
+                  triggerChange={(newValue) => handleChange("padding", newValue)}
                 />
               </fieldset>
             </SidebarMenuItem>
           )}
-          {selectedLayout === "flex" && (
+          {currentStyle?.display === "flex" && (
             <SidebarMenuItem>
               <fieldset className={"space-y-1"}>
                 <legend className={"text-sidebar-foreground/70 text-xs"}>
                   Align items
                 </legend>
-                <RadioGroup className="flex flex-col gap-1">
+                <RadioGroup
+                  className="grid grid-cols-3 gap-1"
+                  value={currentStyle?.alignItems}
+                >
                   <label className="border-input has-[:focus-visible]:outline-ring/70 relative flex cursor-pointer flex-col items-center gap-3 rounded-lg border px-2 py-3 text-center shadow-sm shadow-black/5 outline-offset-2 transition-colors has-[:focus-visible]:outline-2 has-[[data-disabled]]:cursor-not-allowed has-[[data-disabled]]:opacity-50 has-[[data-state=checked]]:border-blue-500 has-[[data-state=checked]]:bg-blue-500/10 has-[[data-state=checked]]:text-blue-500">
                     <RadioGroupItem
                       value={"start"}
@@ -160,13 +173,16 @@ const NavLayoutEditor = () => {
               </fieldset>
             </SidebarMenuItem>
           )}
-          {selectedLayout === "flex" && (
+          {currentStyle?.display === "flex" && (
             <SidebarMenuItem>
               <fieldset className={"space-y-1"}>
                 <legend className={"text-sidebar-foreground/70 text-xs"}>
                   Justify content
                 </legend>
-                <RadioGroup className="grid grid-cols-3 gap-1">
+                <RadioGroup
+                  className="grid grid-cols-3 gap-1"
+                  value={currentStyle?.justifyContent}
+                >
                   <label className="border-input has-[:focus-visible]:outline-ring/70 relative col-span-full flex cursor-pointer flex-row items-center gap-3 rounded-lg border px-2 py-3 text-center shadow-sm shadow-black/5 outline-offset-2 transition-colors has-[:focus-visible]:outline-2 has-[[data-disabled]]:cursor-not-allowed has-[[data-disabled]]:opacity-50 has-[[data-state=checked]]:border-blue-500 has-[[data-state=checked]]:bg-blue-500/10 has-[[data-state=checked]]:text-blue-500">
                     <RadioGroupItem
                       value={"space-between"}
