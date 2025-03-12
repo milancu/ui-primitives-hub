@@ -176,13 +176,33 @@ export const styleToString = (style: Style): string => {
   };
 
   return Object.entries(style)
-    .map(([key, value]:[any, any]) =>
+    .map(([key, value]: [any, any]) =>
       value !== undefined ? processValue(key, value) : ""
     )
     .join("\n");
 };
 
-export const convertStringToStyle = (style: string):Style => {
+export const convertStringToStyle = (style: string): Style => {
   const resultCss = getConvertedClasses(style);
-  return(convertFromCssToJss(resultCss));
+  return (convertFromCssToJss(resultCss));
+};
+
+function addDataPrefix(input: string, key: string) {
+  return (input
+    .split(/\s+/)
+    .map((word) => `data-[${key}]:${word}`)
+    .join(" ") + " ");
+}
+
+
+export const getRawTailwindClasses = (style: any) => {
+  let result = "";
+  result += style.default + " ";
+  Object.keys(style).forEach(key => {
+    if (key === "default") {
+      return;
+    }
+    result += addDataPrefix(style[key], key);
+  });
+  return result;
 };

@@ -187,7 +187,7 @@ web_modules/
 .yarn-integrity
 
 # dotenv environment variable files
-.env
+fe/.env
 .env.development.local
 .env.test.local
 .env.production.local
@@ -274,7 +274,7 @@ dist
 
 # End of https://www.toptal.com/developers/gitignore/api/node,visualstudiocode,intellij
 
-.env
+fe/.env
 .env.local
 .env.development.local
 .env.test.local

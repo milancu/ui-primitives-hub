@@ -10,7 +10,7 @@ export type ComponentPart = {
 
 export type ComponentHierarchy = {
   name: string;
-  children: ComponentHierarchy[];
+  children?: ComponentHierarchy[];
 };
 
 export type Component = {

@@ -1,13 +1,13 @@
 import { useCurrentComponent } from "@/components/CurrentComponentProvider.tsx";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Skeleton } from "@/components/ui/skeleton.tsx";
-import { useCurrentComponentStateFilter } from "@/features/sidebar/hooks/useCurrentComponentStateFilter.tsx";
-import { useCurrentComponentFilter } from "@/features/sidebar/hooks/useCurrentComponentFilter.tsx";
+import { useCurrentComponentStateParam } from "@/features/sidebar/hooks/useCurrentComponentStateParam.tsx";
+import { useCurrentPartParam } from "@/features/sidebar/hooks/useCurrentPartParam.tsx";
 
 const NavEditorHeader = () => {
   const { component } = useCurrentComponent();
-  const [componentName] = useCurrentComponentFilter();
-  const [state, setState] = useCurrentComponentStateFilter();
+  const [componentName] = useCurrentPartParam();
+  const [state, setState] = useCurrentComponentStateParam();
   const attributes = component?.parts[componentName]?.attributes;
 
   if (!component || !attributes) {

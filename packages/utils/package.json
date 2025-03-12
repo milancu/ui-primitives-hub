@@ -1,6 +1,7 @@
 {
   "name": "@ui-primitives-hub/utils",
   "version": "0.0.1",
+  "type": "commonjs",
   "devDependencies": {
     "@types/postcss-js": "^4.0.4",
     "@ui-primitives-hub/types": "workspace:*",
@@ -9,5 +10,7 @@
   },
   "dependencies": {
     "postcss-js": "^4.0.1"
-  }
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts"
 }

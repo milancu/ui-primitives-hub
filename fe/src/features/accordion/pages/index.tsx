@@ -3,7 +3,7 @@ import {
   AccordionItem,
   AccordionPanel,
   AccordionRoot,
-  AccordionTrigger
+  AccordionTrigger,
 } from "@ui-primitives-hub/ui/src";
 import { useAccordionStyles } from "@/features/accordion/hooks/queries/useAccordionStyles.ts";
 import { useCurrentComponent } from "@/components/CurrentComponentProvider";
@@ -11,22 +11,17 @@ import Preview from "@/components/preview.tsx";
 
 const AccordionPage = () => {
   const { component, setComponent } = useCurrentComponent();
-  const { data, isLoading, error } = useAccordionStyles({
-    onDataLoaded: ()=>{
-      if (!data) return
-      setComponent(data)
-    },
+  const { isLoading, error } = useAccordionStyles({
+    onDataLoaded: setComponent,
   });
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading || !component) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
-  if (!component) return <></>
 
-  const { root, item, header, trigger, panel } = component!.parts;
-
+  const { root, item, header, trigger, panel } = component.parts;
 
   return (
-    <div className="w-full h-full">
+    <div className="h-full w-full">
       <Preview>
         <AccordionRoot className={root.raw}>
           <AccordionItem className={item.raw}>

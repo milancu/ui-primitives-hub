@@ -1,7 +1,6 @@
 import { Frame, Layers } from "lucide-react";
 import { useCurrentComponent } from "@/components/CurrentComponentProvider.tsx";
-import { useCurrentComponentFilter } from "@/features/sidebar/hooks/useCurrentComponentFilter.tsx";
-import { useEffect } from "react";
+import { useCurrentPartParam } from "@/features/sidebar/hooks/useCurrentPartParam.tsx";
 import { ComponentHierarchy } from "@ui-primitives-hub/types";
 
 const ComponentTreeItem = ({
@@ -52,12 +51,14 @@ const ComponentTreeItem = ({
 };
 
 export default function FigmaLayers() {
-  const [componentName, setComponentName] = useCurrentComponentFilter();
-  const {component} = useCurrentComponent();
+  const [componentName, setComponentName] = useCurrentPartParam();
+  const { component } = useCurrentComponent();
 
   const selectComponent = (component: ComponentHierarchy) => {
     setComponentName(component.name);
   };
+
+  if (!component) return null;
 
   return (
     <div className="border-border bg-background overflow-hidden rounded-lg border shadow-lg">
@@ -69,7 +70,11 @@ export default function FigmaLayers() {
       </div>
 
       <div className="overflow-y-auto">
-        <ComponentTreeItem component={component?.hierarchy} selectComponent={selectComponent} currentComponent={componentName}/>
+        <ComponentTreeItem
+          component={component?.hierarchy}
+          selectComponent={selectComponent}
+          currentComponent={componentName}
+        />
       </div>
     </div>
   );

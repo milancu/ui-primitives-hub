@@ -6,11 +6,7 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar.tsx";
 import InputWithIcon from "@/components/ui/input-with-icon.tsx";
-import {
-  ChevronDown,
-  Scan,
-  SquareRoundCorner,
-} from "lucide-react";
+import { ChevronDown, Scan, SquareRoundCorner } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -23,9 +19,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input.tsx";
 import { ColorPicker } from "@/components/ui/color-picker.tsx";
 import { useComponentStyleMutation } from "@/hooks/use-component-style-mutation.ts";
+import { useCurrentComponent } from "@/components/CurrentComponentProvider.tsx";
 
 const NavBorderOutlineEditor = () => {
-  const { handleStyleChange, currentStyle } = useComponentStyleMutation();
+  const { handleStyleChange } = useComponentStyleMutation();
+  const { currentStyle } = useCurrentComponent();
 
   return (
     <SidebarGroup>
@@ -34,9 +32,11 @@ const NavBorderOutlineEditor = () => {
         <SidebarMenu>
           <SidebarMenuItem className={"flex gap-1"}>
             <InputWithIcon
-              triggerChange={(value)=>{handleStyleChange('borderWidth', value)}}
+              triggerChange={(value) => {
+                handleStyleChange("borderWidth", value);
+              }}
               placeholder={"border width"}
-              character={'B'}
+              character={"B"}
               // type={"number"}
               // min={0}
               value={currentStyle?.borderWidth}
@@ -58,18 +58,10 @@ const NavBorderOutlineEditor = () => {
                     <Input placeholder={"top"} type={"number"} min={0} />
                   </DropdownMenuLabel>
                   <DropdownMenuLabel>
-                    <Input
-                      placeholder={"bottom"}
-                      type={"number"}
-                      min={0}
-                    />
+                    <Input placeholder={"bottom"} type={"number"} min={0} />
                   </DropdownMenuLabel>
                   <DropdownMenuLabel>
-                    <Input
-                      placeholder={"bottom"}
-                      type={"number"}
-                      min={0}
-                    />
+                    <Input placeholder={"bottom"} type={"number"} min={0} />
                   </DropdownMenuLabel>
                 </DropdownMenuGroup>
               </DropdownMenuContent>
@@ -78,8 +70,12 @@ const NavBorderOutlineEditor = () => {
           <SidebarMenuItem>
             <ColorPicker
               hideContrastRatio={true}
-              value={currentStyle?.borderColor ? currentStyle?.borderColor : '#FFFFFF'}
-              onValueChange={(value)=>handleStyleChange('borderColor', value)}
+              value={
+                currentStyle?.borderColor
+                  ? currentStyle?.borderColor
+                  : "#FFFFFF"
+              }
+              onValueChange={(value) => handleStyleChange("borderColor", value)}
               swatches={["#AEDEAE", "#FFD3B6", "#FFB6B9", "#FFC0CB", "#FFD1DC"]}
             >
               <Button
@@ -87,8 +83,8 @@ const NavBorderOutlineEditor = () => {
                 className="w-full justify-start text-left font-normal"
               >
                 <div
-                  className="w-4 h-4 rounded-full mr-2 shadow-sm"
-                  style={{ backgroundColor: '#AEDEAE' }}
+                  className="mr-2 h-4 w-4 rounded-full shadow-sm"
+                  style={{ backgroundColor: "#AEDEAE" }}
                 />
                 <span className="flex-grow">Border color #AEDEAE</span>
                 <ChevronDown className="h-4 w-4 opacity-50" />
@@ -98,7 +94,9 @@ const NavBorderOutlineEditor = () => {
           <SidebarMenuItem className={"flex gap-1"}>
             <InputWithIcon
               value={currentStyle?.borderRadius}
-              triggerChange={(value)=>{handleStyleChange('borderRadius', value)}}
+              triggerChange={(value) => {
+                handleStyleChange("borderRadius", value);
+              }}
               placeholder={"border radius"}
               icon={SquareRoundCorner}
               // type={"number"}
@@ -141,7 +139,9 @@ const NavBorderOutlineEditor = () => {
           <SidebarMenuItem>
             <InputWithIcon
               value={currentStyle?.outlineWidth}
-              triggerChange={(value)=>{handleStyleChange('outlineWidth', value)}}
+              triggerChange={(value) => {
+                handleStyleChange("outlineWidth", value);
+              }}
               placeholder={"outline width"}
               character={"O"}
               // type={"number"}
@@ -159,8 +159,8 @@ const NavBorderOutlineEditor = () => {
                 className="w-full justify-start text-left font-normal"
               >
                 <div
-                  className="w-4 h-4 rounded-full mr-2 shadow-sm"
-                  style={{ backgroundColor: '#AEDEAE' }}
+                  className="mr-2 h-4 w-4 rounded-full shadow-sm"
+                  style={{ backgroundColor: "#AEDEAE" }}
                 />
                 <span className="flex-grow">Outline color #AEDEAE</span>
                 <ChevronDown className="h-4 w-4 opacity-50" />
@@ -168,10 +168,7 @@ const NavBorderOutlineEditor = () => {
             </ColorPicker>
           </SidebarMenuItem>
           <SidebarMenuItem>
-            <Input
-              placeholder={"outline style"}
-              type={"text"}
-            />
+            <Input placeholder={"outline style"} type={"text"} />
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarGroupContent>

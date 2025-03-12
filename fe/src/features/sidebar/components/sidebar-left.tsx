@@ -4,7 +4,7 @@ import * as React from "react";
 
 import { NavMain } from "@/features/sidebar/components/nav-main.tsx";
 import { NavSecondary } from "@/features/sidebar/components/nav-secondary.tsx";
-import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader } from "@/components/ui/sidebar.tsx";
+import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu } from "@/components/ui/sidebar.tsx";
 import { NavUser } from "@/features/sidebar/components/nav-user.tsx";
 import { Separator } from "@/components/ui/separator";
 
@@ -56,6 +56,9 @@ export function SidebarLeft({
   return (
     <Sidebar className="border-r-0" {...props}>
       <SidebarHeader>
+        <SidebarMenu>
+          <img src={'./ui-primitives-hub-logo.png'} alt={'logo'} className={'w-[90%] mx-auto'} />
+        </SidebarMenu>
         <NavMain items={data.navMain} />
       </SidebarHeader>
       <Separator />

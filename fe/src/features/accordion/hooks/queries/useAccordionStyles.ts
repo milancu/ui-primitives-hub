@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { Component } from "@ui-primitives-hub/types";
 
 type UseAccordionStylesParams = {
-  onDataLoaded?: () => void;
+  onDataLoaded?: (component: Component) => void;
 };
 
 export const useAccordionStyles = ({
@@ -18,7 +18,7 @@ export const useAccordionStyles = ({
   useEffect(() => {
     if (!onDataLoaded) return;
     if (query.data) {
-      onDataLoaded();
+      onDataLoaded(query.data);
     }
   }, [query.data]);
 

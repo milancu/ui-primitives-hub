@@ -18,9 +18,13 @@ import {
 import { Button } from "@/components/ui/button.tsx";
 import { Input } from "@/components/ui/input.tsx";
 import { useComponentStyleMutation } from "@/hooks/use-component-style-mutation.ts";
+import { useCurrentComponent } from "@/components/CurrentComponentProvider.tsx";
 
 const NavPaddingEditor = () => {
   const { handleStyleChange } = useComponentStyleMutation();
+  const { currentStyle } = useCurrentComponent();
+
+  if (!currentStyle) return null;
 
   return (
     <SidebarGroup>
@@ -33,7 +37,9 @@ const NavPaddingEditor = () => {
               character={"P"}
               // type={"number"}
               // min={0}
-              triggerChange={(newValue) => handleStyleChange("padding", newValue)}
+              triggerChange={(newValue) =>
+                handleStyleChange("padding", newValue)
+              }
               value={currentStyle?.padding}
             />
             <DropdownMenu>

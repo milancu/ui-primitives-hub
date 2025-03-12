@@ -19,33 +19,11 @@ import {
 } from "lucide-react";
 import InputWithIcon from "@/components/ui/input-with-icon.tsx";
 import { useCurrentComponent } from "@/components/CurrentComponentProvider.tsx";
-import { styleToString } from "@ui-primitives-hub/utils/src";
-import { Style } from "@ui-primitives-hub/types";
-import { CssToTailwindTranslator } from "css-to-tailwind-translator";
 import { useUpdateAccordionStyle } from "@/features/accordion/hooks/mutations/useUpdateAccordionStyle.ts";
 
 const NavLayoutEditor = () => {
-  const { currentStyle, componentPartName, activeState } = useCurrentComponent();
+  const { currentStyle } = useCurrentComponent();
   const { mutate } = useUpdateAccordionStyle();
-
-
-  const handleChange = (key: keyof Style, value: any) => {
-    const newStyle = { ...currentStyle, [key]: value } as Style;
-
-    const css = styleToString(newStyle);
-    const conversionResult = CssToTailwindTranslator(`
-    component {
-    ${css}
-    }
-    `);
-    const resultVal = conversionResult.data[0].resultVal;
-
-    mutate({
-      name: componentPartName,
-      attribute: activeState,
-      value: resultVal,
-    });
-  };
 
   return (
     <SidebarGroup>
@@ -133,7 +111,9 @@ const NavLayoutEditor = () => {
                   value={currentStyle?.gap}
                   placeholder={"gap"}
                   character={"G"}
-                  triggerChange={(newValue) => handleChange("padding", newValue)}
+                  triggerChange={(newValue) =>
+                    handleChange("padding", newValue)
+                  }
                 />
               </fieldset>
             </SidebarMenuItem>

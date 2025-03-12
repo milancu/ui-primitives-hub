@@ -9,7 +9,7 @@ export const updateAccordionStyle = async ({
   value,
   attribute,
 }: UpdateAccordionStyleProps) => {
-  const response = await fetch(`http://localhost:3000/accordion`, {
+  const response = await fetch(`http://localhost:3000/components/accordion`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",

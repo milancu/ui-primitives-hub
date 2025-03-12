@@ -1,4 +1,4 @@
-import { createRootRoute, Outlet } from "@tanstack/react-router";
+import { createRootRouteWithContext, Outlet } from "@tanstack/react-router";
 import {
   SidebarInset,
   SidebarProvider,
@@ -8,8 +8,14 @@ import { SidebarLeft } from "@/features/sidebar/components/sidebar-left.tsx";
 import { SidebarRight } from "@/features/sidebar/components/sidebar-right.tsx";
 import { ModeToggle } from "@/components/mode-toggle.tsx";
 import { useCurrentComponent } from "@/components/CurrentComponentProvider.tsx";
+import { AuthContextType } from "@/components/AuthProvider.tsx";
+import { LogoutButton } from "@/components/ui/logout-button.tsx";
 
-export const Route = createRootRoute({
+interface RouterContext {
+  auth: AuthContextType;
+}
+
+export const Route = createRootRouteWithContext<RouterContext>()({
   component: RootComponent,
 });
 
@@ -24,6 +30,7 @@ function RootComponent() {
           <div className="flex flex-1 items-center justify-between gap-2 px-3">
             <SidebarTrigger />
             <ModeToggle />
+            {/*<LogoutButton/>*/}
           </div>
         </header>
         <div className={"h-full"}>
