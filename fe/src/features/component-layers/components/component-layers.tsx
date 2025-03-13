@@ -2,6 +2,13 @@ import { Frame, Layers } from "lucide-react";
 import { useCurrentComponent } from "@/components/CurrentComponentProvider.tsx";
 import { useCurrentPartParam } from "@/features/sidebar/hooks/useCurrentPartParam.tsx";
 import { ComponentHierarchy } from "@ui-primitives-hub/types";
+import { useCurrentComponentStateParam } from "@/features/sidebar/hooks/useCurrentComponentStateParam.tsx";
+import {
+  Card, CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle
+} from "@/components/ui/card.tsx";
 
 const ComponentTreeItem = ({
   component,
@@ -52,30 +59,32 @@ const ComponentTreeItem = ({
 
 export default function FigmaLayers() {
   const [componentName, setComponentName] = useCurrentPartParam();
+  const [, setCurrentState] = useCurrentComponentStateParam();
   const { component } = useCurrentComponent();
 
   const selectComponent = (component: ComponentHierarchy) => {
     setComponentName(component.name);
+    setCurrentState("default");
   };
 
   if (!component) return null;
 
   return (
-    <div className="border-border bg-background overflow-hidden rounded-lg border shadow-lg">
-      <div className="border-border flex items-center justify-between border-b p-3">
-        <div className="flex items-center">
-          <Layers className="mr-2 h-5 w-5 text-gray-500" />
+    <Card className="shadow-none">
+      <CardHeader className="p-4 border-b border-gray-200">
+        <CardTitle className="text-sm flex items-center gap-2.5">
+          <Layers className="h-5 w-5 text-gray-500" />
           <h2 className="text-sm font-medium">Component layers</h2>
-        </div>
-      </div>
+        </CardTitle>
+      </CardHeader>
 
-      <div className="overflow-y-auto">
+      <CardContent className="grid gap-2.5 p-0">
         <ComponentTreeItem
           component={component?.hierarchy}
           selectComponent={selectComponent}
           currentComponent={componentName}
         />
-      </div>
-    </div>
+      </CardContent>
+    </Card>
   );
 }

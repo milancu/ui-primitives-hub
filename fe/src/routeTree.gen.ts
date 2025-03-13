@@ -12,9 +12,12 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as LoginImport } from './routes/login'
-import { Route as AccordionImport } from './routes/accordion'
-import { Route as IndexImport } from './routes/index'
+import { Route as SidebarLayoutImport } from './routes/_sidebarLayout'
+import { Route as AuthenticatedImport } from './routes/_authenticated'
+import { Route as AuthenticatedIndexImport } from './routes/_authenticated.index'
 import { Route as AuthCallbackImport } from './routes/auth.callback'
+import { Route as AuthenticatedAvatarImport } from './routes/_authenticated.avatar'
+import { Route as AuthenticatedAccordionImport } from './routes/_authenticated.accordion'
 
 // Create/Update Routes
 
@@ -24,16 +27,20 @@ const LoginRoute = LoginImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const AccordionRoute = AccordionImport.update({
-  id: '/accordion',
-  path: '/accordion',
+const SidebarLayoutRoute = SidebarLayoutImport.update({
+  id: '/_sidebarLayout',
   getParentRoute: () => rootRoute,
 } as any)
 
-const IndexRoute = IndexImport.update({
+const AuthenticatedRoute = AuthenticatedImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const AuthenticatedIndexRoute = AuthenticatedIndexImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => AuthenticatedRoute,
 } as any)
 
 const AuthCallbackRoute = AuthCallbackImport.update({
@@ -42,22 +49,34 @@ const AuthCallbackRoute = AuthCallbackImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const AuthenticatedAvatarRoute = AuthenticatedAvatarImport.update({
+  id: '/avatar',
+  path: '/avatar',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+
+const AuthenticatedAccordionRoute = AuthenticatedAccordionImport.update({
+  id: '/accordion',
+  path: '/accordion',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexImport
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AuthenticatedImport
       parentRoute: typeof rootRoute
     }
-    '/accordion': {
-      id: '/accordion'
-      path: '/accordion'
-      fullPath: '/accordion'
-      preLoaderRoute: typeof AccordionImport
+    '/_sidebarLayout': {
+      id: '/_sidebarLayout'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof SidebarLayoutImport
       parentRoute: typeof rootRoute
     }
     '/login': {
@@ -67,6 +86,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginImport
       parentRoute: typeof rootRoute
     }
+    '/_authenticated/accordion': {
+      id: '/_authenticated/accordion'
+      path: '/accordion'
+      fullPath: '/accordion'
+      preLoaderRoute: typeof AuthenticatedAccordionImport
+      parentRoute: typeof AuthenticatedImport
+    }
+    '/_authenticated/avatar': {
+      id: '/_authenticated/avatar'
+      path: '/avatar'
+      fullPath: '/avatar'
+      preLoaderRoute: typeof AuthenticatedAvatarImport
+      parentRoute: typeof AuthenticatedImport
+    }
     '/auth/callback': {
       id: '/auth/callback'
       path: '/auth/callback'
@@ -74,52 +107,90 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthCallbackImport
       parentRoute: typeof rootRoute
     }
+    '/_authenticated/': {
+      id: '/_authenticated/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedIndexImport
+      parentRoute: typeof AuthenticatedImport
+    }
   }
 }
 
 // Create and export the route tree
 
+interface AuthenticatedRouteChildren {
+  AuthenticatedAccordionRoute: typeof AuthenticatedAccordionRoute
+  AuthenticatedAvatarRoute: typeof AuthenticatedAvatarRoute
+  AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
+}
+
+const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
+  AuthenticatedAccordionRoute: AuthenticatedAccordionRoute,
+  AuthenticatedAvatarRoute: AuthenticatedAvatarRoute,
+  AuthenticatedIndexRoute: AuthenticatedIndexRoute,
+}
+
+const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
+  AuthenticatedRouteChildren,
+)
+
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '/accordion': typeof AccordionRoute
+  '': typeof SidebarLayoutRoute
   '/login': typeof LoginRoute
+  '/accordion': typeof AuthenticatedAccordionRoute
+  '/avatar': typeof AuthenticatedAvatarRoute
   '/auth/callback': typeof AuthCallbackRoute
+  '/': typeof AuthenticatedIndexRoute
 }
 
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/accordion': typeof AccordionRoute
+  '': typeof SidebarLayoutRoute
   '/login': typeof LoginRoute
+  '/accordion': typeof AuthenticatedAccordionRoute
+  '/avatar': typeof AuthenticatedAvatarRoute
   '/auth/callback': typeof AuthCallbackRoute
+  '/': typeof AuthenticatedIndexRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
-  '/': typeof IndexRoute
-  '/accordion': typeof AccordionRoute
+  '/_authenticated': typeof AuthenticatedRouteWithChildren
+  '/_sidebarLayout': typeof SidebarLayoutRoute
   '/login': typeof LoginRoute
+  '/_authenticated/accordion': typeof AuthenticatedAccordionRoute
+  '/_authenticated/avatar': typeof AuthenticatedAvatarRoute
   '/auth/callback': typeof AuthCallbackRoute
+  '/_authenticated/': typeof AuthenticatedIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/accordion' | '/login' | '/auth/callback'
+  fullPaths: '' | '/login' | '/accordion' | '/avatar' | '/auth/callback' | '/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/accordion' | '/login' | '/auth/callback'
-  id: '__root__' | '/' | '/accordion' | '/login' | '/auth/callback'
+  to: '' | '/login' | '/accordion' | '/avatar' | '/auth/callback' | '/'
+  id:
+    | '__root__'
+    | '/_authenticated'
+    | '/_sidebarLayout'
+    | '/login'
+    | '/_authenticated/accordion'
+    | '/_authenticated/avatar'
+    | '/auth/callback'
+    | '/_authenticated/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  AccordionRoute: typeof AccordionRoute
+  AuthenticatedRoute: typeof AuthenticatedRouteWithChildren
+  SidebarLayoutRoute: typeof SidebarLayoutRoute
   LoginRoute: typeof LoginRoute
   AuthCallbackRoute: typeof AuthCallbackRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
-  AccordionRoute: AccordionRoute,
+  AuthenticatedRoute: AuthenticatedRouteWithChildren,
+  SidebarLayoutRoute: SidebarLayoutRoute,
   LoginRoute: LoginRoute,
   AuthCallbackRoute: AuthCallbackRoute,
 }
@@ -134,23 +205,40 @@ export const routeTree = rootRoute
     "__root__": {
       "filePath": "__root.tsx",
       "children": [
-        "/",
-        "/accordion",
+        "/_authenticated",
+        "/_sidebarLayout",
         "/login",
         "/auth/callback"
       ]
     },
-    "/": {
-      "filePath": "index.tsx"
+    "/_authenticated": {
+      "filePath": "_authenticated.tsx",
+      "children": [
+        "/_authenticated/accordion",
+        "/_authenticated/avatar",
+        "/_authenticated/"
+      ]
     },
-    "/accordion": {
-      "filePath": "accordion.tsx"
+    "/_sidebarLayout": {
+      "filePath": "_sidebarLayout.tsx"
     },
     "/login": {
       "filePath": "login.tsx"
     },
+    "/_authenticated/accordion": {
+      "filePath": "_authenticated.accordion.tsx",
+      "parent": "/_authenticated"
+    },
+    "/_authenticated/avatar": {
+      "filePath": "_authenticated.avatar.tsx",
+      "parent": "/_authenticated"
+    },
     "/auth/callback": {
       "filePath": "auth.callback.tsx"
+    },
+    "/_authenticated/": {
+      "filePath": "_authenticated.index.tsx",
+      "parent": "/_authenticated"
     }
   }
 }

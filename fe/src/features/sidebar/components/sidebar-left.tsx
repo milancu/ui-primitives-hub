@@ -3,10 +3,16 @@
 import * as React from "react";
 
 import { NavMain } from "@/features/sidebar/components/nav-main.tsx";
-import { NavSecondary } from "@/features/sidebar/components/nav-secondary.tsx";
-import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu } from "@/components/ui/sidebar.tsx";
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarHeader,
+} from "@/components/ui/sidebar.tsx";
 import { NavUser } from "@/features/sidebar/components/nav-user.tsx";
 import { Separator } from "@/components/ui/separator";
+import { ThemeLogo } from "@/components/ui/theme-logo.tsx";
+import FigmaLayers from "@/features/component-layers/components/component-layers.tsx";
 
 const data = {
   user: {
@@ -37,15 +43,15 @@ const data = {
     },
     {
       title: "Input",
-      url: "/input"
+      url: "/input",
     },
     {
       title: "Menu",
-      url: "/menu"
+      url: "/menu",
     },
     {
       title: "Number field",
-      url: "/number-field"
+      url: "/number-field",
     },
   ],
 };
@@ -54,19 +60,18 @@ export function SidebarLeft({
   ...props
 }: React.ComponentProps<typeof Sidebar>) {
   return (
-    <Sidebar className="border-r-0" {...props}>
+    <Sidebar className="border-r-0" {...props} variant={"inset"}>
       <SidebarHeader>
-        <SidebarMenu>
-          <img src={'./ui-primitives-hub-logo.png'} alt={'logo'} className={'w-[90%] mx-auto'} />
-        </SidebarMenu>
+        <ThemeLogo className={"mb-2 h-14 w-full"} />
         <NavMain items={data.navMain} />
       </SidebarHeader>
       <Separator />
       <SidebarContent>
-        <NavSecondary className={"mt-auto"} />
+        {/*<NavSecondary className={"mt-auto"} />*/}
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <FigmaLayers />
+        <NavUser />
       </SidebarFooter>
     </Sidebar>
   );

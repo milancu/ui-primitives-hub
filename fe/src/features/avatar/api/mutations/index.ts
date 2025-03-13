@@ -1,16 +1,16 @@
-interface UpdateAccordionStyleProps {
+interface UpdateAvatarStyleProps {
   name: string;
   value: string;
   attribute: string;
 }
 
-export const updateAccordionStyle = async ({
+export const updateAvatarStyle = async ({
   name,
   value,
   attribute,
-}: UpdateAccordionStyleProps) => {
+}: UpdateAvatarStyleProps) => {
   const response = await fetch(
-    `${import.meta.env.VITE_BACKEND_API_URL}/components/accordion`,
+    `${import.meta.env.VITE_BACKEND_API_URL}/components/avatar`,
     {
       method: "PUT",
       headers: {

@@ -12,11 +12,11 @@ const getAttributes = (root: Record<string, any>): Record<string, any> => {
 export const getComponentStyle = async (componentName: string) => {
   const ref = db.ref(componentName);
   const snapshot = await ref.once("value");
-  const accordion = snapshot.val();
+  const component = snapshot.val();
 
-  return Object.keys(accordion).reduce((acc: Record<string, ComponentPart>, key) => {
+  return Object.keys(component).reduce((acc: Record<string, ComponentPart>, key) => {
     acc[key] = {
-      name: key, raw: getRawTailwindClasses(accordion[key]), attributes: getAttributes(accordion[key])
+      name: key, raw: getRawTailwindClasses(component[key]), attributes: getAttributes(component[key])
     };
     return acc;
   }, {});

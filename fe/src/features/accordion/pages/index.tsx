@@ -8,6 +8,7 @@ import {
 import { useAccordionStyles } from "@/features/accordion/hooks/queries/useAccordionStyles.ts";
 import { useCurrentComponent } from "@/components/CurrentComponentProvider";
 import Preview from "@/components/preview.tsx";
+import { Skeleton } from "@/components/ui/skeleton.tsx";
 
 const AccordionPage = () => {
   const { component, setComponent } = useCurrentComponent();
@@ -15,7 +16,13 @@ const AccordionPage = () => {
     onDataLoaded: setComponent,
   });
 
-  if (isLoading || !component) return <div>Loading...</div>;
+  if (isLoading || !component)
+    return (
+      <div className={"h-full w-full flex flex-col items-center gap-2 p-2"}>
+        <Skeleton className={"h-full w-full"} />
+        <Skeleton className={"h-full w-full"} />
+      </div>
+    );
   if (error) return <div>Error: {error.message}</div>;
 
   const { root, item, header, trigger, panel } = component.parts;

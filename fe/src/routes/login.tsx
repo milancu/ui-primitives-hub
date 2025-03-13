@@ -1,9 +1,26 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, redirect } from "@tanstack/react-router";
+import { AuthContextType } from "@/components/AuthProvider.tsx";
+import LoginPage from "@/features/auth/pages/login-page.tsx";
 
-export const Route = createFileRoute('/login')({
+const fallback = "/accordion" as const;
+
+export const Route = createFileRoute("/login")({
   component: RouteComponent,
-})
+  beforeLoad: ({
+    context,
+    search,
+  }: {
+    context: { auth: AuthContextType };
+    search: { redirect?: string };
+  }) => {
+    if (context.auth.user) {
+      throw redirect({ to: search.redirect || fallback });
+    }
+  },
+});
 
 function RouteComponent() {
-  return <div>Hello "/login"!</div>
+  return (
+    <LoginPage />
+  );
 }

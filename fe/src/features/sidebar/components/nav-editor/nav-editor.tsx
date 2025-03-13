@@ -11,12 +11,12 @@ import NavOtherPropertiesEditor from "@/features/sidebar/components/nav-editor/n
 const NavEditor = () => {
   return (
     <>
+      <NavLayoutEditor />
+      <Separator />
       <NavSizeEditor />
       <Separator />
       <NavPaddingEditor />
       <NavMarginEditor />
-      <Separator />
-      <NavLayoutEditor />
       <Separator />
       <NavBorderOutlineEditor />
       <Separator />
@@ -25,6 +25,7 @@ const NavEditor = () => {
       <NavTextEditor />
       <Separator />
       <NavOtherPropertiesEditor />
+      <Separator />
     </>
   );
 };

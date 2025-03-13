@@ -8,6 +8,9 @@ const NavEditorHeader = () => {
   const { component } = useCurrentComponent();
   const [componentName] = useCurrentPartParam();
   const [state, setState] = useCurrentComponentStateParam();
+
+  if (!componentName) return null;
+
   const attributes = component?.parts[componentName]?.attributes;
 
   if (!component || !attributes) {

@@ -24,8 +24,6 @@ const NavPaddingEditor = () => {
   const { handleStyleChange } = useComponentStyleMutation();
   const { currentStyle } = useCurrentComponent();
 
-  if (!currentStyle) return null;
-
   return (
     <SidebarGroup>
       <SidebarGroupLabel>Padding properties</SidebarGroupLabel>

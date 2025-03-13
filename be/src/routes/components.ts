@@ -49,4 +49,27 @@ router.put(
   }
 );
 
+router.get("/avatar", async (req: Request, res: Response) => {
+  try {
+    const avatar: Component = {
+      hierarchy: {
+        name: "root",
+        children: [
+          {
+            name: "image",
+          },
+          {
+            name: "fallback",
+          },
+        ],
+      },
+      parts: await getComponentStyle("avatar"),
+    };
+
+    res.json(avatar);
+  } catch (error: any) {
+    res.status(500).json({error: error.message});
+  }
+});
+
 export default router;

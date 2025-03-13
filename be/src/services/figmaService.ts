@@ -1,5 +1,5 @@
 import axios from "axios";
-import { auth, db } from "../firebase";
+import {auth, db} from "../firebase";
 
 export const buildFigmaAuthUrl = () => {
   const params = new URLSearchParams({
@@ -23,7 +23,7 @@ export const exchangeCodeForToken = async (code: string): Promise<string> => {
       grant_type: "authorization_code",
     }),
     {
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      headers: {"Content-Type": "application/x-www-form-urlencoded"},
     }
   );
   return res.data.access_token;
@@ -31,13 +31,14 @@ export const exchangeCodeForToken = async (code: string): Promise<string> => {
 
 export const getFigmaUserProfile = async (accessToken: string) => {
   const res = await axios.get("https://api.figma.com/v1/me", {
-    headers: { Authorization: `Bearer ${accessToken}` },
+    headers: {Authorization: `Bearer ${accessToken}`},
   });
   return res.data;
 };
 
 export const getOrCreateFirebaseUser = async (figmaUser: any) => {
   const uid = `figma:${figmaUser.id}`;
+  console.log(figmaUser)
   try {
     return await auth.getUser(uid);
   } catch (err: any) {
@@ -46,6 +47,7 @@ export const getOrCreateFirebaseUser = async (figmaUser: any) => {
         uid,
         displayName: figmaUser.handle,
         email: figmaUser.email || "",
+        photoURL: figmaUser.img_url,
       });
     }
     throw err;
@@ -59,6 +61,7 @@ export const saveUserToDatabase = async (uid: string, figmaUser: any) => {
     email: figmaUser.email,
     figmaId: figmaUser.id,
     createdAt: new Date().toISOString(),
+    photoURL: figmaUser.img_url,
   });
 };
 
