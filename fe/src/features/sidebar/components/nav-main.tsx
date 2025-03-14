@@ -5,7 +5,8 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar.tsx";
-import { useRouter } from "@tanstack/react-router";
+import { Link, useRouter } from "@tanstack/react-router";
+import { useCurrentComponent } from "@/components/CurrentComponentProvider.tsx";
 
 export function NavMain({
   items,
@@ -15,6 +16,7 @@ export function NavMain({
     url: string;
   }[];
 }) {
+  const { setComponent } = useCurrentComponent();
   const router = useRouter();
   const pathname = router.state.location.pathname;
 
@@ -23,9 +25,14 @@ export function NavMain({
       {items.map((item) => (
         <SidebarMenuItem key={item.title}>
           <SidebarMenuButton asChild isActive={pathname === item.url}>
-            <a href={item.url}>
+            <Link
+              to={item.url}
+              onClick={() => {
+                setComponent(undefined);
+              }}
+            >
               <span>{item.title}</span>
-            </a>
+            </Link>
           </SidebarMenuButton>
         </SidebarMenuItem>
       ))}

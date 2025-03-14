@@ -5,16 +5,14 @@ import {
   AvatarImage,
   AvatarRoot,
 } from "@ui-primitives-hub/ui/src/Avatar.tsx";
-import { useAvatarStyles } from "@/features/avatar/hooks/queries/useAccordionStyles.ts";
+import { useAvatarStyles } from "@/features/avatar/hooks/queries/useAvatarStyles.ts";
 import { Skeleton } from "@/components/ui/skeleton.tsx";
 
 const AvatarPage = () => {
   const { component, setComponent } = useCurrentComponent();
-  const { isLoading, error } = useAvatarStyles({
-    onDataLoaded: setComponent,
+  const {  isLoading, error } = useAvatarStyles({
+    onDataLoaded: setComponent
   });
-
-  console.log(isLoading, error, component);
 
   if (isLoading || !component)
     return (

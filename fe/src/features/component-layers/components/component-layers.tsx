@@ -4,10 +4,10 @@ import { useCurrentPartParam } from "@/features/sidebar/hooks/useCurrentPartPara
 import { ComponentHierarchy } from "@ui-primitives-hub/types";
 import { useCurrentComponentStateParam } from "@/features/sidebar/hooks/useCurrentComponentStateParam.tsx";
 import {
-  Card, CardContent,
-  CardDescription,
+  Card,
+  CardContent,
   CardHeader,
-  CardTitle
+  CardTitle,
 } from "@/components/ui/card.tsx";
 
 const ComponentTreeItem = ({
@@ -71,10 +71,10 @@ export default function FigmaLayers() {
 
   return (
     <Card className="shadow-none">
-      <CardHeader className="p-4 border-b border-gray-200">
-        <CardTitle className="text-sm flex items-center gap-2.5">
+      <CardHeader className="border-b border-gray-200 p-4">
+        <CardTitle className="flex items-center gap-2.5 text-sm">
           <Layers className="h-5 w-5 text-gray-500" />
-          <h2 className="text-sm font-medium">Component layers</h2>
+          <div className="text-sm font-medium">Component layers</div>
         </CardTitle>
       </CardHeader>
 

@@ -19,7 +19,7 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar.tsx";
-import { useAuth } from "@/components/AuthProvider.tsx";
+import { useAuth } from "@/features/auth/components/AuthProvider.tsx";
 import { useNavigate } from "@tanstack/react-router";
 import { toast } from "sonner";
 

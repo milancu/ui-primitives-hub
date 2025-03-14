@@ -2,7 +2,7 @@ import {
   createFileRoute,
   Outlet,
   redirect,
-  useRouter,
+  useLocation,
 } from "@tanstack/react-router";
 import {
   SidebarInset,
@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/breadcrumb.tsx";
 import { useCurrentPartParam } from "@/features/sidebar/hooks/useCurrentPartParam.tsx";
 import { SidebarLeft } from "@/features/sidebar/components/sidebar-left.tsx";
+import { useEffect, useState } from "react";
 
 export const Route = createFileRoute("/_authenticated")({
   component: AuthenticatedLayout,
@@ -38,9 +39,8 @@ export const Route = createFileRoute("/_authenticated")({
 
 function AuthenticatedLayout() {
   const [currentPart] = useCurrentPartParam();
-  const router = useRouter();
-
-  const pathname = router.state.location.pathname;
+  const [mainSection, setMainSection] = useState<string>("Home");
+  const location = useLocation();
 
   const formatSegment = (segment: string) => {
     return segment
@@ -48,9 +48,13 @@ function AuthenticatedLayout() {
       .replace(/(^\w|\s\w)/g, (m) => m.toUpperCase());
   };
 
-  const pathSegments = pathname.split("/").filter(Boolean).map(formatSegment);
-
-  const mainSection = pathSegments[0] || "Home";
+  useEffect(() => {
+    const pathSegments = location.pathname
+      .split("/")
+      .filter(Boolean)
+      .map(formatSegment);
+    setMainSection(pathSegments[0] || "Home");
+  }, [location.pathname]);
 
   return (
     <SidebarProvider>

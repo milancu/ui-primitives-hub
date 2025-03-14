@@ -1,5 +1,5 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
-import { AuthContextType } from "@/components/AuthProvider.tsx";
+import { AuthContextType } from "@/features/auth/components/AuthProvider.tsx";
 import LoginPage from "@/features/auth/pages/login-page.tsx";
 
 const fallback = "/accordion" as const;

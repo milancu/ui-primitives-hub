@@ -12,7 +12,7 @@ import { useCurrentComponentStateParam } from "@/features/sidebar/hooks/useCurre
 
 type CurrentComponentContext = {
   component?: Component;
-  setComponent: (component: Component) => void;
+  setComponent: (component?: Component) => void;
   currentStyle?: Style;
   setCurrentStyle: (style: Style) => void;
 };
@@ -28,7 +28,7 @@ export default function CurrentComponentProvider({
 }: CurrentComponentProviderProps) {
   const [component, setComponent] = useState<Component>();
   const [currentPart] = useCurrentPartParam();
-  const [currentState,] = useCurrentComponentStateParam();
+  const [currentState] = useCurrentComponentStateParam();
   const [currentStyle, setCurrentStyle] = useState<Style>();
 
   useEffect(() => {
@@ -37,7 +37,6 @@ export default function CurrentComponentProvider({
     const style = convertStringToStyle(currentStyle[currentState]);
     setCurrentStyle(style);
   }, [component, currentPart, currentState]);
-
 
   return (
     <CurrentComponentContext.Provider

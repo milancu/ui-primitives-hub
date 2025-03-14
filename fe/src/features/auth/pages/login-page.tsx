@@ -26,10 +26,10 @@ const LoginPage = () => {
           <div>
             <ThemeLogo />
           </div>
-          <h2 className="text-2xl font-bold tracking-tight text-gray-900">
+          <h2 className="text-2xl font-bold tracking-tight text-foreground">
             Welcome to UI Primitives Hub!
           </h2>
-          <p className="text-sm text-gray-600">
+          <p className="text-sm text-muted-foreground">
             Please sign in with your Figma account to continue
           </p>
         </CardHeader>

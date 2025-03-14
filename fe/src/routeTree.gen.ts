@@ -12,10 +12,14 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as LoginImport } from './routes/login'
-import { Route as SidebarLayoutImport } from './routes/_sidebarLayout'
 import { Route as AuthenticatedImport } from './routes/_authenticated'
 import { Route as AuthenticatedIndexImport } from './routes/_authenticated.index'
 import { Route as AuthCallbackImport } from './routes/auth.callback'
+import { Route as AuthenticatedNumberFieldImport } from './routes/_authenticated.number-field'
+import { Route as AuthenticatedMenuImport } from './routes/_authenticated.menu'
+import { Route as AuthenticatedFieldsetImport } from './routes/_authenticated.fieldset'
+import { Route as AuthenticatedFieldImport } from './routes/_authenticated.field'
+import { Route as AuthenticatedDialogImport } from './routes/_authenticated.dialog'
 import { Route as AuthenticatedAvatarImport } from './routes/_authenticated.avatar'
 import { Route as AuthenticatedAccordionImport } from './routes/_authenticated.accordion'
 
@@ -24,11 +28,6 @@ import { Route as AuthenticatedAccordionImport } from './routes/_authenticated.a
 const LoginRoute = LoginImport.update({
   id: '/login',
   path: '/login',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const SidebarLayoutRoute = SidebarLayoutImport.update({
-  id: '/_sidebarLayout',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -47,6 +46,36 @@ const AuthCallbackRoute = AuthCallbackImport.update({
   id: '/auth/callback',
   path: '/auth/callback',
   getParentRoute: () => rootRoute,
+} as any)
+
+const AuthenticatedNumberFieldRoute = AuthenticatedNumberFieldImport.update({
+  id: '/number-field',
+  path: '/number-field',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+
+const AuthenticatedMenuRoute = AuthenticatedMenuImport.update({
+  id: '/menu',
+  path: '/menu',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+
+const AuthenticatedFieldsetRoute = AuthenticatedFieldsetImport.update({
+  id: '/fieldset',
+  path: '/fieldset',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+
+const AuthenticatedFieldRoute = AuthenticatedFieldImport.update({
+  id: '/field',
+  path: '/field',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+
+const AuthenticatedDialogRoute = AuthenticatedDialogImport.update({
+  id: '/dialog',
+  path: '/dialog',
+  getParentRoute: () => AuthenticatedRoute,
 } as any)
 
 const AuthenticatedAvatarRoute = AuthenticatedAvatarImport.update({
@@ -72,13 +101,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedImport
       parentRoute: typeof rootRoute
     }
-    '/_sidebarLayout': {
-      id: '/_sidebarLayout'
-      path: ''
-      fullPath: ''
-      preLoaderRoute: typeof SidebarLayoutImport
-      parentRoute: typeof rootRoute
-    }
     '/login': {
       id: '/login'
       path: '/login'
@@ -98,6 +120,41 @@ declare module '@tanstack/react-router' {
       path: '/avatar'
       fullPath: '/avatar'
       preLoaderRoute: typeof AuthenticatedAvatarImport
+      parentRoute: typeof AuthenticatedImport
+    }
+    '/_authenticated/dialog': {
+      id: '/_authenticated/dialog'
+      path: '/dialog'
+      fullPath: '/dialog'
+      preLoaderRoute: typeof AuthenticatedDialogImport
+      parentRoute: typeof AuthenticatedImport
+    }
+    '/_authenticated/field': {
+      id: '/_authenticated/field'
+      path: '/field'
+      fullPath: '/field'
+      preLoaderRoute: typeof AuthenticatedFieldImport
+      parentRoute: typeof AuthenticatedImport
+    }
+    '/_authenticated/fieldset': {
+      id: '/_authenticated/fieldset'
+      path: '/fieldset'
+      fullPath: '/fieldset'
+      preLoaderRoute: typeof AuthenticatedFieldsetImport
+      parentRoute: typeof AuthenticatedImport
+    }
+    '/_authenticated/menu': {
+      id: '/_authenticated/menu'
+      path: '/menu'
+      fullPath: '/menu'
+      preLoaderRoute: typeof AuthenticatedMenuImport
+      parentRoute: typeof AuthenticatedImport
+    }
+    '/_authenticated/number-field': {
+      id: '/_authenticated/number-field'
+      path: '/number-field'
+      fullPath: '/number-field'
+      preLoaderRoute: typeof AuthenticatedNumberFieldImport
       parentRoute: typeof AuthenticatedImport
     }
     '/auth/callback': {
@@ -122,12 +179,22 @@ declare module '@tanstack/react-router' {
 interface AuthenticatedRouteChildren {
   AuthenticatedAccordionRoute: typeof AuthenticatedAccordionRoute
   AuthenticatedAvatarRoute: typeof AuthenticatedAvatarRoute
+  AuthenticatedDialogRoute: typeof AuthenticatedDialogRoute
+  AuthenticatedFieldRoute: typeof AuthenticatedFieldRoute
+  AuthenticatedFieldsetRoute: typeof AuthenticatedFieldsetRoute
+  AuthenticatedMenuRoute: typeof AuthenticatedMenuRoute
+  AuthenticatedNumberFieldRoute: typeof AuthenticatedNumberFieldRoute
   AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedAccordionRoute: AuthenticatedAccordionRoute,
   AuthenticatedAvatarRoute: AuthenticatedAvatarRoute,
+  AuthenticatedDialogRoute: AuthenticatedDialogRoute,
+  AuthenticatedFieldRoute: AuthenticatedFieldRoute,
+  AuthenticatedFieldsetRoute: AuthenticatedFieldsetRoute,
+  AuthenticatedMenuRoute: AuthenticatedMenuRoute,
+  AuthenticatedNumberFieldRoute: AuthenticatedNumberFieldRoute,
   AuthenticatedIndexRoute: AuthenticatedIndexRoute,
 }
 
@@ -136,19 +203,28 @@ const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
 )
 
 export interface FileRoutesByFullPath {
-  '': typeof SidebarLayoutRoute
+  '': typeof AuthenticatedRouteWithChildren
   '/login': typeof LoginRoute
   '/accordion': typeof AuthenticatedAccordionRoute
   '/avatar': typeof AuthenticatedAvatarRoute
+  '/dialog': typeof AuthenticatedDialogRoute
+  '/field': typeof AuthenticatedFieldRoute
+  '/fieldset': typeof AuthenticatedFieldsetRoute
+  '/menu': typeof AuthenticatedMenuRoute
+  '/number-field': typeof AuthenticatedNumberFieldRoute
   '/auth/callback': typeof AuthCallbackRoute
   '/': typeof AuthenticatedIndexRoute
 }
 
 export interface FileRoutesByTo {
-  '': typeof SidebarLayoutRoute
   '/login': typeof LoginRoute
   '/accordion': typeof AuthenticatedAccordionRoute
   '/avatar': typeof AuthenticatedAvatarRoute
+  '/dialog': typeof AuthenticatedDialogRoute
+  '/field': typeof AuthenticatedFieldRoute
+  '/fieldset': typeof AuthenticatedFieldsetRoute
+  '/menu': typeof AuthenticatedMenuRoute
+  '/number-field': typeof AuthenticatedNumberFieldRoute
   '/auth/callback': typeof AuthCallbackRoute
   '/': typeof AuthenticatedIndexRoute
 }
@@ -156,26 +232,55 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/_authenticated': typeof AuthenticatedRouteWithChildren
-  '/_sidebarLayout': typeof SidebarLayoutRoute
   '/login': typeof LoginRoute
   '/_authenticated/accordion': typeof AuthenticatedAccordionRoute
   '/_authenticated/avatar': typeof AuthenticatedAvatarRoute
+  '/_authenticated/dialog': typeof AuthenticatedDialogRoute
+  '/_authenticated/field': typeof AuthenticatedFieldRoute
+  '/_authenticated/fieldset': typeof AuthenticatedFieldsetRoute
+  '/_authenticated/menu': typeof AuthenticatedMenuRoute
+  '/_authenticated/number-field': typeof AuthenticatedNumberFieldRoute
   '/auth/callback': typeof AuthCallbackRoute
   '/_authenticated/': typeof AuthenticatedIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '' | '/login' | '/accordion' | '/avatar' | '/auth/callback' | '/'
+  fullPaths:
+    | ''
+    | '/login'
+    | '/accordion'
+    | '/avatar'
+    | '/dialog'
+    | '/field'
+    | '/fieldset'
+    | '/menu'
+    | '/number-field'
+    | '/auth/callback'
+    | '/'
   fileRoutesByTo: FileRoutesByTo
-  to: '' | '/login' | '/accordion' | '/avatar' | '/auth/callback' | '/'
+  to:
+    | '/login'
+    | '/accordion'
+    | '/avatar'
+    | '/dialog'
+    | '/field'
+    | '/fieldset'
+    | '/menu'
+    | '/number-field'
+    | '/auth/callback'
+    | '/'
   id:
     | '__root__'
     | '/_authenticated'
-    | '/_sidebarLayout'
     | '/login'
     | '/_authenticated/accordion'
     | '/_authenticated/avatar'
+    | '/_authenticated/dialog'
+    | '/_authenticated/field'
+    | '/_authenticated/fieldset'
+    | '/_authenticated/menu'
+    | '/_authenticated/number-field'
     | '/auth/callback'
     | '/_authenticated/'
   fileRoutesById: FileRoutesById
@@ -183,14 +288,12 @@ export interface FileRouteTypes {
 
 export interface RootRouteChildren {
   AuthenticatedRoute: typeof AuthenticatedRouteWithChildren
-  SidebarLayoutRoute: typeof SidebarLayoutRoute
   LoginRoute: typeof LoginRoute
   AuthCallbackRoute: typeof AuthCallbackRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRoute: AuthenticatedRouteWithChildren,
-  SidebarLayoutRoute: SidebarLayoutRoute,
   LoginRoute: LoginRoute,
   AuthCallbackRoute: AuthCallbackRoute,
 }
@@ -206,7 +309,6 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/_authenticated",
-        "/_sidebarLayout",
         "/login",
         "/auth/callback"
       ]
@@ -216,11 +318,13 @@ export const routeTree = rootRoute
       "children": [
         "/_authenticated/accordion",
         "/_authenticated/avatar",
+        "/_authenticated/dialog",
+        "/_authenticated/field",
+        "/_authenticated/fieldset",
+        "/_authenticated/menu",
+        "/_authenticated/number-field",
         "/_authenticated/"
       ]
-    },
-    "/_sidebarLayout": {
-      "filePath": "_sidebarLayout.tsx"
     },
     "/login": {
       "filePath": "login.tsx"
@@ -231,6 +335,26 @@ export const routeTree = rootRoute
     },
     "/_authenticated/avatar": {
       "filePath": "_authenticated.avatar.tsx",
+      "parent": "/_authenticated"
+    },
+    "/_authenticated/dialog": {
+      "filePath": "_authenticated.dialog.tsx",
+      "parent": "/_authenticated"
+    },
+    "/_authenticated/field": {
+      "filePath": "_authenticated.field.tsx",
+      "parent": "/_authenticated"
+    },
+    "/_authenticated/fieldset": {
+      "filePath": "_authenticated.fieldset.tsx",
+      "parent": "/_authenticated"
+    },
+    "/_authenticated/menu": {
+      "filePath": "_authenticated.menu.tsx",
+      "parent": "/_authenticated"
+    },
+    "/_authenticated/number-field": {
+      "filePath": "_authenticated.number-field.tsx",
       "parent": "/_authenticated"
     },
     "/auth/callback": {

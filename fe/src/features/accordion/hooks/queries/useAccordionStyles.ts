@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { fetchAccordionStyles } from "@/features/accordion/api/queries";
-import { useEffect } from "react";
+import { useLayoutEffect } from "react";
 import { Component } from "@ui-primitives-hub/types";
 
 type UseAccordionStylesParams = {
@@ -13,9 +13,10 @@ export const useAccordionStyles = ({
   const query = useQuery<Component>({
     queryKey: ["accordion"],
     queryFn: fetchAccordionStyles,
+    refetchOnMount: true,
   });
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!onDataLoaded) return;
     if (query.data) {
       onDataLoaded(query.data);

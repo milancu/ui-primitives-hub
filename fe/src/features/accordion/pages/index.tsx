@@ -13,12 +13,12 @@ import { Skeleton } from "@/components/ui/skeleton.tsx";
 const AccordionPage = () => {
   const { component, setComponent } = useCurrentComponent();
   const { isLoading, error } = useAccordionStyles({
-    onDataLoaded: setComponent,
+    onDataLoaded: setComponent
   });
 
   if (isLoading || !component)
     return (
-      <div className={"h-full w-full flex flex-col items-center gap-2 p-2"}>
+      <div className={"flex h-full w-full flex-col items-center gap-2 p-2"}>
         <Skeleton className={"h-full w-full"} />
         <Skeleton className={"h-full w-full"} />
       </div>

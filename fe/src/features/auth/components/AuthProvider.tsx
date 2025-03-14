@@ -6,6 +6,8 @@ import {
 } from "firebase/auth";
 import { auth } from "@/firebase.ts";
 import { toast } from "sonner";
+import { Loader2 } from "lucide-react";
+import { ThemeLogo } from "@/components/ui/theme-logo.tsx";
 
 export type AuthContextType = {
   user: User | null;
@@ -40,7 +42,16 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <AuthContext.Provider value={{ user, logout }}>
-      {isLoading ? <div>Loading...</div> : children}{" "}
+      {isLoading ? (
+        <div className={"flex h-screen w-full items-center justify-center"}>
+          <div className={"flex flex-col items-center gap-2 p-2"}>
+            <ThemeLogo />
+            <Loader2 className="h-5 w-5 animate-spin" />
+          </div>
+        </div>
+      ) : (
+        children
+      )}
     </AuthContext.Provider>
   );
 };

@@ -1,6 +1,6 @@
 import { useNavigate } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
-import { useAuth } from "@/components/AuthProvider.tsx";
+import { useAuth } from "@/features/auth/components/AuthProvider.tsx";
 
 export const LogoutButton = () => {
   const { logout } = useAuth();

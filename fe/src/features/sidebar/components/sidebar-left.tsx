@@ -35,15 +35,11 @@ const data = {
     },
     {
       title: "Field",
-      url: "/fiel",
+      url: "/field",
     },
     {
       title: "Fieldset",
       url: "/fieldset",
-    },
-    {
-      title: "Input",
-      url: "/input",
     },
     {
       title: "Menu",

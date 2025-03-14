@@ -50,17 +50,17 @@ export const AuthCallback = () => {
         )}
       />
       <div
-        className={"inset bg-foreground absolute z-20 h-full w-full opacity-20"}
+        className={"inset bg-black absolute z-20 h-full w-full opacity-20"}
       />
       <Card className="bg-background relative z-10 w-full max-w-md">
         <CardHeader className="flex flex-col items-center space-y-2 text-center">
           <div>
             <ThemeLogo />
           </div>
-          <h2 className="text-2xl font-bold tracking-tight text-gray-900">
+          <h2 className="text-2xl font-bold tracking-tight text-foreground">
             Welcome to UI Primitives Hub!
           </h2>
-          <p className="text-sm text-gray-600">
+          <p className="text-sm text-muted-foreground">
             Please sign in with your Figma account to continue
           </p>
         </CardHeader>

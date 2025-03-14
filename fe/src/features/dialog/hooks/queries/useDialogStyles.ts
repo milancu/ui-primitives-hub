@@ -1,19 +1,20 @@
 import { useQuery } from "@tanstack/react-query";
-import { useEffect } from "react";
+import { useLayoutEffect } from "react";
 import { Component } from "@ui-primitives-hub/types";
-import { fetchAvatarStyles } from "@/features/avatar/api/queries";
+import { fetchDialogStyles } from "@/features/dialog/api/queries";
 
-type UseAvatarStylesParams = {
+type UseDialogStylesParams = {
   onDataLoaded?: (component: Component) => void;
 };
 
-export const useAvatarStyles = ({ onDataLoaded }: UseAvatarStylesParams) => {
+export const useDialogStyles = ({ onDataLoaded }: UseDialogStylesParams) => {
   const query = useQuery<Component>({
-    queryKey: ["avatar"],
-    queryFn: fetchAvatarStyles,
+    queryKey: ["dialog"],
+    queryFn: fetchDialogStyles,
+    refetchOnMount: true,
   });
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!onDataLoaded) return;
     if (query.data) {
       onDataLoaded(query.data);
