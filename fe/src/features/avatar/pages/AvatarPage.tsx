@@ -7,11 +7,16 @@ import {
 } from "@ui-primitives-hub/ui/src/Avatar.tsx";
 import { useAvatarStyles } from "@/features/avatar/hooks/queries/useAvatarStyles.ts";
 import { Skeleton } from "@/components/ui/skeleton.tsx";
+import { useUpdateAvatarStyle } from "@/features/avatar/hooks/mutations/useUpdateAvatarStyle.ts";
 
 const AvatarPage = () => {
-  const { component, setComponent } = useCurrentComponent();
-  const {  isLoading, error } = useAvatarStyles({
-    onDataLoaded: setComponent
+  const { component, setComponent, setMutation } = useCurrentComponent();
+  const mutation = useUpdateAvatarStyle();
+  const { isLoading, error } = useAvatarStyles({
+    onDataLoaded: (component) => {
+      setComponent(component);
+      setMutation(mutation);
+    },
   });
 
   if (isLoading || !component)

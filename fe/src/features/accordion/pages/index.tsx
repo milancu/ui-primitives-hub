@@ -9,11 +9,16 @@ import { useAccordionStyles } from "@/features/accordion/hooks/queries/useAccord
 import { useCurrentComponent } from "@/components/CurrentComponentProvider";
 import Preview from "@/components/preview.tsx";
 import { Skeleton } from "@/components/ui/skeleton.tsx";
+import { useUpdateAccordionStyle } from "@/features/accordion/hooks/mutations/useUpdateAccordionStyle.ts";
 
 const AccordionPage = () => {
-  const { component, setComponent } = useCurrentComponent();
+  const { component, setComponent, setMutation } = useCurrentComponent();
+  const mutation = useUpdateAccordionStyle();
   const { isLoading, error } = useAccordionStyles({
-    onDataLoaded: setComponent
+    onDataLoaded: (component)=>{
+      setComponent(component);
+      setMutation(mutation)
+    }
   });
 
   if (isLoading || !component)

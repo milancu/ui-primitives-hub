@@ -18,9 +18,11 @@ import {
 import { Button } from "@/components/ui/button.tsx";
 import { Input } from "@/components/ui/input.tsx";
 import { useCurrentComponent } from "@/components/CurrentComponentProvider.tsx";
+import { useComponentStyleMutation } from "@/hooks/use-component-style-mutation.ts";
 
 const NavMarginEditor = () => {
   const { currentStyle } = useCurrentComponent();
+  const { handleStyleChange } = useComponentStyleMutation();
 
   return (
     <SidebarGroup>
@@ -31,8 +33,9 @@ const NavMarginEditor = () => {
             <InputWithIcon
               placeholder={"margin"}
               character={"M"}
-              // type={"number"}
-              // min={0}
+              triggerChange={(newValue) =>
+                handleStyleChange("margin", newValue)
+              }
               value={currentStyle?.margin}
             />
             <DropdownMenu>
@@ -48,48 +51,54 @@ const NavMarginEditor = () => {
                   <DropdownMenuLabel>
                     <Input
                       placeholder={"margin-left"}
-                      type={"number"}
-                      min={0}
+                      onChange={(e) =>
+                        handleStyleChange("marginLeft", e.target.value)
+                      }
                       value={currentStyle?.marginLeft}
                     />
                   </DropdownMenuLabel>
                   <DropdownMenuLabel>
                     <Input
                       placeholder={"margin-top"}
-                      type={"number"}
-                      min={0}
+                      onChange={(e) =>
+                        handleStyleChange("marginTop", e.target.value)
+                      }
                       value={currentStyle?.marginTop}
                     />
                   </DropdownMenuLabel>
                   <DropdownMenuLabel>
                     <Input
                       placeholder={"margin-right"}
-                      type={"number"}
-                      min={0}
+                      onChange={(e) =>
+                        handleStyleChange("marginRight", e.target.value)
+                      }
                       value={currentStyle?.marginRight}
                     />
                   </DropdownMenuLabel>
                   <DropdownMenuLabel>
                     <Input
                       placeholder={"margin-bottom"}
-                      type={"number"}
-                      min={0}
+                      onChange={(e) =>
+                        handleStyleChange("marginBottom", e.target.value)
+                      }
                       value={currentStyle?.marginBottom}
                     />
                   </DropdownMenuLabel>
                   <DropdownMenuLabel>
                     <Input
                       placeholder={"margin-vertical"}
-                      type={"number"}
-                      min={0}
+                      onChange={(e) =>
+                        handleStyleChange("marginVertical", e.target.value)
+                      }
                       value={currentStyle?.marginVertical}
                     />
                   </DropdownMenuLabel>
                   <DropdownMenuLabel>
                     <Input
                       placeholder={"margin-horizontal"}
-                      type={"number"}
-                      min={0}
+                      onChange={(e) =>
+                        handleStyleChange("marginHorizontal", e.target.value)
+                      }
                       value={currentStyle?.marginHorizontal}
                     />
                   </DropdownMenuLabel>

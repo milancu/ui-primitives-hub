@@ -33,8 +33,6 @@ const NavPaddingEditor = () => {
             <InputWithIcon
               placeholder={"padding"}
               character={"P"}
-              // type={"number"}
-              // min={0}
               triggerChange={(newValue) =>
                 handleStyleChange("padding", newValue)
               }
@@ -53,48 +51,54 @@ const NavPaddingEditor = () => {
                   <DropdownMenuLabel>
                     <Input
                       placeholder={"padding-left"}
-                      type={"number"}
-                      min={0}
+                      onChange={(e) =>
+                        handleStyleChange("paddingLeft", e.target.value)
+                      }
                       value={currentStyle?.paddingLeft}
                     />
                   </DropdownMenuLabel>
                   <DropdownMenuLabel>
                     <Input
                       placeholder={"padding-top"}
-                      type={"number"}
-                      min={0}
+                      onChange={(e) =>
+                        handleStyleChange("paddingTop", e.target.value)
+                      }
                       value={currentStyle?.paddingTop}
                     />
                   </DropdownMenuLabel>
                   <DropdownMenuLabel>
                     <Input
                       placeholder={"padding-right"}
-                      type={"number"}
-                      min={0}
                       value={currentStyle?.paddingRight}
+                      onChange={(e) =>
+                        handleStyleChange("paddingRight", e.target.value)
+                      }
                     />
                   </DropdownMenuLabel>
                   <DropdownMenuLabel>
                     <Input
                       placeholder={"padding-bottom"}
-                      type={"number"}
-                      min={0}
+                      onChange={(e) =>
+                        handleStyleChange("paddingBottom", e.target.value)
+                      }
                       value={currentStyle?.paddingBottom}
                     />
                   </DropdownMenuLabel>
                   <DropdownMenuLabel>
                     <Input
                       placeholder={"padding-vertical"}
-                      type={"number"}
-                      min={0}
+                      onChange={(e) =>
+                        handleStyleChange("paddingVertical", e.target.value)
+                      }
                       value={currentStyle?.paddingVertical}
                     />
                   </DropdownMenuLabel>
                   <DropdownMenuLabel>
                     <Input
                       placeholder={"padding-horizontal"}
-                      type={"number"}
-                      min={0}
+                      onChange={(e) =>
+                        handleStyleChange("paddingHorizontal", e.target.value)
+                      }
                       value={currentStyle?.paddingHorizontal}
                     />
                   </DropdownMenuLabel>

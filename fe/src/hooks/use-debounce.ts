@@ -6,32 +6,30 @@ export function useDebounce<T extends (...args: any[]) => void>(
   delay: number,
 ): (...args: Parameters<T>) => void {
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const callbackRef = useRef(callback);
-  const isMountedRef = useRef(true);
+  const savedCallback = useRef(callback);
+  const latestArgs = useRef<Parameters<T>>();
 
-  // Aktualizace callbacku při změně
   useEffect(() => {
-    callbackRef.current = callback;
+    savedCallback.current = callback;
   }, [callback]);
 
-  // Cleanup efekt pro unmount
   useEffect(() => {
     return () => {
-      isMountedRef.current = false;
       clearTimeout(timeoutRef.current!);
     };
   }, []);
 
   return useCallback(
     (...args: Parameters<T>) => {
+      latestArgs.current = args;
       clearTimeout(timeoutRef.current!);
 
       timeoutRef.current = setTimeout(() => {
-        if (isMountedRef.current) {
-          callbackRef.current(...args);
+        if (latestArgs.current) {
+          savedCallback.current(...latestArgs.current);
         }
       }, delay);
     },
-    [delay],
+    [delay]
   );
 }

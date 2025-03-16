@@ -7,6 +7,7 @@ import {
 } from "@/components/ui/sidebar.tsx";
 import { Link, useRouter } from "@tanstack/react-router";
 import { useCurrentComponent } from "@/components/CurrentComponentProvider.tsx";
+import { useCurrentPartParam } from "@/features/sidebar/hooks/useCurrentPartParam.tsx";
 
 export function NavMain({
   items,
@@ -17,6 +18,7 @@ export function NavMain({
   }[];
 }) {
   const { setComponent } = useCurrentComponent();
+  const [, setCurrentPart] = useCurrentPartParam();
   const router = useRouter();
   const pathname = router.state.location.pathname;
 
@@ -29,6 +31,7 @@ export function NavMain({
               to={item.url}
               onClick={() => {
                 setComponent(undefined);
+                setCurrentPart(null);
               }}
             >
               <span>{item.title}</span>

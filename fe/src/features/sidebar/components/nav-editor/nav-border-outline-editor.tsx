@@ -6,7 +6,7 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar.tsx";
 import InputWithIcon from "@/components/ui/input-with-icon.tsx";
-import { ChevronDown, Scan, SquareRoundCorner } from "lucide-react";
+import { Scan, SquareRoundCorner } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -37,8 +37,6 @@ const NavBorderOutlineEditor = () => {
               }}
               placeholder={"border width"}
               character={"B"}
-              // type={"number"}
-              // min={0}
               value={currentStyle?.borderWidth}
             />
             <DropdownMenu>
@@ -52,16 +50,36 @@ const NavBorderOutlineEditor = () => {
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
                   <DropdownMenuLabel>
-                    <Input placeholder={"left"} type={"number"} min={0} />
+                    <Input
+                      placeholder={"left"}
+                      onChange={(e) => {
+                        handleStyleChange("borderLeftWidth", e.target.value);
+                      }}
+                    />
                   </DropdownMenuLabel>
                   <DropdownMenuLabel>
-                    <Input placeholder={"top"} type={"number"} min={0} />
+                    <Input
+                      placeholder={"top"}
+                      onChange={(e) => {
+                        handleStyleChange("borderTopWidth", e.target.value);
+                      }}
+                    />
                   </DropdownMenuLabel>
                   <DropdownMenuLabel>
-                    <Input placeholder={"bottom"} type={"number"} min={0} />
+                    <Input
+                      placeholder={"bottom"}
+                      onChange={(e) => {
+                        handleStyleChange("borderBottomWidth", e.target.value);
+                      }}
+                    />
                   </DropdownMenuLabel>
                   <DropdownMenuLabel>
-                    <Input placeholder={"bottom"} type={"number"} min={0} />
+                    <Input
+                      placeholder={"right"}
+                      onChange={(e) => {
+                        handleStyleChange("borderRightWidth", e.target.value);
+                      }}
+                    />
                   </DropdownMenuLabel>
                 </DropdownMenuGroup>
               </DropdownMenuContent>
@@ -72,24 +90,15 @@ const NavBorderOutlineEditor = () => {
               hideContrastRatio={true}
               value={
                 currentStyle?.borderColor
-                  ? currentStyle?.borderColor
+                  ? (currentStyle?.borderColor as `#${string}`)
                   : "#FFFFFF"
               }
-              onValueChange={(value) => handleStyleChange("borderColor", value)}
+              onValueChange={(value) =>
+                handleStyleChange("borderColor", value.hex)
+              }
               swatches={["#AEDEAE", "#FFD3B6", "#FFB6B9", "#FFC0CB", "#FFD1DC"]}
-            >
-              <Button
-                variant="outline"
-                className="w-full justify-start text-left font-normal"
-              >
-                <div
-                  className="mr-2 h-4 w-4 rounded-full shadow-sm"
-                  style={{ backgroundColor: "#AEDEAE" }}
-                />
-                <span className="flex-grow">Border color #AEDEAE</span>
-                <ChevronDown className="h-4 w-4 opacity-50" />
-              </Button>
-            </ColorPicker>
+              label={"Border color "}
+            />
           </SidebarMenuItem>
           <SidebarMenuItem className={"flex gap-1"}>
             <InputWithIcon
@@ -99,8 +108,6 @@ const NavBorderOutlineEditor = () => {
               }}
               placeholder={"border radius"}
               icon={SquareRoundCorner}
-              // type={"number"}
-              // min={0}
             />
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -113,23 +120,47 @@ const NavBorderOutlineEditor = () => {
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
                   <DropdownMenuLabel>
-                    <Input placeholder={"left-top"} type={"number"} min={0} />
+                    <Input
+                      placeholder={"left-top"}
+                      onChange={(e) => {
+                        handleStyleChange(
+                          "borderRadiusTopLeft",
+                          e.target.value,
+                        );
+                      }}
+                    />
                   </DropdownMenuLabel>
                   <DropdownMenuLabel>
-                    <Input placeholder={"right-top"} type={"number"} min={0} />
+                    <Input
+                      placeholder={"right-top"}
+                      onChange={(e) => {
+                        handleStyleChange(
+                          "borderRadiusTopRight",
+                          e.target.value,
+                        );
+                      }}
+                    />
                   </DropdownMenuLabel>
                   <DropdownMenuLabel>
                     <Input
                       placeholder={"left-bottom"}
-                      type={"number"}
-                      min={0}
+                      onChange={(e) => {
+                        handleStyleChange(
+                          "borderRadiusBottomLeft",
+                          e.target.value,
+                        );
+                      }}
                     />
                   </DropdownMenuLabel>
                   <DropdownMenuLabel>
                     <Input
                       placeholder={"right-bottom"}
-                      type={"number"}
-                      min={0}
+                      onChange={(e) => {
+                        handleStyleChange(
+                          "borderRadiusBottomRight",
+                          e.target.value,
+                        );
+                      }}
                     />
                   </DropdownMenuLabel>
                 </DropdownMenuGroup>
@@ -144,31 +175,28 @@ const NavBorderOutlineEditor = () => {
               }}
               placeholder={"outline width"}
               character={"O"}
-              // type={"number"}
-              // min={0}
             />
           </SidebarMenuItem>
           <SidebarMenuItem>
             <ColorPicker
               hideContrastRatio={true}
-              value={"#AEDEAE"}
+              value={
+                currentStyle?.outlineColor
+                  ? (currentStyle?.outlineColor as `#${string}`)
+                  : "#FFFFFF"
+              }
               swatches={["#AEDEAE", "#FFD3B6", "#FFB6B9", "#FFC0CB", "#FFD1DC"]}
-            >
-              <Button
-                variant="outline"
-                className="w-full justify-start text-left font-normal"
-              >
-                <div
-                  className="mr-2 h-4 w-4 rounded-full shadow-sm"
-                  style={{ backgroundColor: "#AEDEAE" }}
-                />
-                <span className="flex-grow">Outline color #AEDEAE</span>
-                <ChevronDown className="h-4 w-4 opacity-50" />
-              </Button>
-            </ColorPicker>
+              label={"Outline color"}
+            />
           </SidebarMenuItem>
           <SidebarMenuItem>
-            <Input placeholder={"outline style"} type={"text"} />
+            <Input
+              placeholder={"outline style"}
+              type={"text"}
+              onChange={(e) => {
+                handleStyleChange("outlineStyle", e.target.value);
+              }}
+            />
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarGroupContent>

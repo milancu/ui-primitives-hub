@@ -12,18 +12,23 @@ import {
 } from "@ui-primitives-hub/ui/src/Fieldset.tsx";
 import { useFieldsetStyles } from "@/features/fieldset/hooks/queries/useFieldsetStyles.ts";
 import { useFieldStyles } from "@/features/field/hooks/queries/useFieldStyles.ts";
+import { useUpdateFieldsetStyle } from "@/features/fieldset/hooks/mutations/useUpdateFieldsetStyle.ts";
 
 const FieldsetPage = () => {
-  const { component, setComponent } = useCurrentComponent();
+  const { component, setComponent, setMutation } = useCurrentComponent();
   const {
     data: field,
     isLoading: fieldIsLoading,
     error: fieldError,
   } = useFieldStyles({});
+  const mutation = useUpdateFieldsetStyle();
 
   const { isLoading: fieldsetIsLoading, error: fieldsetError } =
     useFieldsetStyles({
-      onDataLoaded: setComponent,
+      onDataLoaded: (component) => {
+        setComponent(component);
+        setMutation(mutation);
+      },
     });
 
   if (fieldIsLoading || !component || !field || fieldsetIsLoading)

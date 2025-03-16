@@ -16,7 +16,7 @@ app.use("/auth", authRouter);
 app.use("/components", componentsRouter);
 
 app.get("/", (req, res) => {
-  res.send("API is running 🚀 voe");
+  res.send("API is running 🚀");
 });
 
 const PORT = process.env.PORT || 5000;

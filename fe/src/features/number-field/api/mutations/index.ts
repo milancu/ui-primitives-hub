@@ -4,7 +4,7 @@ interface UpdateStyleProps {
   attribute: string;
 }
 
-export const updateMenStyle = async ({
+export const updateNumberFieldStyle = async ({
                                          name,
                                          value,
                                          attribute,

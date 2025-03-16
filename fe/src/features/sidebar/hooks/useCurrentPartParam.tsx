@@ -1,7 +1,5 @@
 import { useQueryState } from "nuqs";
 
 export const useCurrentPartParam = () => {
-  return useQueryState("part", {
-    defaultValue: "",
-  });
+  return useQueryState("part");
 };

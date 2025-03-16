@@ -39,6 +39,10 @@ export interface Style {
     | "space-around";
   gap?: CSSUnit;
   borderRadius?: CSSUnit;
+  borderRadiusTopLeft?: CSSUnit;
+  borderRadiusTopRight?: CSSUnit;
+  borderRadiusBottomLeft?: CSSUnit;
+  borderRadiusBottomRight?: CSSUnit;
   borderWidth?: CSSUnit;
   borderBottomWidth?: CSSUnit;
   borderTopWidth?: CSSUnit;

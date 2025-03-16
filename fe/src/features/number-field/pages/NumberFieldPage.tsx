@@ -12,11 +12,16 @@ import {
   NumberFieldScrubArea,
   NumberFieldScrubAreaCursor,
 } from "@ui-primitives-hub/ui/src/NumberField.tsx";
+import { useUpdateNumberFieldStyle } from "@/features/number-field/hooks/mutations/useUpdateNumberFieldStyle.ts";
 
 const NumberFieldPage = () => {
-  const { component, setComponent } = useCurrentComponent();
+  const { component, setComponent, setMutation } = useCurrentComponent();
+  const mutation = useUpdateNumberFieldStyle();
   const { isLoading, error: errorFetch } = useNumberFieldStyles({
-    onDataLoaded: setComponent,
+    onDataLoaded: (component) => {
+      setComponent(component);
+      setMutation(mutation);
+    },
   });
   const id = React.useId();
 

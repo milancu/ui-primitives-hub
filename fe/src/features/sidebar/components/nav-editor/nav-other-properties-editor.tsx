@@ -19,11 +19,16 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import { Plus } from "lucide-react";
+import { useCurrentComponent } from "@/components/CurrentComponentProvider.tsx";
+import { useComponentStyleMutation } from "@/hooks/use-component-style-mutation.ts";
 
 const NavOtherPropertiesEditor = () => {
+  const { currentStyle } = useCurrentComponent();
+  const { handleStyleChange } = useComponentStyleMutation();
+
   return (
     <Collapsible title={"Other properties"} className="group/collapsible">
-      <SidebarGroup className={'p-0'}>
+      <SidebarGroup className={"p-0"}>
         <SidebarGroupLabel asChild className="group/label">
           <CollapsibleTrigger>
             Other properties
@@ -34,10 +39,22 @@ const NavOtherPropertiesEditor = () => {
           <SidebarGroupContent>
             <SidebarMenu>
               <SidebarMenuItem>
-                <Input placeholder={"box-shadow"} type={"text"} />
+                <Input
+                  placeholder={"box-shadow"}
+                  type={"text"}
+                  value={currentStyle?.boxShadow}
+                  onChange={(e) => {
+                    handleStyleChange("boxShadow", e.target.value);
+                  }}
+                />
               </SidebarMenuItem>
               <SidebarMenuItem>
-                <Select>
+                <Select
+                  value={currentStyle?.cursor}
+                  onValueChange={(value) => {
+                    handleStyleChange("cursor", value);
+                  }}
+                >
                   <SelectTrigger>
                     <span className="text-muted-foreground">
                       cursor: <SelectValue placeholder="Select a cursor" />
@@ -50,7 +67,12 @@ const NavOtherPropertiesEditor = () => {
                 </Select>
               </SidebarMenuItem>
               <SidebarMenuItem>
-                <Select>
+                <Select
+                  value={currentStyle?.overflow}
+                  onValueChange={(value) => {
+                    handleStyleChange("overflow", value);
+                  }}
+                >
                   <SelectTrigger>
                     <span className="text-muted-foreground">
                       overflow: <SelectValue placeholder="Select a overflow" />

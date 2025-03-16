@@ -9,11 +9,16 @@ import {
   FieldLabel,
   FieldRoot,
 } from "@ui-primitives-hub/ui/src/Field.tsx";
+import { useUpdateFieldStyle } from "@/features/field/hooks/mutations/useUpdateFieldStyle.ts";
 
 const FieldPage = () => {
-  const { component, setComponent } = useCurrentComponent();
+  const { component, setComponent, setMutation } = useCurrentComponent();
+  const mutation = useUpdateFieldStyle();
   const { isLoading, error: errorFetch } = useFieldStyles({
-    onDataLoaded: setComponent,
+    onDataLoaded: (component) => {
+      setComponent(component);
+      setMutation(mutation);
+    },
   });
 
   if (isLoading || !component)

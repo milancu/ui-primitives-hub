@@ -2,27 +2,32 @@ import * as React from "react";
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarHeader,
 } from "@/components/ui/sidebar.tsx";
 import NavEditor from "@/features/sidebar/components/nav-editor/nav-editor.tsx";
 import NavEditorHeader from "@/features/sidebar/components/nav-editor/nav-editor-header.tsx";
+import CodePreviewSheet from "@/features/code-preview/components/code-preivew-sheet.tsx";
 
 export function SidebarRight({
   ...props
 }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar
-      variant={'floating'}
+      variant={"floating"}
       // collapsible="none"
       className="sticky top-0 hidden h-svh lg:flex"
       {...props}
     >
-      <SidebarHeader className="border-sidebar-border h-14 border-b flex items-center justify-center">
-        <NavEditorHeader/>
+      <SidebarHeader className="border-sidebar-border flex h-14 items-center justify-center border-b">
+        <NavEditorHeader />
       </SidebarHeader>
       <SidebarContent>
         <NavEditor />
       </SidebarContent>
+      <SidebarFooter>
+        <CodePreviewSheet />
+      </SidebarFooter>
     </Sidebar>
   );
 }

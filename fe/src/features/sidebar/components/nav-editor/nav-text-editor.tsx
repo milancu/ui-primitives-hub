@@ -14,48 +14,58 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { ColorPicker } from "@/components/ui/color-picker.tsx";
-import { Button } from "@/components/ui/button.tsx";
-import { ChevronDown, Plus } from "lucide-react";
+import { Plus } from "lucide-react";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible.tsx";
+import { useComponentStyleMutation } from "@/hooks/use-component-style-mutation.ts";
+import { useCurrentComponent } from "@/components/CurrentComponentProvider.tsx";
 
 const NavTextEditor = () => {
+  const { handleStyleChange } = useComponentStyleMutation();
+  const { currentStyle } = useCurrentComponent();
+
   return (
     <Collapsible title={"Text properties"} className="group/collapsible">
-      <SidebarGroup className={'p-0'}>
-        <SidebarGroupLabel
-          asChild
-          className="group/label "
-        >
+      <SidebarGroup className={"p-0"}>
+        <SidebarGroupLabel asChild className="group/label">
           <CollapsibleTrigger>
             Text properties
             <Plus className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-90" />
           </CollapsibleTrigger>
         </SidebarGroupLabel>
-        <CollapsibleContent className={'p-2'}>
+        <CollapsibleContent className={"p-2"}>
           <SidebarGroupContent>
             <SidebarMenu>
               <SidebarMenuItem>
                 <InputWithIcon
                   placeholder={"font-size"}
-                  type={"number"}
-                  min={0}
+                  value={currentStyle?.fontSize}
+                  triggerChange={(newValue) =>
+                    handleStyleChange("fontSize", newValue)
+                  }
                   character={"S"}
                 />
               </SidebarMenuItem>
               <SidebarMenuItem>
                 <InputWithIcon
                   placeholder={"font-weight"}
-                  type={"number"}
-                  min={0}
+                  value={currentStyle?.fontSize}
+                  triggerChange={(newValue) =>
+                    handleStyleChange("fontWeight", newValue)
+                  }
                   character={"W"}
                 />
               </SidebarMenuItem>
               <SidebarMenuItem>
-                <Select>
+                <Select
+                  value={currentStyle?.textAlign}
+                  onValueChange={(value) => {
+                    handleStyleChange("textAlign", value);
+                  }}
+                >
                   <SelectTrigger>
                     <span className="text-muted-foreground">
                       text-align:{" "}
@@ -70,7 +80,12 @@ const NavTextEditor = () => {
                 </Select>
               </SidebarMenuItem>
               <SidebarMenuItem>
-                <Select>
+                <Select
+                  value={currentStyle?.textTransform}
+                  onValueChange={(value) => {
+                    handleStyleChange("textTransform", value);
+                  }}
+                >
                   <SelectTrigger>
                     <span className="text-muted-foreground">
                       text-transform:{" "}
@@ -86,21 +101,18 @@ const NavTextEditor = () => {
                 </Select>
               </SidebarMenuItem>
               <SidebarMenuItem className={"flex gap-1"}>
-                <ColorPicker hideContrastRatio={true} value={"#AEDEAE"}>
-                  <Button
-                    variant="outline"
-                    className="w-full justify-start text-left font-normal"
-                  >
-                    <div
-                      className="mr-2 h-4 w-4 rounded-full shadow-sm"
-                      style={{ backgroundColor: "#AEDEAE" }}
-                    />
-                    <span className="text-muted-foreground flex-grow">
-                      color #AEDEAE
-                    </span>
-                    <ChevronDown className="h-4 w-4 opacity-50" />
-                  </Button>
-                </ColorPicker>
+                <ColorPicker
+                  hideContrastRatio={true}
+                  value={
+                    currentStyle?.color
+                      ? (currentStyle?.color as `#${string}`)
+                      : "#FFFFFF"
+                  }
+                  label={"color"}
+                  onValueChange={(value) => {
+                    handleStyleChange("color", value.hex);
+                  }}
+                />
               </SidebarMenuItem>
             </SidebarMenu>
           </SidebarGroupContent>

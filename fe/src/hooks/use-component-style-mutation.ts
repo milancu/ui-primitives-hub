@@ -1,4 +1,3 @@
-import { useUpdateAccordionStyle } from "@/features/accordion/hooks/mutations/useUpdateAccordionStyle";
 import { useCurrentComponent } from "@/components/CurrentComponentProvider";
 import { Style } from "@ui-primitives-hub/types";
 
@@ -13,13 +12,18 @@ import {
 } from "@ui-primitives-hub/utils/src";
 
 export const useComponentStyleMutation = () => {
-  const { component, currentStyle, setCurrentStyle } = useCurrentComponent();
+  const { component, currentStyle, setCurrentStyle, mutation } =
+    useCurrentComponent();
   const [currentPart] = useCurrentPartParam();
   const [currentState] = useCurrentComponentStateParam();
-  const { mutate } = useUpdateAccordionStyle();
 
   const lastValidStyles = useRef(currentStyle);
-  const componentRef = useRef(component); // Přidejte ref pro komponentu
+  const componentRef = useRef(component);
+
+  // Debugging
+  useEffect(() => {
+    console.log("Component updated:", componentRef.current);
+  }, [component]);
 
   useEffect(() => {
     componentRef.current = component;
@@ -27,65 +31,80 @@ export const useComponentStyleMutation = () => {
   }, [component, currentStyle]);
 
   const debouncedMutate = useDebounce(
-    async (params: {
-      part: string;
-      state: string;
-      value: string;
-      previousStyles: Style;
-    }) => {
+    async (params: { part: string; state: string; value: string }) => {
+      if (!mutation) return;
+      const { mutateAsync } = mutation;
       try {
-        await mutate({
+        console.log("Calling mutate with:", params);
+        await mutateAsync({
           name: params.part,
           attribute: params.state,
           value: params.value,
-        });
+        }).then((res) => console.log(res));
+        console.log("Mutate successful");
       } catch (error) {
-        console.error("Failed to save styles:", error);
-        setCurrentStyle(params.previousStyles);
-        lastValidStyles.current = params.previousStyles;
+        console.error("Mutate failed:", error);
       }
     },
-    500
+    500,
   );
 
   const handleStyleChange = useCallback(
-    async (key: keyof Style, value: any) => {
+    async (key: keyof Style, value: string) => {
       try {
-        if (!componentRef.current) return;
+        console.log("Handling style change:", key, value);
+
+        if (!componentRef.current || !currentPart || !currentState) {
+          console.error("Missing component, part or state");
+          return;
+        }
 
         const newStyle = { ...lastValidStyles.current, [key]: value } as Style;
-
-        // Okamžitá aktualizace
         setCurrentStyle(newStyle);
         lastValidStyles.current = newStyle;
 
         const css = styleToString(newStyle);
-        const conversionResult = CssToTailwindTranslator(`component { ${css} }`);
-        const css_result = conversionResult.data[0].resultVal;
+        console.log("Generated CSS:", css);
 
-        // Aktualizujte komponentu přes ref
-        componentRef.current.parts[currentPart!].attributes[currentState] = css_result;
+        const conversionResult = CssToTailwindTranslator(
+          `component { ${css} }`,
+        );
+        if (!conversionResult.data?.[0]?.resultVal) {
+          throw new Error("Invalid CSS conversion");
+        }
+        const css_result = conversionResult.data[0].resultVal;
+        console.log("Tailwind result:", css_result);
+
+        componentRef.current.parts[currentPart].attributes[currentState] =
+          css_result;
         Object.keys(componentRef.current.parts).forEach((key) => {
           componentRef.current.parts[key].raw = getRawTailwindClasses(
-            componentRef.current.parts[key].attributes
+            componentRef.current.parts[key].attributes,
           );
         });
 
-        // Předání aktuálních hodnot přímo do debounce
         debouncedMutate({
-          part: currentPart!,
+          part: currentPart,
           state: currentState,
           value: css_result,
-          previousStyles: lastValidStyles.current
         });
+
+        // const { mutateAsync } = mutation!;
+        // mutateAsync({
+        //   name: currentPart,
+        //   attribute: currentState,
+        //   value: css_result,
+        // }).then((res) => {
+        //   console.log(res);
+        // });
 
         return { success: true };
       } catch (error) {
-        console.error("Style update failed:", error);
+        console.error("Error in handleStyleChange:", error);
         return { success: false, error };
       }
     },
-    [currentPart, currentState, debouncedMutate, setCurrentStyle]
+    [currentPart, currentState, debouncedMutate, setCurrentStyle],
   );
 
   return { handleStyleChange };

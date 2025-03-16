@@ -49,6 +49,26 @@ router.put(
   }
 );
 
+router.put(
+  "/:component",
+  async (req: any, res: any) => {
+    const { component } = req.params;
+    const { id, data } = req.body;
+
+    if (!id || !data) {
+      return res.status(400).json({ error: "ID nebo data chybí" });
+    }
+
+    try {
+      const ref = db.ref(`${component}/${id}`);
+      await ref.update(data);
+      res.status(200).json({ message: "Úspěšně aktualizováno" });
+    } catch (error: any) {
+      res.status(500).json({ error: error.message });
+    }
+  }
+);
+
 router.get("/avatar", async (req: Request, res: Response) => {
   try {
     const avatar: Component = {

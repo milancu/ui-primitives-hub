@@ -13,11 +13,16 @@ import {
   MenuSeparator,
   MenuTrigger,
 } from "@ui-primitives-hub/ui/src/Menu.tsx";
+import { useUpdateMenuStyle } from "@/features/menu/hooks/mutations/useUpdateMenuStyle.ts";
 
 const MenuPage = () => {
-  const { component, setComponent } = useCurrentComponent();
+  const { component, setComponent, setMutation } = useCurrentComponent();
+  const mutation = useUpdateMenuStyle();
   const { isLoading, error: errorFetch } = useMenuStyles({
-    onDataLoaded: setComponent,
+    onDataLoaded: (component) => {
+      setComponent(component);
+      setMutation(mutation);
+    },
   });
 
   if (isLoading || !component)

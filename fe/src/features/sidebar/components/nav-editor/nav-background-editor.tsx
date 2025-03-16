@@ -5,8 +5,7 @@ import {
   SidebarMenu,
   SidebarMenuItem,
 } from "@/components/ui/sidebar.tsx";
-import { Button } from "@/components/ui/button.tsx";
-import { ChevronDown, Plus } from "lucide-react";
+import { Plus } from "lucide-react";
 import { ColorPicker } from "@/components/ui/color-picker.tsx";
 import InputWithIcon from "@/components/ui/input-with-icon.tsx";
 import {
@@ -14,8 +13,13 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible.tsx";
+import { useComponentStyleMutation } from "@/hooks/use-component-style-mutation.ts";
+import { useCurrentComponent } from "@/components/CurrentComponentProvider.tsx";
 
 const NavBackgroundEditor = () => {
+  const { handleStyleChange } = useComponentStyleMutation();
+  const { currentStyle } = useCurrentComponent();
+
   return (
     <Collapsible title={"Background properties"} className="group/collapsible">
       <SidebarGroup className={"p-0"}>
@@ -28,10 +32,47 @@ const NavBackgroundEditor = () => {
         <CollapsibleContent>
           <SidebarGroupContent>
             <SidebarMenu>
+              {/*<SidebarMenuItem className={"flex gap-1"}>*/}
+              {/*  <ColorPicker*/}
+              {/*    onValueChange={(value)=>{*/}
+              {/*      handleStyleChange('background', value.hex)*/}
+              {/*    }}*/}
+              {/*    hideContrastRatio={true}*/}
+              {/*    value={currentStyle?.background ? currentStyle.background as `#${string}` : "#FFFFFF"}*/}
+              {/*    swatches={[*/}
+              {/*      "#AEDEAE",*/}
+              {/*      "#FFD3B6",*/}
+              {/*      "#FFB6B9",*/}
+              {/*      "#FFC0CB",*/}
+              {/*      "#FFD1DC",*/}
+              {/*    ]}*/}
+              {/*  >*/}
+              {/*    <Button*/}
+              {/*      variant="outline"*/}
+              {/*      className="w-full justify-start text-left font-normal"*/}
+              {/*    >*/}
+              {/*      <div*/}
+              {/*        className="mr-2 h-4 w-4 rounded-full shadow-sm"*/}
+              {/*        style={{ backgroundColor: currentStyle?.background ? currentStyle.background as `#${string}` : "#FFFFFF" }}*/}
+              {/*      />*/}
+              {/*      <span className="text-muted-foreground flex-grow">*/}
+              {/*        background color {currentStyle?.background ? currentStyle.background as `#${string}` : "#FFFFFF"}*/}
+              {/*      </span>*/}
+              {/*      <ChevronDown className="h-4 w-4 opacity-50" />*/}
+              {/*    </Button>*/}
+              {/*  </ColorPicker>*/}
+              {/*</SidebarMenuItem>*/}
               <SidebarMenuItem className={"flex gap-1"}>
                 <ColorPicker
                   hideContrastRatio={true}
-                  value={"#AEDEAE"}
+                  value={
+                    currentStyle?.backgroundColor
+                      ? (currentStyle.backgroundColor as `#${string}`)
+                      : "#FFFFFF"
+                  }
+                  onValueChange={(value) => {
+                    handleStyleChange("backgroundColor", value.hex);
+                  }}
                   swatches={[
                     "#AEDEAE",
                     "#FFD3B6",
@@ -39,48 +80,8 @@ const NavBackgroundEditor = () => {
                     "#FFC0CB",
                     "#FFD1DC",
                   ]}
-                >
-                  <Button
-                    variant="outline"
-                    className="w-full justify-start text-left font-normal"
-                  >
-                    <div
-                      className="mr-2 h-4 w-4 rounded-full shadow-sm"
-                      style={{ backgroundColor: "#AEDEAE" }}
-                    />
-                    <span className="text-muted-foreground flex-grow">
-                      background color #AEDEAE
-                    </span>
-                    <ChevronDown className="h-4 w-4 opacity-50" />
-                  </Button>
-                </ColorPicker>
-              </SidebarMenuItem>
-              <SidebarMenuItem className={"flex gap-1"}>
-                <ColorPicker
-                  hideContrastRatio={true}
-                  value={"#AEDEAE"}
-                  swatches={[
-                    "#AEDEAE",
-                    "#FFD3B6",
-                    "#FFB6B9",
-                    "#FFC0CB",
-                    "#FFD1DC",
-                  ]}
-                >
-                  <Button
-                    variant="outline"
-                    className="w-full justify-start text-left font-normal"
-                  >
-                    <div
-                      className="mr-2 h-4 w-4 rounded-full shadow-sm"
-                      style={{ backgroundColor: "#AEDEAE" }}
-                    />
-                    <span className="text-muted-foreground flex-grow">
-                      background #AEDEAE
-                    </span>
-                    <ChevronDown className="h-4 w-4 opacity-50" />
-                  </Button>
-                </ColorPicker>
+                  label={"Background color"}
+                />
               </SidebarMenuItem>
               <SidebarMenuItem>
                 <InputWithIcon
@@ -90,6 +91,9 @@ const NavBackgroundEditor = () => {
                   min={0}
                   max={100}
                   step={5}
+                  triggerChange={(newValue) =>
+                    handleStyleChange("opacity", newValue)
+                  }
                 />
               </SidebarMenuItem>
             </SidebarMenu>
