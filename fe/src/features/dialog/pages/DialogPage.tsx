@@ -10,8 +10,8 @@ import {
   DialogRoot,
   DialogTitle,
   DialogTrigger,
+  DialogClose
 } from "@ui-primitives-hub/ui/src/Dialog.tsx";
-import { DialogClose } from "@radix-ui/react-dialog";
 import { useUpdateDialogStyle } from "@/features/dialog/hooks/mutations/useUpdateDialogStyle.ts";
 
 const DialogPage = () => {

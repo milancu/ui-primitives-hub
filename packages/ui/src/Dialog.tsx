@@ -87,6 +87,7 @@ export {
   DialogPopup,
   DialogTitle,
   DialogDescription,
+  DialogClose
 }
 
 
