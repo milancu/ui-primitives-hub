@@ -13,15 +13,17 @@
 import { Route as rootRoute } from './routes/__root'
 import { Route as LoginImport } from './routes/login'
 import { Route as AuthenticatedImport } from './routes/_authenticated'
-import { Route as AuthenticatedIndexImport } from './routes/_authenticated.index'
 import { Route as AuthCallbackImport } from './routes/auth.callback'
-import { Route as AuthenticatedNumberFieldImport } from './routes/_authenticated.number-field'
-import { Route as AuthenticatedMenuImport } from './routes/_authenticated.menu'
-import { Route as AuthenticatedFieldsetImport } from './routes/_authenticated.fieldset'
-import { Route as AuthenticatedFieldImport } from './routes/_authenticated.field'
-import { Route as AuthenticatedDialogImport } from './routes/_authenticated.dialog'
-import { Route as AuthenticatedAvatarImport } from './routes/_authenticated.avatar'
-import { Route as AuthenticatedAccordionImport } from './routes/_authenticated.accordion'
+import { Route as AuthenticatedDashboardLayoutImport } from './routes/_authenticated/_dashboard-layout'
+import { Route as AuthenticatedCanvaLayoutImport } from './routes/_authenticated/_canva-layout'
+import { Route as AuthenticatedDashboardLayoutIndexImport } from './routes/_authenticated/_dashboard-layout/index'
+import { Route as AuthenticatedCanvaLayoutNumberFieldImport } from './routes/_authenticated/_canva-layout/number-field'
+import { Route as AuthenticatedCanvaLayoutMenuImport } from './routes/_authenticated/_canva-layout/menu'
+import { Route as AuthenticatedCanvaLayoutFieldsetImport } from './routes/_authenticated/_canva-layout/fieldset'
+import { Route as AuthenticatedCanvaLayoutFieldImport } from './routes/_authenticated/_canva-layout/field'
+import { Route as AuthenticatedCanvaLayoutDialogImport } from './routes/_authenticated/_canva-layout/dialog'
+import { Route as AuthenticatedCanvaLayoutAvatarImport } from './routes/_authenticated/_canva-layout/avatar'
+import { Route as AuthenticatedCanvaLayoutAccordionImport } from './routes/_authenticated/_canva-layout/accordion'
 
 // Create/Update Routes
 
@@ -36,59 +38,78 @@ const AuthenticatedRoute = AuthenticatedImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const AuthenticatedIndexRoute = AuthenticatedIndexImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => AuthenticatedRoute,
-} as any)
-
 const AuthCallbackRoute = AuthCallbackImport.update({
   id: '/auth/callback',
   path: '/auth/callback',
   getParentRoute: () => rootRoute,
 } as any)
 
-const AuthenticatedNumberFieldRoute = AuthenticatedNumberFieldImport.update({
-  id: '/number-field',
-  path: '/number-field',
+const AuthenticatedDashboardLayoutRoute =
+  AuthenticatedDashboardLayoutImport.update({
+    id: '/_dashboard-layout',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+
+const AuthenticatedCanvaLayoutRoute = AuthenticatedCanvaLayoutImport.update({
+  id: '/_canva-layout',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
 
-const AuthenticatedMenuRoute = AuthenticatedMenuImport.update({
-  id: '/menu',
-  path: '/menu',
-  getParentRoute: () => AuthenticatedRoute,
-} as any)
+const AuthenticatedDashboardLayoutIndexRoute =
+  AuthenticatedDashboardLayoutIndexImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => AuthenticatedDashboardLayoutRoute,
+  } as any)
 
-const AuthenticatedFieldsetRoute = AuthenticatedFieldsetImport.update({
-  id: '/fieldset',
-  path: '/fieldset',
-  getParentRoute: () => AuthenticatedRoute,
-} as any)
+const AuthenticatedCanvaLayoutNumberFieldRoute =
+  AuthenticatedCanvaLayoutNumberFieldImport.update({
+    id: '/number-field',
+    path: '/number-field',
+    getParentRoute: () => AuthenticatedCanvaLayoutRoute,
+  } as any)
 
-const AuthenticatedFieldRoute = AuthenticatedFieldImport.update({
-  id: '/field',
-  path: '/field',
-  getParentRoute: () => AuthenticatedRoute,
-} as any)
+const AuthenticatedCanvaLayoutMenuRoute =
+  AuthenticatedCanvaLayoutMenuImport.update({
+    id: '/menu',
+    path: '/menu',
+    getParentRoute: () => AuthenticatedCanvaLayoutRoute,
+  } as any)
 
-const AuthenticatedDialogRoute = AuthenticatedDialogImport.update({
-  id: '/dialog',
-  path: '/dialog',
-  getParentRoute: () => AuthenticatedRoute,
-} as any)
+const AuthenticatedCanvaLayoutFieldsetRoute =
+  AuthenticatedCanvaLayoutFieldsetImport.update({
+    id: '/fieldset',
+    path: '/fieldset',
+    getParentRoute: () => AuthenticatedCanvaLayoutRoute,
+  } as any)
 
-const AuthenticatedAvatarRoute = AuthenticatedAvatarImport.update({
-  id: '/avatar',
-  path: '/avatar',
-  getParentRoute: () => AuthenticatedRoute,
-} as any)
+const AuthenticatedCanvaLayoutFieldRoute =
+  AuthenticatedCanvaLayoutFieldImport.update({
+    id: '/field',
+    path: '/field',
+    getParentRoute: () => AuthenticatedCanvaLayoutRoute,
+  } as any)
 
-const AuthenticatedAccordionRoute = AuthenticatedAccordionImport.update({
-  id: '/accordion',
-  path: '/accordion',
-  getParentRoute: () => AuthenticatedRoute,
-} as any)
+const AuthenticatedCanvaLayoutDialogRoute =
+  AuthenticatedCanvaLayoutDialogImport.update({
+    id: '/dialog',
+    path: '/dialog',
+    getParentRoute: () => AuthenticatedCanvaLayoutRoute,
+  } as any)
+
+const AuthenticatedCanvaLayoutAvatarRoute =
+  AuthenticatedCanvaLayoutAvatarImport.update({
+    id: '/avatar',
+    path: '/avatar',
+    getParentRoute: () => AuthenticatedCanvaLayoutRoute,
+  } as any)
+
+const AuthenticatedCanvaLayoutAccordionRoute =
+  AuthenticatedCanvaLayoutAccordionImport.update({
+    id: '/accordion',
+    path: '/accordion',
+    getParentRoute: () => AuthenticatedCanvaLayoutRoute,
+  } as any)
 
 // Populate the FileRoutesByPath interface
 
@@ -108,53 +129,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginImport
       parentRoute: typeof rootRoute
     }
-    '/_authenticated/accordion': {
-      id: '/_authenticated/accordion'
-      path: '/accordion'
-      fullPath: '/accordion'
-      preLoaderRoute: typeof AuthenticatedAccordionImport
+    '/_authenticated/_canva-layout': {
+      id: '/_authenticated/_canva-layout'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AuthenticatedCanvaLayoutImport
       parentRoute: typeof AuthenticatedImport
     }
-    '/_authenticated/avatar': {
-      id: '/_authenticated/avatar'
-      path: '/avatar'
-      fullPath: '/avatar'
-      preLoaderRoute: typeof AuthenticatedAvatarImport
-      parentRoute: typeof AuthenticatedImport
-    }
-    '/_authenticated/dialog': {
-      id: '/_authenticated/dialog'
-      path: '/dialog'
-      fullPath: '/dialog'
-      preLoaderRoute: typeof AuthenticatedDialogImport
-      parentRoute: typeof AuthenticatedImport
-    }
-    '/_authenticated/field': {
-      id: '/_authenticated/field'
-      path: '/field'
-      fullPath: '/field'
-      preLoaderRoute: typeof AuthenticatedFieldImport
-      parentRoute: typeof AuthenticatedImport
-    }
-    '/_authenticated/fieldset': {
-      id: '/_authenticated/fieldset'
-      path: '/fieldset'
-      fullPath: '/fieldset'
-      preLoaderRoute: typeof AuthenticatedFieldsetImport
-      parentRoute: typeof AuthenticatedImport
-    }
-    '/_authenticated/menu': {
-      id: '/_authenticated/menu'
-      path: '/menu'
-      fullPath: '/menu'
-      preLoaderRoute: typeof AuthenticatedMenuImport
-      parentRoute: typeof AuthenticatedImport
-    }
-    '/_authenticated/number-field': {
-      id: '/_authenticated/number-field'
-      path: '/number-field'
-      fullPath: '/number-field'
-      preLoaderRoute: typeof AuthenticatedNumberFieldImport
+    '/_authenticated/_dashboard-layout': {
+      id: '/_authenticated/_dashboard-layout'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AuthenticatedDashboardLayoutImport
       parentRoute: typeof AuthenticatedImport
     }
     '/auth/callback': {
@@ -164,38 +150,120 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthCallbackImport
       parentRoute: typeof rootRoute
     }
-    '/_authenticated/': {
-      id: '/_authenticated/'
+    '/_authenticated/_canva-layout/accordion': {
+      id: '/_authenticated/_canva-layout/accordion'
+      path: '/accordion'
+      fullPath: '/accordion'
+      preLoaderRoute: typeof AuthenticatedCanvaLayoutAccordionImport
+      parentRoute: typeof AuthenticatedCanvaLayoutImport
+    }
+    '/_authenticated/_canva-layout/avatar': {
+      id: '/_authenticated/_canva-layout/avatar'
+      path: '/avatar'
+      fullPath: '/avatar'
+      preLoaderRoute: typeof AuthenticatedCanvaLayoutAvatarImport
+      parentRoute: typeof AuthenticatedCanvaLayoutImport
+    }
+    '/_authenticated/_canva-layout/dialog': {
+      id: '/_authenticated/_canva-layout/dialog'
+      path: '/dialog'
+      fullPath: '/dialog'
+      preLoaderRoute: typeof AuthenticatedCanvaLayoutDialogImport
+      parentRoute: typeof AuthenticatedCanvaLayoutImport
+    }
+    '/_authenticated/_canva-layout/field': {
+      id: '/_authenticated/_canva-layout/field'
+      path: '/field'
+      fullPath: '/field'
+      preLoaderRoute: typeof AuthenticatedCanvaLayoutFieldImport
+      parentRoute: typeof AuthenticatedCanvaLayoutImport
+    }
+    '/_authenticated/_canva-layout/fieldset': {
+      id: '/_authenticated/_canva-layout/fieldset'
+      path: '/fieldset'
+      fullPath: '/fieldset'
+      preLoaderRoute: typeof AuthenticatedCanvaLayoutFieldsetImport
+      parentRoute: typeof AuthenticatedCanvaLayoutImport
+    }
+    '/_authenticated/_canva-layout/menu': {
+      id: '/_authenticated/_canva-layout/menu'
+      path: '/menu'
+      fullPath: '/menu'
+      preLoaderRoute: typeof AuthenticatedCanvaLayoutMenuImport
+      parentRoute: typeof AuthenticatedCanvaLayoutImport
+    }
+    '/_authenticated/_canva-layout/number-field': {
+      id: '/_authenticated/_canva-layout/number-field'
+      path: '/number-field'
+      fullPath: '/number-field'
+      preLoaderRoute: typeof AuthenticatedCanvaLayoutNumberFieldImport
+      parentRoute: typeof AuthenticatedCanvaLayoutImport
+    }
+    '/_authenticated/_dashboard-layout/': {
+      id: '/_authenticated/_dashboard-layout/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof AuthenticatedIndexImport
-      parentRoute: typeof AuthenticatedImport
+      preLoaderRoute: typeof AuthenticatedDashboardLayoutIndexImport
+      parentRoute: typeof AuthenticatedDashboardLayoutImport
     }
   }
 }
 
 // Create and export the route tree
 
+interface AuthenticatedCanvaLayoutRouteChildren {
+  AuthenticatedCanvaLayoutAccordionRoute: typeof AuthenticatedCanvaLayoutAccordionRoute
+  AuthenticatedCanvaLayoutAvatarRoute: typeof AuthenticatedCanvaLayoutAvatarRoute
+  AuthenticatedCanvaLayoutDialogRoute: typeof AuthenticatedCanvaLayoutDialogRoute
+  AuthenticatedCanvaLayoutFieldRoute: typeof AuthenticatedCanvaLayoutFieldRoute
+  AuthenticatedCanvaLayoutFieldsetRoute: typeof AuthenticatedCanvaLayoutFieldsetRoute
+  AuthenticatedCanvaLayoutMenuRoute: typeof AuthenticatedCanvaLayoutMenuRoute
+  AuthenticatedCanvaLayoutNumberFieldRoute: typeof AuthenticatedCanvaLayoutNumberFieldRoute
+}
+
+const AuthenticatedCanvaLayoutRouteChildren: AuthenticatedCanvaLayoutRouteChildren =
+  {
+    AuthenticatedCanvaLayoutAccordionRoute:
+      AuthenticatedCanvaLayoutAccordionRoute,
+    AuthenticatedCanvaLayoutAvatarRoute: AuthenticatedCanvaLayoutAvatarRoute,
+    AuthenticatedCanvaLayoutDialogRoute: AuthenticatedCanvaLayoutDialogRoute,
+    AuthenticatedCanvaLayoutFieldRoute: AuthenticatedCanvaLayoutFieldRoute,
+    AuthenticatedCanvaLayoutFieldsetRoute:
+      AuthenticatedCanvaLayoutFieldsetRoute,
+    AuthenticatedCanvaLayoutMenuRoute: AuthenticatedCanvaLayoutMenuRoute,
+    AuthenticatedCanvaLayoutNumberFieldRoute:
+      AuthenticatedCanvaLayoutNumberFieldRoute,
+  }
+
+const AuthenticatedCanvaLayoutRouteWithChildren =
+  AuthenticatedCanvaLayoutRoute._addFileChildren(
+    AuthenticatedCanvaLayoutRouteChildren,
+  )
+
+interface AuthenticatedDashboardLayoutRouteChildren {
+  AuthenticatedDashboardLayoutIndexRoute: typeof AuthenticatedDashboardLayoutIndexRoute
+}
+
+const AuthenticatedDashboardLayoutRouteChildren: AuthenticatedDashboardLayoutRouteChildren =
+  {
+    AuthenticatedDashboardLayoutIndexRoute:
+      AuthenticatedDashboardLayoutIndexRoute,
+  }
+
+const AuthenticatedDashboardLayoutRouteWithChildren =
+  AuthenticatedDashboardLayoutRoute._addFileChildren(
+    AuthenticatedDashboardLayoutRouteChildren,
+  )
+
 interface AuthenticatedRouteChildren {
-  AuthenticatedAccordionRoute: typeof AuthenticatedAccordionRoute
-  AuthenticatedAvatarRoute: typeof AuthenticatedAvatarRoute
-  AuthenticatedDialogRoute: typeof AuthenticatedDialogRoute
-  AuthenticatedFieldRoute: typeof AuthenticatedFieldRoute
-  AuthenticatedFieldsetRoute: typeof AuthenticatedFieldsetRoute
-  AuthenticatedMenuRoute: typeof AuthenticatedMenuRoute
-  AuthenticatedNumberFieldRoute: typeof AuthenticatedNumberFieldRoute
-  AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
+  AuthenticatedCanvaLayoutRoute: typeof AuthenticatedCanvaLayoutRouteWithChildren
+  AuthenticatedDashboardLayoutRoute: typeof AuthenticatedDashboardLayoutRouteWithChildren
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
-  AuthenticatedAccordionRoute: AuthenticatedAccordionRoute,
-  AuthenticatedAvatarRoute: AuthenticatedAvatarRoute,
-  AuthenticatedDialogRoute: AuthenticatedDialogRoute,
-  AuthenticatedFieldRoute: AuthenticatedFieldRoute,
-  AuthenticatedFieldsetRoute: AuthenticatedFieldsetRoute,
-  AuthenticatedMenuRoute: AuthenticatedMenuRoute,
-  AuthenticatedNumberFieldRoute: AuthenticatedNumberFieldRoute,
-  AuthenticatedIndexRoute: AuthenticatedIndexRoute,
+  AuthenticatedCanvaLayoutRoute: AuthenticatedCanvaLayoutRouteWithChildren,
+  AuthenticatedDashboardLayoutRoute:
+    AuthenticatedDashboardLayoutRouteWithChildren,
 }
 
 const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
@@ -203,45 +271,48 @@ const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
 )
 
 export interface FileRoutesByFullPath {
-  '': typeof AuthenticatedRouteWithChildren
+  '': typeof AuthenticatedDashboardLayoutRouteWithChildren
   '/login': typeof LoginRoute
-  '/accordion': typeof AuthenticatedAccordionRoute
-  '/avatar': typeof AuthenticatedAvatarRoute
-  '/dialog': typeof AuthenticatedDialogRoute
-  '/field': typeof AuthenticatedFieldRoute
-  '/fieldset': typeof AuthenticatedFieldsetRoute
-  '/menu': typeof AuthenticatedMenuRoute
-  '/number-field': typeof AuthenticatedNumberFieldRoute
   '/auth/callback': typeof AuthCallbackRoute
-  '/': typeof AuthenticatedIndexRoute
+  '/accordion': typeof AuthenticatedCanvaLayoutAccordionRoute
+  '/avatar': typeof AuthenticatedCanvaLayoutAvatarRoute
+  '/dialog': typeof AuthenticatedCanvaLayoutDialogRoute
+  '/field': typeof AuthenticatedCanvaLayoutFieldRoute
+  '/fieldset': typeof AuthenticatedCanvaLayoutFieldsetRoute
+  '/menu': typeof AuthenticatedCanvaLayoutMenuRoute
+  '/number-field': typeof AuthenticatedCanvaLayoutNumberFieldRoute
+  '/': typeof AuthenticatedDashboardLayoutIndexRoute
 }
 
 export interface FileRoutesByTo {
+  '': typeof AuthenticatedCanvaLayoutRouteWithChildren
   '/login': typeof LoginRoute
-  '/accordion': typeof AuthenticatedAccordionRoute
-  '/avatar': typeof AuthenticatedAvatarRoute
-  '/dialog': typeof AuthenticatedDialogRoute
-  '/field': typeof AuthenticatedFieldRoute
-  '/fieldset': typeof AuthenticatedFieldsetRoute
-  '/menu': typeof AuthenticatedMenuRoute
-  '/number-field': typeof AuthenticatedNumberFieldRoute
   '/auth/callback': typeof AuthCallbackRoute
-  '/': typeof AuthenticatedIndexRoute
+  '/accordion': typeof AuthenticatedCanvaLayoutAccordionRoute
+  '/avatar': typeof AuthenticatedCanvaLayoutAvatarRoute
+  '/dialog': typeof AuthenticatedCanvaLayoutDialogRoute
+  '/field': typeof AuthenticatedCanvaLayoutFieldRoute
+  '/fieldset': typeof AuthenticatedCanvaLayoutFieldsetRoute
+  '/menu': typeof AuthenticatedCanvaLayoutMenuRoute
+  '/number-field': typeof AuthenticatedCanvaLayoutNumberFieldRoute
+  '/': typeof AuthenticatedDashboardLayoutIndexRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/_authenticated': typeof AuthenticatedRouteWithChildren
   '/login': typeof LoginRoute
-  '/_authenticated/accordion': typeof AuthenticatedAccordionRoute
-  '/_authenticated/avatar': typeof AuthenticatedAvatarRoute
-  '/_authenticated/dialog': typeof AuthenticatedDialogRoute
-  '/_authenticated/field': typeof AuthenticatedFieldRoute
-  '/_authenticated/fieldset': typeof AuthenticatedFieldsetRoute
-  '/_authenticated/menu': typeof AuthenticatedMenuRoute
-  '/_authenticated/number-field': typeof AuthenticatedNumberFieldRoute
+  '/_authenticated/_canva-layout': typeof AuthenticatedCanvaLayoutRouteWithChildren
+  '/_authenticated/_dashboard-layout': typeof AuthenticatedDashboardLayoutRouteWithChildren
   '/auth/callback': typeof AuthCallbackRoute
-  '/_authenticated/': typeof AuthenticatedIndexRoute
+  '/_authenticated/_canva-layout/accordion': typeof AuthenticatedCanvaLayoutAccordionRoute
+  '/_authenticated/_canva-layout/avatar': typeof AuthenticatedCanvaLayoutAvatarRoute
+  '/_authenticated/_canva-layout/dialog': typeof AuthenticatedCanvaLayoutDialogRoute
+  '/_authenticated/_canva-layout/field': typeof AuthenticatedCanvaLayoutFieldRoute
+  '/_authenticated/_canva-layout/fieldset': typeof AuthenticatedCanvaLayoutFieldsetRoute
+  '/_authenticated/_canva-layout/menu': typeof AuthenticatedCanvaLayoutMenuRoute
+  '/_authenticated/_canva-layout/number-field': typeof AuthenticatedCanvaLayoutNumberFieldRoute
+  '/_authenticated/_dashboard-layout/': typeof AuthenticatedDashboardLayoutIndexRoute
 }
 
 export interface FileRouteTypes {
@@ -249,6 +320,7 @@ export interface FileRouteTypes {
   fullPaths:
     | ''
     | '/login'
+    | '/auth/callback'
     | '/accordion'
     | '/avatar'
     | '/dialog'
@@ -256,11 +328,12 @@ export interface FileRouteTypes {
     | '/fieldset'
     | '/menu'
     | '/number-field'
-    | '/auth/callback'
     | '/'
   fileRoutesByTo: FileRoutesByTo
   to:
+    | ''
     | '/login'
+    | '/auth/callback'
     | '/accordion'
     | '/avatar'
     | '/dialog'
@@ -268,21 +341,22 @@ export interface FileRouteTypes {
     | '/fieldset'
     | '/menu'
     | '/number-field'
-    | '/auth/callback'
     | '/'
   id:
     | '__root__'
     | '/_authenticated'
     | '/login'
-    | '/_authenticated/accordion'
-    | '/_authenticated/avatar'
-    | '/_authenticated/dialog'
-    | '/_authenticated/field'
-    | '/_authenticated/fieldset'
-    | '/_authenticated/menu'
-    | '/_authenticated/number-field'
+    | '/_authenticated/_canva-layout'
+    | '/_authenticated/_dashboard-layout'
     | '/auth/callback'
-    | '/_authenticated/'
+    | '/_authenticated/_canva-layout/accordion'
+    | '/_authenticated/_canva-layout/avatar'
+    | '/_authenticated/_canva-layout/dialog'
+    | '/_authenticated/_canva-layout/field'
+    | '/_authenticated/_canva-layout/fieldset'
+    | '/_authenticated/_canva-layout/menu'
+    | '/_authenticated/_canva-layout/number-field'
+    | '/_authenticated/_dashboard-layout/'
   fileRoutesById: FileRoutesById
 }
 
@@ -316,53 +390,67 @@ export const routeTree = rootRoute
     "/_authenticated": {
       "filePath": "_authenticated.tsx",
       "children": [
-        "/_authenticated/accordion",
-        "/_authenticated/avatar",
-        "/_authenticated/dialog",
-        "/_authenticated/field",
-        "/_authenticated/fieldset",
-        "/_authenticated/menu",
-        "/_authenticated/number-field",
-        "/_authenticated/"
+        "/_authenticated/_canva-layout",
+        "/_authenticated/_dashboard-layout"
       ]
     },
     "/login": {
       "filePath": "login.tsx"
     },
-    "/_authenticated/accordion": {
-      "filePath": "_authenticated.accordion.tsx",
-      "parent": "/_authenticated"
+    "/_authenticated/_canva-layout": {
+      "filePath": "_authenticated/_canva-layout.tsx",
+      "parent": "/_authenticated",
+      "children": [
+        "/_authenticated/_canva-layout/accordion",
+        "/_authenticated/_canva-layout/avatar",
+        "/_authenticated/_canva-layout/dialog",
+        "/_authenticated/_canva-layout/field",
+        "/_authenticated/_canva-layout/fieldset",
+        "/_authenticated/_canva-layout/menu",
+        "/_authenticated/_canva-layout/number-field"
+      ]
     },
-    "/_authenticated/avatar": {
-      "filePath": "_authenticated.avatar.tsx",
-      "parent": "/_authenticated"
-    },
-    "/_authenticated/dialog": {
-      "filePath": "_authenticated.dialog.tsx",
-      "parent": "/_authenticated"
-    },
-    "/_authenticated/field": {
-      "filePath": "_authenticated.field.tsx",
-      "parent": "/_authenticated"
-    },
-    "/_authenticated/fieldset": {
-      "filePath": "_authenticated.fieldset.tsx",
-      "parent": "/_authenticated"
-    },
-    "/_authenticated/menu": {
-      "filePath": "_authenticated.menu.tsx",
-      "parent": "/_authenticated"
-    },
-    "/_authenticated/number-field": {
-      "filePath": "_authenticated.number-field.tsx",
-      "parent": "/_authenticated"
+    "/_authenticated/_dashboard-layout": {
+      "filePath": "_authenticated/_dashboard-layout.tsx",
+      "parent": "/_authenticated",
+      "children": [
+        "/_authenticated/_dashboard-layout/"
+      ]
     },
     "/auth/callback": {
       "filePath": "auth.callback.tsx"
     },
-    "/_authenticated/": {
-      "filePath": "_authenticated.index.tsx",
-      "parent": "/_authenticated"
+    "/_authenticated/_canva-layout/accordion": {
+      "filePath": "_authenticated/_canva-layout/accordion.tsx",
+      "parent": "/_authenticated/_canva-layout"
+    },
+    "/_authenticated/_canva-layout/avatar": {
+      "filePath": "_authenticated/_canva-layout/avatar.tsx",
+      "parent": "/_authenticated/_canva-layout"
+    },
+    "/_authenticated/_canva-layout/dialog": {
+      "filePath": "_authenticated/_canva-layout/dialog.tsx",
+      "parent": "/_authenticated/_canva-layout"
+    },
+    "/_authenticated/_canva-layout/field": {
+      "filePath": "_authenticated/_canva-layout/field.tsx",
+      "parent": "/_authenticated/_canva-layout"
+    },
+    "/_authenticated/_canva-layout/fieldset": {
+      "filePath": "_authenticated/_canva-layout/fieldset.tsx",
+      "parent": "/_authenticated/_canva-layout"
+    },
+    "/_authenticated/_canva-layout/menu": {
+      "filePath": "_authenticated/_canva-layout/menu.tsx",
+      "parent": "/_authenticated/_canva-layout"
+    },
+    "/_authenticated/_canva-layout/number-field": {
+      "filePath": "_authenticated/_canva-layout/number-field.tsx",
+      "parent": "/_authenticated/_canva-layout"
+    },
+    "/_authenticated/_dashboard-layout/": {
+      "filePath": "_authenticated/_dashboard-layout/index.tsx",
+      "parent": "/_authenticated/_dashboard-layout"
     }
   }
 }

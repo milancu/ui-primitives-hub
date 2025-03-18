@@ -46,7 +46,7 @@ export const useComponentStyleMutation = () => {
         console.error("Mutate failed:", error);
       }
     },
-    500,
+    5000,
   );
 
   const handleStyleChange = useCallback(
@@ -60,7 +60,7 @@ export const useComponentStyleMutation = () => {
         }
 
         const newStyle = { ...lastValidStyles.current, [key]: value } as Style;
-        setCurrentStyle(newStyle);
+        // setCurrentStyle(newStyle);
         lastValidStyles.current = newStyle;
 
         const css = styleToString(newStyle);
@@ -77,11 +77,15 @@ export const useComponentStyleMutation = () => {
 
         componentRef.current.parts[currentPart].attributes[currentState] =
           css_result;
-        Object.keys(componentRef.current.parts).forEach((key) => {
-          componentRef.current.parts[key].raw = getRawTailwindClasses(
-            componentRef.current.parts[key].attributes,
-          );
-        });
+        // Object.keys(componentRef.current.parts).forEach((key) => {
+        //   componentRef.current.parts[key].raw = getRawTailwindClasses(
+        //     componentRef.current.parts[key].attributes,
+        //   );
+        // });
+
+        componentRef.current.parts[currentPart].raw = getRawTailwindClasses(
+          componentRef.current.parts[currentPart].attributes,
+        );
 
         debouncedMutate({
           part: currentPart,
@@ -89,14 +93,14 @@ export const useComponentStyleMutation = () => {
           value: css_result,
         });
 
-        // const { mutateAsync } = mutation!;
-        // mutateAsync({
-        //   name: currentPart,
-        //   attribute: currentState,
-        //   value: css_result,
-        // }).then((res) => {
-        //   console.log(res);
-        // });
+        const { mutateAsync } = mutation!;
+        mutateAsync({
+          name: currentPart,
+          attribute: currentState,
+          value: css_result,
+        }).then((res) => {
+          console.log(res);
+        });
 
         return { success: true };
       } catch (error) {
