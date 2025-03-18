@@ -9,45 +9,38 @@ import {
   SidebarFooter,
   SidebarHeader,
 } from "@/components/ui/sidebar.tsx";
-import { NavUser } from "@/features/sidebar/components/nav-user.tsx";
 import { Separator } from "@/components/ui/separator";
-import { ThemeLogo } from "@/components/ui/theme-logo.tsx";
 import FigmaLayers from "@/features/component-layers/components/component-layers.tsx";
 
 const data = {
-  user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
   navMain: [
     {
       title: "Accordion",
-      url: "/accordion",
+      url: "accordion",
     },
     {
       title: "Avatar",
-      url: "/avatar",
+      url: "avatar",
     },
     {
       title: "Dialog",
-      url: "/dialog",
+      url: "dialog"
     },
     {
       title: "Field",
-      url: "/field",
+      url: `field`
     },
     {
       title: "Fieldset",
-      url: "/fieldset",
+      url: "fieldset"
     },
     {
       title: "Menu",
-      url: "/menu",
+      url: "menu"
     },
     {
       title: "Number field",
-      url: "/number-field",
+      url: "number-field"
     },
   ],
 };
@@ -56,9 +49,12 @@ export function SidebarLeft({
   ...props
 }: React.ComponentProps<typeof Sidebar>) {
   return (
-    <Sidebar className="border-r-0" {...props} variant={"inset"}>
+    <Sidebar
+      className="top-[--header-height] mt-auto !h-[calc(100svh-var(--header-height))] border-r-0"
+      {...props}
+      variant={"inset"}
+    >
       <SidebarHeader>
-        <ThemeLogo className={"mb-2 h-14 w-full"} />
         <NavMain items={data.navMain} />
       </SidebarHeader>
       <Separator />
@@ -67,7 +63,11 @@ export function SidebarLeft({
       </SidebarContent>
       <SidebarFooter>
         <FigmaLayers />
-        <NavUser />
+        {/*<SidebarMenu>*/}
+        {/*  <SidebarMenuItem>*/}
+        {/*    <NavUser />*/}
+        {/*  </SidebarMenuItem>*/}
+        {/*</SidebarMenu>*/}
       </SidebarFooter>
     </Sidebar>
   );

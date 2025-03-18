@@ -6469,7 +6469,7 @@ const CheatSheet = [
         ],
       },
       {
-        title: "User Select",
+        title: "NavUser Select",
         docs: "https://tailwindcss.com/docs/user-select",
         description: "Controls whether the user can select text.",
         table: [

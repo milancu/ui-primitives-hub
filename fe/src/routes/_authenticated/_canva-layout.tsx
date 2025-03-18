@@ -15,8 +15,8 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb.tsx";
-import { ModeToggle } from "@/components/mode-toggle.tsx";
 import { SidebarRight } from "@/features/sidebar/components/sidebar-right.tsx";
+import Header from "@/features/header/components/header.tsx";
 
 export const Route = createFileRoute("/_authenticated/_canva-layout")({
   component: RouteComponent,
@@ -38,45 +38,48 @@ function RouteComponent() {
       .split("/")
       .filter(Boolean)
       .map(formatSegment);
-    setMainSection(pathSegments[0] || "Home");
+    setMainSection(pathSegments[1] || "Home");
   }, [location.pathname]);
 
   return (
-    <SidebarProvider>
-      <SidebarLeft />
-      <SidebarInset className="overflow-hidden rounded-lg border shadow-2xl">
-        <header className="bg-background sticky top-0 flex h-14 shrink-0 items-center justify-between gap-2 border-b px-3">
-          <div className="flex flex-1 items-center gap-2">
-            <SidebarTrigger />
-            <Separator orientation="vertical" className="mr-2 h-4" />
-            <Breadcrumb>
-              <BreadcrumbList>
-                <BreadcrumbItem>
-                  <BreadcrumbPage className="line-clamp-1">
-                    {mainSection}
-                  </BreadcrumbPage>
-                </BreadcrumbItem>
-
-                {currentPart && (
-                  <>
-                    <BreadcrumbSeparator />
+    <div className="[--header-height:calc(theme(spacing.14))]">
+      <SidebarProvider className="flex flex-col">
+        <Header />
+        <div className="flex flex-1">
+          <SidebarLeft />
+          <SidebarInset className="overflow-hidden rounded-lg border shadow-2xl">
+            <header className="bg-background sticky top-0 flex h-14 shrink-0 items-center justify-between gap-2 border-b px-3">
+              <div className="flex flex-1 items-center gap-2">
+                <SidebarTrigger />
+                <Separator orientation="vertical" className="mr-2 h-4" />
+                <Breadcrumb>
+                  <BreadcrumbList>
                     <BreadcrumbItem>
                       <BreadcrumbPage className="line-clamp-1">
-                        {formatSegment(currentPart)}
+                        {mainSection}
                       </BreadcrumbPage>
                     </BreadcrumbItem>
-                  </>
-                )}
-              </BreadcrumbList>
-            </Breadcrumb>
-          </div>
-          <ModeToggle />
-        </header>
-        <div className="h-full">
-          <Outlet />
+                    {currentPart && (
+                      <>
+                        <BreadcrumbSeparator />
+                        <BreadcrumbItem>
+                          <BreadcrumbPage className="line-clamp-1">
+                            {formatSegment(currentPart)}
+                          </BreadcrumbPage>
+                        </BreadcrumbItem>
+                      </>
+                    )}
+                  </BreadcrumbList>
+                </Breadcrumb>
+              </div>
+            </header>
+            <div className="h-full">
+              <Outlet />
+            </div>
+          </SidebarInset>
+          {currentPart && <SidebarRight />}
         </div>
-      </SidebarInset>
-      {currentPart && <SidebarRight />}
-    </SidebarProvider>
+      </SidebarProvider>
+    </div>
   );
 }

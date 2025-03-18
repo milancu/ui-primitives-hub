@@ -28,7 +28,7 @@ export function NavMain({
         <SidebarMenuItem key={item.title}>
           <SidebarMenuButton asChild isActive={pathname === item.url}>
             <Link
-              to={item.url}
+              to={`/$id/${item.url}`}
               onClick={() => {
                 setComponent(undefined);
                 setCurrentPart(null);

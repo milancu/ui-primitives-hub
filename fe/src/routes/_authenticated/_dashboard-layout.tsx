@@ -1,4 +1,5 @@
 import { createFileRoute, Outlet } from "@tanstack/react-router";
+import Header from "@/features/header/components/header.tsx";
 
 export const Route = createFileRoute("/_authenticated/_dashboard-layout")({
   component: RouteComponent,
@@ -6,7 +7,8 @@ export const Route = createFileRoute("/_authenticated/_dashboard-layout")({
 
 function RouteComponent() {
   return (
-    <div className={"bg-red-500"}>
+    <div>
+      <Header />
       <Outlet />
     </div>
   );
