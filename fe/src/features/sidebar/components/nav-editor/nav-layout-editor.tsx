@@ -20,6 +20,7 @@ import {
 import InputWithIcon from "@/components/ui/input-with-icon.tsx";
 import { useCurrentComponent } from "@/components/CurrentComponentProvider.tsx";
 import { useComponentStyleMutation } from "@/hooks/use-component-style-mutation.ts";
+import InputComponentSwitcher from "@/components/ui/input-component-switcher.tsx";
 
 const NavLayoutEditor = () => {
   const { currentStyle } = useCurrentComponent();
@@ -30,6 +31,9 @@ const NavLayoutEditor = () => {
       <SidebarGroupLabel>Layout properties</SidebarGroupLabel>
       <SidebarGroupContent>
         <SidebarMenu className={"gap-2"}>
+          <SidebarMenuItem>
+            <InputComponentSwitcher />
+          </SidebarMenuItem>
           <SidebarMenuItem>
             <RadioGroup
               onValueChange={(e) => {

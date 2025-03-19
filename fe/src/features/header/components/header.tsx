@@ -1,7 +1,7 @@
 import { ModeToggle } from "@/components/mode-toggle.tsx";
 import User from "@/features/user/components/user.tsx";
 import SearchInput from "@/features/search-input/components/search-input.tsx";
-import { Link, useRouter } from "@tanstack/react-router";
+import { Link, useParams } from "@tanstack/react-router";
 import { X } from "lucide-react";
 import { cn } from "@/lib/utils.ts";
 import { ThemeLogo } from "@/components/ui/theme-logo.tsx";
@@ -13,10 +13,7 @@ const initialActiveTabs = [
 ];
 
 const Header = () => {
-  const router = useRouter();
-  const pathname = router.state.location.pathname;
-
-  console.log(pathname);
+  const { id } = useParams({ strict: false });
 
   return (
     <div className={"bg-background border-border h-[3.5rem] w-full border-b"}>
@@ -34,8 +31,8 @@ const Header = () => {
                 to={`${tab.id}`}
                 key={tab.id}
                 className={cn(
-                  pathname === `/${tab.id}` && "bg-gray-500/20",
-                  "group data-[state=active]:bg-accent/70 relative flex h-full items-center gap-2 p-4 transition-all duration-200 border-r border-l",
+                  id === tab.id && "bg-gray-500/20",
+                  "group data-[state=active]:bg-accent/70 relative flex h-full items-center gap-2 border-r border-l p-4 transition-all duration-200",
                   "hover:pr-8",
                 )}
               >

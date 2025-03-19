@@ -5,7 +5,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar.tsx";
-import { Link, useRouter } from "@tanstack/react-router";
+import { Link, useLocation, useParams } from "@tanstack/react-router";
 import { useCurrentComponent } from "@/components/CurrentComponentProvider.tsx";
 import { useCurrentPartParam } from "@/features/sidebar/hooks/useCurrentPartParam.tsx";
 
@@ -19,14 +19,17 @@ export function NavMain({
 }) {
   const { setComponent } = useCurrentComponent();
   const [, setCurrentPart] = useCurrentPartParam();
-  const router = useRouter();
-  const pathname = router.state.location.pathname;
+  const { id } = useParams({ strict: false });
+  const { pathname } = useLocation();
 
   return (
     <SidebarMenu>
       {items.map((item) => (
         <SidebarMenuItem key={item.title}>
-          <SidebarMenuButton asChild isActive={pathname === item.url}>
+          <SidebarMenuButton
+            asChild
+            isActive={pathname === `/${id}/${item.url}`}
+          >
             <Link
               to={`/$id/${item.url}`}
               onClick={() => {

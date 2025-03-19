@@ -60,7 +60,7 @@ export const useComponentStyleMutation = () => {
         }
 
         const newStyle = { ...lastValidStyles.current, [key]: value } as Style;
-        // setCurrentStyle(newStyle);
+        setCurrentStyle(newStyle);
         lastValidStyles.current = newStyle;
 
         const css = styleToString(newStyle);
@@ -82,6 +82,7 @@ export const useComponentStyleMutation = () => {
         //     componentRef.current.parts[key].attributes,
         //   );
         // });
+
 
         componentRef.current.parts[currentPart].raw = getRawTailwindClasses(
           componentRef.current.parts[currentPart].attributes,
