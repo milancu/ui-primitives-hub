@@ -1,11 +1,11 @@
 interface UpdateAccordionStyleProps {
-  name: string;
+  part: string;
   value: string;
   attribute: string;
 }
 
 export const updateAccordionStyle = async ({
-  name,
+                                             part,
   value,
   attribute,
 }: UpdateAccordionStyleProps) => {
@@ -18,7 +18,7 @@ export const updateAccordionStyle = async ({
         Accept: "application/json",
       },
       body: JSON.stringify({
-        id: name,
+        part,
         data: {
           [attribute]: value,
         },

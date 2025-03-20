@@ -10,15 +10,21 @@ import { useCurrentComponent } from "@/components/CurrentComponentProvider";
 import Preview from "@/components/preview.tsx";
 import { Skeleton } from "@/components/ui/skeleton.tsx";
 import { useUpdateAccordionStyle } from "@/features/accordion/hooks/mutations/useUpdateAccordionStyle.ts";
+import { useParams } from "@tanstack/react-router";
 
 const AccordionPage = () => {
   const { component, setComponent, setMutation } = useCurrentComponent();
   const mutation = useUpdateAccordionStyle();
+
+  const { id } = useParams({
+    from: "/_authenticated/_canva-layout/$id/accordion",
+  });
   const { isLoading, error } = useAccordionStyles({
-    onDataLoaded: (component)=>{
+    projectId: id,
+    onDataLoaded: (component) => {
       setComponent(component);
-      setMutation(mutation)
-    }
+      setMutation(mutation);
+    },
   });
 
   if (isLoading || !component)

@@ -11,17 +11,14 @@ import { format } from "date-fns";
 import { cs } from "date-fns/locale";
 import { Calendar, Ellipsis, Eye, File, Pencil, Trash2 } from "lucide-react";
 import { Link } from "@tanstack/react-router";
+import { Project } from "@ui-primitives-hub/types";
 
 type ProjectCardProps = {
-  project: {
-    id: string;
-    name: string;
-    lastUpdated: Date;
-  };
+  project: Project;
 };
 
 const ProjectCard = ({ project }: ProjectCardProps) => {
-  const { id, name, lastUpdated } = project;
+  const { id, name, updatedAt } = project;
   const [isHovered, setIsHovered] = useState(false);
 
   return (
@@ -58,7 +55,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuItem asChild>
-                <Link to={`${id}`} className={'flex items-center'}>
+                <Link to={`${id}`} className={"flex items-center"}>
                   {" "}
                   <Eye className="mr-2 h-4 w-4" />
                   Open
@@ -79,7 +76,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
       <CardContent className="relative flex h-full flex-col justify-between pb-4">
         <div className="text-muted-foreground mt-4 flex items-center gap-1.5 text-sm">
           <Calendar className="h-3.5 w-3.5" />
-          <span>{format(lastUpdated, "dd.MM.yyyy", { locale: cs })}</span>
+          <span>{format(updatedAt, "dd.MM.yyyy", { locale: cs })}</span>
         </div>
       </CardContent>
     </Card>

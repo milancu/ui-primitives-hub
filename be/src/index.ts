@@ -1,7 +1,9 @@
 import express from "express";
 import dotenv from "dotenv";
-import authRouter from "./routes/auth";
-import componentsRouter from "./routes/components";
+import authRouter from "./routes/auth.route";
+// import componentsRouter from "./routes/components";
+import componentsRouter from "./routes/component.route";
+import projectsRouter from "./routes/project.route";
 import cors from "cors";
 
 dotenv.config();
@@ -13,7 +15,7 @@ app.use(express.json(), cors({
 }));
 
 app.use("/auth", authRouter);
-app.use("/components", componentsRouter);
+app.use('/projects', [projectsRouter, componentsRouter])
 
 app.get("/", (req, res) => {
   res.send("API is running 🚀");

@@ -1,46 +1,32 @@
 import ProjectCard from "@/features/projects-list/components/project-card.tsx";
+import { Project } from "@ui-primitives-hub/types";
+import { Skeleton } from "@/components/ui/skeleton.tsx";
 
-const SAMPLE_PROJECTS = [
-  {
-    id: "1",
-    name: "Redesign firemního webu",
-    lastUpdated: new Date("2023-11-10"),
-  },
-  {
-    id: "2",
-    name: "Mobilní aplikace",
-    lastUpdated: new Date("2023-12-05"),
-  },
-  {
-    id: "3",
-    name: "Dashboard analytics",
-    lastUpdated: new Date("2023-10-22"),
-  },
-  {
-    id: "4",
-    name: "E-commerce platforma",
-    lastUpdated: new Date("2023-12-15"),
-  },
-  {
-    id: "5",
-    name: "Redesign loga a identity",
-    lastUpdated: new Date("2023-09-20"),
-  },
-  {
-    id: "6",
-    name: "CRM systém",
-    lastUpdated: new Date("2023-12-20"),
-  },
-];
+type ProjectsListProps = {
+  projects?: Project[];
+};
 
-const ProjectsList = () => {
+const ProjectsList = ({ projects }: ProjectsListProps) => {
+  if (!projects)
+    return (
+      <div
+        className={
+          "grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
+        }
+      >
+        <Skeleton className={'h-32 w-full rounded-lg'} />
+        <Skeleton className={'h-32 w-full rounded-lg'} />
+        <Skeleton className={'h-32 w-full rounded-lg'} />
+      </div>
+    );
+
   return (
     <div
       className={
         "grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
       }
     >
-      {SAMPLE_PROJECTS.map((project, index) => (
+      {projects.map((project, index) => (
         <ProjectCard project={project} key={index} />
       ))}
     </div>

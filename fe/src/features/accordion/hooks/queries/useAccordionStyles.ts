@@ -5,14 +5,16 @@ import { Component } from "@ui-primitives-hub/types";
 
 type UseAccordionStylesParams = {
   onDataLoaded?: (component: Component) => void;
+  projectId: string;
 };
 
 export const useAccordionStyles = ({
   onDataLoaded,
+  projectId,
 }: UseAccordionStylesParams) => {
   const query = useQuery<Component>({
     queryKey: ["accordion"],
-    queryFn: fetchAccordionStyles,
+    queryFn: () => fetchAccordionStyles(projectId),
     refetchOnMount: true,
   });
 

@@ -21,6 +21,31 @@ export type Component = {
 };
 
 
+export type Project = {
+  id: string;
+  name: string;
+  createdAt: string;
+  updatedAt: string;
+  ownerId: string;
+};
+
+export type ComponentType =
+  | 'accordion'
+  | 'avatar'
+  | 'dialog'
+  | 'field'
+  | 'menu'
+  | 'numberfield';
+
+export type ComponentConfig = {
+  [key: string]: {
+    [variant: string]: string;
+  };
+};
+
+export type ProjectComponents = {
+  [key in ComponentType]?: ComponentConfig;
+};
 
 export interface Style {
   width?: CSSUnit;

@@ -2,8 +2,11 @@ import ProjectsList from "@/features/projects-list/components/projects-list.tsx"
 import { GridPattern } from "@/components/magicui/grid-pattern";
 import { cn } from "@/lib/utils";
 import { ProjectFormDialog } from "@/features/projects-list/components/project-form-dialog.tsx";
+import { useGetProjects } from "@/features/dashboard/hooks/queries/useGetProjects.ts";
 
 const DashboardPage = () => {
+  const { data: projects } = useGetProjects();
+
   return (
     <div className={"relative container mx-auto py-4"}>
       <GridPattern
@@ -25,7 +28,7 @@ const DashboardPage = () => {
           </div>
           <ProjectFormDialog />
         </div>
-        <ProjectsList />
+        <ProjectsList projects={projects}/>
       </div>
     </div>
   );

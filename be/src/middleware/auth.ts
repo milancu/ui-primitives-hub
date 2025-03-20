@@ -1,18 +1,26 @@
-import {NextFunction, Request, Response} from "express";
-import {auth} from "../firebase";
+import {NextFunction, Request, Response} from 'express';
+import {auth} from '../firebase';
 
-export const authenticate = async (req: Request, res: Response, next: NextFunction) => {
-  const token = req.headers.authorization?.split("Bearer ")[1];
-
-  if (!token) {
-    return res.status(401).json({ error: "Unauthorized" });
-  }
-
+export const authenticate = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
   try {
-    // @ts-ignore
-    req.user = await auth.verifyIdToken(token);
+    const token = req.headers.authorization?.split('Bearer ')[1];
+
+    if (!token) {
+      res.status(401).json({ error: 'Authorization token required' });
+      return;
+    }
+
+    // Verify the token
+    // Attach user to request
+    (req as any).user = await auth.verifyIdToken(token);
+
     next();
   } catch (error) {
-    res.status(401).json({ error: "Invalid token" });
+    console.error('Authentication error:', error);
+    res.status(401).json({ error: 'Invalid or expired token' });
   }
 };

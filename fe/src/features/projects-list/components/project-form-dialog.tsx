@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -7,12 +7,22 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Plus } from "lucide-react";
+import { useAddProject } from "@/features/dashboard/hooks/mutations/useAddProject.ts";
+import { useState } from "react";
 
 export function ProjectFormDialog() {
+  const { mutate } = useAddProject();
+
+  const [projectName, setProjectName] = useState("My awesome project");
+
+  const handleSubmit = () => {
+    mutate({ name: projectName });
+  };
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -33,13 +43,20 @@ export function ProjectFormDialog() {
             <Label htmlFor="name" className="text-right">
               Name
             </Label>
-            <Input id="name" value="My aswome project" className="col-span-3" />
+            <Input
+              id="name"
+              value={projectName}
+              onChange={(e) => setProjectName(e.target.value)}
+              className="col-span-3"
+            />
           </div>
         </div>
         <DialogFooter>
-          <Button type="submit">Create</Button>
+          <Button type="submit" onClick={handleSubmit}>
+            Create
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
-  )
+  );
 }

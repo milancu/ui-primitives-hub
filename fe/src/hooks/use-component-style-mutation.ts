@@ -94,14 +94,14 @@ export const useComponentStyleMutation = () => {
           value: css_result,
         });
 
-        const { mutateAsync } = mutation!;
-        mutateAsync({
-          name: currentPart,
-          attribute: currentState,
-          value: css_result,
-        }).then((res) => {
-          console.log(res);
-        });
+        // const { mutateAsync } = mutation!;
+        // mutateAsync({
+        //   name: currentPart,
+        //   attribute: currentState,
+        //   value: css_result,
+        // }).then((res) => {
+        //   console.log(res);
+        // });
 
         return { success: true };
       } catch (error) {

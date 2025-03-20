@@ -1,7 +1,7 @@
-export const fetchAccordionStyles = async () => {
-  const res = await fetch(
-    `${import.meta.env.VITE_BACKEND_API_URL}/components/accordion`,
-  );
+import { authFetch } from "@/lib/authFetch.ts";
+
+export const fetchAccordionStyles = async (projectId: string) => {
+  const res = await authFetch(`/projects/${projectId}/components/accordion`);
   if (!res.ok) {
     throw new Error("Failed to fetch accordion styles");
   }
