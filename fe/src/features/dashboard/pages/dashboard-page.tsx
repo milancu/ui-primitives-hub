@@ -1,8 +1,8 @@
-import ProjectsList from "@/features/projects-list/components/projects-list.tsx";
 import { GridPattern } from "@/components/magicui/grid-pattern";
+import { AddProjectFormDialog } from "@/features/project/components/add-project-form-dialog.tsx";
+import { useGetProjects } from "@/features/project/hooks/queries/useGetProjects";
 import { cn } from "@/lib/utils";
-import { ProjectFormDialog } from "@/features/projects-list/components/project-form-dialog.tsx";
-import { useGetProjects } from "@/features/dashboard/hooks/queries/useGetProjects.ts";
+import ProjectsList from "@/features/project/components/projects-list.tsx";
 
 const DashboardPage = () => {
   const { data: projects } = useGetProjects();
@@ -26,9 +26,9 @@ const DashboardPage = () => {
               An overview of all your projects in one place
             </div>
           </div>
-          <ProjectFormDialog />
+          <AddProjectFormDialog />
         </div>
-        <ProjectsList projects={projects}/>
+        <ProjectsList projects={projects} />
       </div>
     </div>
   );

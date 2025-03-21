@@ -52,7 +52,6 @@ export class AuthService {
 
   static async getOrCreateUser(figmaUser: any): Promise<User> {
     const uid = `figma:${figmaUser.id}`;
-    console.log(uid)
     try {
       const existingUser = await auth.getUser(uid);
       return this.mapToUserModel(existingUser, figmaUser);
@@ -82,7 +81,11 @@ export class AuthService {
   }
 
   static async initializeUserProjects(user: User): Promise<void> {
-    if (user.projects.length === 0) {
+    const snapshot = await db.ref(`users/${user.uid}/projects`).once('value');
+    const projects = snapshot.val();
+    const length = projects ? Object.keys(projects).length : 0;
+
+    if (length === 0) {
       await ProjectService.createProject(user.uid, 'My First Project');
     }
   }

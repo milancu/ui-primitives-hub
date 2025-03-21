@@ -1,7 +1,6 @@
 import {Component, ComponentPart} from '@ui-primitives-hub/types';
 import {db} from '../firebase';
 import {getRawTailwindClasses} from "@ui-primitives-hub/utils";
-import {getComponentStyle} from "./componentService";
 
 export class ComponentService {
 

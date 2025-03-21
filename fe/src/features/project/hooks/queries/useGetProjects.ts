@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { fetchProjects } from "@/features/dashboard/api/queries";
+import { fetchProjects } from "@/features/project/api/queries";
 
 export const useGetProjects = () => {
   return useQuery({

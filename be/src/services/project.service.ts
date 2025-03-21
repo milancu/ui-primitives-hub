@@ -4,6 +4,25 @@ import {DEFAULT_COMPONENTS} from "../default-components";
 
 export class ProjectService {
   static async createProject(userId: string, name: string): Promise<ProjectMetadata> {
+    const projectsSnapshot = await db.ref(`users/${userId}/projects`).once('value');
+    const projects = projectsSnapshot.val();
+
+    const nameExists = projects
+      ? Object.values(projects).some((p: any) => p.metadata?.name === name)
+      : false;
+
+    if (nameExists) {
+      throw new Error('Name already exists!');
+    }
+
+    if (name.length > 20) throw new Error(
+      'Name must be less than 20 characters'
+    )
+
+    if (name.length < 3) throw new Error(
+      'Name must be more than 3 characters'
+    )
+
     const projectRef = db.ref(`users/${userId}/projects`).push();
     const metadata: ProjectMetadata = {
       id: projectRef.key!,
@@ -21,6 +40,7 @@ export class ProjectService {
     return metadata;
   }
 
+
   static async getProject(userId: string, projectId: string): Promise<Project> {
     const snapshot = await db.ref(`users/${userId}/projects/${projectId}`).once('value');
     if (!snapshot.exists()) throw new Error('Project not found');
@@ -30,18 +50,48 @@ export class ProjectService {
   static async updateProject(
     userId: string,
     projectId: string,
-    updates: Partial<ProjectMetadata>
+    name: string
   ): Promise<ProjectMetadata> {
-    const ref = db.ref(`users/${userId}/projects/${projectId}/metadata`);
-    await ref.update({
-      ...updates,
-      updatedAt: new Date().toISOString()
-    });
-    return (await ref.once('value')).val();
+    const snapshot = await db.ref(`users/${userId}/projects/${projectId}`).once('value');
+    if (!snapshot.exists()) {
+      throw new Error('Project does not exists.');
+    }
+
+    const metadataRef = db.ref(`users/${userId}/projects/${projectId}/metadata`);
+
+    if (name) {
+      const allProjectsSnap = await db.ref(`users/${userId}/projects`).once('value');
+      const allProjects = allProjectsSnap.val();
+
+      const nameExists = Object.entries(allProjects || {}).some(
+        ([id, proj]: any) =>
+          id !== projectId && proj.metadata?.name === name
+      );
+
+      if (nameExists) {
+        throw new Error('Project name already exists. Please choose another name.');
+      }
+    }
+
+    const updatedData = {
+      name:name,
+      updatedAt: new Date().toISOString(),
+    };
+
+    await metadataRef.update(updatedData);
+    return (await metadataRef.once('value')).val();
   }
 
+
   static async deleteProject(userId: string, projectId: string): Promise<void> {
-    await db.ref(`users/${userId}/projects/${projectId}`).remove();
+    const projectRef = db.ref(`users/${userId}/projects/${projectId}`);
+    const snapshot = await projectRef.once('value');
+
+    if (!snapshot.exists()) {
+      throw new Error('Project does not exists.');
+    }
+
+    await projectRef.remove();
   }
 
   static async listProjects(userId: string): Promise<ProjectMetadata[]> {

@@ -6,36 +6,34 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Plus } from "lucide-react";
-import { useAddProject } from "@/features/dashboard/hooks/mutations/useAddProject.ts";
-import { useState } from "react";
 
-export function ProjectFormDialog() {
-  const { mutate } = useAddProject();
+type UpdateProjectFormDialogProps = {
+  open: boolean;
+  setOpen: (open: boolean) => void;
+  name: string;
+  setProjectName: (name: string) => void;
+  handleUpdate: () => void;
+  isPending: boolean;
+};
 
-  const [projectName, setProjectName] = useState("My awesome project");
-
-  const handleSubmit = () => {
-    mutate({ name: projectName });
-  };
-
+export function UpdateProjectFormDialog({
+  open,
+  setOpen,
+  name,
+  isPending,
+  handleUpdate,
+  setProjectName,
+}: UpdateProjectFormDialogProps) {
   return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button>
-          <Plus />
-          Create new project
-        </Button>
-      </DialogTrigger>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>Create new project</DialogTitle>
           <DialogDescription>
-            Select a name for Your project. Click create when you're done.
+            Select a name for Your project. Click save when you're done.
           </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-2">
@@ -45,15 +43,15 @@ export function ProjectFormDialog() {
             </Label>
             <Input
               id="name"
-              value={projectName}
+              value={name}
               onChange={(e) => setProjectName(e.target.value)}
               className="col-span-3"
             />
           </div>
         </div>
         <DialogFooter>
-          <Button type="submit" onClick={handleSubmit}>
-            Create
+          <Button type="submit" onClick={handleUpdate} disabled={isPending}>
+            Save
           </Button>
         </DialogFooter>
       </DialogContent>

@@ -15,9 +15,15 @@ import { Project } from "@ui-primitives-hub/types";
 
 type ProjectCardProps = {
   project: Project;
+  handleDelete: (id: string) => void;
+  triggerUpdate: (id: string, name: string) => void;
 };
 
-const ProjectCard = ({ project }: ProjectCardProps) => {
+const ProjectCard = ({
+  project,
+  handleDelete,
+  triggerUpdate,
+}: ProjectCardProps) => {
   const { id, name, updatedAt } = project;
   const [isHovered, setIsHovered] = useState(false);
 
@@ -61,11 +67,14 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
                   Open
                 </Link>
               </DropdownMenuItem>
-              <DropdownMenuItem>
+              <DropdownMenuItem onClick={() => triggerUpdate(id, name)}>
                 <Pencil className="mr-2 h-4 w-4" />
                 Rename
               </DropdownMenuItem>
-              <DropdownMenuItem className="text-destructive focus:text-destructive">
+              <DropdownMenuItem
+                className="text-destructive focus:text-destructive"
+                onClick={() => handleDelete(id)}
+              >
                 <Trash2 className="text-destructive mr-2 h-4 w-4" />
                 Delete
               </DropdownMenuItem>

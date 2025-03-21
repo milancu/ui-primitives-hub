@@ -9,11 +9,17 @@ router.use(authenticate as express.RequestHandler);
 
 // Projects CRUD
 router.post('/', async (req, res) => {
+  const {name} = req.body;
+
+  if (!name) {
+    res.status(400).json({error: 'Missing name'});
+  }
+
   try {
-    const project = await ProjectService.createProject((req as any).user.uid, req.body.name);
+    const project = await ProjectService.createProject((req as any).user.uid, name);
     res.status(201).json(project);
   } catch (error) {
-    res.status(500).json({error: 'Project creation failed'});
+    res.status(400).json({error: `Project creation failed, ${error}`});
   }
 });
 
@@ -22,7 +28,7 @@ router.get('/', async (req, res) => {
     const projects = await ProjectService.listProjects((req as any).user.uid);
     res.json(projects);
   } catch (error) {
-    res.status(500).json({error: 'Failed to fetch projects'});
+    res.status(400).json({error: 'Failed to fetch projects'});
   }
 });
 
@@ -36,23 +42,32 @@ router.route('/:projectId')
     }
   })
   .put(async (req, res) => {
+    const {name} = req.body;
+    const {projectId} = req.params;
+
+    if (!projectId || !name) {
+      res.status(400).json({error: 'Missing data'});
+    }
+
     try {
-      const updated = await ProjectService.updateProject(
-        (req as any).user.uid,
-        req.params.projectId,
-        req.body
-      );
-      res.json(updated);
-    } catch (error) {
-      res.status(400).json({error: 'Update failed'});
+      const updatedProject = await ProjectService.updateProject((req as any).user.uid, projectId, name);
+      res.status(200).json(updatedProject);
+    } catch (err: any) {
+      res.status(400).json({error: err.message});
     }
   })
   .delete(async (req, res) => {
+    const {projectId} = req.params;
+
+    if (!projectId) {
+      res.status(400).json({error: 'Missing projectId'});
+    }
+
     try {
-      await ProjectService.deleteProject((req as any).user.uid, req.params.projectId);
+      await ProjectService.deleteProject((req as any).user.uid, projectId);
       res.status(204).send();
-    } catch (error) {
-      res.status(500).json({error: 'Deletion failed'});
+    } catch (error: any) {
+      res.status(400).json({error: error.message});
     }
   });
 

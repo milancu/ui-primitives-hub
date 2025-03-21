@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { addProject } from "@/features/dashboard/api/mutations";
+import { addProject } from "@/features/project/api/mutations";
 
 export const useAddProject = () => {
   const queryClient = useQueryClient();
