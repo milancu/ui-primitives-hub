@@ -46,7 +46,7 @@ export const fetchAccordionPartState = async (
   );
   if (!res.ok) {
     const error = await res.json();
-    console.error(error.error);
+    throw new Error(error.error);
   }
   return res.json();
 };

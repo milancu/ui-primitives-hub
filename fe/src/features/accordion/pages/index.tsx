@@ -19,6 +19,8 @@ import { useHierarchy } from "@/components/hierarchy-provider.tsx";
 import { useStates } from "@/components/states-provider.tsx";
 import { useStyle } from "@/components/style-provider.tsx";
 import { useComponent } from "@/components/component-provider";
+import { projectStore } from "@/store/project.store.ts";
+import { componentStore } from "@/store/component.store.ts";
 
 const AccordionPage = () => {
   const { id } = useParams({
@@ -60,6 +62,11 @@ const AccordionPage = () => {
   useEffect(() => {
     setStyleFromString(style);
   }, [style]);
+
+  useEffect(() => {
+    projectStore.setState(() => id);
+    componentStore.setState(() => "accordion");
+  }, [id]);
 
   if (!component)
     return (

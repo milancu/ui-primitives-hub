@@ -6,29 +6,30 @@ const router = express.Router();
 
 router.use(authenticate as express.RequestHandler);
 
-// router.put('/:projectId/components/:component/', async (req, res) => {
-//   try {
-//     const { state, data } = req.body;
-//
-//     const updated = await ComponentService.updateComponent(
-//       (req as any).user.uid,
-//       req.params.projectId,
-//       req.params.component,
-//       state,
-//       data
-//     );
-//     res.json(updated);
-//   } catch (error) {
-//     res.status(400).json({ error: `Component update failed, ${error}` });
-//   }
-// });
+router.put('/:projectId/components/:component/:part/:state', async (req, res) => {
+  try {
+    const {tailwind} = req.body;
+
+    const updated = await ComponentService.updateComponent(
+      (req as any).user.uid,
+      req.params.projectId,
+      req.params.component,
+      req.params.part,
+      req.params.state,
+      tailwind
+    );
+    res.json(updated);
+  } catch (error: any) {
+    res.status(400).json({error: `Component update failed, ${error.message}`});
+  }
+});
 
 router.get('/:projectId/components/:component/hierarchy', async (req, res) => {
   try {
     const hierarchy = ComponentService.getComponentHierarchy(
-        (req as any).user.uid,
-        req.params.projectId,
-        req.params.component
+      (req as any).user.uid,
+      req.params.projectId,
+      req.params.component
     );
     res.json(hierarchy);
   } catch (error: any) {
@@ -39,9 +40,9 @@ router.get('/:projectId/components/:component/hierarchy', async (req, res) => {
 router.get('/:projectId/components/:component/parts', async (req, res) => {
   try {
     const parts = await ComponentService.getComponentParts(
-        (req as any).user.uid,
-        req.params.projectId,
-        req.params.component
+      (req as any).user.uid,
+      req.params.projectId,
+      req.params.component
     )
     res.json(parts)
   } catch (error: any) {
@@ -52,10 +53,10 @@ router.get('/:projectId/components/:component/parts', async (req, res) => {
 router.get('/:projectId/components/:component/:part/states', async (req, res) => {
   try {
     const parts = await ComponentService.getComponentPartStates(
-        (req as any).user.uid,
-        req.params.projectId,
-        req.params.component,
-        req.params.part
+      (req as any).user.uid,
+      req.params.projectId,
+      req.params.component,
+      req.params.part
     )
     res.json(parts)
   } catch (error: any) {
@@ -66,11 +67,11 @@ router.get('/:projectId/components/:component/:part/states', async (req, res) =>
 router.get('/:projectId/components/:component/:part/:state', async (req, res) => {
   try {
     const parts = await ComponentService.getComponentPartState(
-        (req as any).user.uid,
-        req.params.projectId,
-        req.params.component,
-        req.params.part,
-        req.params.state
+      (req as any).user.uid,
+      req.params.projectId,
+      req.params.component,
+      req.params.part,
+      req.params.state
     )
     res.json(parts)
   } catch (error: any) {

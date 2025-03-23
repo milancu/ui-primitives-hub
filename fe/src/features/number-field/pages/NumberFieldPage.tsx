@@ -1,8 +1,6 @@
-import { useCurrentComponent } from "@/components/CurrentComponentProvider.tsx";
 import { Skeleton } from "@/components/ui/skeleton.tsx";
 import Preview from "@/components/preview.tsx";
-import React from "react";
-import { useNumberFieldStyles } from "@/features/number-field/hooks/queries/useNumberFieldStyles.ts";
+import React, { useEffect } from "react";
 import {
   NumberFieldDecrement,
   NumberFieldGroup,
@@ -12,27 +10,74 @@ import {
   NumberFieldScrubArea,
   NumberFieldScrubAreaCursor,
 } from "@ui-primitives-hub/ui/src/NumberField.tsx";
-import { useUpdateNumberFieldStyle } from "@/features/number-field/hooks/mutations/useUpdateNumberFieldStyle.ts";
+import { useParams } from "@tanstack/react-router";
+import { useCurrentPartParam } from "@/features/sidebar/hooks/useCurrentPartParam.tsx";
+import { useCurrentComponentStateParam } from "@/features/sidebar/hooks/useCurrentComponentStateParam.tsx";
+import { useComponent } from "@/components/component-provider.tsx";
+import { useHierarchy } from "@/components/hierarchy-provider.tsx";
+import { useStates } from "@/components/states-provider.tsx";
+import { useStyle } from "@/components/style-provider.tsx";
+import { useComponentHierarchy } from "@/hooks/queries/useComponentHierarchy.ts";
+import { useParts } from "@/hooks/queries/useParts.ts";
+import { usePartStates } from "@/hooks/queries/usePartStates.ts";
+import { usePartStateStyle } from "@/hooks/queries/usePartStateStyle.ts";
+import { projectStore } from "@/store/project.store.ts";
+import { componentStore } from "@/store/component.store.ts";
 
 const NumberFieldPage = () => {
-  const { component, setComponent, setMutation } = useCurrentComponent();
-  const mutation = useUpdateNumberFieldStyle();
-  const { isLoading, error: errorFetch } = useNumberFieldStyles({
-    onDataLoaded: (component) => {
-      setComponent(component);
-      setMutation(mutation);
-    },
+  const { id } = useParams({
+    from: "/_authenticated/_canva-layout/$id/number-field",
   });
-  const id = React.useId();
 
-  if (isLoading || !component)
+  const [currentPart] = useCurrentPartParam();
+  const [currentState] = useCurrentComponentStateParam();
+
+  const { component, setComponent } = useComponent();
+  const { setHierarchy } = useHierarchy();
+  const { setStates } = useStates();
+  const { setStyleFromString } = useStyle();
+
+  const { data: hierarchy } = useComponentHierarchy(id, "number-field");
+  const { data: parts } = useParts(id, "number-field");
+  const { data: states } = usePartStates(id, currentPart, "number-field");
+  const { data: style } = usePartStateStyle(
+    id,
+    currentPart,
+    currentState,
+    "number-field",
+  );
+
+  useEffect(() => {
+    if (!parts) return;
+    setComponent(parts);
+  }, [parts]);
+
+  useEffect(() => {
+    if (!hierarchy) return;
+    setHierarchy(hierarchy);
+  }, [hierarchy]);
+
+  useEffect(() => {
+    if (!states) return;
+    setStates(states);
+  }, [states]);
+
+  useEffect(() => {
+    setStyleFromString(style);
+  }, [style]);
+
+  useEffect(() => {
+    projectStore.setState(() => id);
+    componentStore.setState(() => "number-field");
+  }, [id]);
+
+  if (!component)
     return (
       <div className={"flex h-full w-full flex-col items-center gap-2 p-2"}>
         <Skeleton className={"h-full w-full"} />
         <Skeleton className={"h-full w-full"} />
       </div>
     );
-  if (errorFetch) return <div>Error: {errorFetch.message}</div>;
 
   const {
     root,
@@ -42,30 +87,30 @@ const NumberFieldPage = () => {
     decrement,
     input,
     increment,
-  } = component.parts;
+  } = component;
 
   return (
     <div className="h-full w-full">
       <Preview>
-        <NumberFieldRoot id={id} defaultValue={100} className={root.raw}>
-          <NumberFieldScrubArea className={scrubarea.raw}>
+        <NumberFieldRoot id={id} defaultValue={100} className={root}>
+          <NumberFieldScrubArea className={scrubarea}>
             <label
               htmlFor={id}
               className="cursor-ew-resize text-sm font-medium text-gray-900"
             >
               Amount
             </label>
-            <NumberFieldScrubAreaCursor className={scrubareacursor.raw}>
+            <NumberFieldScrubAreaCursor className={scrubareacursor}>
               <CursorGrowIcon />
             </NumberFieldScrubAreaCursor>
           </NumberFieldScrubArea>
 
-          <NumberFieldGroup className={group.raw}>
-            <NumberFieldDecrement className={decrement.raw}>
+          <NumberFieldGroup className={group}>
+            <NumberFieldDecrement className={decrement}>
               <MinusIcon />
             </NumberFieldDecrement>
-            <NumberFieldInput className={input.raw} />
-            <NumberFieldIncrement className={increment.raw}>
+            <NumberFieldInput className={input} />
+            <NumberFieldIncrement className={increment}>
               <PlusIcon />
             </NumberFieldIncrement>
           </NumberFieldGroup>

@@ -1,7 +1,5 @@
-import { useCurrentComponent } from "@/components/CurrentComponentProvider.tsx";
 import { Skeleton } from "@/components/ui/skeleton.tsx";
 import Preview from "@/components/preview.tsx";
-import { useFieldStyles } from "@/features/field/hooks/queries/useFieldStyles.ts";
 import {
   FieldControl,
   FieldDescription,
@@ -9,44 +7,89 @@ import {
   FieldLabel,
   FieldRoot,
 } from "@ui-primitives-hub/ui/src/Field.tsx";
-import { useUpdateFieldStyle } from "@/features/field/hooks/mutations/useUpdateFieldStyle.ts";
+import { useParams } from "@tanstack/react-router";
+import { useCurrentPartParam } from "@/features/sidebar/hooks/useCurrentPartParam.tsx";
+import { useCurrentComponentStateParam } from "@/features/sidebar/hooks/useCurrentComponentStateParam.tsx";
+import { useComponent } from "@/components/component-provider.tsx";
+import { useHierarchy } from "@/components/hierarchy-provider.tsx";
+import { useStates } from "@/components/states-provider.tsx";
+import { useStyle } from "@/components/style-provider.tsx";
+import { useEffect } from "react";
+import { useParts } from "@/hooks/queries/useParts.ts";
+import { useComponentHierarchy } from "@/hooks/queries/useComponentHierarchy.ts";
+import { usePartStates } from "@/hooks/queries/usePartStates.ts";
+import { usePartStateStyle } from "@/hooks/queries/usePartStateStyle.ts";
+import { projectStore } from "@/store/project.store.ts";
+import { componentStore } from "@/store/component.store.ts";
 
 const FieldPage = () => {
-  const { component, setComponent, setMutation } = useCurrentComponent();
-  const mutation = useUpdateFieldStyle();
-  const { isLoading, error: errorFetch } = useFieldStyles({
-    onDataLoaded: (component) => {
-      setComponent(component);
-      setMutation(mutation);
-    },
+  const { id } = useParams({
+    from: "/_authenticated/_canva-layout/$id/field",
   });
 
-  if (isLoading || !component)
+  const [currentPart] = useCurrentPartParam();
+  const [currentState] = useCurrentComponentStateParam();
+
+  const { component, setComponent } = useComponent();
+  const { setHierarchy } = useHierarchy();
+  const { setStates } = useStates();
+  const { setStyleFromString } = useStyle();
+
+  const { data: hierarchy } = useComponentHierarchy(id, "field");
+  const { data: parts } = useParts(id, "field");
+  const { data: states } = usePartStates(id, currentPart, "field");
+  const { data: style } = usePartStateStyle(
+    id,
+    currentPart,
+    currentState,
+    "field",
+  );
+
+  useEffect(() => {
+    if (!parts) return;
+    setComponent(parts);
+  }, [parts]);
+
+  useEffect(() => {
+    if (!hierarchy) return;
+    setHierarchy(hierarchy);
+  }, [hierarchy]);
+
+  useEffect(() => {
+    if (!states) return;
+    setStates(states);
+  }, [states]);
+
+  useEffect(() => {
+    setStyleFromString(style);
+  }, [style]);
+
+  useEffect(() => {
+    projectStore.setState(() => id);
+    componentStore.setState(() => "field");
+  }, [id]);
+
+  if (!component)
     return (
       <div className={"flex h-full w-full flex-col items-center gap-2 p-2"}>
         <Skeleton className={"h-full w-full"} />
         <Skeleton className={"h-full w-full"} />
       </div>
     );
-  if (errorFetch) return <div>Error: {errorFetch.message}</div>;
 
-  const { root, label, control, error, description } = component.parts;
+  const { root, label, control, error, description } = component;
 
   return (
     <div className="h-full w-full">
       <Preview>
-        <FieldRoot className={root.raw}>
-          <FieldLabel className={label.raw}>Name</FieldLabel>
-          <FieldControl
-            required
-            placeholder="Required"
-            className={control.raw}
-          />
-          <FieldError className={error.raw} match="valueMissing">
+        <FieldRoot className={root}>
+          <FieldLabel className={label}>Name</FieldLabel>
+          <FieldControl required placeholder="Required" className={control} />
+          <FieldError className={error} match="valueMissing">
             Please enter your name
           </FieldError>
 
-          <FieldDescription className={description.raw}>
+          <FieldDescription className={description}>
             Visible on your profile
           </FieldDescription>
         </FieldRoot>

@@ -82,6 +82,24 @@ export class ProjectService {
     return (await metadataRef.once('value')).val();
   }
 
+  static async updateProjectLastUpdated(
+    userId: string,
+    projectId: string,
+  ): Promise<ProjectMetadata> {
+    const snapshot = await db.ref(`users/${userId}/projects/${projectId}`).once('value');
+    if (!snapshot.exists()) {
+      throw new Error('Project does not exists.');
+    }
+    const metadataRef = db.ref(`users/${userId}/projects/${projectId}/metadata`);
+
+    const updatedData = {
+      updatedAt: new Date().toISOString(),
+    };
+
+    await metadataRef.update(updatedData);
+    return (await metadataRef.once('value')).val();
+  }
+
 
   static async deleteProject(userId: string, projectId: string): Promise<void> {
     const projectRef = db.ref(`users/${userId}/projects/${projectId}`);

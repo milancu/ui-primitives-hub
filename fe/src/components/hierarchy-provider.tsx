@@ -27,7 +27,7 @@ export function useHierarchy() {
 
   if (context === undefined) {
     throw new Error(
-      "useHierarchy must be used within a CurrentComponentProvider",
+      "useComponentHierarchy must be used within a CurrentComponentProvider",
     );
   }
 

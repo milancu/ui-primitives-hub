@@ -1,33 +1,11 @@
 import { authFetch } from "@/lib/authFetch.ts";
 
-export const fetchDialogHierarchy = async (projectId: string) => {
-  const res = await authFetch(
-    `/projects/${projectId}/components/dialog/hierarchy`,
-  );
-  if (!res.ok) {
-    const error = await res.json();
-    throw new Error(error.error);
-  }
-  return res.json();
-};
-
-export const fetchDialogParts = async (projectId: string) => {
-  const res = await authFetch(
-    `/projects/${projectId}/components/dialog/parts`,
-  );
-  if (!res.ok) {
-    const error = await res.json();
-    throw new Error(error.error);
-  }
-  return res.json();
-};
-
-export const fetchDialogPartStates = async (
+export const fetchHierarchy = async (
   projectId: string,
-  part: string,
+  componentName: string,
 ) => {
   const res = await authFetch(
-    `/projects/${projectId}/components/dialog/${part}/states`,
+    `/projects/${projectId}/components/${componentName}/hierarchy`,
   );
   if (!res.ok) {
     const error = await res.json();
@@ -36,13 +14,40 @@ export const fetchDialogPartStates = async (
   return res.json();
 };
 
-export const fetchDialogPartState = async (
+export const fetchParts = async (projectId: string, componentName: string) => {
+  const res = await authFetch(
+    `/projects/${projectId}/components/${componentName}/parts`,
+  );
+  if (!res.ok) {
+    const error = await res.json();
+    throw new Error(error.error);
+  }
+  return res.json();
+};
+
+export const fetchPartStates = async (
+  projectId: string,
+  part: string,
+  componentName: string,
+) => {
+  const res = await authFetch(
+    `/projects/${projectId}/components/${componentName}/${part}/states`,
+  );
+  if (!res.ok) {
+    const error = await res.json();
+    throw new Error(error.error);
+  }
+  return res.json();
+};
+
+export const fetchPartStateStyle = async (
   projectId: string,
   part: string,
   state: string,
+  componentName: string,
 ) => {
   const res = await authFetch(
-    `/projects/${projectId}/components/dialog/${part}/${state}`,
+    `/projects/${projectId}/components/${componentName}/${part}/${state}`,
   );
   if (!res.ok) {
     const error = await res.json();

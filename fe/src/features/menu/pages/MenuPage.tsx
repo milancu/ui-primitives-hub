@@ -1,8 +1,6 @@
-import { useCurrentComponent } from "@/components/CurrentComponentProvider.tsx";
 import { Skeleton } from "@/components/ui/skeleton.tsx";
 import Preview from "@/components/preview.tsx";
-import { useMenuStyles } from "@/features/menu/hooks/queries/useMenuStyles.ts";
-import React from "react";
+import React, { useEffect } from "react";
 import {
   MenuArrow,
   MenuItem,
@@ -13,51 +11,98 @@ import {
   MenuSeparator,
   MenuTrigger,
 } from "@ui-primitives-hub/ui/src/Menu.tsx";
-import { useUpdateMenuStyle } from "@/features/menu/hooks/mutations/useUpdateMenuStyle.ts";
+import { useParams } from "@tanstack/react-router";
+import { useCurrentPartParam } from "@/features/sidebar/hooks/useCurrentPartParam.tsx";
+import { useCurrentComponentStateParam } from "@/features/sidebar/hooks/useCurrentComponentStateParam.tsx";
+import { useComponent } from "@/components/component-provider.tsx";
+import { useHierarchy } from "@/components/hierarchy-provider.tsx";
+import { useStates } from "@/components/states-provider.tsx";
+import { useStyle } from "@/components/style-provider.tsx";
+import { useComponentHierarchy } from "@/hooks/queries/useComponentHierarchy.ts";
+import { useParts } from "@/hooks/queries/useParts.ts";
+import { usePartStates } from "@/hooks/queries/usePartStates.ts";
+import { usePartStateStyle } from "@/hooks/queries/usePartStateStyle.ts";
+import { projectStore } from "@/store/project.store.ts";
+import { componentStore } from "@/store/component.store.ts";
 
 const MenuPage = () => {
-  const { component, setComponent, setMutation } = useCurrentComponent();
-  const mutation = useUpdateMenuStyle();
-  const { isLoading, error: errorFetch } = useMenuStyles({
-    onDataLoaded: (component) => {
-      setComponent(component);
-      setMutation(mutation);
-    },
+  const { id } = useParams({
+    from: "/_authenticated/_canva-layout/$id/menu",
   });
 
-  if (isLoading || !component)
+  const [currentPart] = useCurrentPartParam();
+  const [currentState] = useCurrentComponentStateParam();
+
+  const { component, setComponent } = useComponent();
+  const { setHierarchy } = useHierarchy();
+  const { setStates } = useStates();
+  const { setStyleFromString } = useStyle();
+
+  const { data: hierarchy } = useComponentHierarchy(id, "menu");
+  const { data: parts } = useParts(id, "menu");
+  const { data: states } = usePartStates(id, currentPart, "menu");
+  const { data: style } = usePartStateStyle(
+    id,
+    currentPart,
+    currentState,
+    "menu",
+  );
+
+  useEffect(() => {
+    if (!parts) return;
+    setComponent(parts);
+  }, [parts]);
+
+  useEffect(() => {
+    if (!hierarchy) return;
+    setHierarchy(hierarchy);
+  }, [hierarchy]);
+
+  useEffect(() => {
+    if (!states) return;
+    setStates(states);
+  }, [states]);
+
+  useEffect(() => {
+    setStyleFromString(style);
+  }, [style]);
+
+  useEffect(() => {
+    projectStore.setState(() => id);
+    componentStore.setState(() => "menu");
+  }, [id]);
+
+  if (!component)
     return (
       <div className={"flex h-full w-full flex-col items-center gap-2 p-2"}>
         <Skeleton className={"h-full w-full"} />
         <Skeleton className={"h-full w-full"} />
       </div>
     );
-  if (errorFetch) return <div>Error: {errorFetch.message}</div>;
 
-  const { trigger, positioner, popup, arrow, item, separator } =
-    component.parts;
+  const { trigger, positioner, popup, arrow, item, separator } = component;
 
   return (
     <div className="h-full w-full">
       <Preview>
         <MenuRoot>
-          <MenuTrigger className={trigger.raw}>
+          <MenuTrigger className={trigger}>
             Song <ChevronDownIcon className="-mr-1" />
           </MenuTrigger>
           <MenuPortal>
-            <MenuPositioner className={positioner.raw} sideOffset={8}>
-              <MenuPopup className={popup.raw}>
-                <MenuArrow className={arrow.raw}>
+            <MenuPositioner className={positioner} sideOffset={8}>
+              <MenuPopup className={popup}>
+                <MenuArrow className={arrow}>
                   <ArrowSvg />
                 </MenuArrow>
-                <MenuItem className={item.raw}>Add to Library</MenuItem>
-                <MenuItem className={item.raw}>Add to Playlist</MenuItem>
-                <MenuSeparator className={separator.raw} />
-                <MenuItem className={item.raw}>Play Next</MenuItem>
-                <MenuItem className={item.raw}>Play Last</MenuItem>
-                <MenuSeparator className={separator.raw} />
-                <MenuItem className={item.raw}>Favorite</MenuItem>
-                <MenuItem className={item.raw}>Share</MenuItem>
+                <MenuItem className={item}>Add to Library</MenuItem>
+                <MenuItem className={item}>Add to Playlist</MenuItem>
+                <MenuSeparator className={separator} />
+                <MenuItem className={item}>Play Next</MenuItem>
+                <MenuItem className={item}>Play Last</MenuItem>
+                <MenuSeparator className={separator} />
+                <MenuItem className={item}>Favorite</MenuItem>
+                <MenuItem className={item}>Share</MenuItem>
               </MenuPopup>
             </MenuPositioner>
           </MenuPortal>

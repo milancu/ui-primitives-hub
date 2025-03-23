@@ -1,6 +1,13 @@
 import {db} from '../firebase';
 import {getRawTailwindClasses} from "@ui-primitives-hub/utils";
 import {AccordionService} from "./accordion.service";
+import {AvatarService} from "./avatar.service";
+import {DialogService} from "./dialog.service";
+import {FieldService} from "./field.service";
+import {FieldsetService} from "./fieldset.service";
+import {MenuService} from "./menu.service";
+import {NumberfieldService} from "./numberfield.service";
+import {ProjectService} from "./project.service";
 
 export class ComponentService {
 
@@ -11,73 +18,38 @@ export class ComponentService {
     }, {});
   };
 
-  // static getComponentStyle = async (componentName: string) => {
-  //   const ref = db.ref(componentName);
-  //   const snapshot = await ref.once("value");
-  //   const component = snapshot.val();
-  //
-  //   return Object.keys(component).reduce((acc: Record<string, ComponentPart>, key) => {
-  //     acc[key] = {
-  //       name: key, raw: getRawTailwindClasses(component[key]), attributes: this.getAttributes(component[key])
-  //     };
-  //     return acc;
-  //   }, {});
-  // }
-  //
-  // static getComponent = async (userId: string, projectId: string, componentName: string) => {
-  //   const snapshot = await db.ref(`users/${userId}/projects/${projectId}/components/${componentName}`).once('value');
-  //   const component = snapshot.val();
-  //
-  //   const x = Object.keys(component).reduce((acc: Record<string, ComponentPart>, key) => {
-  //     acc[key] = {
-  //       name: key, raw: getRawTailwindClasses(component[key]), attributes: this.getAttributes(component[key])
-  //     };
-  //     return acc;
-  //   }, {});
-  //
-  //   const accordion: Component = {
-  //     hierarchy: {
-  //       name: "root",
-  //       children: [
-  //         {
-  //           name: "item",
-  //           children: [
-  //             {name: "header", children: [{name: "trigger"}]},
-  //             {name: "panel"},
-  //           ],
-  //         },
-  //       ],
-  //     },
-  //     parts: x
-  //   };
-  //
-  //   return accordion
-  // }
-  //
-  // static updateComponent = async (userId: string, projectId: string, componentName: string, state:string, updates: string) => {
-  //   const ref = db.ref(`users/${userId}/projects/${projectId}/${componentName}/${state}`);
-  //   await ref.update(updates);
-  // }
-  //   async (req: any, res: any) => {
-  //     const { component } = req.params;
-  //     const { id, data } = req.body;
-  //
-  //     if (!id || !data) {
-  //       return res.status(400).json({ error: "ID nebo data chybí" });
-  //     }
-  //
-  //     try {
-  //       const ref = db.ref(`${component}/${id}`);
-  //       await ref.update(data);
-  //       res.status(200).json({ message: "Úspěšně aktualizováno" });
-  //     } catch (error: any) {
-  //       res.status(500).json({ error: error.message });
-  //     }
-  // }
+  static updateComponent = async (userId: string, projectId: string, componentName: string, part: string, state: string, tailwind: string) => {
+    const ref = db.ref(`users/${userId}/projects/${projectId}/components/${componentName}/${part}`);
+    const updatedData = {
+      [state]: tailwind,
+    };
+    await ref.update(updatedData);
+    await ProjectService.updateProjectLastUpdated(userId, projectId);
+    return (await ref.once('value')).val();
+  }
+
   static getComponentHierarchy = (userId: string, projectId: string, componentName: string) => {
     switch (componentName) {
       case "accordion": {
         return AccordionService.getHierarchy()
+      }
+      case "avatar": {
+        return AvatarService.getHierarchy()
+      }
+      case "dialog": {
+        return DialogService.getHierarchy()
+      }
+      case "field": {
+        return FieldService.getHierarchy()
+      }
+      case "fieldset": {
+        return FieldsetService.getHierarchy()
+      }
+      case "menu": {
+        return MenuService.getHierarchy()
+      }
+      case "number-field": {
+        return NumberfieldService.getHierarchy()
       }
       default:
         return {}
