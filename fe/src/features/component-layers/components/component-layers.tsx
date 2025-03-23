@@ -1,5 +1,4 @@
 import { Frame, Layers } from "lucide-react";
-import { useCurrentComponent } from "@/components/CurrentComponentProvider.tsx";
 import { useCurrentPartParam } from "@/features/sidebar/hooks/useCurrentPartParam.tsx";
 import { ComponentHierarchy } from "@ui-primitives-hub/types";
 import { useCurrentComponentStateParam } from "@/features/sidebar/hooks/useCurrentComponentStateParam.tsx";
@@ -9,6 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card.tsx";
+import { useHierarchy } from "@/components/hierarchy-provider";
 
 const ComponentTreeItem = ({
   component,
@@ -17,7 +17,7 @@ const ComponentTreeItem = ({
   selectComponent,
 }: {
   component: ComponentHierarchy;
-  currentComponent: string;
+  currentComponent?: string | null | undefined;
   depth?: number;
   selectComponent: (component: ComponentHierarchy) => void;
 }) => {
@@ -57,21 +57,21 @@ const ComponentTreeItem = ({
   );
 };
 
-export default function FigmaLayers() {
-  const [componentName, setComponentName] = useCurrentPartParam();
+export default function ComponentLayers() {
+  const { hierarchy } = useHierarchy();
+  const [partName, setPartName] = useCurrentPartParam();
   const [, setCurrentState] = useCurrentComponentStateParam();
-  const { component } = useCurrentComponent();
 
   const selectComponent = (component: ComponentHierarchy) => {
-    setComponentName(component.name);
+    setPartName(component.name);
     setCurrentState("default");
   };
 
-  if (!component) return null;
+  if (hierarchy === undefined) return null;
 
   return (
     <Card className="shadow-none">
-      <CardHeader className="border-b border-gray-200 p-4">
+      <CardHeader className="border-border border-b p-4">
         <CardTitle className="flex items-center gap-2.5 text-sm">
           <Layers className="h-5 w-5 text-gray-500" />
           <div className="text-sm font-medium">Component layers</div>
@@ -80,9 +80,9 @@ export default function FigmaLayers() {
 
       <CardContent className="grid gap-2.5 p-0">
         <ComponentTreeItem
-          component={component?.hierarchy}
+          component={hierarchy}
           selectComponent={selectComponent}
-          currentComponent={componentName}
+          currentComponent={partName}
         />
       </CardContent>
     </Card>

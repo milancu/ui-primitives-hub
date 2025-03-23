@@ -6,48 +6,76 @@ const router = express.Router();
 
 router.use(authenticate as express.RequestHandler);
 
-router.put('/:projectId/components/:componentType/', async (req, res) => {
-  try {
-    const { state, data } = req.body;
-
-    const updated = await ComponentService.updateComponent(
-      (req as any).user.uid,
-      req.params.projectId,
-      req.params.componentType,
-      state,
-      data
-    );
-    res.json(updated);
-  } catch (error) {
-    res.status(400).json({ error: 'Component update failed' });
-  }
-});
-
-router.get('/:projectId/components/:componentType', async (req, res) => {
-  try {
-    const component = await ComponentService.getComponent(
-      (req as any).user.uid,
-      req.params.projectId,
-      req.params.componentType,
-    );
-    res.json(component);
-  } catch (error) {
-    res.status(404).json({ error: 'Component not found' });
-  }
-});
-
-// router.delete('/:projectId/components/:componentType/:element', async (req, res) => {
+// router.put('/:projectId/components/:component/', async (req, res) => {
 //   try {
-//     await ComponentService.resetComponent(
-//       req.user.uid,
+//     const { state, data } = req.body;
+//
+//     const updated = await ComponentService.updateComponent(
+//       (req as any).user.uid,
 //       req.params.projectId,
-//       req.params.componentType,
-//       req.params.element
+//       req.params.component,
+//       state,
+//       data
 //     );
-//     res.status(204).send();
+//     res.json(updated);
 //   } catch (error) {
-//     res.status(500).json({ error: 'Reset failed' });
+//     res.status(400).json({ error: `Component update failed, ${error}` });
 //   }
 // });
+
+router.get('/:projectId/components/:component/hierarchy', async (req, res) => {
+  try {
+    const hierarchy = ComponentService.getComponentHierarchy(
+        (req as any).user.uid,
+        req.params.projectId,
+        req.params.component
+    );
+    res.json(hierarchy);
+  } catch (error: any) {
+    res.status(400).json({error: error.message});
+  }
+});
+
+router.get('/:projectId/components/:component/parts', async (req, res) => {
+  try {
+    const parts = await ComponentService.getComponentParts(
+        (req as any).user.uid,
+        req.params.projectId,
+        req.params.component
+    )
+    res.json(parts)
+  } catch (error: any) {
+    res.status(400).json({error: error.message});
+  }
+})
+
+router.get('/:projectId/components/:component/:part/states', async (req, res) => {
+  try {
+    const parts = await ComponentService.getComponentPartStates(
+        (req as any).user.uid,
+        req.params.projectId,
+        req.params.component,
+        req.params.part
+    )
+    res.json(parts)
+  } catch (error: any) {
+    res.status(400).json({error: error.message});
+  }
+})
+
+router.get('/:projectId/components/:component/:part/:state', async (req, res) => {
+  try {
+    const parts = await ComponentService.getComponentPartState(
+        (req as any).user.uid,
+        req.params.projectId,
+        req.params.component,
+        req.params.part,
+        req.params.state
+    )
+    res.json(parts)
+  } catch (error: any) {
+    res.status(400).json({error: error.message});
+  }
+})
 
 export default router;

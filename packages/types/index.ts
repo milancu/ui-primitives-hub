@@ -1,12 +1,5 @@
 export type CSSUnit = `${number}${"px" | "%" | "em" | "rem" | "vh" | "vw"}`;
 
-export type ComponentPart = {
-  name: string;
-  raw: string;
-  attributes: {
-    [attribute: string]: string;
-  };
-};
 
 export type ComponentHierarchy = {
   name: string;
@@ -14,12 +7,8 @@ export type ComponentHierarchy = {
 };
 
 export type Component = {
-  hierarchy: ComponentHierarchy;
-  parts: {
-    [key: string]: ComponentPart;
-  };
+  [key: string]: string;
 };
-
 
 export type Project = {
   id: string;
@@ -27,6 +16,7 @@ export type Project = {
   createdAt: string;
   updatedAt: string;
   ownerId: string;
+  components?: ProjectComponents;
 };
 
 export type ComponentType =

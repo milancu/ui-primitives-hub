@@ -9,6 +9,10 @@ import { Toaster } from "@/components/ui/sonner";
 import { NuqsAdapter } from "nuqs/adapters/react";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { MenuContextProvider } from "@/features/command-menu/components/CommandMenuContext.tsx";
+import HierarchyProvider from "@/components/hierarchy-provider.tsx";
+import StatesProvider from "@/components/states-provider.tsx";
+import StyleProvider from "@/components/style-provider.tsx";
+import ComponentProvider from "@/components/component-provider.tsx";
 
 const queryClient = new QueryClient();
 
@@ -18,11 +22,19 @@ createRoot(document.getElementById("root")!).render(
       <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
         <QueryClientProvider client={queryClient}>
           <NuqsAdapter>
-            <CurrentComponentProvider>
-              <App />
-              <Toaster />
-              <ReactQueryDevtools initialIsOpen={false} />
-            </CurrentComponentProvider>
+            <HierarchyProvider>
+              <ComponentProvider>
+                <StatesProvider>
+                  <StyleProvider>
+                    <CurrentComponentProvider>
+                      <App />
+                      <Toaster />
+                      <ReactQueryDevtools initialIsOpen={false} />
+                    </CurrentComponentProvider>
+                  </StyleProvider>
+                </StatesProvider>
+              </ComponentProvider>
+            </HierarchyProvider>
           </NuqsAdapter>
         </QueryClientProvider>
       </ThemeProvider>

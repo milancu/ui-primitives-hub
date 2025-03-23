@@ -5,7 +5,6 @@ import {
   SidebarMenu,
   SidebarMenuItem,
 } from "@/components/ui/sidebar.tsx";
-import InputWithIcon from "@/components/ui/input-with-icon.tsx";
 import { Scan } from "lucide-react";
 import {
   DropdownMenu,
@@ -16,13 +15,11 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu.tsx";
 import { Button } from "@/components/ui/button.tsx";
-import { Input } from "@/components/ui/input.tsx";
-import { useCurrentComponent } from "@/components/CurrentComponentProvider.tsx";
-import { useComponentStyleMutation } from "@/hooks/use-component-style-mutation.ts";
+import { useStyle } from "@/components/style-provider";
+import InputComponentUnitSwitcher from "@/components/ui/input-component-unit-switcher.tsx";
 
 const NavMarginEditor = () => {
-  const { currentStyle } = useCurrentComponent();
-  const { handleStyleChange } = useComponentStyleMutation();
+  const { style: currentStyle, handleStyle } = useStyle();
 
   return (
     <SidebarGroup>
@@ -30,12 +27,10 @@ const NavMarginEditor = () => {
       <SidebarGroupContent>
         <SidebarMenu>
           <SidebarMenuItem className={"flex gap-1"}>
-            <InputWithIcon
+            <InputComponentUnitSwitcher
               placeholder={"margin"}
               character={"M"}
-              triggerChange={(newValue) =>
-                handleStyleChange("margin", newValue)
-              }
+              handleChange={(newValue) => handleStyle("margin", newValue)}
               value={currentStyle?.margin}
             />
             <DropdownMenu>
@@ -44,60 +39,60 @@ const NavMarginEditor = () => {
                   <Scan />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent className="mr-2 w-56">
+              <DropdownMenuContent className="mr-4 w-56">
                 <DropdownMenuLabel>Margin details</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
                   <DropdownMenuLabel>
-                    <Input
+                    <InputComponentUnitSwitcher
                       placeholder={"margin-left"}
-                      onChange={(e) =>
-                        handleStyleChange("marginLeft", e.target.value)
+                      handleChange={(newValue) =>
+                        handleStyle("marginLeft", newValue)
                       }
                       value={currentStyle?.marginLeft}
                     />
                   </DropdownMenuLabel>
                   <DropdownMenuLabel>
-                    <Input
+                    <InputComponentUnitSwitcher
                       placeholder={"margin-top"}
-                      onChange={(e) =>
-                        handleStyleChange("marginTop", e.target.value)
+                      handleChange={(newValue) =>
+                        handleStyle("marginTop", newValue)
                       }
                       value={currentStyle?.marginTop}
                     />
                   </DropdownMenuLabel>
                   <DropdownMenuLabel>
-                    <Input
+                    <InputComponentUnitSwitcher
                       placeholder={"margin-right"}
-                      onChange={(e) =>
-                        handleStyleChange("marginRight", e.target.value)
+                      handleChange={(newValue) =>
+                        handleStyle("marginRight", newValue)
                       }
                       value={currentStyle?.marginRight}
                     />
                   </DropdownMenuLabel>
                   <DropdownMenuLabel>
-                    <Input
+                    <InputComponentUnitSwitcher
                       placeholder={"margin-bottom"}
-                      onChange={(e) =>
-                        handleStyleChange("marginBottom", e.target.value)
+                      handleChange={(newValue) =>
+                        handleStyle("marginBottom", newValue)
                       }
                       value={currentStyle?.marginBottom}
                     />
                   </DropdownMenuLabel>
                   <DropdownMenuLabel>
-                    <Input
+                    <InputComponentUnitSwitcher
                       placeholder={"margin-vertical"}
-                      onChange={(e) =>
-                        handleStyleChange("marginVertical", e.target.value)
+                      handleChange={(newValue) =>
+                        handleStyle("marginVertical", newValue)
                       }
                       value={currentStyle?.marginVertical}
                     />
                   </DropdownMenuLabel>
                   <DropdownMenuLabel>
-                    <Input
+                    <InputComponentUnitSwitcher
                       placeholder={"margin-horizontal"}
-                      onChange={(e) =>
-                        handleStyleChange("marginHorizontal", e.target.value)
+                      handleChange={(newValue) =>
+                        handleStyle("marginHorizontal", newValue)
                       }
                       value={currentStyle?.marginHorizontal}
                     />

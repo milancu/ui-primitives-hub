@@ -17,14 +17,11 @@ import {
   StretchHorizontal,
   StretchVertical,
 } from "lucide-react";
-import InputWithIcon from "@/components/ui/input-with-icon.tsx";
-import { useCurrentComponent } from "@/components/CurrentComponentProvider.tsx";
-import { useComponentStyleMutation } from "@/hooks/use-component-style-mutation.ts";
-import InputComponentSwitcher from "@/components/ui/input-component-switcher.tsx";
+import { useStyle } from "@/components/style-provider";
+import InputComponentUnitSwitcher from "@/components/ui/input-component-unit-switcher.tsx";
 
 const NavLayoutEditor = () => {
-  const { currentStyle } = useCurrentComponent();
-  const { handleStyleChange } = useComponentStyleMutation();
+  const { style: currentStyle, handleStyle } = useStyle();
 
   return (
     <SidebarGroup>
@@ -32,12 +29,9 @@ const NavLayoutEditor = () => {
       <SidebarGroupContent>
         <SidebarMenu className={"gap-2"}>
           <SidebarMenuItem>
-            <InputComponentSwitcher />
-          </SidebarMenuItem>
-          <SidebarMenuItem>
             <RadioGroup
               onValueChange={(e) => {
-                handleStyleChange("display", e);
+                handleStyle("display", e);
               }}
               className="grid grid-cols-2 gap-1"
               value={currentStyle?.display}
@@ -66,7 +60,7 @@ const NavLayoutEditor = () => {
                 className="grid grid-cols-2 gap-1"
                 value={currentStyle.flexDirection}
                 onValueChange={(e) => {
-                  handleStyleChange("flexDirection", e);
+                  handleStyle("flexDirection", e);
                 }}
               >
                 <label className="border-input has-[:focus-visible]:outline-ring/70 relative flex cursor-pointer flex-col items-center gap-3 rounded-lg border px-2 py-3 text-center shadow-sm shadow-black/5 outline-offset-2 transition-colors has-[:focus-visible]:outline-2 has-[[data-disabled]]:cursor-not-allowed has-[[data-disabled]]:opacity-50 has-[[data-state=checked]]:border-blue-500 has-[[data-state=checked]]:bg-blue-500/10 has-[[data-state=checked]]:text-blue-500">
@@ -94,7 +88,7 @@ const NavLayoutEditor = () => {
                 className="grid grid-cols-2 gap-1"
                 value={currentStyle.flexWrap}
                 onValueChange={(e) => {
-                  handleStyleChange("flexWrap", e);
+                  handleStyle("flexWrap", e);
                 }}
               >
                 <label className="border-input has-[:focus-visible]:outline-ring/70 relative flex cursor-pointer flex-col items-center gap-3 rounded-lg border px-2 py-3 text-center shadow-sm shadow-black/5 outline-offset-2 transition-colors has-[:focus-visible]:outline-2 has-[[data-disabled]]:cursor-not-allowed has-[[data-disabled]]:opacity-50 has-[[data-state=checked]]:border-blue-500 has-[[data-state=checked]]:bg-blue-500/10 has-[[data-state=checked]]:text-blue-500">
@@ -120,13 +114,11 @@ const NavLayoutEditor = () => {
                 <legend className={"text-sidebar-foreground/70 text-xs"}>
                   Gap
                 </legend>
-                <InputWithIcon
-                  value={currentStyle?.gap}
+                <InputComponentUnitSwitcher
                   placeholder={"gap"}
                   character={"G"}
-                  triggerChange={(newValue) =>
-                    handleStyleChange("gap", newValue)
-                  }
+                  handleChange={(newValue) => handleStyle("gap", newValue)}
+                  value={currentStyle?.gap}
                 />
               </fieldset>
             </SidebarMenuItem>
@@ -141,7 +133,7 @@ const NavLayoutEditor = () => {
                   className="grid grid-cols-3 gap-1"
                   value={currentStyle?.alignItems}
                   onValueChange={(e) => {
-                    handleStyleChange("alignItems", e);
+                    handleStyle("alignItems", e);
                   }}
                 >
                   <label className="border-input has-[:focus-visible]:outline-ring/70 relative flex cursor-pointer flex-col items-center gap-3 rounded-lg border px-2 py-3 text-center shadow-sm shadow-black/5 outline-offset-2 transition-colors has-[:focus-visible]:outline-2 has-[[data-disabled]]:cursor-not-allowed has-[[data-disabled]]:opacity-50 has-[[data-state=checked]]:border-blue-500 has-[[data-state=checked]]:bg-blue-500/10 has-[[data-state=checked]]:text-blue-500">
@@ -179,7 +171,7 @@ const NavLayoutEditor = () => {
                   className="grid grid-cols-3 gap-1"
                   value={currentStyle?.justifyContent}
                   onValueChange={(e) => {
-                    handleStyleChange("justifyContent", e);
+                    handleStyle("justifyContent", e);
                   }}
                 >
                   <label className="border-input has-[:focus-visible]:outline-ring/70 relative col-span-full flex cursor-pointer flex-row items-center gap-3 rounded-lg border px-2 py-3 text-center shadow-sm shadow-black/5 outline-offset-2 transition-colors has-[:focus-visible]:outline-2 has-[[data-disabled]]:cursor-not-allowed has-[[data-disabled]]:opacity-50 has-[[data-state=checked]]:border-blue-500 has-[[data-state=checked]]:bg-blue-500/10 has-[[data-state=checked]]:text-blue-500">

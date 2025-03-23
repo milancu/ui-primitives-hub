@@ -5,7 +5,6 @@ import {
   SidebarMenu,
   SidebarMenuItem,
 } from "@/components/ui/sidebar.tsx";
-import InputWithIcon from "@/components/ui/input-with-icon.tsx";
 import {
   Select,
   SelectContent,
@@ -20,12 +19,11 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible.tsx";
-import { useComponentStyleMutation } from "@/hooks/use-component-style-mutation.ts";
-import { useCurrentComponent } from "@/components/CurrentComponentProvider.tsx";
+import { useStyle } from "@/components/style-provider";
+import InputComponentUnitSwitcher from "@/components/ui/input-component-unit-switcher.tsx";
 
 const NavTextEditor = () => {
-  const { handleStyleChange } = useComponentStyleMutation();
-  const { currentStyle } = useCurrentComponent();
+  const { style: currentStyle, handleStyle } = useStyle();
 
   return (
     <Collapsible title={"Text properties"} className="group/collapsible">
@@ -40,21 +38,19 @@ const NavTextEditor = () => {
           <SidebarGroupContent>
             <SidebarMenu>
               <SidebarMenuItem>
-                <InputWithIcon
+                <InputComponentUnitSwitcher
                   placeholder={"font-size"}
-                  value={currentStyle?.fontSize}
-                  triggerChange={(newValue) =>
-                    handleStyleChange("fontSize", newValue)
-                  }
                   character={"S"}
+                  handleChange={(newValue) => handleStyle("fontSize", newValue)}
+                  value={currentStyle?.margin}
                 />
               </SidebarMenuItem>
               <SidebarMenuItem>
-                <InputWithIcon
+                <InputComponentUnitSwitcher
                   placeholder={"font-weight"}
                   value={currentStyle?.fontSize}
-                  triggerChange={(newValue) =>
-                    handleStyleChange("fontWeight", newValue)
+                  handleChange={(newValue) =>
+                    handleStyle("fontWeight", newValue)
                   }
                   character={"W"}
                 />
@@ -63,7 +59,7 @@ const NavTextEditor = () => {
                 <Select
                   value={currentStyle?.textAlign}
                   onValueChange={(value) => {
-                    handleStyleChange("textAlign", value);
+                    handleStyle("textAlign", value);
                   }}
                 >
                   <SelectTrigger>
@@ -83,7 +79,7 @@ const NavTextEditor = () => {
                 <Select
                   value={currentStyle?.textTransform}
                   onValueChange={(value) => {
-                    handleStyleChange("textTransform", value);
+                    handleStyle("textTransform", value);
                   }}
                 >
                   <SelectTrigger>
@@ -102,7 +98,7 @@ const NavTextEditor = () => {
               </SidebarMenuItem>
               <SidebarMenuItem className={"flex gap-1"}>
                 <ColorPicker
-                  hideContrastRatio={true}
+                  hideContrastRatio={false}
                   value={
                     currentStyle?.color
                       ? (currentStyle?.color as `#${string}`)
@@ -110,7 +106,7 @@ const NavTextEditor = () => {
                   }
                   label={"color"}
                   onValueChange={(value) => {
-                    handleStyleChange("color", value.hex);
+                    handleStyle("color", value.hex);
                   }}
                 />
               </SidebarMenuItem>

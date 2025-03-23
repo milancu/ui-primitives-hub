@@ -10,7 +10,7 @@ import {
   SidebarHeader,
 } from "@/components/ui/sidebar.tsx";
 import { Separator } from "@/components/ui/separator";
-import FigmaLayers from "@/features/component-layers/components/component-layers.tsx";
+import ComponentLayers from "@/features/component-layers/components/component-layers.tsx";
 
 const data = {
   navMain: [
@@ -62,7 +62,7 @@ export function SidebarLeft({
         {/*<NavSecondary className={"mt-auto"} />*/}
       </SidebarContent>
       <SidebarFooter>
-        <FigmaLayers />
+        <ComponentLayers />
         {/*<SidebarMenu>*/}
         {/*  <SidebarMenuItem>*/}
         {/*    <NavUser />*/}

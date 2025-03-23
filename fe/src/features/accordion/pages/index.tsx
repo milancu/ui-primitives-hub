@@ -1,3 +1,8 @@
+import { useParams } from "@tanstack/react-router";
+import { useAccordionHierarchy } from "@/features/accordion/hooks/queries/useAccordionHierarchy.ts";
+import { useAccordionParts } from "@/features/accordion/hooks/queries/useAccordionParts.ts";
+import { Skeleton } from "@/components/ui/skeleton";
+import Preview from "@/components/preview";
 import {
   AccordionHeader,
   AccordionItem,
@@ -5,60 +10,88 @@ import {
   AccordionRoot,
   AccordionTrigger,
 } from "@ui-primitives-hub/ui/src";
-import { useAccordionStyles } from "@/features/accordion/hooks/queries/useAccordionStyles.ts";
-import { useCurrentComponent } from "@/components/CurrentComponentProvider";
-import Preview from "@/components/preview.tsx";
-import { Skeleton } from "@/components/ui/skeleton.tsx";
-import { useUpdateAccordionStyle } from "@/features/accordion/hooks/mutations/useUpdateAccordionStyle.ts";
-import { useParams } from "@tanstack/react-router";
+import { useAccordionPartStates } from "@/features/accordion/hooks/queries/useAccordionPartStates.ts";
+import { useAccordionPartStateStyle } from "@/features/accordion/hooks/queries/useAccordionPartStateStyle.ts";
+import { useCurrentPartParam } from "@/features/sidebar/hooks/useCurrentPartParam.tsx";
+import { useCurrentComponentStateParam } from "@/features/sidebar/hooks/useCurrentComponentStateParam.tsx";
+import { useEffect } from "react";
+import { useHierarchy } from "@/components/hierarchy-provider.tsx";
+import { useStates } from "@/components/states-provider.tsx";
+import { useStyle } from "@/components/style-provider.tsx";
+import { useComponent } from "@/components/component-provider";
 
 const AccordionPage = () => {
-  const { component, setComponent, setMutation } = useCurrentComponent();
-  const mutation = useUpdateAccordionStyle();
-
   const { id } = useParams({
     from: "/_authenticated/_canva-layout/$id/accordion",
   });
-  const { isLoading, error } = useAccordionStyles({
-    projectId: id,
-    onDataLoaded: (component) => {
-      setComponent(component);
-      setMutation(mutation);
-    },
-  });
 
-  if (isLoading || !component)
+  const [currentPart] = useCurrentPartParam();
+  const [currentState] = useCurrentComponentStateParam();
+
+  const { component, setComponent } = useComponent();
+  const { setHierarchy } = useHierarchy();
+  const { setStates } = useStates();
+  const { setStyleFromString } = useStyle();
+
+  const { data: hierarchy } = useAccordionHierarchy(id);
+  const { data: parts } = useAccordionParts(id);
+  const { data: states } = useAccordionPartStates(id, currentPart);
+  const { data: style } = useAccordionPartStateStyle(
+    id,
+    currentPart,
+    currentState,
+  );
+
+  useEffect(() => {
+    if (!parts) return;
+    setComponent(parts);
+  }, [parts]);
+
+  useEffect(() => {
+    if (!hierarchy) return;
+    setHierarchy(hierarchy);
+  }, [hierarchy]);
+
+  useEffect(() => {
+    if (!states) return;
+    setStates(states);
+  }, [states]);
+
+  useEffect(() => {
+    setStyleFromString(style);
+  }, [style]);
+
+  if (!component)
     return (
       <div className={"flex h-full w-full flex-col items-center gap-2 p-2"}>
         <Skeleton className={"h-full w-full"} />
         <Skeleton className={"h-full w-full"} />
       </div>
     );
-  if (error) return <div>Error: {error.message}</div>;
 
-  const { root, item, header, trigger, panel } = component.parts;
+  const { root, item, header, trigger, panel } = component;
 
   return (
     <div className="h-full w-full">
       <Preview>
-        <AccordionRoot className={root.raw}>
-          <AccordionItem className={item.raw}>
-            <AccordionHeader className={header.raw}>
-              <AccordionTrigger className={trigger.raw}>
+        <AccordionRoot className={root}>
+          <AccordionItem className={item}>
+            <AccordionHeader className={header}>
+              <AccordionTrigger className={trigger}>
                 Hello, this is accordion
               </AccordionTrigger>
             </AccordionHeader>
-            <AccordionPanel className={panel.raw}>
+            <AccordionPanel className={panel}>
               You can add any content here.
             </AccordionPanel>
           </AccordionItem>
-          <AccordionItem className={item.raw}>
-            <AccordionHeader className={header.raw}>
-              <AccordionTrigger className={trigger.raw}>
+          <AccordionItem className={item}>
+            <AccordionHeader className={header}>
+              <AccordionTrigger className={trigger}>
                 Hello, this is accordion
               </AccordionTrigger>
             </AccordionHeader>
-            <AccordionPanel className={panel.raw}>
+            <AccordionPanel className={panel}>
               You can add any content here.
             </AccordionPanel>
           </AccordionItem>

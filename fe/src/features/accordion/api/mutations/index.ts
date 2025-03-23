@@ -1,16 +1,20 @@
+import { authFetch } from "@/lib/authFetch.ts";
+
 interface UpdateAccordionStyleProps {
   part: string;
   value: string;
   attribute: string;
+  projectId: string;
 }
 
 export const updateAccordionStyle = async ({
-                                             part,
+  projectId,
+  part,
   value,
   attribute,
 }: UpdateAccordionStyleProps) => {
-  const response = await fetch(
-    `${import.meta.env.VITE_BACKEND_API_URL}/components/accordion`,
+  const response = await authFetch(
+    `/projects/${projectId}/components/accordion`,
     {
       method: "PUT",
       headers: {

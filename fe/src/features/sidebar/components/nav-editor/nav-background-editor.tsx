@@ -13,12 +13,10 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible.tsx";
-import { useComponentStyleMutation } from "@/hooks/use-component-style-mutation.ts";
-import { useCurrentComponent } from "@/components/CurrentComponentProvider.tsx";
+import { useStyle } from "@/components/style-provider.tsx";
 
 const NavBackgroundEditor = () => {
-  const { handleStyleChange } = useComponentStyleMutation();
-  const { currentStyle } = useCurrentComponent();
+  const { style: currentStyle, handleStyle } = useStyle();
 
   return (
     <Collapsible title={"Background properties"} className="group/collapsible">
@@ -32,36 +30,6 @@ const NavBackgroundEditor = () => {
         <CollapsibleContent>
           <SidebarGroupContent>
             <SidebarMenu>
-              {/*<SidebarMenuItem className={"flex gap-1"}>*/}
-              {/*  <ColorPicker*/}
-              {/*    onValueChange={(value)=>{*/}
-              {/*      handleStyleChange('background', value.hex)*/}
-              {/*    }}*/}
-              {/*    hideContrastRatio={true}*/}
-              {/*    value={currentStyle?.background ? currentStyle.background as `#${string}` : "#FFFFFF"}*/}
-              {/*    swatches={[*/}
-              {/*      "#AEDEAE",*/}
-              {/*      "#FFD3B6",*/}
-              {/*      "#FFB6B9",*/}
-              {/*      "#FFC0CB",*/}
-              {/*      "#FFD1DC",*/}
-              {/*    ]}*/}
-              {/*  >*/}
-              {/*    <Button*/}
-              {/*      variant="outline"*/}
-              {/*      className="w-full justify-start text-left font-normal"*/}
-              {/*    >*/}
-              {/*      <div*/}
-              {/*        className="mr-2 h-4 w-4 rounded-full shadow-sm"*/}
-              {/*        style={{ backgroundColor: currentStyle?.background ? currentStyle.background as `#${string}` : "#FFFFFF" }}*/}
-              {/*      />*/}
-              {/*      <span className="text-muted-foreground flex-grow">*/}
-              {/*        background color {currentStyle?.background ? currentStyle.background as `#${string}` : "#FFFFFF"}*/}
-              {/*      </span>*/}
-              {/*      <ChevronDown className="h-4 w-4 opacity-50" />*/}
-              {/*    </Button>*/}
-              {/*  </ColorPicker>*/}
-              {/*</SidebarMenuItem>*/}
               <SidebarMenuItem className={"flex gap-1"}>
                 <ColorPicker
                   hideContrastRatio={true}
@@ -71,7 +39,7 @@ const NavBackgroundEditor = () => {
                       : "#FFFFFF"
                   }
                   onValueChange={(value) => {
-                    handleStyleChange("backgroundColor", value.hex);
+                    handleStyle("backgroundColor", value.hex);
                   }}
                   swatches={[
                     "#AEDEAE",
@@ -91,8 +59,8 @@ const NavBackgroundEditor = () => {
                   min={0}
                   max={100}
                   step={5}
-                  triggerChange={(newValue) =>
-                    handleStyleChange("opacity", newValue)
+                  handleChange={(newValue) =>
+                    handleStyle("opacity", newValue)
                   }
                 />
               </SidebarMenuItem>

@@ -6,18 +6,16 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar.tsx";
 import InputWithIcon from "@/components/ui/input-with-icon.tsx";
-import { useCurrentComponent } from "@/components/CurrentComponentProvider.tsx";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible.tsx";
 import { Plus } from "lucide-react";
-import { useComponentStyleMutation } from "@/hooks/use-component-style-mutation.ts";
+import { useStyle } from "@/components/style-provider.tsx";
 
 const NavSizeEditor = () => {
-  const { currentStyle } = useCurrentComponent();
-  const { handleStyleChange } = useComponentStyleMutation();
+  const { style: currentStyle, handleStyle } = useStyle();
 
   return (
     <Collapsible title={"Text properties"} className="group/collapsible">
@@ -35,9 +33,7 @@ const NavSizeEditor = () => {
                 <InputWithIcon
                   placeholder={"width"}
                   character={"W"}
-                  triggerChange={(newValue) =>
-                    handleStyleChange("width", newValue)
-                  }
+                  handleChange={(newValue) => handleStyle("width", newValue)}
                   value={currentStyle?.width}
                 />
               </SidebarMenuItem>
@@ -45,9 +41,7 @@ const NavSizeEditor = () => {
                 <InputWithIcon
                   placeholder={"min-width"}
                   character={"W"}
-                  triggerChange={(newValue) =>
-                    handleStyleChange("minWidth", newValue)
-                  }
+                  handleChange={(newValue) => handleStyle("minWidth", newValue)}
                   value={currentStyle?.minWidth}
                 />
               </SidebarMenuItem>
@@ -55,9 +49,7 @@ const NavSizeEditor = () => {
                 <InputWithIcon
                   placeholder={"max-width"}
                   character={"W"}
-                  triggerChange={(newValue) =>
-                    handleStyleChange("maxWidth", newValue)
-                  }
+                  handleChange={(newValue) => handleStyle("maxWidth", newValue)}
                   value={currentStyle?.maxWidth}
                 />
               </SidebarMenuItem>
@@ -65,9 +57,7 @@ const NavSizeEditor = () => {
                 <InputWithIcon
                   placeholder={"height"}
                   character={"H"}
-                  triggerChange={(newValue) =>
-                    handleStyleChange("height", newValue)
-                  }
+                  handleChange={(newValue) => handleStyle("height", newValue)}
                   value={currentStyle?.height}
                 />
               </SidebarMenuItem>

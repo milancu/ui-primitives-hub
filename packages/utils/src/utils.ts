@@ -2,6 +2,7 @@ import postcss from "postcss";
 import CheatSheet from "./cheatsheet";
 import {Style} from "@ui-primitives-hub/types";
 import * as postcssJs from 'postcss-js';
+import {CssToTailwindTranslator} from "css-to-tailwind-translator";
 
 
 export function cssToJsObject(
@@ -205,4 +206,17 @@ export const getRawTailwindClasses = (style: any) => {
     result += addDataPrefix(style[key], key);
   });
   return result;
+};
+
+export const styleToTailwind = (style: Style): string => {
+  const css = styleToString(style);
+  const conversionResult = CssToTailwindTranslator(
+      `component { ${css} }`,
+  );
+
+  if (!conversionResult.data?.[0]?.resultVal) {
+    throw new Error("Invalid CSS conversion");
+  }
+
+  return conversionResult.data[0].resultVal;
 };

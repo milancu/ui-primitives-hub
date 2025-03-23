@@ -19,12 +19,10 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import { Plus } from "lucide-react";
-import { useCurrentComponent } from "@/components/CurrentComponentProvider.tsx";
-import { useComponentStyleMutation } from "@/hooks/use-component-style-mutation.ts";
+import { useStyle } from "@/components/style-provider.tsx";
 
 const NavOtherPropertiesEditor = () => {
-  const { currentStyle } = useCurrentComponent();
-  const { handleStyleChange } = useComponentStyleMutation();
+  const { style: currentStyle, handleStyle } = useStyle();
 
   return (
     <Collapsible title={"Other properties"} className="group/collapsible">
@@ -44,7 +42,7 @@ const NavOtherPropertiesEditor = () => {
                   type={"text"}
                   value={currentStyle?.boxShadow}
                   onChange={(e) => {
-                    handleStyleChange("boxShadow", e.target.value);
+                    handleStyle("boxShadow", e.target.value);
                   }}
                 />
               </SidebarMenuItem>
@@ -52,7 +50,7 @@ const NavOtherPropertiesEditor = () => {
                 <Select
                   value={currentStyle?.cursor}
                   onValueChange={(value) => {
-                    handleStyleChange("cursor", value);
+                    handleStyle("cursor", value);
                   }}
                 >
                   <SelectTrigger>
@@ -70,7 +68,7 @@ const NavOtherPropertiesEditor = () => {
                 <Select
                   value={currentStyle?.overflow}
                   onValueChange={(value) => {
-                    handleStyleChange("overflow", value);
+                    handleStyle("overflow", value);
                   }}
                 >
                   <SelectTrigger>

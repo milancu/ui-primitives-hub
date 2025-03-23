@@ -16,7 +16,7 @@ export function SidebarRight({
     <Sidebar
       variant={"floating"}
       // collapsible="none"
-      className="sticky hidden h-svh lg:flex top-[--header-height] mt-auto !h-[calc(100svh-var(--header-height)-8px)]"
+      className="sticky hidden lg:flex top-[--header-height] mt-auto !h-[calc(100svh-var(--header-height)-8px)]"
       {...props}
     >
       <SidebarHeader className="border-sidebar-border flex h-14 items-center justify-center border-b">

@@ -113,6 +113,9 @@ importers:
       '@tanstack/react-router':
         specifier: ^1.112.13
         version: 1.112.13(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      '@tanstack/react-store':
+        specifier: ^0.7.0
+        version: 0.7.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       '@ui-primitives-hub/types':
         specifier: workspace:*
         version: link:../packages/types
@@ -306,6 +309,9 @@ importers:
 
   packages/utils:
     dependencies:
+      css-to-tailwind-translator:
+        specifier: ^1.2.8
+        version: 1.2.8
       postcss-js:
         specifier: ^4.0.1
         version: 4.0.1(postcss@8.5.3)

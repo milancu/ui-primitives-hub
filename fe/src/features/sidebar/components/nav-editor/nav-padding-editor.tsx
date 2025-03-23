@@ -5,7 +5,6 @@ import {
   SidebarMenu,
   SidebarMenuItem,
 } from "@/components/ui/sidebar.tsx";
-import InputWithIcon from "@/components/ui/input-with-icon.tsx";
 import { Scan } from "lucide-react";
 import {
   DropdownMenu,
@@ -16,13 +15,11 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu.tsx";
 import { Button } from "@/components/ui/button.tsx";
-import { Input } from "@/components/ui/input.tsx";
-import { useComponentStyleMutation } from "@/hooks/use-component-style-mutation.ts";
-import { useCurrentComponent } from "@/components/CurrentComponentProvider.tsx";
+import { useStyle } from "@/components/style-provider.tsx";
+import InputComponentUnitSwitcher from "@/components/ui/input-component-unit-switcher.tsx";
 
 const NavPaddingEditor = () => {
-  const { handleStyleChange } = useComponentStyleMutation();
-  const { currentStyle } = useCurrentComponent();
+  const { style: currentStyle, handleStyle } = useStyle();
 
   return (
     <SidebarGroup>
@@ -30,13 +27,12 @@ const NavPaddingEditor = () => {
       <SidebarGroupContent>
         <SidebarMenu>
           <SidebarMenuItem className={"flex gap-1"}>
-            <InputWithIcon
+            <InputComponentUnitSwitcher
               placeholder={"padding"}
               character={"P"}
-              triggerChange={(newValue) =>
-                handleStyleChange("padding", newValue)
-              }
+              handleChange={(newValue) => handleStyle("padding", newValue)}
               value={currentStyle?.padding}
+              unit={'rem'}
             />
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -44,60 +40,60 @@ const NavPaddingEditor = () => {
                   <Scan />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent className="mr-2 w-56">
+              <DropdownMenuContent className="mr-4 w-56">
                 <DropdownMenuLabel>Padding details</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
                   <DropdownMenuLabel>
-                    <Input
+                    <InputComponentUnitSwitcher
                       placeholder={"padding-left"}
-                      onChange={(e) =>
-                        handleStyleChange("paddingLeft", e.target.value)
+                      handleChange={(newValue) =>
+                        handleStyle("paddingLeft", newValue)
                       }
                       value={currentStyle?.paddingLeft}
                     />
                   </DropdownMenuLabel>
                   <DropdownMenuLabel>
-                    <Input
+                    <InputComponentUnitSwitcher
                       placeholder={"padding-top"}
-                      onChange={(e) =>
-                        handleStyleChange("paddingTop", e.target.value)
+                      handleChange={(newValue) =>
+                        handleStyle("paddingTop", newValue)
                       }
                       value={currentStyle?.paddingTop}
                     />
                   </DropdownMenuLabel>
                   <DropdownMenuLabel>
-                    <Input
+                    <InputComponentUnitSwitcher
                       placeholder={"padding-right"}
                       value={currentStyle?.paddingRight}
-                      onChange={(e) =>
-                        handleStyleChange("paddingRight", e.target.value)
+                      handleChange={(newValue) =>
+                        handleStyle("paddingRight", newValue)
                       }
                     />
                   </DropdownMenuLabel>
                   <DropdownMenuLabel>
-                    <Input
+                    <InputComponentUnitSwitcher
                       placeholder={"padding-bottom"}
-                      onChange={(e) =>
-                        handleStyleChange("paddingBottom", e.target.value)
+                      handleChange={(newValue) =>
+                        handleStyle("paddingBottom", newValue)
                       }
                       value={currentStyle?.paddingBottom}
                     />
                   </DropdownMenuLabel>
                   <DropdownMenuLabel>
-                    <Input
+                    <InputComponentUnitSwitcher
                       placeholder={"padding-vertical"}
-                      onChange={(e) =>
-                        handleStyleChange("paddingVertical", e.target.value)
+                      handleChange={(newValue) =>
+                        handleStyle("paddingVertical", newValue)
                       }
                       value={currentStyle?.paddingVertical}
                     />
                   </DropdownMenuLabel>
                   <DropdownMenuLabel>
-                    <Input
+                    <InputComponentUnitSwitcher
                       placeholder={"padding-horizontal"}
-                      onChange={(e) =>
-                        handleStyleChange("paddingHorizontal", e.target.value)
+                      handleChange={(newValue) =>
+                        handleStyle("paddingHorizontal", newValue)
                       }
                       value={currentStyle?.paddingHorizontal}
                     />

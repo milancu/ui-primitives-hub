@@ -17,7 +17,7 @@ import {
 import Hue from "@uiw/react-color-hue";
 import Saturation from "@uiw/react-color-saturation";
 import { CheckIcon, ChevronDown, ChevronDownIcon, XIcon } from "lucide-react";
-import React from "react";
+import React, { useEffect } from "react";
 
 import { Badge, type BadgeProps } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -84,14 +84,16 @@ function ColorPicker({
   );
 
   const handleValueChange = (color: HsvaColor) => {
+    setColorHsv(color);
+  };
+
+  useEffect(() => {
     onValueChange?.({
       hex: hsvaToHex(colorHsv),
       hsl: hsvaToHsla(colorHsv),
       rgb: hsvaToRgba(colorHsv),
     });
-
-    setColorHsv(color);
-  };
+  }, [colorHsv]);
 
   return (
     <Popover>
@@ -101,12 +103,14 @@ function ColorPicker({
           className="w-full justify-start text-left font-normal"
         >
           <div
-            className="mr-2 h-4 w-4 rounded-full shadow-sm"
+            className="mr-2 h-4 w-4 flex-shrink-0 rounded-full shadow-sm"
             style={{
-              backgroundColor: value,
+              backgroundColor: value as string,
             }}
           />
-          <span className="flex-grow">{label} {value}</span>
+          <span className="truncate">
+            {label} {value as string}
+          </span>
           <ChevronDown className="h-4 w-4 opacity-50" />
         </Button>
       </PopoverTrigger>

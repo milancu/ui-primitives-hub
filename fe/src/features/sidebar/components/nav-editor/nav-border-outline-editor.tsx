@@ -5,7 +5,6 @@ import {
   SidebarMenu,
   SidebarMenuItem,
 } from "@/components/ui/sidebar.tsx";
-import InputWithIcon from "@/components/ui/input-with-icon.tsx";
 import { Scan, SquareRoundCorner } from "lucide-react";
 import {
   DropdownMenu,
@@ -18,12 +17,11 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input.tsx";
 import { ColorPicker } from "@/components/ui/color-picker.tsx";
-import { useComponentStyleMutation } from "@/hooks/use-component-style-mutation.ts";
-import { useCurrentComponent } from "@/components/CurrentComponentProvider.tsx";
+import { useStyle } from "@/components/style-provider.tsx";
+import InputComponentUnitSwitcher from "@/components/ui/input-component-unit-switcher.tsx";
 
 const NavBorderOutlineEditor = () => {
-  const { handleStyleChange } = useComponentStyleMutation();
-  const { currentStyle } = useCurrentComponent();
+  const { style: currentStyle, handleStyle } = useStyle();
 
   return (
     <SidebarGroup>
@@ -31,13 +29,14 @@ const NavBorderOutlineEditor = () => {
       <SidebarGroupContent>
         <SidebarMenu>
           <SidebarMenuItem className={"flex gap-1"}>
-            <InputWithIcon
-              triggerChange={(value) => {
-                handleStyleChange("borderWidth", value);
+            <InputComponentUnitSwitcher
+              handleChange={(value) => {
+                handleStyle("borderWidth", value);
               }}
               placeholder={"border width"}
               character={"B"}
               value={currentStyle?.borderWidth}
+              unit={"px"}
             />
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -45,40 +44,48 @@ const NavBorderOutlineEditor = () => {
                   <Scan />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent className="mr-2 w-56">
+              <DropdownMenuContent className="mr-4 w-56">
                 <DropdownMenuLabel>Border width details</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
                   <DropdownMenuLabel>
-                    <Input
+                    <InputComponentUnitSwitcher
                       placeholder={"left"}
-                      onChange={(e) => {
-                        handleStyleChange("borderLeftWidth", e.target.value);
+                      value={currentStyle?.borderLeftWidth}
+                      handleChange={(value) => {
+                        handleStyle("borderLeftWidth", value);
                       }}
+                      unit={"px"}
                     />
                   </DropdownMenuLabel>
                   <DropdownMenuLabel>
-                    <Input
+                    <InputComponentUnitSwitcher
                       placeholder={"top"}
-                      onChange={(e) => {
-                        handleStyleChange("borderTopWidth", e.target.value);
+                      value={currentStyle?.borderTopWidth}
+                      handleChange={(value) => {
+                        handleStyle("borderTopWidth", value);
                       }}
+                      unit={"px"}
                     />
                   </DropdownMenuLabel>
                   <DropdownMenuLabel>
-                    <Input
+                    <InputComponentUnitSwitcher
                       placeholder={"bottom"}
-                      onChange={(e) => {
-                        handleStyleChange("borderBottomWidth", e.target.value);
+                      value={currentStyle?.borderBottomWidth}
+                      handleChange={(value) => {
+                        handleStyle("borderBottomWidth", value);
                       }}
+                      unit={"px"}
                     />
                   </DropdownMenuLabel>
                   <DropdownMenuLabel>
-                    <Input
+                    <InputComponentUnitSwitcher
                       placeholder={"right"}
-                      onChange={(e) => {
-                        handleStyleChange("borderRightWidth", e.target.value);
+                      value={currentStyle?.borderRightWidth}
+                      handleChange={(value) => {
+                        handleStyle("borderRightWidth", value);
                       }}
+                      unit={"px"}
                     />
                   </DropdownMenuLabel>
                 </DropdownMenuGroup>
@@ -93,18 +100,16 @@ const NavBorderOutlineEditor = () => {
                   ? (currentStyle?.borderColor as `#${string}`)
                   : "#FFFFFF"
               }
-              onValueChange={(value) =>
-                handleStyleChange("borderColor", value.hex)
-              }
+              onValueChange={(value) => handleStyle("borderColor", value.hex)}
               swatches={["#AEDEAE", "#FFD3B6", "#FFB6B9", "#FFC0CB", "#FFD1DC"]}
               label={"Border color "}
             />
           </SidebarMenuItem>
           <SidebarMenuItem className={"flex gap-1"}>
-            <InputWithIcon
+            <InputComponentUnitSwitcher
               value={currentStyle?.borderRadius}
-              triggerChange={(value) => {
-                handleStyleChange("borderRadius", value);
+              handleChange={(value) => {
+                handleStyle("borderRadius", value);
               }}
               placeholder={"border radius"}
               icon={SquareRoundCorner}
@@ -115,52 +120,44 @@ const NavBorderOutlineEditor = () => {
                   <Scan />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent className="mr-2 w-56">
+              <DropdownMenuContent className="mr-4 w-56">
                 <DropdownMenuLabel>Border radius details</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
                   <DropdownMenuLabel>
-                    <Input
+                    <InputComponentUnitSwitcher
                       placeholder={"left-top"}
-                      onChange={(e) => {
-                        handleStyleChange(
-                          "borderRadiusTopLeft",
-                          e.target.value,
-                        );
+                      handleChange={(value) => {
+                        handleStyle("borderRadiusTopLeft", value);
                       }}
+                      value={currentStyle?.borderRadiusTopLeft}
                     />
                   </DropdownMenuLabel>
                   <DropdownMenuLabel>
-                    <Input
+                    <InputComponentUnitSwitcher
                       placeholder={"right-top"}
-                      onChange={(e) => {
-                        handleStyleChange(
-                          "borderRadiusTopRight",
-                          e.target.value,
-                        );
+                      handleChange={(value) => {
+                        handleStyle("borderRadiusTopRight", value);
                       }}
+                      value={currentStyle?.borderRadiusTopRight}
                     />
                   </DropdownMenuLabel>
                   <DropdownMenuLabel>
-                    <Input
+                    <InputComponentUnitSwitcher
                       placeholder={"left-bottom"}
-                      onChange={(e) => {
-                        handleStyleChange(
-                          "borderRadiusBottomLeft",
-                          e.target.value,
-                        );
+                      handleChange={(value) => {
+                        handleStyle("borderRadiusBottomLeft", value);
                       }}
+                      value={currentStyle?.borderRadiusBottomLeft}
                     />
                   </DropdownMenuLabel>
                   <DropdownMenuLabel>
-                    <Input
+                    <InputComponentUnitSwitcher
                       placeholder={"right-bottom"}
-                      onChange={(e) => {
-                        handleStyleChange(
-                          "borderRadiusBottomRight",
-                          e.target.value,
-                        );
+                      handleChange={(value) => {
+                        handleStyle("borderRadiusBottomRight", value);
                       }}
+                      value={currentStyle?.borderRadiusBottomRight}
                     />
                   </DropdownMenuLabel>
                 </DropdownMenuGroup>
@@ -168,10 +165,10 @@ const NavBorderOutlineEditor = () => {
             </DropdownMenu>
           </SidebarMenuItem>
           <SidebarMenuItem>
-            <InputWithIcon
+            <InputComponentUnitSwitcher
               value={currentStyle?.outlineWidth}
-              triggerChange={(value) => {
-                handleStyleChange("outlineWidth", value);
+              handleChange={(value) => {
+                handleStyle("outlineWidth", value);
               }}
               placeholder={"outline width"}
               character={"O"}
@@ -194,7 +191,7 @@ const NavBorderOutlineEditor = () => {
               placeholder={"outline style"}
               type={"text"}
               onChange={(e) => {
-                handleStyleChange("outlineStyle", e.target.value);
+                handleStyle("outlineStyle", e.target.value);
               }}
             />
           </SidebarMenuItem>
