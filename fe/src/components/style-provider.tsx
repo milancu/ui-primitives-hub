@@ -5,6 +5,7 @@ import {
   useCallback,
   useContext,
   useEffect,
+  useRef,
   useState,
 } from "react";
 import {
@@ -23,6 +24,7 @@ import { componentStore } from "@/store/component.store.ts";
 type StyleProvider = {
   style?: Style;
   setStyleFromString: (style?: string) => void;
+  setStyle: (style?: Style) => void;
   handleStyle: (key: keyof Style, value: string) => void;
 };
 
@@ -31,8 +33,10 @@ const StyleContext = createContext<StyleProvider | undefined>(undefined);
 type StyleProviderProps = PropsWithChildren;
 
 export default function StyleProvider({ children }: StyleProviderProps) {
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
   const [style, setStyle] = useState<Style | undefined>();
-  const [tailwind, setTailwind] = useState<string | undefined>();
+
   const id = useStore(projectStore);
   const component = useStore(componentStore);
 
@@ -52,8 +56,16 @@ export default function StyleProvider({ children }: StyleProviderProps) {
       setStyle(newStyle);
 
       const tailwind = styleToTailwind(newStyle);
-      setTailwind(tailwind);
+      console.log(tailwind);
       updateStateStyle(currentState, tailwind);
+
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+
+      timeoutRef.current = setTimeout(() => {
+        saveStyle(tailwind);
+      }, 500);
     },
     [currentState, style, updateStateStyle],
   );
@@ -67,25 +79,28 @@ export default function StyleProvider({ children }: StyleProviderProps) {
     setStyle(newStyle);
   }, []);
 
-  const saveStyle = useCallback(() => {
-    if (
-      !currentState ||
-      !currentPart ||
-      !style ||
-      !tailwind ||
-      !id ||
-      !component
-    )
-      return;
+  const saveStyle = useCallback(
+    (tailwindToSave: string) => {
+      if (
+        !currentState ||
+        !currentPart ||
+        !style ||
+        !tailwindToSave ||
+        !id ||
+        !component
+      )
+        return;
 
-    mutate({
-      componentName: component,
-      part: currentPart,
-      state: currentState,
-      projectId: id,
-      tailwind: tailwind,
-    });
-  }, [currentPart, currentState, id, mutate, style, tailwind, component]);
+      mutate({
+        componentName: component,
+        part: currentPart,
+        state: currentState,
+        projectId: id,
+        tailwind: tailwindToSave,
+      });
+    },
+    [currentPart, currentState, id, mutate, style, component],
+  );
 
   useEffect(() => {
     if (!states || !currentPart) return;
@@ -93,19 +108,17 @@ export default function StyleProvider({ children }: StyleProviderProps) {
   }, [states, currentPart]);
 
   useEffect(() => {
-    if (!states || !currentPart) return;
-
-    const timeoutId = setTimeout(() => {
-      saveStyle();
-    }, 2000);
-
     return () => {
-      clearTimeout(timeoutId);
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
     };
-  }, [states, currentPart, saveStyle]);
+  }, []);
 
   return (
-    <StyleContext.Provider value={{ style, setStyleFromString, handleStyle }}>
+    <StyleContext.Provider
+      value={{ style, setStyleFromString, handleStyle, setStyle }}
+    >
       {children}
     </StyleContext.Provider>
   );

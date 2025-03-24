@@ -23,6 +23,7 @@ import { Route as AuthenticatedCanvaLayoutIdMenuImport } from './routes/_authent
 import { Route as AuthenticatedCanvaLayoutIdFieldsetImport } from './routes/_authenticated/_canva-layout/$id/fieldset'
 import { Route as AuthenticatedCanvaLayoutIdFieldImport } from './routes/_authenticated/_canva-layout/$id/field'
 import { Route as AuthenticatedCanvaLayoutIdDialogImport } from './routes/_authenticated/_canva-layout/$id/dialog'
+import { Route as AuthenticatedCanvaLayoutIdColorCustomizerImport } from './routes/_authenticated/_canva-layout/$id/color-customizer'
 import { Route as AuthenticatedCanvaLayoutIdAvatarImport } from './routes/_authenticated/_canva-layout/$id/avatar'
 import { Route as AuthenticatedCanvaLayoutIdAccordionImport } from './routes/_authenticated/_canva-layout/$id/accordion'
 
@@ -105,6 +106,13 @@ const AuthenticatedCanvaLayoutIdDialogRoute =
     getParentRoute: () => AuthenticatedCanvaLayoutRoute,
   } as any)
 
+const AuthenticatedCanvaLayoutIdColorCustomizerRoute =
+  AuthenticatedCanvaLayoutIdColorCustomizerImport.update({
+    id: '/$id/color-customizer',
+    path: '/$id/color-customizer',
+    getParentRoute: () => AuthenticatedCanvaLayoutRoute,
+  } as any)
+
 const AuthenticatedCanvaLayoutIdAvatarRoute =
   AuthenticatedCanvaLayoutIdAvatarImport.update({
     id: '/$id/avatar',
@@ -179,6 +187,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedCanvaLayoutIdAvatarImport
       parentRoute: typeof AuthenticatedCanvaLayoutImport
     }
+    '/_authenticated/_canva-layout/$id/color-customizer': {
+      id: '/_authenticated/_canva-layout/$id/color-customizer'
+      path: '/$id/color-customizer'
+      fullPath: '/$id/color-customizer'
+      preLoaderRoute: typeof AuthenticatedCanvaLayoutIdColorCustomizerImport
+      parentRoute: typeof AuthenticatedCanvaLayoutImport
+    }
     '/_authenticated/_canva-layout/$id/dialog': {
       id: '/_authenticated/_canva-layout/$id/dialog'
       path: '/$id/dialog'
@@ -229,6 +244,7 @@ declare module '@tanstack/react-router' {
 interface AuthenticatedCanvaLayoutRouteChildren {
   AuthenticatedCanvaLayoutIdAccordionRoute: typeof AuthenticatedCanvaLayoutIdAccordionRoute
   AuthenticatedCanvaLayoutIdAvatarRoute: typeof AuthenticatedCanvaLayoutIdAvatarRoute
+  AuthenticatedCanvaLayoutIdColorCustomizerRoute: typeof AuthenticatedCanvaLayoutIdColorCustomizerRoute
   AuthenticatedCanvaLayoutIdDialogRoute: typeof AuthenticatedCanvaLayoutIdDialogRoute
   AuthenticatedCanvaLayoutIdFieldRoute: typeof AuthenticatedCanvaLayoutIdFieldRoute
   AuthenticatedCanvaLayoutIdFieldsetRoute: typeof AuthenticatedCanvaLayoutIdFieldsetRoute
@@ -243,6 +259,8 @@ const AuthenticatedCanvaLayoutRouteChildren: AuthenticatedCanvaLayoutRouteChildr
       AuthenticatedCanvaLayoutIdAccordionRoute,
     AuthenticatedCanvaLayoutIdAvatarRoute:
       AuthenticatedCanvaLayoutIdAvatarRoute,
+    AuthenticatedCanvaLayoutIdColorCustomizerRoute:
+      AuthenticatedCanvaLayoutIdColorCustomizerRoute,
     AuthenticatedCanvaLayoutIdDialogRoute:
       AuthenticatedCanvaLayoutIdDialogRoute,
     AuthenticatedCanvaLayoutIdFieldRoute: AuthenticatedCanvaLayoutIdFieldRoute,
@@ -296,6 +314,7 @@ export interface FileRoutesByFullPath {
   '/': typeof AuthenticatedDashboardLayoutIndexRoute
   '/$id/accordion': typeof AuthenticatedCanvaLayoutIdAccordionRoute
   '/$id/avatar': typeof AuthenticatedCanvaLayoutIdAvatarRoute
+  '/$id/color-customizer': typeof AuthenticatedCanvaLayoutIdColorCustomizerRoute
   '/$id/dialog': typeof AuthenticatedCanvaLayoutIdDialogRoute
   '/$id/field': typeof AuthenticatedCanvaLayoutIdFieldRoute
   '/$id/fieldset': typeof AuthenticatedCanvaLayoutIdFieldsetRoute
@@ -311,6 +330,7 @@ export interface FileRoutesByTo {
   '/': typeof AuthenticatedDashboardLayoutIndexRoute
   '/$id/accordion': typeof AuthenticatedCanvaLayoutIdAccordionRoute
   '/$id/avatar': typeof AuthenticatedCanvaLayoutIdAvatarRoute
+  '/$id/color-customizer': typeof AuthenticatedCanvaLayoutIdColorCustomizerRoute
   '/$id/dialog': typeof AuthenticatedCanvaLayoutIdDialogRoute
   '/$id/field': typeof AuthenticatedCanvaLayoutIdFieldRoute
   '/$id/fieldset': typeof AuthenticatedCanvaLayoutIdFieldsetRoute
@@ -329,6 +349,7 @@ export interface FileRoutesById {
   '/_authenticated/_dashboard-layout/': typeof AuthenticatedDashboardLayoutIndexRoute
   '/_authenticated/_canva-layout/$id/accordion': typeof AuthenticatedCanvaLayoutIdAccordionRoute
   '/_authenticated/_canva-layout/$id/avatar': typeof AuthenticatedCanvaLayoutIdAvatarRoute
+  '/_authenticated/_canva-layout/$id/color-customizer': typeof AuthenticatedCanvaLayoutIdColorCustomizerRoute
   '/_authenticated/_canva-layout/$id/dialog': typeof AuthenticatedCanvaLayoutIdDialogRoute
   '/_authenticated/_canva-layout/$id/field': typeof AuthenticatedCanvaLayoutIdFieldRoute
   '/_authenticated/_canva-layout/$id/fieldset': typeof AuthenticatedCanvaLayoutIdFieldsetRoute
@@ -346,6 +367,7 @@ export interface FileRouteTypes {
     | '/'
     | '/$id/accordion'
     | '/$id/avatar'
+    | '/$id/color-customizer'
     | '/$id/dialog'
     | '/$id/field'
     | '/$id/fieldset'
@@ -360,6 +382,7 @@ export interface FileRouteTypes {
     | '/'
     | '/$id/accordion'
     | '/$id/avatar'
+    | '/$id/color-customizer'
     | '/$id/dialog'
     | '/$id/field'
     | '/$id/fieldset'
@@ -376,6 +399,7 @@ export interface FileRouteTypes {
     | '/_authenticated/_dashboard-layout/'
     | '/_authenticated/_canva-layout/$id/accordion'
     | '/_authenticated/_canva-layout/$id/avatar'
+    | '/_authenticated/_canva-layout/$id/color-customizer'
     | '/_authenticated/_canva-layout/$id/dialog'
     | '/_authenticated/_canva-layout/$id/field'
     | '/_authenticated/_canva-layout/$id/fieldset'
@@ -428,6 +452,7 @@ export const routeTree = rootRoute
       "children": [
         "/_authenticated/_canva-layout/$id/accordion",
         "/_authenticated/_canva-layout/$id/avatar",
+        "/_authenticated/_canva-layout/$id/color-customizer",
         "/_authenticated/_canva-layout/$id/dialog",
         "/_authenticated/_canva-layout/$id/field",
         "/_authenticated/_canva-layout/$id/fieldset",
@@ -456,6 +481,10 @@ export const routeTree = rootRoute
     },
     "/_authenticated/_canva-layout/$id/avatar": {
       "filePath": "_authenticated/_canva-layout/$id/avatar.tsx",
+      "parent": "/_authenticated/_canva-layout"
+    },
+    "/_authenticated/_canva-layout/$id/color-customizer": {
+      "filePath": "_authenticated/_canva-layout/$id/color-customizer.tsx",
       "parent": "/_authenticated/_canva-layout"
     },
     "/_authenticated/_canva-layout/$id/dialog": {

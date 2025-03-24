@@ -1,6 +1,4 @@
 import { useParams } from "@tanstack/react-router";
-import { useAccordionHierarchy } from "@/features/accordion/hooks/queries/useAccordionHierarchy.ts";
-import { useAccordionParts } from "@/features/accordion/hooks/queries/useAccordionParts.ts";
 import { Skeleton } from "@/components/ui/skeleton";
 import Preview from "@/components/preview";
 import {
@@ -10,8 +8,6 @@ import {
   AccordionRoot,
   AccordionTrigger,
 } from "@ui-primitives-hub/ui/src";
-import { useAccordionPartStates } from "@/features/accordion/hooks/queries/useAccordionPartStates.ts";
-import { useAccordionPartStateStyle } from "@/features/accordion/hooks/queries/useAccordionPartStateStyle.ts";
 import { useCurrentPartParam } from "@/features/sidebar/hooks/useCurrentPartParam.tsx";
 import { useCurrentComponentStateParam } from "@/features/sidebar/hooks/useCurrentComponentStateParam.tsx";
 import { useEffect } from "react";
@@ -21,6 +17,10 @@ import { useStyle } from "@/components/style-provider.tsx";
 import { useComponent } from "@/components/component-provider";
 import { projectStore } from "@/store/project.store.ts";
 import { componentStore } from "@/store/component.store.ts";
+import { useComponentHierarchy } from "@/hooks/queries/useComponentHierarchy.ts";
+import { useParts } from "@/hooks/queries/useParts.ts";
+import { usePartStates } from "@/hooks/queries/usePartStates.ts";
+import { usePartStateStyle } from "@/hooks/queries/usePartStateStyle";
 
 const AccordionPage = () => {
   const { id } = useParams({
@@ -35,13 +35,14 @@ const AccordionPage = () => {
   const { setStates } = useStates();
   const { setStyleFromString } = useStyle();
 
-  const { data: hierarchy } = useAccordionHierarchy(id);
-  const { data: parts } = useAccordionParts(id);
-  const { data: states } = useAccordionPartStates(id, currentPart);
-  const { data: style } = useAccordionPartStateStyle(
+  const { data: hierarchy } = useComponentHierarchy(id, "accordion");
+  const { data: parts } = useParts(id, "accordion");
+  const { data: states } = usePartStates(id, currentPart, "accordion");
+  const { data: style } = usePartStateStyle(
     id,
     currentPart,
     currentState,
+    "accordion",
   );
 
   useEffect(() => {

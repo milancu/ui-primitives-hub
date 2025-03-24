@@ -1,6 +1,15 @@
-import { PropsWithChildren, useMemo } from "react";
+import { PropsWithChildren, useEffect, useMemo } from "react";
 import { DotPattern } from "./magicui/dot-pattern";
 import { cn } from "@/lib/utils";
+
+const colors = {
+  light: {
+    test: "oklch(0.577 0.245 27.325)",
+  },
+  dark: {
+    test: "oklch(0.452 0.313 264.052)",
+  },
+};
 
 export function Preview({ children }: PropsWithChildren) {
   const dotPattern = useMemo(() => {
@@ -11,6 +20,22 @@ export function Preview({ children }: PropsWithChildren) {
         )}
       />
     );
+  }, []);
+
+  useEffect(() => {
+    const root = document.documentElement;
+    const darkStyle = document.createElement("style");
+
+    Object.entries(colors.light).forEach(([key, value]) => {
+      root.style.setProperty(`--${key}`, value);
+    });
+
+    const darkVars = Object.entries(colors.dark)
+      .map(([key, value]) => `--${key}: ${value};`)
+      .join("\n");
+
+    darkStyle.innerHTML = `.dark {\n${darkVars}\n}`;
+    document.head.appendChild(darkStyle);
   }, []);
 
   return (

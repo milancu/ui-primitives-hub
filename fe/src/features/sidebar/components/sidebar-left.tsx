@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/sidebar.tsx";
 import { Separator } from "@/components/ui/separator";
 import ComponentLayers from "@/features/component-layers/components/component-layers.tsx";
+import { NavSecondary } from "@/features/sidebar/components/nav-secondary.tsx";
 
 const data = {
   navMain: [
@@ -24,23 +25,23 @@ const data = {
     },
     {
       title: "Dialog",
-      url: "dialog"
+      url: "dialog",
     },
     {
       title: "Field",
-      url: `field`
+      url: `field`,
     },
     {
       title: "Fieldset",
-      url: "fieldset"
+      url: "fieldset",
     },
     {
       title: "Menu",
-      url: "menu"
+      url: "menu",
     },
     {
       title: "Number field",
-      url: "number-field"
+      url: "number-field",
     },
   ],
 };
@@ -59,7 +60,7 @@ export function SidebarLeft({
       </SidebarHeader>
       <Separator />
       <SidebarContent>
-        {/*<NavSecondary className={"mt-auto"} />*/}
+        <NavSecondary />
       </SidebarContent>
       <SidebarFooter>
         <ComponentLayers />

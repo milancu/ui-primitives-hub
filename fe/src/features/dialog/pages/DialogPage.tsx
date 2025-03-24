@@ -18,12 +18,12 @@ import { useComponent } from "@/components/component-provider.tsx";
 import { useHierarchy } from "@/components/hierarchy-provider.tsx";
 import { useStates } from "@/components/states-provider.tsx";
 import { useStyle } from "@/components/style-provider.tsx";
-import { useDialogHierarchy } from "@/features/dialog/hooks/queries/useDialogHierarchy.ts";
-import { useDialogParts } from "@/features/dialog/hooks/queries/useDialogParts.ts";
-import { useDialogPartStates } from "@/features/dialog/hooks/queries/useDialogPartStates.ts";
-import { useDialogPartStateStyle } from "@/features/dialog/hooks/queries/useDialogPartStateStyle.ts";
 import { projectStore } from "@/store/project.store.ts";
 import { componentStore } from "@/store/component.store.ts";
+import { useComponentHierarchy } from "@/hooks/queries/useComponentHierarchy.ts";
+import { useParts } from "@/hooks/queries/useParts.ts";
+import { usePartStates } from "@/hooks/queries/usePartStates.ts";
+import { usePartStateStyle } from "@/hooks/queries/usePartStateStyle.ts";
 
 const DialogPage = () => {
   const { id } = useParams({
@@ -38,13 +38,14 @@ const DialogPage = () => {
   const { setStates } = useStates();
   const { setStyleFromString } = useStyle();
 
-  const { data: hierarchy } = useDialogHierarchy(id);
-  const { data: parts } = useDialogParts(id);
-  const { data: states } = useDialogPartStates(id, currentPart);
-  const { data: style } = useDialogPartStateStyle(
+  const { data: hierarchy } = useComponentHierarchy(id, "dialog");
+  const { data: parts } = useParts(id, "dialog");
+  const { data: states } = usePartStates(id, currentPart, "dialog");
+  const { data: style } = usePartStateStyle(
     id,
     currentPart,
     currentState,
+    "dialog",
   );
 
   useEffect(() => {

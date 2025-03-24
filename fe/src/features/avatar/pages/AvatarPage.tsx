@@ -13,12 +13,12 @@ import { useHierarchy } from "@/components/hierarchy-provider.tsx";
 import { useStates } from "@/components/states-provider.tsx";
 import { useStyle } from "@/components/style-provider.tsx";
 import { useEffect } from "react";
-import { useAvatarHierarchy } from "@/features/avatar/hooks/queries/useAvatarHierarchy.ts";
-import { useAvatarParts } from "@/features/avatar/hooks/queries/useAvatarParts.ts";
-import { useAvatarPartStateStyle } from "@/features/avatar/hooks/queries/useAvatarPartStateStyle.ts";
-import { useAvatarPartStates } from "@/features/avatar/hooks/queries/useAvatarPartStates.ts";
 import { projectStore } from "@/store/project.store.ts";
 import { componentStore } from "@/store/component.store.ts";
+import { useComponentHierarchy } from "@/hooks/queries/useComponentHierarchy.ts";
+import { useParts } from "@/hooks/queries/useParts.ts";
+import { usePartStates } from "@/hooks/queries/usePartStates.ts";
+import { usePartStateStyle } from "@/hooks/queries/usePartStateStyle.ts";
 
 const AvatarPage = () => {
   const { id } = useParams({
@@ -33,13 +33,14 @@ const AvatarPage = () => {
   const { setStates } = useStates();
   const { setStyleFromString } = useStyle();
 
-  const { data: hierarchy } = useAvatarHierarchy(id);
-  const { data: parts } = useAvatarParts(id);
-  const { data: states } = useAvatarPartStates(id, currentPart);
-  const { data: style } = useAvatarPartStateStyle(
+  const { data: hierarchy } = useComponentHierarchy(id, "avatar");
+  const { data: parts } = useParts(id, "avatar");
+  const { data: states } = usePartStates(id, currentPart, "avatar");
+  const { data: style } = usePartStateStyle(
     id,
     currentPart,
     currentState,
+    "avatar",
   );
 
   useEffect(() => {
@@ -58,6 +59,7 @@ const AvatarPage = () => {
   }, [states]);
 
   useEffect(() => {
+    console.log('ahojda');
     setStyleFromString(style);
   }, [style]);
 

@@ -19,9 +19,8 @@ function InputComponentUnitSwitcher({
   unit = "rem",
   ...props
 }: InputComponentUnitSwitcher) {
-  const [inputValue, setInputValue] = useState<number | undefined>(()=>{
-    return parseFloat(value as string)
-  });
+  const [inputValue, setInputValue] = useState<number | undefined>(undefined);
+
   const [selectedUnit, setSelectedUnit] = useState<"rem" | "px">(() => {
     if (typeof value === "string") {
       const unitMatch = value.match(/(rem|px)$/);
@@ -60,6 +59,15 @@ function InputComponentUnitSwitcher({
     );
   }, [inputValue, selectedUnit]);
 
+  useEffect(()=>{
+    if(typeof value === "string"){
+      const unitMatch = value.match(/(rem|px)$/);
+      if(unitMatch){
+        setSelectedUnit(unitMatch[1] as "rem" | "px");
+        setInputValue(parseFloat(value.replace(unitMatch[0], "")));
+      }
+    }
+  },[value])
 
   return (
     <div className="space-y-2">
@@ -83,7 +91,7 @@ function InputComponentUnitSwitcher({
               e.target.value === "" ? undefined : parseFloat(e.target.value);
             setInputValue(num);
           }}
-          value={inputValue !== undefined ? String(inputValue) : ""}
+          value={inputValue ?? ""}
         />
         <div className="relative inline-flex">
           <select

@@ -6,8 +6,8 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar.tsx";
 import { Link, useLocation, useParams } from "@tanstack/react-router";
-import { useCurrentComponent } from "@/components/CurrentComponentProvider.tsx";
-import { useCurrentPartParam } from "@/features/sidebar/hooks/useCurrentPartParam.tsx";
+import { useStyle } from "@/components/style-provider.tsx";
+import { useCurrentComponentStateParam } from "@/features/sidebar/hooks/useCurrentComponentStateParam.tsx";
 
 export function NavMain({
   items,
@@ -17,8 +17,8 @@ export function NavMain({
     url: string;
   }[];
 }) {
-  const { setComponent } = useCurrentComponent();
-  const [, setCurrentPart] = useCurrentPartParam();
+  const { setStyle } = useStyle();
+  const [, setState] = useCurrentComponentStateParam();
   const { id } = useParams({ strict: false });
   const { pathname } = useLocation();
 
@@ -33,8 +33,8 @@ export function NavMain({
             <Link
               to={`/$id/${item.url}`}
               onClick={() => {
-                setComponent(undefined);
-                setCurrentPart(null);
+                setStyle(undefined);
+                setState(null);
               }}
             >
               <span>{item.title}</span>

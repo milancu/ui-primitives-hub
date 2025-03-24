@@ -7,8 +7,12 @@ import NavBorderOutlineEditor from "@/features/sidebar/components/nav-editor/nav
 import NavBackgroundEditor from "@/features/sidebar/components/nav-editor/nav-background-editor.tsx";
 import NavTextEditor from "@/features/sidebar/components/nav-editor/nav-text-editor.tsx";
 import NavOtherPropertiesEditor from "@/features/sidebar/components/nav-editor/nav-other-properties-editor.tsx";
+import { useStyle } from "@/components/style-provider.tsx";
 
 const NavEditor = () => {
+  const { style } = useStyle();
+  console.log(style);
+
   return (
     <>
       <NavLayoutEditor />
