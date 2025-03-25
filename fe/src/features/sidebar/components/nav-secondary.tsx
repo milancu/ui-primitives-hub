@@ -8,9 +8,11 @@ import {
 import { Link, useLocation, useParams } from "@tanstack/react-router";
 import { useStyle } from "@/components/style-provider.tsx";
 import { useCurrentComponentStateParam } from "@/features/sidebar/hooks/useCurrentComponentStateParam.tsx";
+import { useHierarchy } from "@/components/hierarchy-provider.tsx";
 
 export function NavSecondary() {
   const { setStyle } = useStyle();
+  const { setHierarchy } = useHierarchy();
   const [, setState] = useCurrentComponentStateParam();
   const { pathname } = useLocation();
   const { id } = useParams({ strict: false });
@@ -25,6 +27,8 @@ export function NavSecondary() {
             onClick={() => {
               setStyle(undefined);
               setState(null);
+              setHierarchy(undefined)
+
             }}
           >
             <span>Color Customizer</span>

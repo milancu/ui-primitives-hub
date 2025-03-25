@@ -1,6 +1,6 @@
 import {db} from '../firebase';
-import {Project, ProjectMetadata} from '../models/project.model';
-import {DEFAULT_COMPONENTS} from "../default-components";
+import {Color, ColorScheme, Project, ProjectMetadata} from '../models/project.model';
+import {DEFAULT_COLORS, DEFAULT_COMPONENTS} from "../default-components";
 
 export class ProjectService {
   static async createProject(userId: string, name: string): Promise<ProjectMetadata> {
@@ -34,7 +34,8 @@ export class ProjectService {
 
     await projectRef.set({
       metadata,
-      components: DEFAULT_COMPONENTS
+      components: DEFAULT_COMPONENTS,
+      colors:DEFAULT_COLORS
     });
 
     return metadata;
@@ -45,6 +46,30 @@ export class ProjectService {
     const snapshot = await db.ref(`users/${userId}/projects/${projectId}`).once('value');
     if (!snapshot.exists()) throw new Error('Project not found');
     return snapshot.val();
+  }
+
+  static async getProjectColors(userId: string, projectId: string): Promise<ColorScheme> {
+    const snapshot = await db.ref(`users/${userId}/projects/${projectId}/colors`).once('value');
+    if (!snapshot.exists()) throw new Error('Project not found');
+    return snapshot.val();
+  }
+
+  static async updateProjectColors(
+      userId: string,
+      projectId: string,
+      theme: string,
+      color: string,
+      newValue: Color
+  ): Promise<ColorScheme> {
+    const snapshot = await db.ref(`users/${userId}/projects/${projectId}`).once('value');
+    if (!snapshot.exists()) {
+      throw new Error('Project does not exists.');
+    }
+
+    const colorRef = db.ref(`users/${userId}/projects/${projectId}/colors/${theme}/${color}`);
+
+    await colorRef.update(newValue);
+    return (await colorRef.once('value')).val();
   }
 
   static async updateProject(

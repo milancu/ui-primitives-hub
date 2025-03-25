@@ -32,6 +32,30 @@ router.get('/', async (req, res) => {
   }
 });
 
+router.get('/:projectId/colors', async (req, res) => {
+  const projectId = req.params.projectId
+  const userId = (req as any).user.uid
+  try {
+    const projects = await ProjectService.getProjectColors(userId, projectId);
+    res.json(projects);
+  } catch (error) {
+    res.status(400).json({error: 'Failed to fetch projects'});
+  }
+});
+
+router.put('/:projectId/colors', async (req, res) => {
+  const projectId = req.params.projectId
+  const userId = (req as any).user.uid
+  const {theme, color, value} = req.body;
+
+  try {
+    const projects = await ProjectService.updateProjectColors(userId, projectId, theme, color, value);
+    res.json(projects);
+  } catch (error: any) {
+    res.status(400).json({error: error.message});
+  }
+});
+
 router.route('/:projectId')
   .get(async (req, res) => {
     try {

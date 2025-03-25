@@ -151,3 +151,40 @@ export const DEFAULT_COMPONENTS: Components = {
     }
   },
 };
+
+export const DEFAULT_COLORS = {
+  light: {
+    background: { l: 0.97, c: 0.02, h: 240 },
+    foreground: { l: 0.2, c: 0.05, h: 250 },
+    primary: { l: 0.6, c: 0.2, h: 260 },
+    primaryForeground: { l: 1, c: 0, h: 0 },
+    secondary: { l: 0.75, c: 0.18, h: 290 },
+    secondaryForeground: { l: 1, c: 0, h: 0 },
+    muted: { l: 0.85, c: 0.03, h: 210 },
+    mutedForeground: { l: 0.4, c: 0.04, h: 220 },
+    accent: { l: 0.7, c: 0.22, h: 350 },
+    accentForeground: { l: 1, c: 0, h: 0 },
+    destructive: { l: 0.55, c: 0.25, h: 20 },
+    destructiveForeground: { l: 1, c: 0, h: 0 },
+    success: { l: 0.6, c: 0.22, h: 150 },
+    warning: { l: 0.75, c: 0.3, h: 80 },
+    border: { l: 0.9, c: 0.02, h: 240 },
+  },
+  dark: {
+    background: { l: 0.12, c: 0.02, h: 240 },
+    foreground: { l: 0.95, c: 0.02, h: 250 },
+    primary: { l: 0.7, c: 0.25, h: 260 },
+    primaryForeground: { l: 0, c: 0, h: 0 },
+    secondary: { l: 0.6, c: 0.22, h: 290 },
+    secondaryForeground: { l: 0, c: 0, h: 0 },
+    muted: { l: 0.25, c: 0.05, h: 210 },
+    mutedForeground: { l: 0.7, c: 0.04, h: 220 },
+    accent: { l: 0.75, c: 0.3, h: 350 },
+    accentForeground: { l: 0, c: 0, h: 0 },
+    destructive: { l: 0.65, c: 0.3, h: 20 },
+    destructiveForeground: { l: 0, c: 0, h: 0 },
+    success: { l: 0.7, c: 0.3, h: 150 },
+    warning: { l: 0.85, c: 0.35, h: 80 },
+    border: { l: 0.3, c: 0.02, h: 240 },
+  },
+};

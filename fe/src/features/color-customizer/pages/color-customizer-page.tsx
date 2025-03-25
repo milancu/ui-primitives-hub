@@ -1,137 +1,158 @@
 import CodePreview from "@/features/color-customizer/components/code-preview.tsx";
 import ColorPreview from "@/features/color-customizer/components/color-preview.tsx";
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@/components/ui/tabs.tsx";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs.tsx";
 import { ColorCard } from "@/features/color-customizer/components/color-card.tsx";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { Card, CardContent, CardHeader } from "@/components/ui/card.tsx";
+import OklchEditor from "@/features/color-customizer/components/oklch-editor.tsx";
+import { useGetProjectColors } from "@/features/color-customizer/hooks/queries/useGetProjectColors.ts";
+import { useParams } from "@tanstack/react-router";
+import { Skeleton } from "@/components/ui/skeleton.tsx";
+import { useUpdateProjectColors } from "@/features/color-customizer/hooks/mutations/useUpdateProjectColors.ts";
+import { Button } from "@/components/ui/button.tsx";
 
-const colors = [
-  "background",
-  "foreground",
-  "primary",
-  "primaryForeground",
-  "secondary",
-  "secondaryForeground",
-  "muted",
-  "mutedForeground",
-  "accent",
-  "accentForeground",
-  "destructive",
-  "destructiveForeground",
-  "success",
-  "warning",
-  "border",
-];
+const COLOR_KEYS = [
+  "background", "foreground", "primary", "primaryForeground",
+  "secondary", "secondaryForeground", "muted", "mutedForeground",
+  "accent", "accentForeground", "destructive", "destructiveForeground",
+  "success", "warning", "border"
+] as const;
 
-const defaultLightColors = {
-  background: { value: "0.97 0.02 240" },
-  foreground: { value: "0.2 0.05 250" },
-  primary: { value: "0.6 0.2 260" },
-  primaryForeground: { value: "1 0 0" },
-  secondary: { value: "0.75 0.18 290" },
-  secondaryForeground: { value: "1 0 0" },
-  muted: { value: "0.85 0.03 210" },
-  mutedForeground: { value: "0.4 0.04 220" },
-  accent: { value: "0.7 0.22 350" },
-  accentForeground: { value: "1 0 0" },
-  destructive: { value: "0.55 0.25 20" },
-  destructiveForeground: { value: "1 0 0" },
-  success: { value: "0.6 0.22 150" },
-  warning: { value: "0.75 0.3 80" },
-  border: { value: "0.9 0.02 240" },
-};
+type ColorKey = typeof COLOR_KEYS[number];
 
-const defaultDarkColors = {
-  background: { value: "0.12 0.02 240" },
-  foreground: { value: "0.95 0.02 250" },
-  primary: { value: "0.7 0.25 260" },
-  primaryForeground: { value: "0 0 0" },
-  secondary: { value: "0.6 0.22 290" },
-  secondaryForeground: { value: "0 0 0" },
-  muted: { value: "0.25 0.05 210" },
-  mutedForeground: { value: "0.7 0.04 220" },
-  accent: { value: "0.75 0.3 350" },
-  accentForeground: { value: "0 0 0" },
-  destructive: { value: "0.65 0.3 20" },
-  destructiveForeground: { value: "0 0 0" },
-  success: { value: "0.7 0.3 150" },
-  warning: { value: "0.85 0.35 80" },
-  border: { value: "0.3 0.02 240" },
-};
+const getForegroundColor = (l: number): string => l > 0.6 ? "#000000" : "#FFFFFF";
 
-const ColorCustomizerPage = () => {
-  const [selectedColor, setSelectedColor] = useState("primary");
-
-  const getForegroundColor = (oklch: string): string => {
-    const [l] = oklch.split(" ").map(parseFloat);
-    return l > 0.6 ? "#000000" : "#FFFFFF";
+const ThemeColorGrid = ({
+                          colorsObj,
+                          selectedColor,
+                          onSelectColor
+                        }: {
+  colorsObj: Record<ColorKey, { l: number; c: number; h: number }>;
+  selectedColor: ColorKey;
+  onSelectColor: (color: ColorKey) => void;
+}) => {
+  const getColorDetails = (colorKey: ColorKey) => {
+    const color = colorsObj[colorKey];
+    return {
+      displayColor: `oklch(${color.l} ${color.c} ${color.h})`,
+      foregroundColor: getForegroundColor(color.l)
+    };
   };
 
   return (
-    <div
-      className={
-        "grid h-full w-full grid-cols-1 items-start gap-4 p-4 lg:grid-cols-4"
-      }
-    >
-      <div className="grid grid-cols-2 gap-3">
-        {colors.map((colorKey, index) => {
-          const lightColor = defaultLightColors[colorKey];
-          const lightDisplayColor = `oklch(${lightColor.value})`;
-          const lightForegroundColor = getForegroundColor(lightColor.value);
+    <div className="grid grid-cols-4 gap-1">
+      {COLOR_KEYS.map((colorKey) => {
+        const { displayColor, foregroundColor } = getColorDetails(colorKey);
+        return (
+          <div className="flex gap-2" key={colorKey}>
+            <ColorCard
+              name={colorKey.replace(/([A-Z])/g, " $1").toLowerCase()}
+              mainColor={displayColor}
+              textColor={foregroundColor}
+              onClick={() => onSelectColor(colorKey)}
+              active={selectedColor === colorKey}
+            />
+          </div>
+        );
+      })}
+    </div>
+  );
+};
 
-          return (
-            <div className="flex gap-2" key={index}>
-              <ColorCard
-                key={colorKey}
-                name={colorKey.replace(/([A-Z])/g, " $1").toLowerCase()}
-                mainColor={lightDisplayColor}
-                textColor={lightForegroundColor}
-                onClick={() => setSelectedColor(colorKey)}
-                active={selectedColor === colorKey}
-              />
-            </div>
-          );
-        })}
-      </div>
-      <div className="grid grid-cols-2 gap-3">
-        {colors.map((colorKey, index) => {
-          const darkColor = defaultDarkColors[colorKey];
-          const darkDisplayColor = `oklch(${darkColor.value})`;
-          const darkForegroundColor = getForegroundColor(darkColor.value);
+const ColorCustomizerPage = () => {
+  const { id } = useParams({
+    from: "/_authenticated/_canva-layout/$id/color-customizer"
+  });
 
-          return (
-            <div className="flex gap-2" key={index}>
-              <ColorCard
-                key={colorKey}
-                name={colorKey.replace(/([A-Z])/g, " $1").toLowerCase()}
-                mainColor={darkDisplayColor}
-                textColor={darkForegroundColor}
-                onClick={() => setSelectedColor(colorKey)}
-                active={selectedColor === colorKey}
-              />
-            </div>
-          );
-        })}
+  const { data } = useGetProjectColors(id);
+  const { mutate } = useUpdateProjectColors(id);
+  const [lightColors, setLightColors] = useState<Record<ColorKey, { l: number; c: number; h: number }>>();
+  const [darkColors, setDarkColors] = useState<Record<ColorKey, { l: number; c: number; h: number }>>();
+  const [selectedColor, setSelectedColor] = useState<ColorKey>("primary");
+  const [selectedTheme, setSelectedTheme] = useState<"light" | "dark">("light");
+
+  useEffect(() => {
+    if (data) {
+      setLightColors(prev => deepCompareUpdate(prev, data.light));
+      setDarkColors(prev => deepCompareUpdate(prev, data.dark));
+    }
+  }, [data]);
+
+  const deepCompareUpdate = <T,>(prev: T, newData: T): T =>
+    JSON.stringify(prev) === JSON.stringify(newData) ? prev : newData;
+
+  const handleOklchChange = useCallback((oklch: { l: number; c: number; h: number }) => {
+    const updater = selectedTheme === 'light' ? setLightColors : setDarkColors;
+    updater(prev => prev ? ({ ...prev, [selectedColor]: oklch }) : prev);
+  }, [selectedColor, selectedTheme]);
+
+  const handleSave = () => {
+    if (!lightColors || !darkColors) return;
+
+    const currentColors = selectedTheme === 'light' ? lightColors : darkColors;
+    mutate({
+      id,
+      theme: selectedTheme,
+      color: selectedColor,
+      value: currentColors[selectedColor]
+    });
+  };
+
+  if (!lightColors || !darkColors) {
+    return (
+      <div className="grid h-full w-full grid-cols-1 items-start gap-4 p-4 lg:grid-cols-2">
+        {Array.from({ length: 4 }).map((_, i) => <Skeleton key={i} />)}
       </div>
-      <Tabs className={"h-full col-span-2"} defaultValue={"theme"}>
+    );
+  }
+
+  return (
+    <div className="grid h-full w-full grid-cols-1 items-start gap-4 p-4 lg:grid-cols-2">
+      <div className="flex h-full flex-col gap-4">
+        <OklchEditor
+          key={`${selectedTheme}-${selectedColor}`}
+          initialOklchValue={(selectedTheme === 'light' ? lightColors : darkColors)[selectedColor]}
+          onChange={handleOklchChange}
+        />
+        <Button onClick={handleSave}>Save</Button>
+
+        <Tabs value={selectedTheme} onValueChange={v => setSelectedTheme(v as "light" | "dark")}>
+          <Card>
+            <CardHeader>
+              <TabsList className="grid w-full grid-cols-2">
+                <TabsTrigger value="light">Light Theme</TabsTrigger>
+                <TabsTrigger value="dark">Dark Theme</TabsTrigger>
+              </TabsList>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <TabsContent value="light">
+                <ThemeColorGrid
+                  colorsObj={lightColors}
+                  selectedColor={selectedColor}
+                  onSelectColor={setSelectedColor}
+                />
+              </TabsContent>
+              <TabsContent value="dark">
+                <ThemeColorGrid
+                  colorsObj={darkColors}
+                  selectedColor={selectedColor}
+                  onSelectColor={setSelectedColor}
+                />
+              </TabsContent>
+            </CardContent>
+          </Card>
+        </Tabs>
+      </div>
+
+      <Tabs defaultValue="theme">
         <TabsList className="grid w-full grid-cols-2">
           <TabsTrigger value="theme">Theme Preview</TabsTrigger>
           <TabsTrigger value="code">Code Preview</TabsTrigger>
         </TabsList>
-        <TabsContent
-          value="theme"
-          className={"overflow-hidden rounded-md border"}
-        >
+        <TabsContent value="theme" className="overflow-hidden rounded-md border">
           <ColorPreview />
         </TabsContent>
-        <TabsContent
-          value="code"
-          className={"overflow-hidden rounded-md border"}
-        >
+        <TabsContent value="code" className="overflow-hidden rounded-md border">
           <CodePreview />
         </TabsContent>
       </Tabs>

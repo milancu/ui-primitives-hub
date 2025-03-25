@@ -8,6 +8,7 @@ import {
 import { Link, useLocation, useParams } from "@tanstack/react-router";
 import { useStyle } from "@/components/style-provider.tsx";
 import { useCurrentComponentStateParam } from "@/features/sidebar/hooks/useCurrentComponentStateParam.tsx";
+import { useHierarchy } from "@/components/hierarchy-provider.tsx";
 
 export function NavMain({
   items,
@@ -18,6 +19,7 @@ export function NavMain({
   }[];
 }) {
   const { setStyle } = useStyle();
+  const { setHierarchy } = useHierarchy();
   const [, setState] = useCurrentComponentStateParam();
   const { id } = useParams({ strict: false });
   const { pathname } = useLocation();
@@ -35,6 +37,7 @@ export function NavMain({
               onClick={() => {
                 setStyle(undefined);
                 setState(null);
+                setHierarchy(undefined)
               }}
             >
               <span>{item.title}</span>
