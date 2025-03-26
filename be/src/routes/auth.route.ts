@@ -3,6 +3,29 @@ import {AuthService} from "../services/auth.service";
 
 const router = express.Router();
 
+// Device Code Flow endpoints
+router.post("/device/code", async (req, res) => {
+  try {
+    const deviceCode = await AuthService.generateDeviceCode();
+    res.json(deviceCode);
+  } catch (error) {
+    res.status(500).json({error: "Failed to generate device code"});
+  }
+});
+
+router.post("/device/poll", async (req, res) => {
+  const {device_code} = req.body;
+
+  try {
+    const result = await AuthService.pollDeviceCode(device_code);
+    console.log(result)
+    res.json(result);
+  } catch (error: any) {
+    const statusCode = error.message.includes("expired") ? 410 : 404;
+    res.status(statusCode).json({error: error.message});
+  }
+});
+
 router.get("/figma", (req, res) => {
   const url = AuthService.buildFigmaAuthUrl();
   res.redirect(url);

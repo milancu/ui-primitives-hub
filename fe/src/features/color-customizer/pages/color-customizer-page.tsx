@@ -1,6 +1,11 @@
 import CodePreview from "@/features/color-customizer/components/code-preview.tsx";
 import ColorPreview from "@/features/color-customizer/components/color-preview.tsx";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs.tsx";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/components/ui/tabs.tsx";
 import { ColorCard } from "@/features/color-customizer/components/color-card.tsx";
 import { useCallback, useEffect, useState } from "react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card.tsx";
@@ -10,23 +15,36 @@ import { useParams } from "@tanstack/react-router";
 import { Skeleton } from "@/components/ui/skeleton.tsx";
 import { useUpdateProjectColors } from "@/features/color-customizer/hooks/mutations/useUpdateProjectColors.ts";
 import { Button } from "@/components/ui/button.tsx";
+import { toast } from "sonner";
 
 const COLOR_KEYS = [
-  "background", "foreground", "primary", "primaryForeground",
-  "secondary", "secondaryForeground", "muted", "mutedForeground",
-  "accent", "accentForeground", "destructive", "destructiveForeground",
-  "success", "warning", "border"
+  "background",
+  "foreground",
+  "primary",
+  "primaryForeground",
+  "secondary",
+  "secondaryForeground",
+  "muted",
+  "mutedForeground",
+  "accent",
+  "accentForeground",
+  "destructive",
+  "destructiveForeground",
+  "success",
+  "warning",
+  "border",
 ] as const;
 
-type ColorKey = typeof COLOR_KEYS[number];
+type ColorKey = (typeof COLOR_KEYS)[number];
 
-const getForegroundColor = (l: number): string => l > 0.6 ? "#000000" : "#FFFFFF";
+const getForegroundColor = (l: number): string =>
+  l > 0.6 ? "#000000" : "#FFFFFF";
 
 const ThemeColorGrid = ({
-                          colorsObj,
-                          selectedColor,
-                          onSelectColor
-                        }: {
+  colorsObj,
+  selectedColor,
+  onSelectColor,
+}: {
   colorsObj: Record<ColorKey, { l: number; c: number; h: number }>;
   selectedColor: ColorKey;
   onSelectColor: (color: ColorKey) => void;
@@ -35,7 +53,7 @@ const ThemeColorGrid = ({
     const color = colorsObj[colorKey];
     return {
       displayColor: `oklch(${color.l} ${color.c} ${color.h})`,
-      foregroundColor: getForegroundColor(color.l)
+      foregroundColor: getForegroundColor(color.l),
     };
   };
 
@@ -61,47 +79,61 @@ const ThemeColorGrid = ({
 
 const ColorCustomizerPage = () => {
   const { id } = useParams({
-    from: "/_authenticated/_canva-layout/$id/color-customizer"
+    from: "/_authenticated/_canva-layout/$id/color-customizer",
   });
 
   const { data } = useGetProjectColors(id);
-  const { mutate } = useUpdateProjectColors(id);
-  const [lightColors, setLightColors] = useState<Record<ColorKey, { l: number; c: number; h: number }>>();
-  const [darkColors, setDarkColors] = useState<Record<ColorKey, { l: number; c: number; h: number }>>();
+  const { mutateAsync, isPending } = useUpdateProjectColors(id);
+  const [lightColors, setLightColors] =
+    useState<Record<ColorKey, { l: number; c: number; h: number }>>();
+  const [darkColors, setDarkColors] =
+    useState<Record<ColorKey, { l: number; c: number; h: number }>>();
   const [selectedColor, setSelectedColor] = useState<ColorKey>("primary");
   const [selectedTheme, setSelectedTheme] = useState<"light" | "dark">("light");
 
   useEffect(() => {
     if (data) {
-      setLightColors(prev => deepCompareUpdate(prev, data.light));
-      setDarkColors(prev => deepCompareUpdate(prev, data.dark));
+      setLightColors((prev) => deepCompareUpdate(prev, data.light));
+      setDarkColors((prev) => deepCompareUpdate(prev, data.dark));
     }
   }, [data]);
 
   const deepCompareUpdate = <T,>(prev: T, newData: T): T =>
     JSON.stringify(prev) === JSON.stringify(newData) ? prev : newData;
 
-  const handleOklchChange = useCallback((oklch: { l: number; c: number; h: number }) => {
-    const updater = selectedTheme === 'light' ? setLightColors : setDarkColors;
-    updater(prev => prev ? ({ ...prev, [selectedColor]: oklch }) : prev);
-  }, [selectedColor, selectedTheme]);
+  const handleOklchChange = useCallback(
+    (oklch: { l: number; c: number; h: number }) => {
+      const updater =
+        selectedTheme === "light" ? setLightColors : setDarkColors;
+      updater((prev) => (prev ? { ...prev, [selectedColor]: oklch } : prev));
+    },
+    [selectedColor, selectedTheme],
+  );
 
   const handleSave = () => {
     if (!lightColors || !darkColors) return;
 
-    const currentColors = selectedTheme === 'light' ? lightColors : darkColors;
-    mutate({
+    const currentColors = selectedTheme === "light" ? lightColors : darkColors;
+    mutateAsync({
       id,
       theme: selectedTheme,
       color: selectedColor,
-      value: currentColors[selectedColor]
-    });
+      value: currentColors[selectedColor],
+    })
+      .then(() => {
+        toast.success("Saved successfully");
+      })
+      .catch((error) => {
+        toast.error(error.error);
+      });
   };
 
   if (!lightColors || !darkColors) {
     return (
       <div className="grid h-full w-full grid-cols-1 items-start gap-4 p-4 lg:grid-cols-2">
-        {Array.from({ length: 4 }).map((_, i) => <Skeleton key={i} />)}
+        {Array.from({ length: 4 }).map((_, i) => (
+          <Skeleton key={i} />
+        ))}
       </div>
     );
   }
@@ -111,12 +143,19 @@ const ColorCustomizerPage = () => {
       <div className="flex h-full flex-col gap-4">
         <OklchEditor
           key={`${selectedTheme}-${selectedColor}`}
-          initialOklchValue={(selectedTheme === 'light' ? lightColors : darkColors)[selectedColor]}
+          initialOklchValue={
+            (selectedTheme === "light" ? lightColors : darkColors)[
+              selectedColor
+            ]
+          }
           onChange={handleOklchChange}
         />
-        <Button onClick={handleSave}>Save</Button>
+        <Button onClick={handleSave} disabled={isPending}>Save</Button>
 
-        <Tabs value={selectedTheme} onValueChange={v => setSelectedTheme(v as "light" | "dark")}>
+        <Tabs
+          value={selectedTheme}
+          onValueChange={(v) => setSelectedTheme(v as "light" | "dark")}
+        >
           <Card>
             <CardHeader>
               <TabsList className="grid w-full grid-cols-2">
@@ -149,8 +188,11 @@ const ColorCustomizerPage = () => {
           <TabsTrigger value="theme">Theme Preview</TabsTrigger>
           <TabsTrigger value="code">Code Preview</TabsTrigger>
         </TabsList>
-        <TabsContent value="theme" className="overflow-hidden rounded-md border">
-          <ColorPreview />
+        <TabsContent
+          value="theme"
+          className="overflow-hidden rounded-md border"
+        >
+          <ColorPreview lightColors={lightColors} darkColors={darkColors} />
         </TabsContent>
         <TabsContent value="code" className="overflow-hidden rounded-md border">
           <CodePreview />

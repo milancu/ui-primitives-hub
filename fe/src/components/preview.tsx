@@ -1,79 +1,98 @@
-import { PropsWithChildren, useEffect, useMemo } from "react";
+import React, { PropsWithChildren, useCallback, useMemo } from "react";
 import { DotPattern } from "./magicui/dot-pattern";
 import { cn } from "@/lib/utils";
+import { useGetProjectColors } from "@/features/color-customizer/hooks/queries/useGetProjectColors.ts";
+import { useStore } from "@tanstack/react-store";
+import { projectStore } from "@/store/project.store.ts";
+import { ColorScheme } from "../../../packages/types";
 
-const colors = {
-  light: {
-    test: "oklch(0.577 0.245 27.325)",
-  },
-  dark: {
-    test: "oklch(0.452 0.313 264.052)",
-  },
+type ThemeType = "light" | "dark";
+
+const ThemePreviewBlock = ({
+  theme,
+  colors,
+  children,
+  dotPattern,
+}: PropsWithChildren<{
+  theme: ThemeType;
+  colors: {
+    light: ColorScheme;
+    dark: ColorScheme;
+  };
+  dotPattern: React.ReactNode;
+}>) => {
+  const createThemeStyle = useCallback(
+    (theme: ThemeType) => {
+      const themeColors = colors?.[theme];
+      if (!themeColors) return {};
+
+      return Object.fromEntries(
+        Object.entries(themeColors).map(([key, value]) => [
+          `--${key}`,
+          `oklch(${value.l} ${value.c} ${value.h})`,
+        ]),
+      ) as React.CSSProperties;
+    },
+    [colors],
+  );
+
+  return (
+    <div
+      className={`${theme} bg-background text-foreground relative w-full flex-1`}
+    >
+      {dotPattern}
+      <div data-theme={theme} className="relative flex h-full flex-col">
+        <div className="bg-background relative w-full rounded-t-lg border-b p-2 text-center font-semibold">
+          {theme.charAt(0).toUpperCase() + theme.slice(1)} preview
+        </div>
+        <div
+          style={createThemeStyle(theme)}
+          className="relative flex h-full items-center justify-center p-4"
+        >
+          {children}
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export function Preview({ children }: PropsWithChildren) {
-  const dotPattern = useMemo(() => {
-    return (
+  const id = useStore(projectStore);
+  const { data: colors, isLoading, isError } = useGetProjectColors(id);
+
+  const dotPattern = useMemo(
+    () => (
       <DotPattern
         className={cn(
           "[mask-image:radial-gradient(500px_circle_at_center,white,transparent)]",
         )}
       />
+    ),
+    [],
+  );
+
+  if (isLoading)
+    return (
+      <div className="flex h-full items-center justify-center">
+        Loading themes...
+      </div>
     );
-  }, []);
-
-  useEffect(() => {
-    const root = document.documentElement;
-    const darkStyle = document.createElement("style");
-
-    Object.entries(colors.light).forEach(([key, value]) => {
-      root.style.setProperty(`--${key}`, value);
-    });
-
-    const darkVars = Object.entries(colors.dark)
-      .map(([key, value]) => `--${key}: ${value};`)
-      .join("\n");
-
-    darkStyle.innerHTML = `.dark {\n${darkVars}\n}`;
-    document.head.appendChild(darkStyle);
-  }, []);
+  if (isError)
+    return (
+      <div className="text-destructive flex h-full items-center justify-center">
+        Error loading colors
+      </div>
+    );
+  if (!colors) return null;
 
   return (
     <div className="flex h-full flex-col">
-      <div className="light bg-background text-foreground relative w-full flex-1">
-        {dotPattern}
-        <div data-theme="light" className="relative flex h-full flex-col">
-          <div
-            className={
-              "bg-background relative w-full rounded-t-lg border-b p-2 text-center font-semibold"
-            }
-          >
-            Light preview
-          </div>
-          <div
-            className={"relative flex h-full items-center justify-center p-4"}
-          >
-            {children}
-          </div>
-        </div>
-      </div>
-      <div className="dark bg-background text-foreground relative w-full flex-1">
-        {dotPattern}
-        <div data-theme="dark" className="relative flex h-full flex-col">
-          <div
-            className={
-              "bg-background relative w-full rounded-t-lg border-b p-2 text-center font-semibold"
-            }
-          >
-            Dark preview
-          </div>
-          <div
-            className={"relative flex h-full items-center justify-center p-4"}
-          >
-            {children}
-          </div>
-        </div>
-      </div>
+      <ThemePreviewBlock theme="light" colors={colors} dotPattern={dotPattern}>
+        {children}
+      </ThemePreviewBlock>
+      <ThemePreviewBlock theme="dark" colors={colors} dotPattern={dotPattern}>
+        {children}
+      </ThemePreviewBlock>
     </div>
   );
 }

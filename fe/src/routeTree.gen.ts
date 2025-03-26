@@ -14,6 +14,7 @@ import { Route as rootRoute } from './routes/__root'
 import { Route as LoginImport } from './routes/login'
 import { Route as AuthenticatedImport } from './routes/_authenticated'
 import { Route as AuthCallbackImport } from './routes/auth.callback'
+import { Route as AuthenticatedActivateImport } from './routes/_authenticated/activate'
 import { Route as AuthenticatedDashboardLayoutImport } from './routes/_authenticated/_dashboard-layout'
 import { Route as AuthenticatedCanvaLayoutImport } from './routes/_authenticated/_canva-layout'
 import { Route as AuthenticatedDashboardLayoutIndexImport } from './routes/_authenticated/_dashboard-layout/index'
@@ -44,6 +45,12 @@ const AuthCallbackRoute = AuthCallbackImport.update({
   id: '/auth/callback',
   path: '/auth/callback',
   getParentRoute: () => rootRoute,
+} as any)
+
+const AuthenticatedActivateRoute = AuthenticatedActivateImport.update({
+  id: '/activate',
+  path: '/activate',
+  getParentRoute: () => AuthenticatedRoute,
 } as any)
 
 const AuthenticatedDashboardLayoutRoute =
@@ -157,6 +164,13 @@ declare module '@tanstack/react-router' {
       path: ''
       fullPath: ''
       preLoaderRoute: typeof AuthenticatedDashboardLayoutImport
+      parentRoute: typeof AuthenticatedImport
+    }
+    '/_authenticated/activate': {
+      id: '/_authenticated/activate'
+      path: '/activate'
+      fullPath: '/activate'
+      preLoaderRoute: typeof AuthenticatedActivateImport
       parentRoute: typeof AuthenticatedImport
     }
     '/auth/callback': {
@@ -295,12 +309,14 @@ const AuthenticatedDashboardLayoutRouteWithChildren =
 interface AuthenticatedRouteChildren {
   AuthenticatedCanvaLayoutRoute: typeof AuthenticatedCanvaLayoutRouteWithChildren
   AuthenticatedDashboardLayoutRoute: typeof AuthenticatedDashboardLayoutRouteWithChildren
+  AuthenticatedActivateRoute: typeof AuthenticatedActivateRoute
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedCanvaLayoutRoute: AuthenticatedCanvaLayoutRouteWithChildren,
   AuthenticatedDashboardLayoutRoute:
     AuthenticatedDashboardLayoutRouteWithChildren,
+  AuthenticatedActivateRoute: AuthenticatedActivateRoute,
 }
 
 const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
@@ -310,6 +326,7 @@ const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
 export interface FileRoutesByFullPath {
   '': typeof AuthenticatedDashboardLayoutRouteWithChildren
   '/login': typeof LoginRoute
+  '/activate': typeof AuthenticatedActivateRoute
   '/auth/callback': typeof AuthCallbackRoute
   '/': typeof AuthenticatedDashboardLayoutIndexRoute
   '/$id/accordion': typeof AuthenticatedCanvaLayoutIdAccordionRoute
@@ -326,6 +343,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '': typeof AuthenticatedCanvaLayoutRouteWithChildren
   '/login': typeof LoginRoute
+  '/activate': typeof AuthenticatedActivateRoute
   '/auth/callback': typeof AuthCallbackRoute
   '/': typeof AuthenticatedDashboardLayoutIndexRoute
   '/$id/accordion': typeof AuthenticatedCanvaLayoutIdAccordionRoute
@@ -345,6 +363,7 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/_authenticated/_canva-layout': typeof AuthenticatedCanvaLayoutRouteWithChildren
   '/_authenticated/_dashboard-layout': typeof AuthenticatedDashboardLayoutRouteWithChildren
+  '/_authenticated/activate': typeof AuthenticatedActivateRoute
   '/auth/callback': typeof AuthCallbackRoute
   '/_authenticated/_dashboard-layout/': typeof AuthenticatedDashboardLayoutIndexRoute
   '/_authenticated/_canva-layout/$id/accordion': typeof AuthenticatedCanvaLayoutIdAccordionRoute
@@ -363,6 +382,7 @@ export interface FileRouteTypes {
   fullPaths:
     | ''
     | '/login'
+    | '/activate'
     | '/auth/callback'
     | '/'
     | '/$id/accordion'
@@ -378,6 +398,7 @@ export interface FileRouteTypes {
   to:
     | ''
     | '/login'
+    | '/activate'
     | '/auth/callback'
     | '/'
     | '/$id/accordion'
@@ -395,6 +416,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/_authenticated/_canva-layout'
     | '/_authenticated/_dashboard-layout'
+    | '/_authenticated/activate'
     | '/auth/callback'
     | '/_authenticated/_dashboard-layout/'
     | '/_authenticated/_canva-layout/$id/accordion'
@@ -440,7 +462,8 @@ export const routeTree = rootRoute
       "filePath": "_authenticated.tsx",
       "children": [
         "/_authenticated/_canva-layout",
-        "/_authenticated/_dashboard-layout"
+        "/_authenticated/_dashboard-layout",
+        "/_authenticated/activate"
       ]
     },
     "/login": {
@@ -467,6 +490,10 @@ export const routeTree = rootRoute
       "children": [
         "/_authenticated/_dashboard-layout/"
       ]
+    },
+    "/_authenticated/activate": {
+      "filePath": "_authenticated/activate.tsx",
+      "parent": "/_authenticated"
     },
     "/auth/callback": {
       "filePath": "auth.callback.tsx"

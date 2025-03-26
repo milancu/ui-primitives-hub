@@ -4,6 +4,7 @@ import authRouter from "./routes/auth.route";
 // import componentsRouter from "./routes/components";
 import componentsRouter from "./routes/component.route";
 import projectsRouter from "./routes/project.route";
+import verifyRoute from "./routes/verify.route";
 import cors from "cors";
 
 dotenv.config();
@@ -14,7 +15,7 @@ app.use(express.json(), cors({
   credentials: true
 }));
 
-app.use("/auth", authRouter);
+app.use("/auth", [authRouter, verifyRoute]);
 app.use('/projects', [projectsRouter, componentsRouter])
 
 app.get("/", (req, res) => {

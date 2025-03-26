@@ -2,3 +2,4 @@ packages:
   - 'packages/*'
   - 'fe'
   - 'be'
+  - 'cli'

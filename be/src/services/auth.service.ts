@@ -2,8 +2,107 @@ import {ProjectService} from './project.service';
 import {User} from "../models/user.model";
 import {auth, db} from "../firebase";
 import axios from "axios";
+import {generatePKCE} from "../utils/pkce";
+import crypto from "crypto";
+import * as dotenv from "dotenv";
+
+const DEVICE_CODES_REF = "deviceCodes";
+const CODE_EXPIRATION = 15 * 60 * 1000;
+
+dotenv.config();
 
 export class AuthService {
+  static async generateDeviceCode() {
+    const deviceCode = this.generateUniqueId();
+    const userCode = this.generateHumanFriendlyCode();
+    const {codeChallenge} = generatePKCE();
+
+    await db.ref(`${DEVICE_CODES_REF}/${deviceCode}`).set({
+      userCode,
+      codeChallenge,
+      status: "pending",
+      createdAt: Date.now()
+    });
+
+    return {
+      device_code: deviceCode,
+      user_code: userCode,
+      verification_uri: `${process.env.FRONTEND_URL}/activate`,
+      expires_in: CODE_EXPIRATION
+    };
+  }
+
+  static async verifyDeviceCode(userCode: string, userId: string) {
+    const deviceCode = await this.findDeviceCodeByUserCode(userCode);
+    const firebaseToken = await auth.createCustomToken(userId);
+
+    await db.ref(`${DEVICE_CODES_REF}/${deviceCode}`).update({
+      status: "approved",
+      firebaseToken,
+    });
+  }
+
+  static async pollDeviceCode(deviceCode: string) {
+    const snapshot = await db.ref(`${DEVICE_CODES_REF}/${deviceCode}`).get();
+    const codeData = snapshot.val();
+
+    if (!codeData) throw new Error("Invalid device code");
+    if (codeData.status === "expired") throw new Error("Session expired");
+
+    return {
+      status: codeData.status,
+      token: codeData.firebaseToken
+    };
+  }
+
+  static async handleFigmaCallback(code: string, state: string) {
+    if (state !== process.env.OAUTH_STATE_SECRET) {
+      throw new Error("Invalid state parameter");
+    }
+
+    const accessToken = await AuthService.exchangeCodeForToken(code);
+    const figmaUser = await AuthService.getFigmaUserProfile(accessToken);
+    const firebaseUser = await this.getOrCreateFirebaseUser(figmaUser);
+
+    return `${process.env.FRONTEND_URL}/auth/callback?token=${await auth.createCustomToken(firebaseUser.uid)}`;
+  }
+
+  private static async findDeviceCodeByUserCode(userCode: string) {
+    const snapshot = await db.ref(DEVICE_CODES_REF)
+      .orderByChild("userCode")
+      .equalTo(userCode)
+      .once("value");
+
+    if (!snapshot.exists()) throw new Error("Invalid user code");
+    return Object.keys(snapshot.val())[0];
+  }
+
+  private static async getOrCreateFirebaseUser(figmaUser: any) {
+    const uid = `figma:${figmaUser.id}`;
+
+    try {
+      return await auth.getUser(uid);
+    } catch {
+      return auth.createUser({
+        uid,
+        email: figmaUser.email,
+        displayName: figmaUser.handle,
+        photoURL: figmaUser.img_url
+      });
+    }
+  }
+
+  private static generateHumanFriendlyCode() {
+    const chars = "ABCDEFGHJKMNPQRSTUVWXYZ23456789";
+    return Array.from({length: 6}, () => chars[Math.floor(Math.random() * chars.length)])
+      .join("")
+      .match(/.{1,3}/g)?.join("") || "";
+  }
+
+  private static generateUniqueId() {
+    return crypto.randomBytes(16).toString("hex");
+  }
+
   static async handleFigmaAuth(figmaUser: any): Promise<User> {
     const user = await this.getOrCreateUser(figmaUser);
     await this.initializeUserProjects(user);
@@ -47,7 +146,7 @@ export class AuthService {
 
   static generateFrontendRedirectUrl = async (uid: string) => {
     const firebaseToken = await auth.createCustomToken(uid);
-    return `http://localhost:5173/auth/callback?token=${firebaseToken}`;
+    return `${process.env.FRONTEND_URL}/auth/callback?token=${firebaseToken}`;
   };
 
   static async getOrCreateUser(figmaUser: any): Promise<User> {

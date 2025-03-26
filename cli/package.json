@@ -1,0 +1,25 @@
+{
+  "bin": {
+    "ui-primitives-hub": "./index.js"
+  },
+  "type": "module",
+  "name": "cli",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "boxen": "^8.0.1",
+    "chalk": "^5.4.1",
+    "commander": "^13.1.0",
+    "figlet": "^1.8.0",
+    "fs-extra": "^11.3.0",
+    "inquirer": "^12.5.0",
+    "ora": "^8.2.0"
+  }
+}

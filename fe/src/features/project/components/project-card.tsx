@@ -85,7 +85,7 @@ const ProjectCard = ({
       <CardContent className="relative flex h-full flex-col justify-between pb-4">
         <div className="text-muted-foreground mt-4 flex items-center gap-1.5 text-sm">
           <Calendar className="h-3.5 w-3.5" />
-          <span>{format(updatedAt, "dd.MM.yyyy", { locale: cs })}</span>
+          <span>{format(updatedAt, "dd.MM.yyyy HH:mm", { locale: cs })}</span>
         </div>
       </CardContent>
     </Card>

@@ -35,7 +35,7 @@ export class ProjectService {
     await projectRef.set({
       metadata,
       components: DEFAULT_COMPONENTS,
-      colors:DEFAULT_COLORS
+      colors: DEFAULT_COLORS
     });
 
     return metadata;
@@ -55,11 +55,11 @@ export class ProjectService {
   }
 
   static async updateProjectColors(
-      userId: string,
-      projectId: string,
-      theme: string,
-      color: string,
-      newValue: Color
+    userId: string,
+    projectId: string,
+    theme: string,
+    color: string,
+    newValue: Color
   ): Promise<ColorScheme> {
     const snapshot = await db.ref(`users/${userId}/projects/${projectId}`).once('value');
     if (!snapshot.exists()) {
@@ -99,7 +99,7 @@ export class ProjectService {
     }
 
     const updatedData = {
-      name:name,
+      name: name,
       updatedAt: new Date().toISOString(),
     };
 
@@ -141,9 +141,11 @@ export class ProjectService {
     const snapshot = await db.ref(`users/${userId}/projects`).once('value');
     if (!snapshot.exists()) return [];
 
-    return Object.entries(snapshot.val()).map(([id, project]: [string, any]) => ({
-      id,
-      ...project.metadata
-    }));
+    return Object.entries(snapshot.val())
+      .map(([id, project]: [string, any]) => ({
+        id,
+        ...project.metadata
+      }))
+      .sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
   }
 }
