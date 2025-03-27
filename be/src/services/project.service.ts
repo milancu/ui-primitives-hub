@@ -48,6 +48,15 @@ export class ProjectService {
     return snapshot.val();
   }
 
+  static async getProjectMetadata(userId: string, projectId: string): Promise<Project> {
+    const snapshot = await db.ref(`users/${userId}/projects/${projectId}`).once('value');
+    if (!snapshot.exists()) throw new Error('Project not found');
+    const component = snapshot.val();
+    return {
+      ...component.metadata
+    };
+  }
+
   static async getProjectColors(userId: string, projectId: string): Promise<ColorScheme> {
     const snapshot = await db.ref(`users/${userId}/projects/${projectId}/colors`).once('value');
     if (!snapshot.exists()) throw new Error('Project not found');

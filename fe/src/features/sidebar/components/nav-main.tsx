@@ -37,7 +37,7 @@ export function NavMain({
               onClick={() => {
                 setStyle(undefined);
                 setState(null);
-                setHierarchy(undefined)
+                setHierarchy(undefined);
               }}
             >
               <span>{item.title}</span>

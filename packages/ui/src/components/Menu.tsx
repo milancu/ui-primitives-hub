@@ -1,5 +1,5 @@
 import React from "react";
-import {cn} from "./lib/utils.ts";
+import {cn} from "../lib/utils.ts";
 
 import {Menu as MenuPrimitives} from '@base-ui-components/react/menu';
 

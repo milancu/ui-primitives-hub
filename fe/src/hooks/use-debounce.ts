@@ -1,35 +1,17 @@
-// src/hooks/useDebounce.ts
-import { useEffect, useCallback, useRef } from "react";
+import { useEffect, useState } from "react";
 
-export function useDebounce<T extends (...args: any[]) => void>(
-  callback: T,
-  delay: number,
-): (...args: Parameters<T>) => void {
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const savedCallback = useRef(callback);
-  const latestArgs = useRef<Parameters<T>>();
+export function useDebounce<T>(value: T, delay: number): T {
+  const [debouncedValue, setDebouncedValue] = useState<T>(value);
 
   useEffect(() => {
-    savedCallback.current = callback;
-  }, [callback]);
+    const handler = setTimeout(() => {
+      setDebouncedValue(value);
+    }, delay);
 
-  useEffect(() => {
     return () => {
-      clearTimeout(timeoutRef.current!);
+      clearTimeout(handler);
     };
-  }, []);
+  }, [value, delay]);
 
-  return useCallback(
-    (...args: Parameters<T>) => {
-      latestArgs.current = args;
-      clearTimeout(timeoutRef.current!);
-
-      timeoutRef.current = setTimeout(() => {
-        if (latestArgs.current) {
-          savedCallback.current(...latestArgs.current);
-        }
-      }, delay);
-    },
-    [delay]
-  );
+  return debouncedValue;
 }

@@ -1,5 +1,3 @@
-import { DotPattern } from "@/components/magicui/dot-pattern.tsx";
-import { cn } from "@/lib/utils.ts";
 import {
   Card,
   CardContent,
@@ -16,25 +14,29 @@ import {
 } from "@/components/ui/input-otp";
 import { useState } from "react";
 import { useVerifyCode } from "@/features/activate/hooks/mutations/useVerifyCode.ts";
+import { toast } from "sonner";
+import { useNavigate } from "@tanstack/react-router";
 
 const ActivatePage = () => {
   const { mutateAsync, isPending } = useVerifyCode();
   const [value, setValue] = useState<string>("");
+  const navigate = useNavigate({ from: "/activate" });
 
   const handleSubmit = () => {
     mutateAsync({
       userCode: value,
-      figmaToken: "<PASSWORD>",
-    });
+    })
+      .then(() => {
+        navigate({ to: "/success" });
+      })
+      .catch((error) => {
+        toast.error(error.message);
+        setValue("");
+      });
   };
 
   return (
     <div className="bg-background relative flex h-screen w-full items-center justify-center overflow-hidden rounded-lg">
-      <DotPattern
-        className={cn(
-          "[mask-image:radial-gradient(500px_circle_at_center,white,transparent)]",
-        )}
-      />
       <Card className="bg-background relative z-10 w-full max-w-md">
         <CardHeader className="flex flex-col items-center space-y-2 text-center">
           <div>

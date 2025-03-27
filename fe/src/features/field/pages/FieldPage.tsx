@@ -6,7 +6,7 @@ import {
   FieldError,
   FieldLabel,
   FieldRoot,
-} from "@ui-primitives-hub/ui/src/Field.tsx";
+} from "@ui-primitives-hub/ui/src/components/Field.tsx";
 import { useParams } from "@tanstack/react-router";
 import { useCurrentPartParam } from "@/features/sidebar/hooks/useCurrentPartParam.tsx";
 import { useCurrentComponentStateParam } from "@/features/sidebar/hooks/useCurrentComponentStateParam.tsx";

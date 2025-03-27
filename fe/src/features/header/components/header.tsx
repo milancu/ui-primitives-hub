@@ -3,7 +3,7 @@ import User from "@/features/user/components/user.tsx";
 import SearchInput from "@/features/search-input/components/search-input.tsx";
 import { Link } from "@tanstack/react-router";
 import { ThemeLogo } from "@/components/ui/theme-logo.tsx";
-import ProjectTabs from "@/features/header/components/project-tabs.tsx";
+import ProjectTabList from "@/features/header/components/project-tab-list.tsx";
 
 const Header = () => {
   return (
@@ -16,7 +16,7 @@ const Header = () => {
           >
             <ThemeLogo />
           </Link>
-          <ProjectTabs/>
+          <ProjectTabList/>
         </div>
         <div className={"flex items-center gap-2"}>
           <SearchInput />

@@ -1,5 +1,5 @@
 import React from "react";
-import {cn} from "./lib/utils.ts";
+import {cn} from "../lib/utils.ts";
 import {Field as FieldPrimitives} from '@base-ui-components/react/field';
 
 const FieldRoot = React.forwardRef<

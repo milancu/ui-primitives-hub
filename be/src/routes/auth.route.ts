@@ -18,7 +18,6 @@ router.post("/device/poll", async (req, res) => {
 
   try {
     const result = await AuthService.pollDeviceCode(device_code);
-    console.log(result)
     res.json(result);
   } catch (error: any) {
     const statusCode = error.message.includes("expired") ? 410 : 404;

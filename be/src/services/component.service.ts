@@ -60,10 +60,10 @@ export class ComponentService {
     const snapshot = await db.ref(`users/${uid}/projects/${projectId}/components/${componentName}`).once('value');
     if (!snapshot.exists()) throw new Error('Project or component not found');
 
-    const component = snapshot.val();
+    const components = snapshot.val();
 
-    return Object.keys(component).reduce((acc: Record<string, string>, key) => {
-      acc[key] = getRawTailwindClasses(component[key])
+    return Object.keys(components).reduce((acc: Record<string, string>, key) => {
+      acc[key] = getRawTailwindClasses(components[key])
       return acc;
     }, {})
   }
@@ -80,5 +80,37 @@ export class ComponentService {
     if (!snapshot.exists()) throw new Error('Project or component not found');
 
     return snapshot.val()
+  }
+
+  static async getComponentCode(uid: any, projectId: string, componentName: string):Promise<string> {
+    const snapshot = await db.ref(`users/${uid}/projects/${projectId}/components/${componentName}/`).once('value');
+    if (!snapshot.exists()) throw new Error('Project or component not found');
+
+    const components = snapshot.val();
+    switch (componentName) {
+      case "accordion": {
+        return AccordionService.getCode(components)
+      }
+      case "avatar": {
+        return AvatarService.getCode(components)
+      }
+      case "dialog": {
+        return DialogService.getCode(components)
+      }
+      case "field": {
+        return FieldService.getCode(components)
+      }
+      case "fieldset": {
+        return FieldsetService.getCode(components)
+      }
+      case "menu": {
+        return MenuService.getCode(components)
+      }
+      case "number-field": {
+        return NumberfieldService.getCode(components)
+      }
+      default:
+        return ''
+    }
   }
 }

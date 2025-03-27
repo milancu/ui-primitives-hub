@@ -9,7 +9,7 @@ import {
   DialogRoot,
   DialogTitle,
   DialogTrigger,
-} from "@ui-primitives-hub/ui/src/Dialog.tsx";
+} from "@ui-primitives-hub/ui/src/components/Dialog.tsx";
 import { useEffect } from "react";
 import { useParams } from "@tanstack/react-router";
 import { useCurrentPartParam } from "@/features/sidebar/hooks/useCurrentPartParam.tsx";

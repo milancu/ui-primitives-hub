@@ -3,7 +3,7 @@ import {
   AvatarFallback,
   AvatarImage,
   AvatarRoot,
-} from "@ui-primitives-hub/ui/src/Avatar.tsx";
+} from "@ui-primitives-hub/ui/src/components/Avatar.tsx";
 import { Skeleton } from "@/components/ui/skeleton.tsx";
 import { useParams } from "@tanstack/react-router";
 import { useCurrentPartParam } from "@/features/sidebar/hooks/useCurrentPartParam.tsx";
@@ -59,7 +59,6 @@ const AvatarPage = () => {
   }, [states]);
 
   useEffect(() => {
-    console.log('ahojda');
     setStyleFromString(style);
   }, [style]);
 

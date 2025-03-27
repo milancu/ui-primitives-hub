@@ -79,4 +79,18 @@ router.get('/:projectId/components/:component/:part/:state', async (req, res) =>
   }
 })
 
+router.get('/:projectId/components/:component/code', async (req, res) => {
+  try {
+    const code = await ComponentService.getComponentCode(
+      (req as any).user.uid,
+      req.params.projectId,
+      req.params.component,
+    )
+    res.type("text/plain").send(code);
+  } catch (error: any) {
+    res.status(400).json({error: error.message});
+  }
+})
+
+
 export default router;

@@ -10,7 +10,7 @@ import {
   MenuRoot,
   MenuSeparator,
   MenuTrigger,
-} from "@ui-primitives-hub/ui/src/Menu.tsx";
+} from "@ui-primitives-hub/ui/src/components/Menu.tsx";
 import { useParams } from "@tanstack/react-router";
 import { useCurrentPartParam } from "@/features/sidebar/hooks/useCurrentPartParam.tsx";
 import { useCurrentComponentStateParam } from "@/features/sidebar/hooks/useCurrentComponentStateParam.tsx";

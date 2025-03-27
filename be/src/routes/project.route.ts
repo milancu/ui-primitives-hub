@@ -1,4 +1,3 @@
-// src/routes/project.routes.ts
 import express from 'express';
 import {ProjectService} from '../services/project.service';
 import {authenticate} from "../middleware/auth";
@@ -55,6 +54,15 @@ router.put('/:projectId/colors', async (req, res) => {
     res.status(400).json({error: error.message});
   }
 });
+
+router.get('/:projectId/metadata', async (req, res) => {
+  try {
+    const project = await ProjectService.getProjectMetadata((req as any).user.uid, req.params.projectId);
+    res.json(project);
+  } catch (error) {
+    res.status(404).json({error: 'Project not found'});
+  }
+})
 
 router.route('/:projectId')
   .get(async (req, res) => {

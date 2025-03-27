@@ -4,19 +4,13 @@ import { X } from "lucide-react";
 import React from "react";
 
 type TabProps = {
-  id: string;
   path: string;
   isActive: boolean;
   closeTab: (e: React.MouseEvent) => void;
+  name: string;
 };
 
-const Tab = ({ id, path, isActive, closeTab }: TabProps) => {
-  const name = "TODO";
-
-  if (!name) {
-    return null;
-  }
-
+const ProjectTab = ({ path, isActive, closeTab, name }: TabProps) => {
   return (
     <div
       className={cn(
@@ -26,10 +20,7 @@ const Tab = ({ id, path, isActive, closeTab }: TabProps) => {
         "hover:pr-4",
       )}
     >
-      <Link
-        to={`${id}/${path}`}
-        className={"flex h-full flex-1 items-center p-4"}
-      >
+      <Link to={`${path}`} className={"flex h-full flex-1 items-center p-4"}>
         <span className="max-w-[100px] min-w-18 truncate text-xs">{name}</span>
       </Link>
       <X
@@ -42,4 +33,4 @@ const Tab = ({ id, path, isActive, closeTab }: TabProps) => {
   );
 };
 
-export default Tab;
+export default ProjectTab;

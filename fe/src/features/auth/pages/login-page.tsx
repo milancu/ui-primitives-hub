@@ -16,11 +16,11 @@ const LoginPage = () => {
 
   return (
     <div className="bg-background relative flex h-screen w-full items-center justify-center overflow-hidden rounded-lg">
-      <DotPattern
-        className={cn(
-          "[mask-image:radial-gradient(500px_circle_at_center,white,transparent)]",
-        )}
-      />
+      {/*<DotPattern*/}
+      {/*  className={cn(*/}
+      {/*    "[mask-image:radial-gradient(500px_circle_at_center,white,transparent)]",*/}
+      {/*  )}*/}
+      {/*/>*/}
       <Card className="bg-background relative z-10 w-full max-w-md">
         <CardHeader className="flex flex-col items-center space-y-2 text-center">
           <div>

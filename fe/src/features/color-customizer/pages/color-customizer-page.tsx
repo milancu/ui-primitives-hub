@@ -150,7 +150,9 @@ const ColorCustomizerPage = () => {
           }
           onChange={handleOklchChange}
         />
-        <Button onClick={handleSave} disabled={isPending}>Save</Button>
+        <Button onClick={handleSave} disabled={isPending}>
+          Save
+        </Button>
 
         <Tabs
           value={selectedTheme}

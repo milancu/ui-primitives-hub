@@ -18,6 +18,7 @@ import {
 import { SidebarRight } from "@/features/sidebar/components/sidebar-right.tsx";
 import Header from "@/features/header/components/header.tsx";
 import { useStyle } from "@/components/style-provider.tsx";
+import { useProjectTabs } from "@/hooks/use-project-tabs.ts";
 
 export const Route = createFileRoute("/_authenticated/_canva-layout")({
   component: RouteComponent,
@@ -26,9 +27,10 @@ export const Route = createFileRoute("/_authenticated/_canva-layout")({
 function RouteComponent() {
   const [currentPart] = useCurrentPartParam();
   const [mainSection, setMainSection] = useState<string>("Home");
-  const location = useLocation();
 
-  const {style} = useStyle();
+  const location = useLocation();
+  const { style } = useStyle();
+  useProjectTabs();
 
   const formatSegment = (segment: string) => {
     return segment
@@ -50,7 +52,7 @@ function RouteComponent() {
         <Header />
         <div className="flex flex-1">
           <SidebarLeft />
-          <SidebarInset className="overflow-hidden rounded-lg shadow-2xl h-[calc(100vh-1rem-var(--header-height))]">
+          <SidebarInset className="h-[calc(100vh-1rem-var(--header-height))] overflow-hidden rounded-lg shadow-2xl">
             <header className="bg-background sticky top-0 flex h-14 shrink-0 items-center justify-between gap-2 border-b px-3">
               <div className="flex flex-1 items-center gap-2">
                 <SidebarTrigger />
@@ -76,7 +78,7 @@ function RouteComponent() {
                 </Breadcrumb>
               </div>
             </header>
-            <div className={'overflow-auto h-full'}>
+            <div className={"h-full overflow-auto"}>
               <Outlet />
             </div>
           </SidebarInset>

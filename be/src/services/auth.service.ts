@@ -32,13 +32,12 @@ export class AuthService {
     };
   }
 
-  static async verifyDeviceCode(userCode: string, userId: string) {
+  static async verifyDeviceCode(userCode: string, token: string) {
     const deviceCode = await this.findDeviceCodeByUserCode(userCode);
-    const firebaseToken = await auth.createCustomToken(userId);
 
     await db.ref(`${DEVICE_CODES_REF}/${deviceCode}`).update({
       status: "approved",
-      firebaseToken,
+      token:token,
     });
   }
 
@@ -51,7 +50,7 @@ export class AuthService {
 
     return {
       status: codeData.status,
-      token: codeData.firebaseToken
+      token: codeData.token
     };
   }
 

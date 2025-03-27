@@ -1,6 +1,6 @@
 import {Avatar as AvatarPrimitives} from '@base-ui-components/react/avatar';
 import React from "react";
-import {cn} from "./lib/utils.ts";
+import {cn} from "../lib/utils.ts";
 
 const AvatarRoot = React.forwardRef<
   React.ElementRef<typeof AvatarPrimitives.Root>,

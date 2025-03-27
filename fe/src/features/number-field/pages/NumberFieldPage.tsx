@@ -9,7 +9,7 @@ import {
   NumberFieldRoot,
   NumberFieldScrubArea,
   NumberFieldScrubAreaCursor,
-} from "@ui-primitives-hub/ui/src/NumberField.tsx";
+} from "@ui-primitives-hub/ui/src/components/NumberField.tsx";
 import { useParams } from "@tanstack/react-router";
 import { useCurrentPartParam } from "@/features/sidebar/hooks/useCurrentPartParam.tsx";
 import { useCurrentComponentStateParam } from "@/features/sidebar/hooks/useCurrentComponentStateParam.tsx";
@@ -38,13 +38,13 @@ const NumberFieldPage = () => {
   const { setStyleFromString } = useStyle();
 
   const { data: hierarchy } = useComponentHierarchy(id, "number-field");
-  const { data: parts } = useParts(id, "number-field");
-  const { data: states } = usePartStates(id, currentPart, "number-field");
+  const { data: parts } = useParts(id, "numberfield");
+  const { data: states } = usePartStates(id, currentPart, "numberfield");
   const { data: style } = usePartStateStyle(
     id,
     currentPart,
     currentState,
-    "number-field",
+    "numberfield",
   );
 
   useEffect(() => {

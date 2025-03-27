@@ -4,11 +4,11 @@ import {
   FieldControl,
   FieldLabel,
   FieldRoot,
-} from "@ui-primitives-hub/ui/src/Field.tsx";
+} from "@ui-primitives-hub/ui/src/components/Field.tsx";
 import {
   FieldsetLegend,
   FieldsetRoot,
-} from "@ui-primitives-hub/ui/src/Fieldset.tsx";
+} from "@ui-primitives-hub/ui/src/components/Fieldset.tsx";
 import { useParts } from "@/hooks/queries/useParts.ts";
 import { useParams } from "@tanstack/react-router";
 import { useComponentHierarchy } from "@/hooks/queries/useComponentHierarchy.ts";

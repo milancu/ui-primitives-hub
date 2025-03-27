@@ -1,5 +1,5 @@
 import {Dialog as DialogPrimitives} from '@base-ui-components/react/dialog';
-import {cn} from "./lib/utils.ts";
+import {cn} from "../lib/utils.ts";
 import React from "react";
 
 const DialogRoot = DialogPrimitives.Root

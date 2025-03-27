@@ -40,7 +40,7 @@ const ThemePreviewBlock = ({
     <div
       className={`${theme} bg-background text-foreground relative w-full flex-1`}
     >
-      {dotPattern}
+      {/*{dotPattern}*/}
       <div data-theme={theme} className="relative flex h-full flex-col">
         <div className="bg-background relative w-full rounded-t-lg border-b p-2 text-center font-semibold">
           {theme.charAt(0).toUpperCase() + theme.slice(1)} preview

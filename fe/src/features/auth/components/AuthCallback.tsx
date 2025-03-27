@@ -25,7 +25,7 @@ export const AuthCallback = () => {
       if (token.trim() === "") {
         console.error("Empty token received");
         navigate({ to: "/login", params: { error: "empty_token" } });
-        return; // Prevent further execution
+        return;
       }
       signInWithCustomToken(auth, token)
         .then(() => navigate({ to: "/" }))

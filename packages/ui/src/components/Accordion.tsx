@@ -1,6 +1,6 @@
 import { Accordion as AccordionPrimitives } from "@base-ui-components/react/accordion";
 import React from "react";
-import { cn } from "./lib/utils.ts";
+import { cn } from "../lib/utils.ts";
 
 const AccordionRoot = React.forwardRef<
   React.ElementRef<typeof AccordionPrimitives.Root>,

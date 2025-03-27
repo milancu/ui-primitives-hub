@@ -14,6 +14,7 @@ import { Route as rootRoute } from './routes/__root'
 import { Route as LoginImport } from './routes/login'
 import { Route as AuthenticatedImport } from './routes/_authenticated'
 import { Route as AuthCallbackImport } from './routes/auth.callback'
+import { Route as AuthenticatedSuccessImport } from './routes/_authenticated/success'
 import { Route as AuthenticatedActivateImport } from './routes/_authenticated/activate'
 import { Route as AuthenticatedDashboardLayoutImport } from './routes/_authenticated/_dashboard-layout'
 import { Route as AuthenticatedCanvaLayoutImport } from './routes/_authenticated/_canva-layout'
@@ -45,6 +46,12 @@ const AuthCallbackRoute = AuthCallbackImport.update({
   id: '/auth/callback',
   path: '/auth/callback',
   getParentRoute: () => rootRoute,
+} as any)
+
+const AuthenticatedSuccessRoute = AuthenticatedSuccessImport.update({
+  id: '/success',
+  path: '/success',
+  getParentRoute: () => AuthenticatedRoute,
 } as any)
 
 const AuthenticatedActivateRoute = AuthenticatedActivateImport.update({
@@ -171,6 +178,13 @@ declare module '@tanstack/react-router' {
       path: '/activate'
       fullPath: '/activate'
       preLoaderRoute: typeof AuthenticatedActivateImport
+      parentRoute: typeof AuthenticatedImport
+    }
+    '/_authenticated/success': {
+      id: '/_authenticated/success'
+      path: '/success'
+      fullPath: '/success'
+      preLoaderRoute: typeof AuthenticatedSuccessImport
       parentRoute: typeof AuthenticatedImport
     }
     '/auth/callback': {
@@ -310,6 +324,7 @@ interface AuthenticatedRouteChildren {
   AuthenticatedCanvaLayoutRoute: typeof AuthenticatedCanvaLayoutRouteWithChildren
   AuthenticatedDashboardLayoutRoute: typeof AuthenticatedDashboardLayoutRouteWithChildren
   AuthenticatedActivateRoute: typeof AuthenticatedActivateRoute
+  AuthenticatedSuccessRoute: typeof AuthenticatedSuccessRoute
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
@@ -317,6 +332,7 @@ const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedDashboardLayoutRoute:
     AuthenticatedDashboardLayoutRouteWithChildren,
   AuthenticatedActivateRoute: AuthenticatedActivateRoute,
+  AuthenticatedSuccessRoute: AuthenticatedSuccessRoute,
 }
 
 const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
@@ -327,6 +343,7 @@ export interface FileRoutesByFullPath {
   '': typeof AuthenticatedDashboardLayoutRouteWithChildren
   '/login': typeof LoginRoute
   '/activate': typeof AuthenticatedActivateRoute
+  '/success': typeof AuthenticatedSuccessRoute
   '/auth/callback': typeof AuthCallbackRoute
   '/': typeof AuthenticatedDashboardLayoutIndexRoute
   '/$id/accordion': typeof AuthenticatedCanvaLayoutIdAccordionRoute
@@ -344,6 +361,7 @@ export interface FileRoutesByTo {
   '': typeof AuthenticatedCanvaLayoutRouteWithChildren
   '/login': typeof LoginRoute
   '/activate': typeof AuthenticatedActivateRoute
+  '/success': typeof AuthenticatedSuccessRoute
   '/auth/callback': typeof AuthCallbackRoute
   '/': typeof AuthenticatedDashboardLayoutIndexRoute
   '/$id/accordion': typeof AuthenticatedCanvaLayoutIdAccordionRoute
@@ -364,6 +382,7 @@ export interface FileRoutesById {
   '/_authenticated/_canva-layout': typeof AuthenticatedCanvaLayoutRouteWithChildren
   '/_authenticated/_dashboard-layout': typeof AuthenticatedDashboardLayoutRouteWithChildren
   '/_authenticated/activate': typeof AuthenticatedActivateRoute
+  '/_authenticated/success': typeof AuthenticatedSuccessRoute
   '/auth/callback': typeof AuthCallbackRoute
   '/_authenticated/_dashboard-layout/': typeof AuthenticatedDashboardLayoutIndexRoute
   '/_authenticated/_canva-layout/$id/accordion': typeof AuthenticatedCanvaLayoutIdAccordionRoute
@@ -383,6 +402,7 @@ export interface FileRouteTypes {
     | ''
     | '/login'
     | '/activate'
+    | '/success'
     | '/auth/callback'
     | '/'
     | '/$id/accordion'
@@ -399,6 +419,7 @@ export interface FileRouteTypes {
     | ''
     | '/login'
     | '/activate'
+    | '/success'
     | '/auth/callback'
     | '/'
     | '/$id/accordion'
@@ -417,6 +438,7 @@ export interface FileRouteTypes {
     | '/_authenticated/_canva-layout'
     | '/_authenticated/_dashboard-layout'
     | '/_authenticated/activate'
+    | '/_authenticated/success'
     | '/auth/callback'
     | '/_authenticated/_dashboard-layout/'
     | '/_authenticated/_canva-layout/$id/accordion'
@@ -463,7 +485,8 @@ export const routeTree = rootRoute
       "children": [
         "/_authenticated/_canva-layout",
         "/_authenticated/_dashboard-layout",
-        "/_authenticated/activate"
+        "/_authenticated/activate",
+        "/_authenticated/success"
       ]
     },
     "/login": {
@@ -493,6 +516,10 @@ export const routeTree = rootRoute
     },
     "/_authenticated/activate": {
       "filePath": "_authenticated/activate.tsx",
+      "parent": "/_authenticated"
+    },
+    "/_authenticated/success": {
+      "filePath": "_authenticated/success.tsx",
       "parent": "/_authenticated"
     },
     "/auth/callback": {

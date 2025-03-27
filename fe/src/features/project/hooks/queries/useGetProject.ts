@@ -1,9 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import { fetchProject } from "@/features/project/api/queries";
 
-export const useGetProject = ({ id }: { id: string }) => {
+export const useGetProject = (id?: string | null) => {
   return useQuery({
-    queryKey: ["project"],
-    queryFn: () => fetchProject(id),
+    queryKey: ["project", id],
+    queryFn: () => fetchProject(id!),
+    enabled: !!id,
   });
 };

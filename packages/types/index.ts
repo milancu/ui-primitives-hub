@@ -37,6 +37,12 @@ export type ProjectComponents = {
   [key in ComponentType]?: ComponentConfig;
 };
 
+export type Tab = {
+  id: string;
+  name: string;
+  path: string;
+}
+
 export type Color = {
   l: number;
   c: number;
