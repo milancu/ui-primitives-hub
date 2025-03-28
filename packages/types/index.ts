@@ -97,7 +97,7 @@ export interface Style {
   outlineWidth?: CSSUnit;
   outlineColor?: string;
   outlineStyle?: string;
-  backgroundColor?: string;
+  // backgroundColor?: string;
   background?: string;
   opacity?: string;
   padding?:

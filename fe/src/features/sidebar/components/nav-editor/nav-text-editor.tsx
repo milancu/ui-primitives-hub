@@ -12,7 +12,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { ColorPicker } from "@/components/ui/color-picker.tsx";
 import { Plus } from "lucide-react";
 import {
   Collapsible,
@@ -21,6 +20,7 @@ import {
 } from "@/components/ui/collapsible.tsx";
 import { useStyle } from "@/components/style-provider";
 import InputComponentUnitSwitcher from "@/components/ui/input-component-unit-switcher.tsx";
+import { ColorSelect } from "@/components/ui/color-select.tsx";
 
 const NavTextEditor = () => {
   const { style: currentStyle, handleStyle } = useStyle();
@@ -97,18 +97,25 @@ const NavTextEditor = () => {
                 </Select>
               </SidebarMenuItem>
               <SidebarMenuItem className={"flex gap-1"}>
-                <ColorPicker
-                  hideContrastRatio={false}
-                  value={
-                    currentStyle?.color
-                      ? (currentStyle?.color as `#${string}`)
-                      : "#FFFFFF"
-                  }
-                  label={"color"}
-                  onValueChange={(value) => {
-                    handleStyle("color", value.hex);
+                <ColorSelect
+                  placeholder={"Text color"}
+                  value={currentStyle?.color}
+                  handleChange={(newValue) => {
+                    handleStyle("color", newValue);
                   }}
                 />
+                {/*<ColorPicker*/}
+                {/*  hideContrastRatio={false}*/}
+                {/*  value={*/}
+                {/*    currentStyle?.color*/}
+                {/*      ? (currentStyle?.color as `#${string}`)*/}
+                {/*      : "#FFFFFF"*/}
+                {/*  }*/}
+                {/*  label={"color"}*/}
+                {/*  onValueChange={(value) => {*/}
+                {/*    handleStyle("color", value.hex);*/}
+                {/*  }}*/}
+                {/*/>*/}
               </SidebarMenuItem>
             </SidebarMenu>
           </SidebarGroupContent>

@@ -46,17 +46,23 @@ export default function StyleProvider({ children }: StyleProviderProps) {
   const { states, updateStateStyle, getRawClasses } = useStates();
   const { updatePartStyle } = useComponent();
 
-  const { mutate } = useUpdateStyle("accordion");
+  const { mutate } = useUpdateStyle();
+
 
   const handleStyle = useCallback(
     (key: keyof Style, value: string) => {
+      if (!style && value) {
+        const newStyle = { [key]: value };
+        setStyle(newStyle);
+      }
+
       if (!currentState || !style) return;
 
       const newStyle = { ...style, [key]: value } as Style;
       setStyle(newStyle);
 
       const tailwind = styleToTailwind(newStyle);
-      console.log(tailwind);
+      console.log(newStyle,tailwind);
       updateStateStyle(currentState, tailwind);
 
       if (timeoutRef.current) {

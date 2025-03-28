@@ -16,6 +16,8 @@ import { useState } from "react";
 import { useVerifyCode } from "@/features/activate/hooks/mutations/useVerifyCode.ts";
 import { toast } from "sonner";
 import { useNavigate } from "@tanstack/react-router";
+import { cn } from "@/lib/utils.ts";
+import { GridPattern } from "@/components/magicui/grid-pattern.tsx";
 
 const ActivatePage = () => {
   const { mutateAsync, isPending } = useVerifyCode();
@@ -37,6 +39,16 @@ const ActivatePage = () => {
 
   return (
     <div className="bg-background relative flex h-screen w-full items-center justify-center overflow-hidden rounded-lg">
+      <GridPattern
+        width={30}
+        height={30}
+        x={-1}
+        y={-1}
+        strokeDasharray={"4 2"}
+        className={cn(
+          "[mask-image:radial-gradient(300px_circle_at_center,white,transparent)]",
+        )}
+      />
       <Card className="bg-background relative z-10 w-full max-w-md">
         <CardHeader className="flex flex-col items-center space-y-2 text-center">
           <div>

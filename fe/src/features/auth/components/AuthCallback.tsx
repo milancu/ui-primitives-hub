@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { auth } from "@/firebase";
 import { signInWithCustomToken } from "firebase/auth";
-import { DotPattern } from "@/components/magicui/dot-pattern.tsx";
 import { cn } from "@/lib/utils.ts";
 import {
   Card,
@@ -13,6 +12,7 @@ import {
 import { ThemeLogo } from "@/components/ui/theme-logo.tsx";
 import { Button } from "@/components/ui/button.tsx";
 import { Loader2 } from "lucide-react";
+import { GridPattern } from "@/components/magicui/grid-pattern.tsx";
 
 export const AuthCallback = () => {
   const navigate = useNavigate();
@@ -44,23 +44,28 @@ export const AuthCallback = () => {
 
   return (
     <div className="bg-background relative flex h-screen w-full items-center justify-center overflow-hidden rounded-lg">
-      <DotPattern
+      <GridPattern
+        width={30}
+        height={30}
+        x={-1}
+        y={-1}
+        strokeDasharray={"4 2"}
         className={cn(
-          "[mask-image:radial-gradient(500px_circle_at_center,white,transparent)]",
+          "[mask-image:radial-gradient(300px_circle_at_center,white,transparent)]",
         )}
       />
       <div
-        className={"inset bg-black absolute z-20 h-full w-full opacity-20"}
+        className={"inset absolute z-20 h-full w-full bg-black opacity-20"}
       />
       <Card className="bg-background relative z-10 w-full max-w-md">
         <CardHeader className="flex flex-col items-center space-y-2 text-center">
           <div>
             <ThemeLogo />
           </div>
-          <h2 className="text-2xl font-bold tracking-tight text-foreground">
+          <h2 className="text-foreground text-2xl font-bold tracking-tight">
             Welcome to UI Primitives Hub!
           </h2>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-muted-foreground text-sm">
             Please sign in with your Figma account to continue
           </p>
         </CardHeader>

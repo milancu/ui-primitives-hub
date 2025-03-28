@@ -1,6 +1,6 @@
 import { authFetch } from "@/lib/authFetch.ts";
 
-interface UpdateAvatarStyleProps {
+interface UpdateStyleProps {
   projectId: string;
   part: string;
   state: string;
@@ -14,7 +14,7 @@ export const updateStyle = async ({
   state,
   projectId,
   tailwind,
-}: UpdateAvatarStyleProps) => {
+}: UpdateStyleProps) => {
   const response = await authFetch(
     `/projects/${projectId}/components/${componentName}/${part}/${state}`,
     {

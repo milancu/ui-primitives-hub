@@ -6,7 +6,6 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar.tsx";
 import { Plus } from "lucide-react";
-import { ColorPicker } from "@/components/ui/color-picker.tsx";
 import InputWithIcon from "@/components/ui/input-with-icon.tsx";
 import {
   Collapsible,
@@ -14,6 +13,7 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible.tsx";
 import { useStyle } from "@/components/style-provider.tsx";
+import { ColorSelect } from "@/components/ui/color-select.tsx";
 
 const NavBackgroundEditor = () => {
   const { style: currentStyle, handleStyle } = useStyle();
@@ -31,25 +31,28 @@ const NavBackgroundEditor = () => {
           <SidebarGroupContent>
             <SidebarMenu>
               <SidebarMenuItem className={"flex gap-1"}>
-                <ColorPicker
-                  hideContrastRatio={true}
-                  value={
-                    currentStyle?.backgroundColor
-                      ? (currentStyle.backgroundColor as `#${string}`)
-                      : "#FFFFFF"
+                <ColorSelect
+                  placeholder={"Background"}
+                  value={currentStyle?.background}
+                  handleChange={(newValue) =>
+                    handleStyle("background", newValue)
                   }
-                  onValueChange={(value) => {
-                    handleStyle("backgroundColor", value.hex);
-                  }}
-                  swatches={[
-                    "#AEDEAE",
-                    "#FFD3B6",
-                    "#FFB6B9",
-                    "#FFC0CB",
-                    "#FFD1DC",
-                  ]}
-                  label={"Background color"}
                 />
+                {/*<ColorPicker*/}
+                {/*  hideContrastRatio={true}*/}
+                {/*  value={currentStyle?.background}*/}
+                {/*  onValueChange={(value) => {*/}
+                {/*    handleStyle("background", value.hex);*/}
+                {/*  }}*/}
+                {/*  swatches={[*/}
+                {/*    "#AEDEAE",*/}
+                {/*    "#FFD3B6",*/}
+                {/*    "#FFB6B9",*/}
+                {/*    "#FFC0CB",*/}
+                {/*    "#FFD1DC",*/}
+                {/*  ]}*/}
+                {/*  label={"Background color"}*/}
+                {/*/>*/}
               </SidebarMenuItem>
               <SidebarMenuItem>
                 <InputWithIcon
@@ -59,9 +62,7 @@ const NavBackgroundEditor = () => {
                   min={0}
                   max={100}
                   step={5}
-                  handleChange={(newValue) =>
-                    handleStyle("opacity", newValue)
-                  }
+                  handleChange={(newValue) => handleStyle("opacity", newValue)}
                 />
               </SidebarMenuItem>
             </SidebarMenu>

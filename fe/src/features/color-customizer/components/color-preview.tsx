@@ -9,10 +9,10 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Switch } from "@/components/ui/switch";
 import { Input } from "@/components/ui/input";
-import React, { useCallback, useMemo } from "react";
-import { DotPattern } from "@/components/magicui/dot-pattern.tsx";
+import React, { useCallback } from "react";
 import { cn } from "@/lib/utils.ts";
 import { ColorScheme } from "../../../../../packages/types";
+import { GridPattern } from "@/components/magicui/grid-pattern.tsx";
 
 const ThemeDemoComponents = () => (
   <CardContent className="space-y-4">
@@ -75,17 +75,24 @@ const ColorGrid = () => (
 
 const ThemePreviewBlock = ({
   theme,
-  dotPattern,
   style,
 }: {
   theme: "light" | "dark";
-  dotPattern: React.ReactElement;
   style?: React.CSSProperties;
 }) => (
   <div
     className={`${theme} bg-background text-foreground relative w-full flex-1`}
   >
-    {dotPattern}
+    <GridPattern
+      width={30}
+      height={30}
+      x={-1}
+      y={-1}
+      strokeDasharray={"4 2"}
+      className={cn(
+        "[mask-image:radial-gradient(300px_circle_at_center,white,transparent)]",
+      )}
+    />
     <div data-theme={theme} className="relative flex h-full flex-col">
       <div className="relative flex h-full items-center justify-center p-4">
         <Card className="mb-4">
@@ -111,17 +118,6 @@ const ColorPreview = ({
   lightColors: ColorScheme;
   darkColors: ColorScheme;
 }) => {
-  const dotPattern = useMemo(
-    () => (
-      <DotPattern
-        className={cn(
-          "[mask-image:radial-gradient(500px_circle_at_center,white,transparent)]",
-        )}
-      />
-    ),
-    [],
-  );
-
   const createStyleObject = useCallback((colors: ColorScheme) => {
     return Object.fromEntries(
       Object.entries(colors).map(([key, value]) => {
@@ -133,16 +129,8 @@ const ColorPreview = ({
 
   return (
     <div className="flex h-full flex-col">
-      <ThemePreviewBlock
-        theme="light"
-        dotPattern={dotPattern}
-        style={createStyleObject(lightColors)}
-      />
-      <ThemePreviewBlock
-        theme="dark"
-        dotPattern={dotPattern}
-        style={createStyleObject(darkColors)}
-      />
+      <ThemePreviewBlock theme="light" style={createStyleObject(lightColors)} />
+      <ThemePreviewBlock theme="dark" style={createStyleObject(darkColors)} />
     </div>
   );
 };

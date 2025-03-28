@@ -17,7 +17,6 @@ import {
 } from "@/components/ui/breadcrumb.tsx";
 import { SidebarRight } from "@/features/sidebar/components/sidebar-right.tsx";
 import Header from "@/features/header/components/header.tsx";
-import { useStyle } from "@/components/style-provider.tsx";
 import { useProjectTabs } from "@/hooks/use-project-tabs.ts";
 
 export const Route = createFileRoute("/_authenticated/_canva-layout")({
@@ -29,7 +28,6 @@ function RouteComponent() {
   const [mainSection, setMainSection] = useState<string>("Home");
 
   const location = useLocation();
-  const { style } = useStyle();
   useProjectTabs();
 
   const formatSegment = (segment: string) => {
@@ -82,7 +80,7 @@ function RouteComponent() {
               <Outlet />
             </div>
           </SidebarInset>
-          {style && <SidebarRight />}
+          {currentPart && <SidebarRight />}
         </div>
       </SidebarProvider>
     </div>

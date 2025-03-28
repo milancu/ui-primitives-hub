@@ -9,27 +9,32 @@ import { Figma } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "@tanstack/react-router";
 import { cn } from "@/lib/utils.ts";
-import { DotPattern } from "@/components/magicui/dot-pattern.tsx";
+import { GridPattern } from "@/components/magicui/grid-pattern.tsx";
 
 const LoginPage = () => {
   const loginHref = `${import.meta.env.VITE_BACKEND_API_URL}/auth/figma`;
 
   return (
     <div className="bg-background relative flex h-screen w-full items-center justify-center overflow-hidden rounded-lg">
-      {/*<DotPattern*/}
-      {/*  className={cn(*/}
-      {/*    "[mask-image:radial-gradient(500px_circle_at_center,white,transparent)]",*/}
-      {/*  )}*/}
-      {/*/>*/}
+      <GridPattern
+        width={30}
+        height={30}
+        x={-1}
+        y={-1}
+        strokeDasharray={"4 2"}
+        className={cn(
+          "[mask-image:radial-gradient(300px_circle_at_center,white,transparent)]",
+        )}
+      />
       <Card className="bg-background relative z-10 w-full max-w-md">
         <CardHeader className="flex flex-col items-center space-y-2 text-center">
           <div>
             <ThemeLogo />
           </div>
-          <h2 className="text-2xl font-bold tracking-tight text-foreground">
+          <h2 className="text-foreground text-2xl font-bold tracking-tight">
             Welcome to UI Primitives Hub!
           </h2>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-muted-foreground text-sm">
             Please sign in with your Figma account to continue
           </p>
         </CardHeader>

@@ -31,9 +31,9 @@ export function UpdateProjectFormDialog({
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Create new project</DialogTitle>
+          <DialogTitle>Update project name</DialogTitle>
           <DialogDescription>
-            Select a name for Your project. Click save when you're done.
+            Update a name for Your project. Click save when you're done.
           </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-2">

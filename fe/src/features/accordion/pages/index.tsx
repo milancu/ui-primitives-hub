@@ -7,7 +7,8 @@ import {
   AccordionPanel,
   AccordionRoot,
   AccordionTrigger,
-} from "@ui-primitives-hub/ui/src";
+  PlusIcon,
+} from "@ui-primitives-hub/ui/src/components/Accordion.tsx";
 import { useCurrentPartParam } from "@/features/sidebar/hooks/useCurrentPartParam.tsx";
 import { useCurrentComponentStateParam } from "@/features/sidebar/hooks/useCurrentComponentStateParam.tsx";
 import { useEffect } from "react";
@@ -86,21 +87,36 @@ const AccordionPage = () => {
           <AccordionItem className={item}>
             <AccordionHeader className={header}>
               <AccordionTrigger className={trigger}>
-                Hello, this is accordion
+                What is Base UI?
+                <PlusIcon className="mr-2 size-3 shrink-0 transition-all ease-out group-data-[panel-open]:scale-110 group-data-[panel-open]:rotate-45" />
               </AccordionTrigger>
             </AccordionHeader>
             <AccordionPanel className={panel}>
-              You can add any content here.
+              Base UI is a library of high-quality unstyled React components for design
+              systems and web apps.
             </AccordionPanel>
           </AccordionItem>
           <AccordionItem className={item}>
             <AccordionHeader className={header}>
               <AccordionTrigger className={trigger}>
-                Hello, this is accordion
+                How do I get started?
+                <PlusIcon className="mr-2 size-3 shrink-0 transition-all ease-out group-data-[panel-open]:scale-110 group-data-[panel-open]:rotate-45" />
               </AccordionTrigger>
             </AccordionHeader>
             <AccordionPanel className={panel}>
-              You can add any content here.
+              Head to the “Quick start” guide in the docs. If you’ve used unstyled
+              libraries before, you’ll feel at home.
+            </AccordionPanel>
+          </AccordionItem>
+          <AccordionItem className={item}>
+            <AccordionHeader className={header}>
+              <AccordionTrigger className={trigger}>
+                Can I use it for my project?
+                <PlusIcon className="mr-2 size-3 shrink-0 transition-all ease-out group-data-[panel-open]:scale-110 group-data-[panel-open]:rotate-45" />
+              </AccordionTrigger>
+            </AccordionHeader>
+            <AccordionPanel className={panel}>
+              Of course! Base UI is free and open source.
             </AccordionPanel>
           </AccordionItem>
         </AccordionRoot>

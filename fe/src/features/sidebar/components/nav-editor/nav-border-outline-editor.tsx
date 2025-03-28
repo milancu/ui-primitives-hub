@@ -16,9 +16,9 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input.tsx";
-import { ColorPicker } from "@/components/ui/color-picker.tsx";
 import { useStyle } from "@/components/style-provider.tsx";
 import InputComponentUnitSwitcher from "@/components/ui/input-component-unit-switcher.tsx";
+import { ColorSelect } from "@/components/ui/color-select.tsx";
 
 const NavBorderOutlineEditor = () => {
   const { style: currentStyle, handleStyle } = useStyle();
@@ -93,16 +93,23 @@ const NavBorderOutlineEditor = () => {
             </DropdownMenu>
           </SidebarMenuItem>
           <SidebarMenuItem>
-            <ColorPicker
-              hideContrastRatio={true}
-              value={
-                currentStyle?.borderColor
-                  ? (currentStyle?.borderColor as `#${string}`)
-                  : "#FFFFFF"
-              }
-              onValueChange={(value) => handleStyle("borderColor", value.hex)}
-              swatches={["#AEDEAE", "#FFD3B6", "#FFB6B9", "#FFC0CB", "#FFD1DC"]}
-              label={"Border color "}
+            {/*<ColorPicker*/}
+            {/*  hideContrastRatio={true}*/}
+            {/*  value={*/}
+            {/*    currentStyle?.borderColor*/}
+            {/*      ? (currentStyle?.borderColor as `#${string}`)*/}
+            {/*      : "#FFFFFF"*/}
+            {/*  }*/}
+            {/*  onValueChange={(value) => handleStyle("borderColor", value.hex)}*/}
+            {/*  swatches={["#AEDEAE", "#FFD3B6", "#FFB6B9", "#FFC0CB", "#FFD1DC"]}*/}
+            {/*  label={"Border color "}*/}
+            {/*/>*/}
+            <ColorSelect
+              placeholder={"Border"}
+              value={currentStyle?.borderColor}
+              handleChange={(newValue) => {
+                handleStyle("borderColor", newValue);
+              }}
             />
           </SidebarMenuItem>
           <SidebarMenuItem className={"flex gap-1"}>
@@ -175,15 +182,22 @@ const NavBorderOutlineEditor = () => {
             />
           </SidebarMenuItem>
           <SidebarMenuItem>
-            <ColorPicker
-              hideContrastRatio={true}
-              value={
-                currentStyle?.outlineColor
-                  ? (currentStyle?.outlineColor as `#${string}`)
-                  : "#FFFFFF"
-              }
-              swatches={["#AEDEAE", "#FFD3B6", "#FFB6B9", "#FFC0CB", "#FFD1DC"]}
-              label={"Outline color"}
+            {/*<ColorPicker*/}
+            {/*  hideContrastRatio={true}*/}
+            {/*  value={*/}
+            {/*    currentStyle?.outlineColor*/}
+            {/*      ? (currentStyle?.outlineColor as `#${string}`)*/}
+            {/*      : "#FFFFFF"*/}
+            {/*  }*/}
+            {/*  swatches={["#AEDEAE", "#FFD3B6", "#FFB6B9", "#FFC0CB", "#FFD1DC"]}*/}
+            {/*  label={"Outline color"}*/}
+            {/*/>*/}
+            <ColorSelect
+              placeholder={"Outline"}
+              value={currentStyle?.outlineColor}
+              handleChange={(newValue) => {
+                handleStyle("outlineColor", newValue);
+              }}
             />
           </SidebarMenuItem>
           <SidebarMenuItem>

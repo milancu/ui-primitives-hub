@@ -13,9 +13,7 @@ export const useProjectTabs = () => {
   useEffect(() => {
     if (!id || !project) return;
 
-    const currentId = location.pathname
-      .split("/")
-      .filter(Boolean)[0]
+    const currentId = location.pathname.split("/").filter(Boolean)[0];
 
     if (currentId !== id) return;
 
@@ -31,7 +29,7 @@ export const useProjectTabs = () => {
       if (existsIndex === -1) return [...prev, newTab];
 
       return prev.map((tab) =>
-        tab.id === id ? { ...tab, path: newTab.path } : tab,
+        tab.id === id ? { ...tab, path: newTab.path, name: newTab.name } : tab,
       );
     });
   }, [id, project, setTabs, location]);

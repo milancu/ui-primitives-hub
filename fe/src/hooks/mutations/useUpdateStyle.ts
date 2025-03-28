@@ -1,13 +1,13 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { updateStyle } from "@/api/mutations";
 
-export const useUpdateStyle = (component: string) => {
+export const useUpdateStyle = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: updateStyle,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [component] });
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: [variables.componentName] });
     },
   });
 };

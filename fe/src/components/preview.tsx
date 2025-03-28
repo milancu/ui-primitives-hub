@@ -1,10 +1,10 @@
-import React, { PropsWithChildren, useCallback, useMemo } from "react";
-import { DotPattern } from "./magicui/dot-pattern";
+import React, { PropsWithChildren, useCallback } from "react";
 import { cn } from "@/lib/utils";
 import { useGetProjectColors } from "@/features/color-customizer/hooks/queries/useGetProjectColors.ts";
 import { useStore } from "@tanstack/react-store";
 import { projectStore } from "@/store/project.store.ts";
 import { ColorScheme } from "../../../packages/types";
+import { GridPattern } from "@/components/magicui/grid-pattern.tsx";
 
 type ThemeType = "light" | "dark";
 
@@ -12,14 +12,12 @@ const ThemePreviewBlock = ({
   theme,
   colors,
   children,
-  dotPattern,
 }: PropsWithChildren<{
   theme: ThemeType;
   colors: {
     light: ColorScheme;
     dark: ColorScheme;
   };
-  dotPattern: React.ReactNode;
 }>) => {
   const createThemeStyle = useCallback(
     (theme: ThemeType) => {
@@ -40,7 +38,16 @@ const ThemePreviewBlock = ({
     <div
       className={`${theme} bg-background text-foreground relative w-full flex-1`}
     >
-      {/*{dotPattern}*/}
+      <GridPattern
+        width={30}
+        height={30}
+        x={-1}
+        y={-1}
+        strokeDasharray={"4 2"}
+        className={cn(
+          "[mask-image:radial-gradient(300px_circle_at_center,white,transparent)]",
+        )}
+      />
       <div data-theme={theme} className="relative flex h-full flex-col">
         <div className="bg-background relative w-full rounded-t-lg border-b p-2 text-center font-semibold">
           {theme.charAt(0).toUpperCase() + theme.slice(1)} preview
@@ -60,17 +67,6 @@ export function Preview({ children }: PropsWithChildren) {
   const id = useStore(projectStore);
   const { data: colors, isLoading, isError } = useGetProjectColors(id);
 
-  const dotPattern = useMemo(
-    () => (
-      <DotPattern
-        className={cn(
-          "[mask-image:radial-gradient(500px_circle_at_center,white,transparent)]",
-        )}
-      />
-    ),
-    [],
-  );
-
   if (isLoading)
     return (
       <div className="flex h-full items-center justify-center">
@@ -87,10 +83,10 @@ export function Preview({ children }: PropsWithChildren) {
 
   return (
     <div className="flex h-full flex-col">
-      <ThemePreviewBlock theme="light" colors={colors} dotPattern={dotPattern}>
+      <ThemePreviewBlock theme="light" colors={colors}>
         {children}
       </ThemePreviewBlock>
-      <ThemePreviewBlock theme="dark" colors={colors} dotPattern={dotPattern}>
+      <ThemePreviewBlock theme="dark" colors={colors}>
         {children}
       </ThemePreviewBlock>
     </div>

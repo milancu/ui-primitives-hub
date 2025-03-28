@@ -9,9 +9,20 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { format } from "date-fns";
 import { cs } from "date-fns/locale";
-import { Calendar, Ellipsis, Eye, File, Pencil, Trash2 } from "lucide-react";
+import {
+  Calendar,
+  Check,
+  Copy,
+  Ellipsis,
+  Eye,
+  File,
+  Pencil,
+  Trash2,
+} from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import { Project } from "@ui-primitives-hub/types";
+import { cn } from "@/lib/utils.ts";
+import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard.ts";
 
 type ProjectCardProps = {
   project: Project;
@@ -25,6 +36,7 @@ const ProjectCard = ({
   triggerUpdate,
 }: ProjectCardProps) => {
   const { id, name, updatedAt } = project;
+  const { copied, copy } = useCopyToClipboard();
   const [isHovered, setIsHovered] = useState(false);
 
   return (
@@ -70,6 +82,36 @@ const ProjectCard = ({
               <DropdownMenuItem onClick={() => triggerUpdate(id, name)}>
                 <Pencil className="mr-2 h-4 w-4" />
                 Rename
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                className={"flex items-center gap-4"}
+                onClick={(e) => {
+                  e.preventDefault();
+                  copy(id);
+                }}
+              >
+                <div
+                  className={cn(
+                    "transition-all",
+                    copied ? "scale-100 opacity-100" : "scale-0 opacity-0",
+                  )}
+                >
+                  <Check
+                    className="stroke-emerald-500"
+                    size={16}
+                    strokeWidth={2}
+                    aria-hidden="true"
+                  />
+                </div>
+                <div
+                  className={cn(
+                    "absolute transition-all",
+                    copied ? "scale-0 opacity-0" : "scale-100 opacity-100",
+                  )}
+                >
+                  <Copy size={16} strokeWidth={2} aria-hidden="true" />
+                </div>
+                Copy Project ID
               </DropdownMenuItem>
               <DropdownMenuItem
                 className="text-destructive focus:text-destructive"

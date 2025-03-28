@@ -10,8 +10,8 @@ import NavOtherPropertiesEditor from "@/features/sidebar/components/nav-editor/n
 import { useStyle } from "@/components/style-provider.tsx";
 
 const NavEditor = () => {
-  const { style } = useStyle();
-  console.log(style);
+  // const { style } = useStyle();
+  // console.log(style);
 
   return (
     <>
