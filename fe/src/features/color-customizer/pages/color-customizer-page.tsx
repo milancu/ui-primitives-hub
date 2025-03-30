@@ -1,4 +1,4 @@
-import CodePreview from "@/features/color-customizer/components/code-preview.tsx";
+import CssPreview from "@/features/color-customizer/components/css-preview.tsx";
 import ColorPreview from "@/features/color-customizer/components/color-preview.tsx";
 import {
   Tabs,
@@ -185,21 +185,15 @@ const ColorCustomizerPage = () => {
         </Tabs>
       </div>
 
-      <Tabs defaultValue="theme">
-        <TabsList className="grid w-full grid-cols-2">
-          <TabsTrigger value="theme">Theme Preview</TabsTrigger>
-          <TabsTrigger value="code">Code Preview</TabsTrigger>
-        </TabsList>
-        <TabsContent
-          value="theme"
-          className="overflow-hidden rounded-md border"
-        >
-          <ColorPreview lightColors={lightColors} darkColors={darkColors} />
-        </TabsContent>
-        <TabsContent value="code" className="overflow-hidden rounded-md border">
-          <CodePreview />
-        </TabsContent>
-      </Tabs>
+      <TabsContent
+        value="preview"
+        className="overflow-hidden rounded-md border"
+      >
+        <ColorPreview lightColors={lightColors} darkColors={darkColors} />
+      </TabsContent>
+      <TabsContent value="code" className="overflow-hidden rounded-md border">
+        <CssPreview lightSchema={lightColors} darkSchema={darkColors}/>
+      </TabsContent>
     </div>
   );
 };

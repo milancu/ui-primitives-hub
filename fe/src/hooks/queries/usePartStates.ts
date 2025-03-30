@@ -1,6 +1,6 @@
 import { useQuery, UseQueryOptions } from "@tanstack/react-query";
-import { Component } from "../../../../packages/types";
 import { fetchPartStates } from "@/api/queries";
+import { Component } from "@ui-primitives-hub/types";
 
 export const usePartStates = (
   projectId: string,

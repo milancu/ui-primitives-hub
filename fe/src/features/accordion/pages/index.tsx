@@ -1,6 +1,6 @@
 import { useParams } from "@tanstack/react-router";
 import { Skeleton } from "@/components/ui/skeleton";
-import Preview from "@/components/preview";
+import Preview from "@/features/preview/components/preview.tsx";
 import {
   AccordionHeader,
   AccordionItem,
@@ -88,7 +88,6 @@ const AccordionPage = () => {
             <AccordionHeader className={header}>
               <AccordionTrigger className={trigger}>
                 What is Base UI?
-                <PlusIcon className="mr-2 size-3 shrink-0 transition-all ease-out group-data-[panel-open]:scale-110 group-data-[panel-open]:rotate-45" />
               </AccordionTrigger>
             </AccordionHeader>
             <AccordionPanel className={panel}>
@@ -100,7 +99,6 @@ const AccordionPage = () => {
             <AccordionHeader className={header}>
               <AccordionTrigger className={trigger}>
                 How do I get started?
-                <PlusIcon className="mr-2 size-3 shrink-0 transition-all ease-out group-data-[panel-open]:scale-110 group-data-[panel-open]:rotate-45" />
               </AccordionTrigger>
             </AccordionHeader>
             <AccordionPanel className={panel}>
@@ -112,7 +110,6 @@ const AccordionPage = () => {
             <AccordionHeader className={header}>
               <AccordionTrigger className={trigger}>
                 Can I use it for my project?
-                <PlusIcon className="mr-2 size-3 shrink-0 transition-all ease-out group-data-[panel-open]:scale-110 group-data-[panel-open]:rotate-45" />
               </AccordionTrigger>
             </AccordionHeader>
             <AccordionPanel className={panel}>

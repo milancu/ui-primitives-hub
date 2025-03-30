@@ -35,7 +35,7 @@ const DialogPopup = React.forwardRef<
   <DialogPrimitives.Popup
     ref={ref}
     {...props}
-    className={cn(className, "__POPUP_CLASSNAME__", "-translate-x-1/2 -translate-y-1/2")}
+    className={cn(className, "__POPUP_CLASSNAME__", "-translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2")}
   />
 ))
 

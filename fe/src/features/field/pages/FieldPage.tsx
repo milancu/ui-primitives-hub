@@ -1,5 +1,5 @@
 import { Skeleton } from "@/components/ui/skeleton.tsx";
-import Preview from "@/components/preview.tsx";
+import Preview from "@/features/preview/components/preview.tsx";
 import {
   FieldControl,
   FieldDescription,

@@ -1,10 +1,14 @@
 import React, { PropsWithChildren, useCallback } from "react";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils.ts";
 import { useGetProjectColors } from "@/features/color-customizer/hooks/queries/useGetProjectColors.ts";
 import { useStore } from "@tanstack/react-store";
 import { projectStore } from "@/store/project.store.ts";
-import { ColorScheme } from "../../../packages/types";
+import { ColorScheme } from "../../../../../packages/types";
 import { GridPattern } from "@/components/magicui/grid-pattern.tsx";
+import { TabsContent } from "@/components/ui/tabs.tsx";
+import { useCode } from "@/features/preview/hooks/queries/useCode.ts";
+import { componentStore } from "@/store/component.store.ts";
+import ComponentCode from "@/features/preview/components/component-code.tsx";
 
 type ThemeType = "light" | "dark";
 
@@ -65,7 +69,9 @@ const ThemePreviewBlock = ({
 
 export function Preview({ children }: PropsWithChildren) {
   const id = useStore(projectStore);
+  const componentName = useStore(componentStore);
   const { data: colors, isLoading, isError } = useGetProjectColors(id);
+  const { data: code } = useCode(id, componentName);
 
   if (isLoading)
     return (
@@ -79,17 +85,25 @@ export function Preview({ children }: PropsWithChildren) {
         Error loading colors
       </div>
     );
+
   if (!colors) return null;
 
   return (
-    <div className="flex h-full flex-col">
-      <ThemePreviewBlock theme="light" colors={colors}>
-        {children}
-      </ThemePreviewBlock>
-      <ThemePreviewBlock theme="dark" colors={colors}>
-        {children}
-      </ThemePreviewBlock>
-    </div>
+    <>
+      <TabsContent value="preview" className={"relative z-0 h-full"}>
+        <div className="flex h-full flex-col">
+          <ThemePreviewBlock theme="light" colors={colors}>
+            {children}
+          </ThemePreviewBlock>
+          <ThemePreviewBlock theme="dark" colors={colors}>
+            {children}
+          </ThemePreviewBlock>
+        </div>
+      </TabsContent>
+      <TabsContent value="code">
+        {code && <ComponentCode code={code} />}
+      </TabsContent>
+    </>
   );
 }
 

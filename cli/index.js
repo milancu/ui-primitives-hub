@@ -83,7 +83,7 @@ program
         updates.projectId = answers.projectId;
       }
 
-      updates.outputDir = options.output || currentConfig.outputDir || "src/components/ui-primitives";
+      updates.outputDir = options.output || currentConfig.outputDir || "src/components";
 
       if (options.packageManager) {
         updates.packageManager = options.packageManager;

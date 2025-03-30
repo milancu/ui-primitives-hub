@@ -1,10 +1,6 @@
 "use client";
 
-import {
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-} from "@/components/ui/sidebar.tsx";
+import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@/components/ui/sidebar.tsx";
 import { Link, useLocation, useParams } from "@tanstack/react-router";
 import { useStyle } from "@/components/style-provider.tsx";
 import { useCurrentComponentStateParam } from "@/features/sidebar/hooks/useCurrentComponentStateParam.tsx";
@@ -24,6 +20,7 @@ export function NavSecondary() {
         <SidebarMenuButton asChild isActive={pathname === `/${id}/color-customizer`}>
           <Link
             to={`${id}/color-customizer`}
+            activeProps={{ className: `font-bold` }}
             onClick={() => {
               setStyle(undefined);
               setState(null);

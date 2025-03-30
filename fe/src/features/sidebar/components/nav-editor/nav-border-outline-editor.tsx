@@ -105,7 +105,7 @@ const NavBorderOutlineEditor = () => {
             {/*  label={"Border color "}*/}
             {/*/>*/}
             <ColorSelect
-              placeholder={"Border"}
+              placeholder={"Border color"}
               value={currentStyle?.borderColor}
               handleChange={(newValue) => {
                 handleStyle("borderColor", newValue);
@@ -193,7 +193,7 @@ const NavBorderOutlineEditor = () => {
             {/*  label={"Outline color"}*/}
             {/*/>*/}
             <ColorSelect
-              placeholder={"Outline"}
+              placeholder={"Outline color"}
               value={currentStyle?.outlineColor}
               handleChange={(newValue) => {
                 handleStyle("outlineColor", newValue);

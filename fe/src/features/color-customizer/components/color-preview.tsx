@@ -15,7 +15,7 @@ import { ColorScheme } from "../../../../../packages/types";
 import { GridPattern } from "@/components/magicui/grid-pattern.tsx";
 
 const ThemeDemoComponents = () => (
-  <CardContent className="space-y-4">
+  <CardContent className="space-y-2">
     <div className="flex flex-wrap gap-2">
       <Badge>Default</Badge>
       <Badge variant="secondary">Secondary</Badge>
@@ -43,7 +43,7 @@ const ThemeDemoComponents = () => (
           Switch
         </label>
       </div>
-      <Input placeholder="Input field" className="max-w-xs" />
+      <Input placeholder="Input field" />
     </div>
 
     <ColorGrid />
@@ -66,7 +66,7 @@ const ColorGrid = () => (
       },
       { className: "border-border border", label: "Border" },
     ].map(({ className, label }) => (
-      <div key={label} className={`${className} rounded-md p-2 text-center`}>
+      <div key={label} className={`${className} rounded-md p-1 text-center`}>
         {label}
       </div>
     ))}
@@ -95,7 +95,7 @@ const ThemePreviewBlock = ({
     />
     <div data-theme={theme} className="relative flex h-full flex-col">
       <div className="relative flex h-full items-center justify-center p-4">
-        <Card className="mb-4">
+        <Card>
           <CardHeader>
             <CardTitle>Theme Preview</CardTitle>
             <CardDescription>
@@ -126,6 +126,8 @@ const ColorPreview = ({
       }),
     ) as React.CSSProperties;
   }, []);
+
+  console.log(createStyleObject(lightColors));
 
   return (
     <div className="flex h-full flex-col">

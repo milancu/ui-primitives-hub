@@ -34,7 +34,7 @@ const ProjectTab = ({
       <ContextMenuTrigger asChild>
         <div
           className={cn(
-            isActive && "bg-gray-500/20",
+            isActive && "bg-sidebar-accent",
             "relative flex h-full items-center gap-2 border-r border-l text-center transition-all duration-200",
             "group data-[state=active]:bg-accent/70",
             "hover:pr-4",
