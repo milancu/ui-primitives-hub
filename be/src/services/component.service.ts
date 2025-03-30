@@ -48,7 +48,7 @@ export class ComponentService {
       case "menu": {
         return MenuService.getHierarchy()
       }
-      case "number-field": {
+      case "numberfield": {
         return NumberfieldService.getHierarchy()
       }
       default:
@@ -106,7 +106,7 @@ export class ComponentService {
       case "menu": {
         return MenuService.getCode(components)
       }
-      case "number-field": {
+      case "numberfield": {
         return NumberfieldService.getCode(components)
       }
       default:

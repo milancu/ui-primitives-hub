@@ -7,7 +7,8 @@ export const useUpdateStyle = () => {
   return useMutation({
     mutationFn: updateStyle,
     onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({ queryKey: [variables.componentName] });
+      console.log(variables);
+      queryClient.invalidateQueries({ queryKey: [`${variables.projectId}-${variables.componentName}`] });
     },
   });
 };

@@ -5,14 +5,14 @@ import { Component } from "@ui-primitives-hub/types";
 export const usePartStates = (
   projectId: string,
   part: string | null,
-  projectName: string,
+  componentName: string,
   options?: UseQueryOptions<Component>,
 ) => {
   return useQuery<Component>({
-    queryKey: [`${projectId}-${projectName}-${part}-states`],
+    queryKey: [`${projectId}-${componentName}-${part}-states`],
     queryFn: () => {
       if (!part) throw new Error("Missing part");
-      return fetchPartStates(projectId, part, projectName);
+      return fetchPartStates(projectId, part, componentName);
     },
     enabled: !!part,
     refetchOnMount: true,

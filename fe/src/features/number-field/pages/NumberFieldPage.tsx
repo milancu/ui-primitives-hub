@@ -37,7 +37,7 @@ const NumberFieldPage = () => {
   const { setStates } = useStates();
   const { setStyleFromString } = useStyle();
 
-  const { data: hierarchy } = useComponentHierarchy(id, "number-field");
+  const { data: hierarchy } = useComponentHierarchy(id, "numberfield");
   const { data: parts } = useParts(id, "numberfield");
   const { data: states } = usePartStates(id, currentPart, "numberfield");
   const { data: style } = usePartStateStyle(
@@ -68,7 +68,7 @@ const NumberFieldPage = () => {
 
   useEffect(() => {
     projectStore.setState(() => id);
-    componentStore.setState(() => "number-field");
+    componentStore.setState(() => "numberfield");
   }, [id]);
 
   if (!component)

@@ -1,5 +1,11 @@
 import { Component } from "@ui-primitives-hub/types";
-import { createContext, PropsWithChildren, useCallback, useContext, useState } from "react";
+import {
+  createContext,
+  PropsWithChildren,
+  useCallback,
+  useContext,
+  useState,
+} from "react";
 
 type ComponentContext = {
   component?: Component;
@@ -12,21 +18,26 @@ const ComponentContext = createContext<ComponentContext | undefined>(undefined);
 type ComponentProviderProps = PropsWithChildren;
 
 export default function ComponentProvider({
-                                            children
-                                          }: ComponentProviderProps) {
+  children,
+}: ComponentProviderProps) {
   const [component, setComponent] = useState<Component | undefined>();
 
-  const updatePartStyle = useCallback((part: keyof Component, raw: string) => {
-    if (!component) return;
+  const updatePartStyle = useCallback(
+    (part: keyof Component, raw: string) => {
+      if (!component) return;
 
-    setComponent({
-      ...component,
-      [part]: raw
-    });
-  }, [component]);
+      setComponent({
+        ...component,
+        [part]: raw,
+      });
+    },
+    [component],
+  );
 
   return (
-    <ComponentContext.Provider value={{ component, setComponent, updatePartStyle }}>
+    <ComponentContext.Provider
+      value={{ component, setComponent, updatePartStyle }}
+    >
       {children}
     </ComponentContext.Provider>
   );

@@ -100,7 +100,7 @@ export function Preview({ children }: PropsWithChildren) {
           </ThemePreviewBlock>
         </div>
       </TabsContent>
-      <TabsContent value="code">
+      <TabsContent value="code" className={'p-2'}>
         {code && <ComponentCode code={code} />}
       </TabsContent>
     </>

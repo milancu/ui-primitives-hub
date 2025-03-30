@@ -11,7 +11,7 @@ const ComponentCode = ({ code }: { code: string }) => {
   const componentName = useStore(componentStore)
 
   return (
-    <div className={"space-y-2 px-2 pb-2"}>
+    <div className={"space-y-4 px-2 pb-2"}>
       <CommandCopy componentName={componentName}/>
       <div className="relative flex h-full flex-col overflow-auto">
         <pre className="bg-muted overflow-x-auto rounded-lg p-2 font-mono text-sm">

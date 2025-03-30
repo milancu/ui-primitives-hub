@@ -7,7 +7,6 @@ import {
   AccordionPanel,
   AccordionRoot,
   AccordionTrigger,
-  PlusIcon,
 } from "@ui-primitives-hub/ui/src/components/Accordion.tsx";
 import { useCurrentPartParam } from "@/features/sidebar/hooks/useCurrentPartParam.tsx";
 import { useCurrentComponentStateParam } from "@/features/sidebar/hooks/useCurrentComponentStateParam.tsx";
@@ -91,8 +90,8 @@ const AccordionPage = () => {
               </AccordionTrigger>
             </AccordionHeader>
             <AccordionPanel className={panel}>
-              Base UI is a library of high-quality unstyled React components for design
-              systems and web apps.
+              Base UI is a library of high-quality unstyled React components for
+              design systems and web apps.
             </AccordionPanel>
           </AccordionItem>
           <AccordionItem className={item}>
@@ -102,8 +101,8 @@ const AccordionPage = () => {
               </AccordionTrigger>
             </AccordionHeader>
             <AccordionPanel className={panel}>
-              Head to the “Quick start” guide in the docs. If you’ve used unstyled
-              libraries before, you’ll feel at home.
+              Head to the “Quick start” guide in the docs. If you’ve used
+              unstyled libraries before, you’ll feel at home.
             </AccordionPanel>
           </AccordionItem>
           <AccordionItem className={item}>

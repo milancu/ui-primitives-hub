@@ -208,12 +208,12 @@ export const getRawTailwindClasses = (style: any) => {
   return result;
 };
 
-export const styleToTailwind = (style: Style): string => {
+export const styleToTailwind = (style: Style, prefix?: string): string => {
   const css = styleToString(style);
-  console.log(css)
   const conversionResult = CssToTailwindTranslator(
     `component { ${css} }`,
     {
+      prefix: prefix,
       customTheme: {
         color: {
           'var(--background)': 'text-[var(--background)]',
@@ -250,10 +250,8 @@ export const styleToTailwind = (style: Style): string => {
           'var(--border)': 'border-[var(--border)]',
         }
       }
-    }
+    },
   );
-
-  console.log(conversionResult)
 
   // if (!conversionResult.data?.[0]?.resultVal) {
   //   throw new Error("Invalid CSS conversion");

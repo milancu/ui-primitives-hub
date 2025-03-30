@@ -62,6 +62,7 @@ const NavBackgroundEditor = () => {
                   min={0}
                   max={100}
                   step={5}
+                  value={currentStyle?.opacity}
                   handleChange={(newValue) => handleStyle("opacity", newValue)}
                 />
               </SidebarMenuItem>

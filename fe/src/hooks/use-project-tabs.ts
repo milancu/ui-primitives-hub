@@ -1,13 +1,13 @@
 import { useEffect } from "react";
 import { useLocation, useParams } from "@tanstack/react-router";
 import { usePersistedState } from "@/hooks/use-persisted-state";
-import { useGetProject } from "@/features/project/hooks/queries/useGetProject";
 import { Tab } from "@ui-primitives-hub/types";
+import { useGetProjectName } from "@/features/project/hooks/queries/useGetProjectName.ts";
 
 export const useProjectTabs = () => {
   const [tabs, setTabs] = usePersistedState<Tab[]>("project-tabs", []);
   const { id } = useParams({ strict: false });
-  const { data: project } = useGetProject(id);
+  const { data: project } = useGetProjectName(id);
   const location = useLocation();
 
   useEffect(() => {
@@ -19,7 +19,7 @@ export const useProjectTabs = () => {
 
     const newTab = {
       id,
-      name: project.metadata.name,
+      name: project.name,
       path: location.href,
     };
 
