@@ -6,8 +6,15 @@
     "rootDir": "./src",
     "strict": true,
     "esModuleInterop": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "paths": {
+      "@ui-primitives-hub/utils": ["../packages/utils/src"],
+      "@ui-primitives-hub/*": ["../packages/*/src"]
+    }
   },
   "include": ["src/**/*.ts"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules"],
+  "references": [
+    { "path": "../packages/utils" }
+  ]
 }
