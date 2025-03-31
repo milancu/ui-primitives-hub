@@ -56,7 +56,7 @@ program
   .command("init")
   .description("Initialize project configuration")
   .option("-p, --project <id>", "Set active project ID")
-  .option("-o, --output <path>", "Output directory", "src/components/ui-primitives")
+  .option("-o, --output <path>", "Output directory", "src/components")
   .option("--package-manager <manager>", "Set package manager (pnpm/npm/yarn)")
   .option("-t, --token <token>", "Set authentication token (advanced)")
   .action(async (options) => {

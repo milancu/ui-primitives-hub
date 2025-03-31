@@ -74,7 +74,7 @@ function RouteComponent() {
               </div>
             </Tabs>
           </SidebarInset>
-          {currentPart !== "" && <SidebarRight />}
+          {currentPart && <SidebarRight />}
         </div>
       </SidebarProvider>
     </div>

@@ -39,6 +39,9 @@ export function NavMain({
                 setState(null);
                 setHierarchy(undefined);
               }}
+              params={{
+                id:id!
+              }}
             >
               <span>{item.title}</span>
             </Link>

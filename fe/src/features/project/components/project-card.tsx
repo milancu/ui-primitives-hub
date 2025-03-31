@@ -41,7 +41,7 @@ const ProjectCard = ({
 
   return (
     <Card
-      className={`transition-all duration-200 ${isHovered ? "shadow-md" : "shadow-sm"} overflow-hidden`}
+      className={`transition-all duration-200 ${isHovered ? "shadow-md" : "shadow-sm"} overflow-hidden flex flex-col`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -56,7 +56,7 @@ const ProjectCard = ({
                 aria-hidden="true"
               />
             </div>
-            <Link to={`${id}`} className={"text-lg"}>
+            <Link to={`${id}`} className={"text-lg truncate"}>
               {name}
             </Link>
           </div>
@@ -124,7 +124,7 @@ const ProjectCard = ({
           </DropdownMenu>
         </CardTitle>
       </CardHeader>
-      <CardContent className="relative flex h-full flex-col justify-between pb-4">
+      <CardContent className="relative">
         <div className="text-muted-foreground mt-4 flex items-center gap-1.5 text-sm">
           <Calendar className="h-3.5 w-3.5" />
           <span>{format(updatedAt, "dd.MM.yyyy HH:mm", { locale: cs })}</span>
