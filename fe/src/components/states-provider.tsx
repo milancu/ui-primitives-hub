@@ -6,7 +6,7 @@ import {
   useContext,
   useState,
 } from "react";
-import { getRawTailwindClasses } from "@ui-primitives-hub/utils/src";
+import { getRawTailwindClasses } from "@ui-primitives-hub/common";
 
 type StatesContext = {
   states?: Component;

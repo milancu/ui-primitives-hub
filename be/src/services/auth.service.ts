@@ -1,10 +1,10 @@
-import {ProjectService} from './project.service';
-import {User} from "../models/user.model";
-import {auth, db} from "../firebase";
 import axios from "axios";
-import {generatePKCE} from "../utils/pkce";
 import crypto from "crypto";
 import * as dotenv from "dotenv";
+import {auth, db} from "../firebase.js";
+import { generatePKCE } from "../utils/pkce.js";
+import {User} from "../models/user.model.js";
+import {ProjectService} from "./project.service.js";
 
 const DEVICE_CODES_REF = "deviceCodes";
 const CODE_EXPIRATION = 15 * 60 * 1000;

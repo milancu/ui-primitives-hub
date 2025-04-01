@@ -34,7 +34,7 @@
     "@tanstack/react-store": "^0.7.0",
     "@ui-primitives-hub/types": "workspace:*",
     "@ui-primitives-hub/ui": "workspace:*",
-    "@ui-primitives-hub/utils": "workspace:*",
+    "@ui-primitives-hub/common": "workspace:*",
     "@uiw/color-convert": "^2.4.1",
     "@uiw/react-color-hue": "^2.4.1",
     "@uiw/react-color-saturation": "^2.4.1",

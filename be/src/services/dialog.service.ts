@@ -1,7 +1,7 @@
 import {ComponentHierarchy} from "@ui-primitives-hub/types";
-import {getRawTailwindClasses} from "@ui-primitives-hub/utils";
 import path from "path";
 import fs from "fs";
+import { getRawTailwindClasses } from "@ui-primitives-hub/common";
 
 export class DialogService {
   static getHierarchy(): ComponentHierarchy {

@@ -1,5 +1,5 @@
 import {NextFunction, Request, Response} from 'express';
-import {auth} from '../firebase';
+import {auth} from "../firebase.js";
 
 export const authenticate = async (
   req: Request,

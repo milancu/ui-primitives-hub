@@ -8,10 +8,6 @@ import {
   useRef,
   useState,
 } from "react";
-import {
-  convertStringToStyle,
-  styleToTailwind,
-} from "@ui-primitives-hub/utils/src";
 import { useStates } from "@/components/states-provider.tsx";
 import { useCurrentComponentStateParam } from "@/features/sidebar/hooks/useCurrentComponentStateParam.tsx";
 import { useComponent } from "@/components/component-provider.tsx";
@@ -20,6 +16,10 @@ import { useUpdateStyle } from "@/hooks/mutations/useUpdateStyle.ts";
 import { useStore } from "@tanstack/react-store";
 import { projectStore } from "@/store/project.store.ts";
 import { componentStore } from "@/store/component.store.ts";
+import {
+  convertStringToStyle,
+  styleToTailwind,
+} from "@ui-primitives-hub/common";
 
 type StyleProvider = {
   style?: Style;

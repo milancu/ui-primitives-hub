@@ -1,9 +1,9 @@
 import express from "express";
 import dotenv from "dotenv";
-import authRouter from "./routes/auth.route";
-import componentsRouter from "./routes/component.route";
-import projectsRouter from "./routes/project.route";
-import verifyRoute from "./routes/verify.route";
+import authRouter from "./routes/auth.route.js";
+import componentsRouter from "./routes/component.route.js";
+import projectsRouter from "./routes/project.route.js";
+import verifyRoute from "./routes/verify.route.js";
 import cors from "cors";
 
 dotenv.config();

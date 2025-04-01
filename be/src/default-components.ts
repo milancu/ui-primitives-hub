@@ -1,4 +1,4 @@
-import {Components} from "./models/component.model";
+import {Components} from "./models/component.model.js";
 
 export const DEFAULT_COMPONENTS: Components = {
   "accordion": {

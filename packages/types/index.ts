@@ -1,6 +1,5 @@
 export type CSSUnit = `${number}${"px" | "%" | "em" | "rem" | "vh" | "vw"}`;
 
-
 export type ComponentHierarchy = {
   name: string;
   children?: ComponentHierarchy[];

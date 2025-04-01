@@ -1,6 +1,6 @@
-import {db} from '../firebase';
-import {Color, ColorScheme, Project, ProjectMetadata} from '../models/project.model';
-import {DEFAULT_COLORS, DEFAULT_COMPONENTS} from "../default-components";
+import { db } from "../firebase.js";
+import {Color, ColorScheme, Project, ProjectMetadata} from "../models/project.model.js";
+import {DEFAULT_COLORS, DEFAULT_COMPONENTS} from "../default-components.js";
 
 export class ProjectService {
   static async createProject(userId: string, name: string): Promise<ProjectMetadata> {

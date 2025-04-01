@@ -1,13 +1,14 @@
-import {db} from '../firebase';
-import {getRawTailwindClasses} from "@ui-primitives-hub/utils";
-import {AccordionService} from "./accordion.service";
-import {AvatarService} from "./avatar.service";
-import {DialogService} from "./dialog.service";
-import {FieldService} from "./field.service";
-import {FieldsetService} from "./fieldset.service";
-import {MenuService} from "./menu.service";
-import {NumberfieldService} from "./numberfield.service";
-import {ProjectService} from "./project.service";
+import { getRawTailwindClasses } from "@ui-primitives-hub/common";
+import { ProjectService } from './project.service.js';
+import { AccordionService } from "./accordion.service.js";
+import { db } from "../firebase.js";
+import { AvatarService } from "./avatar.service.js";
+import { DialogService } from "./dialog.service.js";
+import { FieldService } from "./field.service.js";
+import { FieldsetService } from "./fieldset.service.js";
+import {MenuService} from "./menu.service.js";
+import {NumberfieldService} from "./numberfield.service.js";
+
 
 export class ComponentService {
 

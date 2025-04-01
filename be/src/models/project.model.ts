@@ -1,4 +1,4 @@
-import {Components} from "./component.model";
+import {Components} from "./component.model.js";
 
 export type Color = {
   l: number;

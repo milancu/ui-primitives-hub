@@ -1,5 +1,5 @@
 import {ComponentHierarchy} from "@ui-primitives-hub/types";
-import {getRawTailwindClasses} from "@ui-primitives-hub/utils";
+import { getRawTailwindClasses } from "@ui-primitives-hub/common";
 import path from "path";
 import fs from "fs";
 
