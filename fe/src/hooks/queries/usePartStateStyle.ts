@@ -9,7 +9,7 @@ export const usePartStateStyle = (
   options?: UseQueryOptions<string>,
 ) => {
   return useQuery<string>({
-    queryKey: [`${projectId}-${componentName}`],
+    queryKey: [`${projectId}-${componentName}`, `${projectId}-${componentName}-${state}`],
     queryFn: () => {
       if (!part || !state) throw new Error("Missing part or state");
       return fetchPartStateStyle(projectId, part, state, componentName);

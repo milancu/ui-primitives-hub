@@ -7,7 +7,7 @@ export const useUpdateProjectColors = (id: string ) => {
   return useMutation({
     mutationFn: updateColors,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["project-colors", id] });
+      queryClient.invalidateQueries({ queryKey: [`${id}-colors`] });
     },
   });
 };

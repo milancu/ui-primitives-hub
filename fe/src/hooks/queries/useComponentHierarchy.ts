@@ -4,7 +4,7 @@ import { fetchHierarchy } from "@/api/queries";
 
 export const useComponentHierarchy = (projectId: string, projectName: string) => {
   return useQuery<ComponentHierarchy>({
-    queryKey: [`${projectId}-${projectName}-hierarchy`],
+    queryKey: [`${projectName}-hierarchy`],
     queryFn: () => fetchHierarchy(projectId, projectName),
     refetchOnMount: true,
   });

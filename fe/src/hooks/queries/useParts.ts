@@ -6,7 +6,6 @@ export const useParts = (projectId: string, component: string) => {
   return useQuery<Component>({
     queryKey: [
       `${projectId}-${component}`,
-      `${projectId}-${component}-parts`,
     ],
     queryFn: () => fetchParts(projectId, component),
     refetchOnMount: true,

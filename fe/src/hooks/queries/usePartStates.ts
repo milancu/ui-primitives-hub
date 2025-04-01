@@ -9,7 +9,7 @@ export const usePartStates = (
   options?: UseQueryOptions<Component>,
 ) => {
   return useQuery<Component>({
-    queryKey: [`${projectId}-${componentName}-${part}-states`],
+    queryKey: [`${componentName}-states`],
     queryFn: () => {
       if (!part) throw new Error("Missing part");
       return fetchPartStates(projectId, part, componentName);

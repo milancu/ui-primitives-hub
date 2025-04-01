@@ -7,7 +7,7 @@ export const useGetProjectColors = (
   options?: UseQueryOptions<{ light: ColorScheme; dark: ColorScheme }, Error>,
 ) => {
   return useQuery<{ light: ColorScheme; dark: ColorScheme }, Error>({
-    queryKey: ["project-colors", id],
+    queryKey: [`${id}-colors`],
     enabled: !!id,
     refetchOnMount: true,
     staleTime: 5 * 60 * 1000,

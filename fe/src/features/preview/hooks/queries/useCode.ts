@@ -7,7 +7,7 @@ export const useCode = (
   options?: UseQueryOptions<string>,
 ) => {
   return useQuery<string>({
-    queryKey: [`${projectId}-${componentName}-code`],
+    queryKey: [`${projectId}-${componentName}`],
     queryFn: () => {
       if (!projectId || !componentName) throw new Error("Missing project ID");
       return fetchCode(projectId, componentName);
