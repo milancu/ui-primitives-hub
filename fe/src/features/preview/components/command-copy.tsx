@@ -12,9 +12,9 @@ import { useState } from "react";
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard.ts";
 
 const commands = {
-  pnpm: `pnpm dlx @ui-primitives-hub add`,
-  npm: `npx @ui-primitives-hub add`,
-  yarn: `npx @ui-primitives-hub add`,
+  pnpm: `pnpm dlx @milancu/ui-primitives-hub add`,
+  npm: `npx @milancu/ui-primitives-hub add`,
+  yarn: `npx @milancu/ui-primitives-hub add`,
 };
 
 type CommandCopyProps = {

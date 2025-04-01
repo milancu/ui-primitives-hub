@@ -3,13 +3,12 @@ import chalk from "chalk";
 import ora from "ora";
 import {config} from "./config.js";
 
-const API_BASE = "http://localhost:3000";
 
 export const authFlow = async () => {
   const spinner = ora(chalk.cyan("Initiating device flow...")).start();
 
   try {
-    const response = await fetch(`${API_BASE}/auth/device/code`, {
+    const response = await fetch(`${config.getApiBase()}/auth/device/code`, {
       method: "POST",
       headers: {"Content-Type": "application/json"}
     });
@@ -25,7 +24,7 @@ ${chalk.bold.cyan("UI Primitives Hub Authentication")}
 1. Open ${chalk.underline.cyan(data.verification_uri)}
 2. Enter code: ${chalk.bold.magenta(data.user_code)}
     
-${chalk.dim(`This code expires in ${Math.floor(data.expires_in / 60)} minutes`)}
+${chalk.dim(`This code expires in ${Math.floor(data.expires_in / 1000 / 60)} minutes`)}
     `);
 
     const pollSpinner = ora(chalk.cyan("Waiting for authentication...")).start();
@@ -35,7 +34,7 @@ ${chalk.dim(`This code expires in ${Math.floor(data.expires_in / 60)} minutes`)}
       await new Promise(resolve => setTimeout(resolve, 4000));
 
       try {
-        const pollResponse = await fetch(`${API_BASE}/auth/device/poll`, {
+        const pollResponse = await fetch(`${config.getApiBase()}/auth/device/poll`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

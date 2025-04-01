@@ -3,15 +3,20 @@
     "ui-primitives-hub": "./index.js"
   },
   "type": "module",
-  "name": "cli",
-  "version": "1.0.0",
-  "description": "",
+  "name": "@milancu/ui-primitives-hub",
+  "version": "1.1.1",
+  "description": "CLI tool for generating UI Primitives",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "component generator", "cli"
+  ],
+  "author": "milancu",
+  "publishConfig": {
+    "access": "public"
+  },
   "license": "ISC",
   "dependencies": {
     "boxen": "^8.0.1",

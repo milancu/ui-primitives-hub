@@ -1,9 +1,12 @@
 import fs from "fs-extra";
 import path from "path";
+import dotenv from "dotenv";
+dotenv.config();
+
 
 const CONFIG_DIR = path.join(process.cwd(), "/");
 const CONFIG_FILE = path.join(CONFIG_DIR, "config.json");
-const API_BASE = process.env.API_BASE ?? "http://localhost:3000";
+const API_BASE = process.env.API_BASE ?? "https://ui-primitives-hub-be.onrender.com";
 
 
 export const config = {

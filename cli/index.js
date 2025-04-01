@@ -9,11 +9,9 @@ import {config} from "./config.js";
 import inquirer from "inquirer";
 import fs from "fs-extra";
 import path from "path";
-import dotenv from "dotenv";
-import { execa } from 'execa';
+import {execa} from 'execa';
 import {UTILS_CONTENT, UTILS_PATH} from "./constants.js";
 
-dotenv.config();
 
 async function getInstalledPackages(packageManager) {
   try {
@@ -34,7 +32,7 @@ async function getInstalledPackages(packageManager) {
 
 program
   .name("ui-primitives")
-  .version("1.0.0")
+  .version("1.1.1")
   .description("UI Primitives Hub - Component Generation CLI");
 
 console.log(
