@@ -14,7 +14,8 @@
     "@types/postcss-js": "^4.0.4",
     "typescript": "~5.7.2",
     "vite": "^6.2.0",
-    "vite-plugin-dts": "^4.5.3"
+    "vite-plugin-dts": "^4.5.3",
+    "postcss": "^8.4.49"
   },
   "dependencies": {
     "@ui-primitives-hub/types": "workspace:*",
