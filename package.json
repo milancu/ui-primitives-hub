@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "start cmd /k \"pnpm --filter fe dev\" && start cmd /k \"pnpm --filter be dev\"",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "pnpm --filter common build && pnpm --filter be build && pnpm --filter fe build",
+    "build-be": "pnpm --filter common build && pnpm --filter be build",
+    "build-fe": "pnpm --filter common build && pnpm --filter fe build",
     "start": "pnpm --filter be start"
   },
   "keywords": [],
