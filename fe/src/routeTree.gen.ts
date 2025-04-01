@@ -12,6 +12,7 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as LoginImport } from './routes/login'
+import { Route as HelloImport } from './routes/hello'
 import { Route as AuthenticatedImport } from './routes/_authenticated'
 import { Route as AuthCallbackImport } from './routes/auth.callback'
 import { Route as AuthenticatedSuccessImport } from './routes/_authenticated/success'
@@ -34,6 +35,12 @@ import { Route as AuthenticatedCanvaLayoutIdAccordionImport } from './routes/_au
 const LoginRoute = LoginImport.update({
   id: '/login',
   path: '/login',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const HelloRoute = HelloImport.update({
+  id: '/hello',
+  path: '/hello',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -150,6 +157,13 @@ declare module '@tanstack/react-router' {
       path: ''
       fullPath: ''
       preLoaderRoute: typeof AuthenticatedImport
+      parentRoute: typeof rootRoute
+    }
+    '/hello': {
+      id: '/hello'
+      path: '/hello'
+      fullPath: '/hello'
+      preLoaderRoute: typeof HelloImport
       parentRoute: typeof rootRoute
     }
     '/login': {
@@ -341,6 +355,7 @@ const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
 
 export interface FileRoutesByFullPath {
   '': typeof AuthenticatedDashboardLayoutRouteWithChildren
+  '/hello': typeof HelloRoute
   '/login': typeof LoginRoute
   '/activate': typeof AuthenticatedActivateRoute
   '/success': typeof AuthenticatedSuccessRoute
@@ -359,6 +374,7 @@ export interface FileRoutesByFullPath {
 
 export interface FileRoutesByTo {
   '': typeof AuthenticatedCanvaLayoutRouteWithChildren
+  '/hello': typeof HelloRoute
   '/login': typeof LoginRoute
   '/activate': typeof AuthenticatedActivateRoute
   '/success': typeof AuthenticatedSuccessRoute
@@ -378,6 +394,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/_authenticated': typeof AuthenticatedRouteWithChildren
+  '/hello': typeof HelloRoute
   '/login': typeof LoginRoute
   '/_authenticated/_canva-layout': typeof AuthenticatedCanvaLayoutRouteWithChildren
   '/_authenticated/_dashboard-layout': typeof AuthenticatedDashboardLayoutRouteWithChildren
@@ -400,6 +417,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | ''
+    | '/hello'
     | '/login'
     | '/activate'
     | '/success'
@@ -417,6 +435,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | ''
+    | '/hello'
     | '/login'
     | '/activate'
     | '/success'
@@ -434,6 +453,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/_authenticated'
+    | '/hello'
     | '/login'
     | '/_authenticated/_canva-layout'
     | '/_authenticated/_dashboard-layout'
@@ -455,12 +475,14 @@ export interface FileRouteTypes {
 
 export interface RootRouteChildren {
   AuthenticatedRoute: typeof AuthenticatedRouteWithChildren
+  HelloRoute: typeof HelloRoute
   LoginRoute: typeof LoginRoute
   AuthCallbackRoute: typeof AuthCallbackRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRoute: AuthenticatedRouteWithChildren,
+  HelloRoute: HelloRoute,
   LoginRoute: LoginRoute,
   AuthCallbackRoute: AuthCallbackRoute,
 }
@@ -476,6 +498,7 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/_authenticated",
+        "/hello",
         "/login",
         "/auth/callback"
       ]
@@ -488,6 +511,9 @@ export const routeTree = rootRoute
         "/_authenticated/activate",
         "/_authenticated/success"
       ]
+    },
+    "/hello": {
+      "filePath": "hello.tsx"
     },
     "/login": {
       "filePath": "login.tsx"
