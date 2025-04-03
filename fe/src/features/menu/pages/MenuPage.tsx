@@ -1,6 +1,6 @@
 import { Skeleton } from "@/components/ui/skeleton.tsx";
 import Preview from "@/features/preview/components/preview.tsx";
-import React, { useEffect } from "react";
+import React from "react";
 import {
   MenuArrow,
   MenuItem,
@@ -11,68 +11,15 @@ import {
   MenuSeparator,
   MenuTrigger,
 } from "@ui-primitives-hub/ui/src/components/Menu.tsx";
-import { useParams } from "@tanstack/react-router";
 import { useCurrentPartParam } from "@/features/sidebar/hooks/useCurrentPartParam.tsx";
-import { useCurrentComponentStateParam } from "@/features/sidebar/hooks/useCurrentComponentStateParam.tsx";
-import { useComponent } from "@/components/component-provider.tsx";
-import { useHierarchy } from "@/components/hierarchy-provider.tsx";
-import { useStates } from "@/components/states-provider.tsx";
-import { useStyle } from "@/components/style-provider.tsx";
-import { useComponentHierarchy } from "@/hooks/queries/useComponentHierarchy.ts";
-import { useParts } from "@/hooks/queries/useParts.ts";
-import { usePartStates } from "@/hooks/queries/usePartStates.ts";
-import { usePartStateStyle } from "@/hooks/queries/usePartStateStyle.ts";
-import { projectStore } from "@/store/project.store.ts";
-import { componentStore } from "@/store/component.store.ts";
+import { useComponentStore } from "@/hooks/store/component-store.ts";
+import { getClassName } from "@/lib/utils.ts";
 
 const MenuPage = () => {
-  const { id } = useParams({
-    from: "/_authenticated/_canva-layout/$id/menu",
-  });
-
   const [currentPart] = useCurrentPartParam();
-  const [currentState] = useCurrentComponentStateParam();
+  const parts = useComponentStore((state) => state.parts);
 
-  const { component, setComponent } = useComponent();
-  const { setHierarchy } = useHierarchy();
-  const { setStates } = useStates();
-  const { setStyleFromString } = useStyle();
-
-  const { data: hierarchy } = useComponentHierarchy(id, "menu");
-  const { data: parts } = useParts(id, "menu");
-  const { data: states } = usePartStates(id, currentPart, "menu");
-  const { data: style } = usePartStateStyle(
-    id,
-    currentPart,
-    currentState,
-    "menu",
-  );
-
-  useEffect(() => {
-    if (!parts) return;
-    setComponent(parts);
-  }, [parts]);
-
-  useEffect(() => {
-    if (!hierarchy) return;
-    setHierarchy(hierarchy);
-  }, [hierarchy]);
-
-  useEffect(() => {
-    if (!states) return;
-    setStates(states);
-  }, [states]);
-
-  useEffect(() => {
-    setStyleFromString(style);
-  }, [style]);
-
-  useEffect(() => {
-    projectStore.setState(() => id);
-    componentStore.setState(() => "menu");
-  }, [id]);
-
-  if (!component)
+  if (!parts)
     return (
       <div className={"flex h-full w-full flex-col items-center gap-2 p-2"}>
         <Skeleton className={"h-full w-full"} />
@@ -80,29 +27,72 @@ const MenuPage = () => {
       </div>
     );
 
-  const { trigger, positioner, popup, arrow, item, separator } = component;
+  const { trigger, positioner, popup, arrow, item, separator } = parts;
 
   return (
     <div className="h-full w-full">
       <Preview>
         <MenuRoot>
-          <MenuTrigger className={trigger}>
+          <MenuTrigger
+            className={getClassName(trigger, "trigger" === currentPart)}
+          >
             Song <ChevronDownIcon className="-mr-1" />
           </MenuTrigger>
           <MenuPortal>
-            <MenuPositioner className={positioner} sideOffset={8}>
-              <MenuPopup className={popup}>
-                <MenuArrow className={arrow}>
+            <MenuPositioner
+              className={getClassName(positioner, "positioner" === currentPart)}
+              sideOffset={8}
+            >
+              <MenuPopup
+                className={getClassName(popup, "popup" === currentPart)}
+              >
+                <MenuArrow
+                  className={getClassName(arrow, "arrow" === currentPart)}
+                >
                   <ArrowSvg />
                 </MenuArrow>
-                <MenuItem className={item}>Add to Library</MenuItem>
-                <MenuItem className={item}>Add to Playlist</MenuItem>
-                <MenuSeparator className={separator} />
-                <MenuItem className={item}>Play Next</MenuItem>
-                <MenuItem className={item}>Play Last</MenuItem>
-                <MenuSeparator className={separator} />
-                <MenuItem className={item}>Favorite</MenuItem>
-                <MenuItem className={item}>Share</MenuItem>
+                <MenuItem
+                  className={getClassName(item, "item" === currentPart)}
+                >
+                  Add to Library
+                </MenuItem>
+                <MenuItem
+                  className={getClassName(item, "item" === currentPart)}
+                >
+                  Add to Playlist
+                </MenuItem>
+                <MenuSeparator
+                  className={getClassName(
+                    separator,
+                    "separator" === currentPart,
+                  )}
+                />
+                <MenuItem
+                  className={getClassName(item, "item" === currentPart)}
+                >
+                  Play Next
+                </MenuItem>
+                <MenuItem
+                  className={getClassName(item, "item" === currentPart)}
+                >
+                  Play Last
+                </MenuItem>
+                <MenuSeparator
+                  className={getClassName(
+                    separator,
+                    "separator" === currentPart,
+                  )}
+                />
+                <MenuItem
+                  className={getClassName(item, "item" === currentPart)}
+                >
+                  Favorite
+                </MenuItem>
+                <MenuItem
+                  className={getClassName(item, "item" === currentPart)}
+                >
+                  Share
+                </MenuItem>
               </MenuPopup>
             </MenuPositioner>
           </MenuPortal>

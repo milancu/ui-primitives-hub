@@ -1,31 +1,30 @@
 "use client";
 
-import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@/components/ui/sidebar.tsx";
+import {
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+} from "@/components/ui/sidebar.tsx";
 import { Link, useLocation, useParams } from "@tanstack/react-router";
-import { useStyle } from "@/components/style-provider.tsx";
-import { useCurrentComponentStateParam } from "@/features/sidebar/hooks/useCurrentComponentStateParam.tsx";
-import { useHierarchy } from "@/components/hierarchy-provider.tsx";
+import { useCurrenStateParam } from "@/features/sidebar/hooks/useCurrenStateParam.tsx";
 
 export function NavSecondary() {
-  const { setStyle } = useStyle();
-  const { setHierarchy } = useHierarchy();
-  const [, setState] = useCurrentComponentStateParam();
+  const [, setState] = useCurrenStateParam();
   const { pathname } = useLocation();
   const { id } = useParams({ strict: false });
 
-
   return (
-    <SidebarMenu className={'p-2'}>
+    <SidebarMenu className={"p-2"}>
       <SidebarMenuItem>
-        <SidebarMenuButton asChild isActive={pathname === `/${id}/color-customizer`}>
+        <SidebarMenuButton
+          asChild
+          isActive={pathname === `/${id}/color-customizer`}
+        >
           <Link
             to={`${id}/color-customizer`}
             activeProps={{ className: `font-bold` }}
             onClick={() => {
-              setStyle(undefined);
-              setState(null);
-              setHierarchy(undefined)
-
+              // setState(null);
             }}
           >
             <span>Color Customizer</span>

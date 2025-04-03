@@ -1,6 +1,6 @@
 import { Skeleton } from "@/components/ui/skeleton.tsx";
 import Preview from "@/features/preview/components/preview.tsx";
-import React, { useEffect } from "react";
+import React from "react";
 import {
   NumberFieldDecrement,
   NumberFieldGroup,
@@ -10,68 +10,16 @@ import {
   NumberFieldScrubArea,
   NumberFieldScrubAreaCursor,
 } from "@ui-primitives-hub/ui/src/components/NumberField.tsx";
-import { useParams } from "@tanstack/react-router";
 import { useCurrentPartParam } from "@/features/sidebar/hooks/useCurrentPartParam.tsx";
-import { useCurrentComponentStateParam } from "@/features/sidebar/hooks/useCurrentComponentStateParam.tsx";
-import { useComponent } from "@/components/component-provider.tsx";
-import { useHierarchy } from "@/components/hierarchy-provider.tsx";
-import { useStates } from "@/components/states-provider.tsx";
-import { useStyle } from "@/components/style-provider.tsx";
-import { useComponentHierarchy } from "@/hooks/queries/useComponentHierarchy.ts";
-import { useParts } from "@/hooks/queries/useParts.ts";
-import { usePartStates } from "@/hooks/queries/usePartStates.ts";
-import { usePartStateStyle } from "@/hooks/queries/usePartStateStyle.ts";
-import { projectStore } from "@/store/project.store.ts";
-import { componentStore } from "@/store/component.store.ts";
+import { useComponentStore } from "@/hooks/store/component-store.ts";
+import { getClassName } from "@/lib/utils.ts";
 
 const NumberFieldPage = () => {
-  const { id } = useParams({
-    from: "/_authenticated/_canva-layout/$id/number-field",
-  });
-
+  const id = "number-field";
   const [currentPart] = useCurrentPartParam();
-  const [currentState] = useCurrentComponentStateParam();
+  const parts = useComponentStore((state) => state.parts);
 
-  const { component, setComponent } = useComponent();
-  const { setHierarchy } = useHierarchy();
-  const { setStates } = useStates();
-  const { setStyleFromString } = useStyle();
-
-  const { data: hierarchy } = useComponentHierarchy(id, "numberfield");
-  const { data: parts } = useParts(id, "numberfield");
-  const { data: states } = usePartStates(id, currentPart, "numberfield");
-  const { data: style } = usePartStateStyle(
-    id,
-    currentPart,
-    currentState,
-    "numberfield",
-  );
-
-  useEffect(() => {
-    if (!parts) return;
-    setComponent(parts);
-  }, [parts]);
-
-  useEffect(() => {
-    if (!hierarchy) return;
-    setHierarchy(hierarchy);
-  }, [hierarchy]);
-
-  useEffect(() => {
-    if (!states) return;
-    setStates(states);
-  }, [states]);
-
-  useEffect(() => {
-    setStyleFromString(style);
-  }, [style]);
-
-  useEffect(() => {
-    projectStore.setState(() => id);
-    componentStore.setState(() => "numberfield");
-  }, [id]);
-
-  if (!component)
+  if (!parts)
     return (
       <div className={"flex h-full w-full flex-col items-center gap-2 p-2"}>
         <Skeleton className={"h-full w-full"} />
@@ -87,30 +35,49 @@ const NumberFieldPage = () => {
     decrement,
     input,
     increment,
-  } = component;
+  } = parts;
 
   return (
     <div className="h-full w-full">
       <Preview>
-        <NumberFieldRoot id={id} defaultValue={100} className={root}>
-          <NumberFieldScrubArea className={scrubarea}>
+        <NumberFieldRoot
+          id={id}
+          defaultValue={100}
+          className={getClassName(root, "root" === currentPart)}
+        >
+          <NumberFieldScrubArea
+            className={getClassName(scrubarea, "scrubarea" === currentPart)}
+          >
             <label
               htmlFor={id}
               className="cursor-ew-resize text-sm font-medium text-gray-900"
             >
               Amount
             </label>
-            <NumberFieldScrubAreaCursor className={scrubareacursor}>
+            <NumberFieldScrubAreaCursor
+              className={getClassName(
+                scrubareacursor,
+                "scrubareacursor" === currentPart,
+              )}
+            >
               <CursorGrowIcon />
             </NumberFieldScrubAreaCursor>
           </NumberFieldScrubArea>
 
-          <NumberFieldGroup className={group}>
-            <NumberFieldDecrement className={decrement}>
+          <NumberFieldGroup
+            className={getClassName(group, "group" === currentPart)}
+          >
+            <NumberFieldDecrement
+              className={getClassName(decrement, "decrement" === currentPart)}
+            >
               <MinusIcon />
             </NumberFieldDecrement>
-            <NumberFieldInput className={input} />
-            <NumberFieldIncrement className={increment}>
+            <NumberFieldInput
+              className={getClassName(input, "input" === currentPart)}
+            />
+            <NumberFieldIncrement
+              className={getClassName(increment, "increment" === currentPart)}
+            >
               <PlusIcon />
             </NumberFieldIncrement>
           </NumberFieldGroup>

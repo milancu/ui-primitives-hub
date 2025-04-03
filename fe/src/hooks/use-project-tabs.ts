@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useLocation, useParams } from "@tanstack/react-router";
+import { useLocation, useNavigate, useParams } from "@tanstack/react-router";
 import { usePersistedState } from "@/hooks/use-persisted-state";
 import { Tab } from "@ui-primitives-hub/types";
 import { useGetProjectName } from "@/features/project/hooks/queries/useGetProjectName.ts";
@@ -9,6 +9,7 @@ export const useProjectTabs = () => {
   const { id } = useParams({ strict: false });
   const { data: project } = useGetProjectName(id);
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!id || !project) return;
@@ -35,6 +36,24 @@ export const useProjectTabs = () => {
   }, [id, project, setTabs, location]);
 
   const closeTab = (tabId: string) => {
+    if (tabId === id) {
+      const currentTabs = tabs;
+      const currentIndex = currentTabs.findIndex((tab) => tab.id === tabId);
+      let nextPath = "/";
+
+      if (currentTabs.length > 1) {
+        let nextTab;
+        if (currentIndex < currentTabs.length - 1) {
+          nextTab = currentTabs[currentIndex + 1];
+        } else {
+          nextTab = currentTabs[currentIndex - 1];
+        }
+        nextPath = nextTab.path;
+      }
+
+      navigate({ to: nextPath });
+    }
+
     setTabs((prev) => prev.filter((tab) => tab.id !== tabId));
   };
 

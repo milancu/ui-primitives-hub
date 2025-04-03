@@ -15,11 +15,12 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu.tsx";
 import { Button } from "@/components/ui/button.tsx";
-import { useStyle } from "@/components/style-provider";
 import InputComponentUnitSwitcher from "@/components/ui/input-component-unit-switcher.tsx";
+import { useStyleStore } from "@/hooks/store/style-store.ts";
 
 const NavMarginEditor = () => {
-  const { style: currentStyle, handleStyle } = useStyle();
+  const style = useStyleStore((state) => state.style);
+  const handleStyle = useStyleStore((state) => state.handleStyle);
 
   return (
     <SidebarGroup>
@@ -31,7 +32,7 @@ const NavMarginEditor = () => {
               placeholder={"margin"}
               character={"M"}
               handleChange={(newValue) => handleStyle("margin", newValue)}
-              value={currentStyle?.margin}
+              value={style?.margin}
             />
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -49,7 +50,7 @@ const NavMarginEditor = () => {
                       handleChange={(newValue) =>
                         handleStyle("marginLeft", newValue)
                       }
-                      value={currentStyle?.marginLeft}
+                      value={style?.marginLeft}
                     />
                   </DropdownMenuLabel>
                   <DropdownMenuLabel>
@@ -58,7 +59,7 @@ const NavMarginEditor = () => {
                       handleChange={(newValue) =>
                         handleStyle("marginTop", newValue)
                       }
-                      value={currentStyle?.marginTop}
+                      value={style?.marginTop}
                     />
                   </DropdownMenuLabel>
                   <DropdownMenuLabel>
@@ -67,7 +68,7 @@ const NavMarginEditor = () => {
                       handleChange={(newValue) =>
                         handleStyle("marginRight", newValue)
                       }
-                      value={currentStyle?.marginRight}
+                      value={style?.marginRight}
                     />
                   </DropdownMenuLabel>
                   <DropdownMenuLabel>
@@ -76,7 +77,7 @@ const NavMarginEditor = () => {
                       handleChange={(newValue) =>
                         handleStyle("marginBottom", newValue)
                       }
-                      value={currentStyle?.marginBottom}
+                      value={style?.marginBottom}
                     />
                   </DropdownMenuLabel>
                   <DropdownMenuLabel>
@@ -85,7 +86,7 @@ const NavMarginEditor = () => {
                       handleChange={(newValue) =>
                         handleStyle("marginVertical", newValue)
                       }
-                      value={currentStyle?.marginVertical}
+                      value={style?.marginVertical}
                     />
                   </DropdownMenuLabel>
                   <DropdownMenuLabel>
@@ -94,7 +95,7 @@ const NavMarginEditor = () => {
                       handleChange={(newValue) =>
                         handleStyle("marginHorizontal", newValue)
                       }
-                      value={currentStyle?.marginHorizontal}
+                      value={style?.marginHorizontal}
                     />
                   </DropdownMenuLabel>
                 </DropdownMenuGroup>

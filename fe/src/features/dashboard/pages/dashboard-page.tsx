@@ -18,7 +18,7 @@ const DashboardPage = () => {
           "opacity-80",
         )}
       />
-      <div className={"relative z-10 flex flex-col gap-4"}>
+      <div className={"relative z-10 flex flex-col gap-4 p-4 md:p-0"}>
         <div className={"flex w-full items-center justify-between"}>
           <div>
             <div className={"text-xl font-semibold"}>Your projects</div>

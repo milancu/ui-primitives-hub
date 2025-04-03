@@ -9,6 +9,8 @@ import { TabsContent } from "@/components/ui/tabs.tsx";
 import { useCode } from "@/features/preview/hooks/queries/useCode.ts";
 import { componentStore } from "@/store/component.store.ts";
 import ComponentCode from "@/features/preview/components/component-code.tsx";
+import { useProjectStore } from "@/hooks/store/project-store.ts";
+import { useComponentStore } from "@/hooks/store/component-store.ts";
 
 type ThemeType = "light" | "dark";
 
@@ -68,10 +70,10 @@ const ThemePreviewBlock = ({
 };
 
 export function Preview({ children }: PropsWithChildren) {
-  const id = useStore(projectStore);
-  const componentName = useStore(componentStore);
-  const { data: colors, isLoading, isError } = useGetProjectColors(id);
-  const { data: code } = useCode(id, componentName);
+  const projectId = useProjectStore(state => state.projectId);
+  const componentName = useComponentStore(state => state.componentName);
+  const { data: colors, isLoading, isError } = useGetProjectColors(projectId);
+  const { data: code } = useCode(projectId, componentName);
 
   if (isLoading)
     return (

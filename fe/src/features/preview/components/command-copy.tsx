@@ -18,7 +18,7 @@ const commands = {
 };
 
 type CommandCopyProps = {
-  componentName: string | null;
+  componentName?: string;
 };
 
 const CommandCopy = ({ componentName }: CommandCopyProps) => {
@@ -72,9 +72,8 @@ const CommandCopy = ({ componentName }: CommandCopyProps) => {
       <Separator />
       <div className={"p-4"}>
         {Object.keys(commands).map((key) => {
-          console.log(key);
           return (
-            <TabsContent value={key} className={"font-mono text-sm"}>
+            <TabsContent value={key} key={key} className={"font-mono text-sm"}>
               {commands[key]} {componentName}
             </TabsContent>
           );

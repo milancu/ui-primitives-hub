@@ -9,7 +9,7 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Switch } from "@/components/ui/switch";
 import { Input } from "@/components/ui/input";
-import React, { useCallback } from "react";
+import React from "react";
 import { cn } from "@/lib/utils.ts";
 import { ColorScheme } from "../../../../../packages/types";
 import { GridPattern } from "@/components/magicui/grid-pattern.tsx";
@@ -118,16 +118,14 @@ const ColorPreview = ({
   lightColors: ColorScheme;
   darkColors: ColorScheme;
 }) => {
-  const createStyleObject = useCallback((colors: ColorScheme) => {
+  const createStyleObject = (colors: ColorScheme) => {
     return Object.fromEntries(
       Object.entries(colors).map(([key, value]) => {
         const cssVarName = `--${key.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase()}`;
         return [cssVarName, `oklch(${value.l} ${value.c} ${value.h})`];
       }),
     ) as React.CSSProperties;
-  }, []);
-
-  console.log(createStyleObject(lightColors));
+  };
 
   return (
     <div className="flex h-full flex-col">

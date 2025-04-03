@@ -6,9 +6,8 @@ import {
   SelectValue,
 } from "@/components/ui/select.tsx";
 import React from "react";
-import { useStore } from "@tanstack/react-store";
-import { projectStore } from "@/store/project.store.ts";
 import { useGetProjectColors } from "@/features/color-customizer/hooks/queries/useGetProjectColors.ts";
+import { useProjectStore } from "@/hooks/store/project-store.ts";
 
 function ColorDot({
   className,
@@ -34,20 +33,24 @@ function ColorDot({
 }
 
 type ColorSelectProps = {
-  placeholder:string;
+  placeholder: string;
   value?: string;
   handleChange: (newValue: string) => void;
 };
 
-const ColorSelect = ({ value, handleChange, placeholder}: ColorSelectProps) => {
-  const projectId = useStore(projectStore);
+const ColorSelect = ({
+  value,
+  handleChange,
+  placeholder,
+}: ColorSelectProps) => {
+  const projectId = useProjectStore((state) => state.projectId);
 
   const { data } = useGetProjectColors(projectId);
   const lightColorScheme = data?.light;
   const darkColorScheme = data?.dark;
 
   const formatColorKey = (input: string) => {
-    return input.replace(/([A-Z])/g, " $1").toLowerCase()
+    return input.replace(/([A-Z])/g, " $1").toLowerCase();
   };
 
   if (!lightColorScheme || !darkColorScheme) {

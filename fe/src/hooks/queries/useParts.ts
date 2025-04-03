@@ -4,9 +4,7 @@ import { fetchParts } from "@/api/queries";
 
 export const useParts = (projectId: string, component: string) => {
   return useQuery<Component>({
-    queryKey: [
-      `${projectId}-${component}`,
-    ],
+    queryKey: ["projects", projectId, "components", component, "parts"],
     queryFn: () => fetchParts(projectId, component),
     refetchOnMount: true,
   });

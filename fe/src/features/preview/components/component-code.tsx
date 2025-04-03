@@ -3,16 +3,15 @@ import { cn } from "@/lib/utils.ts";
 import { Check, Copy } from "lucide-react";
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard.ts";
 import CommandCopy from "@/features/preview/components/command-copy.tsx";
-import { useStore } from "@tanstack/react-store";
-import { componentStore } from "@/store/component.store.ts";
+import { useComponentStore } from "@/hooks/store/component-store.ts";
 
 const ComponentCode = ({ code }: { code: string }) => {
   const { copy, copied } = useCopyToClipboard();
-  const componentName = useStore(componentStore)
+  const componentName = useComponentStore((state) => state.componentName);
 
   return (
     <div className={"space-y-4 px-2 pb-2"}>
-      <CommandCopy componentName={componentName}/>
+      <CommandCopy componentName={componentName} />
       <div className="relative flex h-full flex-col overflow-auto">
         <pre className="bg-muted overflow-x-auto rounded-lg p-2 font-mono text-sm">
           {code}

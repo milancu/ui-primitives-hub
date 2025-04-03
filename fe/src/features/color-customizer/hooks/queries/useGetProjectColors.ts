@@ -7,10 +7,8 @@ export const useGetProjectColors = (
   options?: UseQueryOptions<{ light: ColorScheme; dark: ColorScheme }, Error>,
 ) => {
   return useQuery<{ light: ColorScheme; dark: ColorScheme }, Error>({
-    queryKey: [`${id}-colors`],
+    queryKey: ["projects", id, "colors"],
     enabled: !!id,
-    refetchOnMount: true,
-    staleTime: 5 * 60 * 1000,
     queryFn: async () => {
       if (!id) throw new Error("Missing project ID");
       try {

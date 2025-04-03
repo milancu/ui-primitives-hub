@@ -16,12 +16,13 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input.tsx";
-import { useStyle } from "@/components/style-provider.tsx";
 import InputComponentUnitSwitcher from "@/components/ui/input-component-unit-switcher.tsx";
 import { ColorSelect } from "@/components/ui/color-select.tsx";
+import { useStyleStore } from "@/hooks/store/style-store.ts";
 
 const NavBorderOutlineEditor = () => {
-  const { style: currentStyle, handleStyle } = useStyle();
+  const style = useStyleStore((state) => state.style);
+  const handleStyle = useStyleStore((state) => state.handleStyle);
 
   return (
     <SidebarGroup>
@@ -35,7 +36,7 @@ const NavBorderOutlineEditor = () => {
               }}
               placeholder={"border width"}
               character={"B"}
-              value={currentStyle?.borderWidth}
+              value={style?.borderWidth}
               unit={"px"}
             />
             <DropdownMenu>
@@ -51,7 +52,7 @@ const NavBorderOutlineEditor = () => {
                   <DropdownMenuLabel>
                     <InputComponentUnitSwitcher
                       placeholder={"left"}
-                      value={currentStyle?.borderLeftWidth}
+                      value={style?.borderLeftWidth}
                       handleChange={(value) => {
                         handleStyle("borderLeftWidth", value);
                       }}
@@ -61,7 +62,7 @@ const NavBorderOutlineEditor = () => {
                   <DropdownMenuLabel>
                     <InputComponentUnitSwitcher
                       placeholder={"top"}
-                      value={currentStyle?.borderTopWidth}
+                      value={style?.borderTopWidth}
                       handleChange={(value) => {
                         handleStyle("borderTopWidth", value);
                       }}
@@ -71,7 +72,7 @@ const NavBorderOutlineEditor = () => {
                   <DropdownMenuLabel>
                     <InputComponentUnitSwitcher
                       placeholder={"bottom"}
-                      value={currentStyle?.borderBottomWidth}
+                      value={style?.borderBottomWidth}
                       handleChange={(value) => {
                         handleStyle("borderBottomWidth", value);
                       }}
@@ -81,7 +82,7 @@ const NavBorderOutlineEditor = () => {
                   <DropdownMenuLabel>
                     <InputComponentUnitSwitcher
                       placeholder={"right"}
-                      value={currentStyle?.borderRightWidth}
+                      value={style?.borderRightWidth}
                       handleChange={(value) => {
                         handleStyle("borderRightWidth", value);
                       }}
@@ -96,8 +97,8 @@ const NavBorderOutlineEditor = () => {
             {/*<ColorPicker*/}
             {/*  hideContrastRatio={true}*/}
             {/*  value={*/}
-            {/*    currentStyle?.borderColor*/}
-            {/*      ? (currentStyle?.borderColor as `#${string}`)*/}
+            {/*    style?.borderColor*/}
+            {/*      ? (style?.borderColor as `#${string}`)*/}
             {/*      : "#FFFFFF"*/}
             {/*  }*/}
             {/*  onValueChange={(value) => handleStyle("borderColor", value.hex)}*/}
@@ -106,7 +107,7 @@ const NavBorderOutlineEditor = () => {
             {/*/>*/}
             <ColorSelect
               placeholder={"Border color"}
-              value={currentStyle?.borderColor}
+              value={style?.borderColor}
               handleChange={(newValue) => {
                 handleStyle("borderColor", newValue);
               }}
@@ -114,7 +115,7 @@ const NavBorderOutlineEditor = () => {
           </SidebarMenuItem>
           <SidebarMenuItem className={"flex gap-1"}>
             <InputComponentUnitSwitcher
-              value={currentStyle?.borderRadius}
+              value={style?.borderRadius}
               handleChange={(value) => {
                 handleStyle("borderRadius", value);
               }}
@@ -137,7 +138,7 @@ const NavBorderOutlineEditor = () => {
                       handleChange={(value) => {
                         handleStyle("borderRadiusTopLeft", value);
                       }}
-                      value={currentStyle?.borderRadiusTopLeft}
+                      value={style?.borderRadiusTopLeft}
                     />
                   </DropdownMenuLabel>
                   <DropdownMenuLabel>
@@ -146,7 +147,7 @@ const NavBorderOutlineEditor = () => {
                       handleChange={(value) => {
                         handleStyle("borderRadiusTopRight", value);
                       }}
-                      value={currentStyle?.borderRadiusTopRight}
+                      value={style?.borderRadiusTopRight}
                     />
                   </DropdownMenuLabel>
                   <DropdownMenuLabel>
@@ -155,7 +156,7 @@ const NavBorderOutlineEditor = () => {
                       handleChange={(value) => {
                         handleStyle("borderRadiusBottomLeft", value);
                       }}
-                      value={currentStyle?.borderRadiusBottomLeft}
+                      value={style?.borderRadiusBottomLeft}
                     />
                   </DropdownMenuLabel>
                   <DropdownMenuLabel>
@@ -164,7 +165,7 @@ const NavBorderOutlineEditor = () => {
                       handleChange={(value) => {
                         handleStyle("borderRadiusBottomRight", value);
                       }}
-                      value={currentStyle?.borderRadiusBottomRight}
+                      value={style?.borderRadiusBottomRight}
                     />
                   </DropdownMenuLabel>
                 </DropdownMenuGroup>
@@ -173,7 +174,7 @@ const NavBorderOutlineEditor = () => {
           </SidebarMenuItem>
           <SidebarMenuItem>
             <InputComponentUnitSwitcher
-              value={currentStyle?.outlineWidth}
+              value={style?.outlineWidth}
               handleChange={(value) => {
                 handleStyle("outlineWidth", value);
               }}
@@ -185,8 +186,8 @@ const NavBorderOutlineEditor = () => {
             {/*<ColorPicker*/}
             {/*  hideContrastRatio={true}*/}
             {/*  value={*/}
-            {/*    currentStyle?.outlineColor*/}
-            {/*      ? (currentStyle?.outlineColor as `#${string}`)*/}
+            {/*    style?.outlineColor*/}
+            {/*      ? (style?.outlineColor as `#${string}`)*/}
             {/*      : "#FFFFFF"*/}
             {/*  }*/}
             {/*  swatches={["#AEDEAE", "#FFD3B6", "#FFB6B9", "#FFC0CB", "#FFD1DC"]}*/}
@@ -194,7 +195,7 @@ const NavBorderOutlineEditor = () => {
             {/*/>*/}
             <ColorSelect
               placeholder={"Outline color"}
-              value={currentStyle?.outlineColor}
+              value={style?.outlineColor}
               handleChange={(newValue) => {
                 handleStyle("outlineColor", newValue);
               }}

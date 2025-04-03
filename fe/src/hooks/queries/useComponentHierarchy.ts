@@ -1,11 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
-import { ComponentHierarchy } from "../../../../packages/types";
 import { fetchHierarchy } from "@/api/queries";
+import { ComponentHierarchy } from "@ui-primitives-hub/types";
 
-export const useComponentHierarchy = (projectId: string, projectName: string) => {
+export const useComponentHierarchy = (projectId?: string, componentName?: string) => {
   return useQuery<ComponentHierarchy>({
-    queryKey: [`${projectName}-hierarchy`],
-    queryFn: () => fetchHierarchy(projectId, projectName),
-    refetchOnMount: true,
+    queryKey: ['components', componentName, 'hierarchy'],
+    queryFn: () => fetchHierarchy(projectId!, componentName!),
+    enabled: !!projectId && !!componentName,
   });
 };

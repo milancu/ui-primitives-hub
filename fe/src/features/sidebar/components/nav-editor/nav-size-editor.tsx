@@ -12,11 +12,11 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible.tsx";
 import { Plus } from "lucide-react";
-import { useStyle } from "@/components/style-provider.tsx";
+import { useStyleStore } from "@/hooks/store/style-store.ts";
 
 const NavSizeEditor = () => {
-  const { style: currentStyle, handleStyle } = useStyle();
-
+  const style = useStyleStore((state) => state.style);
+  const handleStyle = useStyleStore((state) => state.handleStyle);
   return (
     <Collapsible title={"Text properties"} className="group/collapsible">
       <SidebarGroup className={"p-0"}>
@@ -34,7 +34,7 @@ const NavSizeEditor = () => {
                   placeholder={"width"}
                   character={"W"}
                   handleChange={(newValue) => handleStyle("width", newValue)}
-                  value={currentStyle?.width}
+                  value={style?.width}
                 />
               </SidebarMenuItem>
               <SidebarMenuItem>
@@ -42,7 +42,7 @@ const NavSizeEditor = () => {
                   placeholder={"min-width"}
                   character={"W"}
                   handleChange={(newValue) => handleStyle("minWidth", newValue)}
-                  value={currentStyle?.minWidth}
+                  value={style?.minWidth}
                 />
               </SidebarMenuItem>
               <SidebarMenuItem>
@@ -50,7 +50,7 @@ const NavSizeEditor = () => {
                   placeholder={"max-width"}
                   character={"W"}
                   handleChange={(newValue) => handleStyle("maxWidth", newValue)}
-                  value={currentStyle?.maxWidth}
+                  value={style?.maxWidth}
                 />
               </SidebarMenuItem>
               <SidebarMenuItem>
@@ -58,7 +58,7 @@ const NavSizeEditor = () => {
                   placeholder={"height"}
                   character={"H"}
                   handleChange={(newValue) => handleStyle("height", newValue)}
-                  value={currentStyle?.height}
+                  value={style?.height}
                 />
               </SidebarMenuItem>
             </SidebarMenu>

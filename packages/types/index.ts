@@ -1,39 +1,15 @@
 export type CSSUnit = `${number}${"px" | "%" | "em" | "rem" | "vh" | "vw"}`;
 
-export type ComponentHierarchy = {
-  name: string;
-  children?: ComponentHierarchy[];
-};
-
 export type Component = {
-  [key: string]: string;
-};
-
-export type Project = {
-  id: string;
-  name: string;
-  createdAt: string;
-  updatedAt: string;
-  ownerId: string;
-  components?: ProjectComponents;
-};
-
-export type ComponentType =
-  | 'accordion'
-  | 'avatar'
-  | 'dialog'
-  | 'field'
-  | 'menu'
-  | 'numberfield';
-
-export type ComponentConfig = {
-  [key: string]: {
-    [variant: string]: string;
+  [part: string]: {
+    [state: string]: string;
   };
 };
 
-export type ProjectComponents = {
-  [key in ComponentType]?: ComponentConfig;
+
+export type ComponentHierarchy = {
+  name: string;
+  children?: ComponentHierarchy[];
 };
 
 export type Tab = {
@@ -65,6 +41,33 @@ export type ColorScheme = {
   warning: Color;
   border: Color;
 };
+
+
+export type ProjectMetadata = {
+  id: string;
+  name: string;
+  createdAt: string;
+  updatedAt: string;
+  ownerId: string;
+};
+
+export type Project = {
+  metadata: ProjectMetadata;
+  components: Component;
+  colors: {
+    light: ColorScheme;
+    dark: ColorScheme;
+  };
+};
+
+export interface User {
+  uid: string;
+  email?: string;
+  figmaId: string;
+  createdAt: Date;
+  photoURL?: string;
+  projects: string[];
+}
 
 export interface Style {
   width?: CSSUnit;
@@ -123,5 +126,5 @@ export interface Style {
   boxShadow?: string;
   cursor?: string;
   pointerEvents?: "auto" | "none";
-  overflow: string;
+  overflow?: string;
 }

@@ -1,54 +1,25 @@
-import {
-  createFileRoute,
-  Outlet,
-  useLocation,
-  useParams,
-} from "@tanstack/react-router";
+import { createFileRoute, Outlet } from "@tanstack/react-router";
 import { useCurrentPartParam } from "@/features/sidebar/hooks/useCurrentPartParam.tsx";
-import { useLayoutEffect } from "react";
+import { useProjectTabs } from "@/hooks/use-project-tabs.ts";
 import {
   SidebarInset,
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar.tsx";
-import { SidebarLeft } from "@/features/sidebar/components/sidebar-left.tsx";
-import { Separator } from "@/components/ui/separator.tsx";
-import { SidebarRight } from "@/features/sidebar/components/sidebar-right.tsx";
 import Header from "@/features/header/components/header.tsx";
-import { useProjectTabs } from "@/hooks/use-project-tabs.ts";
+import { SidebarLeft } from "@/features/sidebar/components/sidebar-left.tsx";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs.tsx";
-import { componentStore } from "@/store/component.store.ts";
-import { projectStore } from "@/store/project.store.ts";
-import { useHierarchy } from "@/components/hierarchy-provider.tsx";
-import { useStyle } from "@/components/style-provider.tsx";
+import { Separator } from "@/components/ui/separator.tsx";
 import AppBreadcrumb from "@/features/breadcrumb/components/app-breadcrumb.tsx";
+import { SidebarRight } from "@/features/sidebar/components/sidebar-right.tsx";
 
 export const Route = createFileRoute("/_authenticated/_canva-layout")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const [currentPart, setCurrentPart] = useCurrentPartParam();
-  const { setHierarchy } = useHierarchy();
-  const { setStyle } = useStyle();
-  const { id } = useParams({
-    strict: false,
-  });
-
-  const location = useLocation();
-
+  const [currentPart] = useCurrentPartParam();
   useProjectTabs();
-
-  useLayoutEffect(() => {
-    const pathSegments = location.pathname.split("/").filter(Boolean);
-    if (pathSegments[1] === "color-customizer") {
-      setCurrentPart(null);
-    }
-    componentStore.setState(() => null);
-    projectStore.setState(() => null);
-    setHierarchy(undefined);
-    setStyle(undefined);
-  }, [id, setHierarchy, setStyle, location.pathname, setCurrentPart]);
 
   return (
     <div className="[--header-height:calc(theme(spacing.14))]">

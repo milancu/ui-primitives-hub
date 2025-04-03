@@ -1,6 +1,4 @@
-import {Components} from "./models/component.model.js";
-
-export const DEFAULT_COMPONENTS: Components = {
+export const DEFAULT_COMPONENTS: any = {
   "accordion": {
     "header": {
       "default": "text-[#ffffff]",

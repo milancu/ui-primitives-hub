@@ -1,11 +1,10 @@
-import { getRawTailwindClasses } from "@ui-primitives-hub/common";
-import { ProjectService } from './project.service.js';
-import { AccordionService } from "./accordion.service.js";
-import { db } from "../firebase.js";
-import { AvatarService } from "./avatar.service.js";
-import { DialogService } from "./dialog.service.js";
-import { FieldService } from "./field.service.js";
-import { FieldsetService } from "./fieldset.service.js";
+import {ProjectService} from './project.service.js';
+import {AccordionService} from "./accordion.service.js";
+import {db} from "../firebase.js";
+import {AvatarService} from "./avatar.service.js";
+import {DialogService} from "./dialog.service.js";
+import {FieldService} from "./field.service.js";
+import {FieldsetService} from "./fieldset.service.js";
 import {MenuService} from "./menu.service.js";
 import {NumberfieldService} from "./numberfield.service.js";
 
@@ -61,12 +60,7 @@ export class ComponentService {
     const snapshot = await db.ref(`users/${uid}/projects/${projectId}/components/${componentName}`).once('value');
     if (!snapshot.exists()) throw new Error('Project or component not found');
 
-    const components = snapshot.val();
-
-    return Object.keys(components).reduce((acc: Record<string, string>, key) => {
-      acc[key] = getRawTailwindClasses(components[key])
-      return acc;
-    }, {})
+    return snapshot.val()
   }
 
   static async getComponentPartStates(uid: any, projectId: string, componentName: string, part: string) {

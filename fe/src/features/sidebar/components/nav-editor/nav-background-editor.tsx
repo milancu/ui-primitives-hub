@@ -12,11 +12,12 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible.tsx";
-import { useStyle } from "@/components/style-provider.tsx";
 import { ColorSelect } from "@/components/ui/color-select.tsx";
+import { useStyleStore } from "@/hooks/store/style-store.ts";
 
 const NavBackgroundEditor = () => {
-  const { style: currentStyle, handleStyle } = useStyle();
+  const style = useStyleStore((state) => state.style);
+  const handleStyle = useStyleStore((state) => state.handleStyle);
 
   return (
     <Collapsible title={"Background properties"} className="group/collapsible">
@@ -33,26 +34,11 @@ const NavBackgroundEditor = () => {
               <SidebarMenuItem className={"flex gap-1"}>
                 <ColorSelect
                   placeholder={"Background color"}
-                  value={currentStyle?.background}
+                  value={style?.background}
                   handleChange={(newValue) =>
                     handleStyle("background", newValue)
                   }
                 />
-                {/*<ColorPicker*/}
-                {/*  hideContrastRatio={true}*/}
-                {/*  value={currentStyle?.background}*/}
-                {/*  onValueChange={(value) => {*/}
-                {/*    handleStyle("background", value.hex);*/}
-                {/*  }}*/}
-                {/*  swatches={[*/}
-                {/*    "#AEDEAE",*/}
-                {/*    "#FFD3B6",*/}
-                {/*    "#FFB6B9",*/}
-                {/*    "#FFC0CB",*/}
-                {/*    "#FFD1DC",*/}
-                {/*  ]}*/}
-                {/*  label={"Background color"}*/}
-                {/*/>*/}
               </SidebarMenuItem>
               <SidebarMenuItem>
                 <InputWithIcon
@@ -62,7 +48,7 @@ const NavBackgroundEditor = () => {
                   min={0}
                   max={100}
                   step={5}
-                  value={currentStyle?.opacity}
+                  value={style?.opacity}
                   handleChange={(newValue) => handleStyle("opacity", newValue)}
                 />
               </SidebarMenuItem>

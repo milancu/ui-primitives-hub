@@ -1,6 +1,6 @@
 import { useQueryState } from "nuqs";
 
-export const useCurrentComponentStateParam = () => {
+export const useCurrenStateParam = () => {
   return useQueryState("state", {
     defaultValue: "default",
   });

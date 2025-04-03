@@ -5,69 +5,15 @@ import {
   AvatarRoot,
 } from "@ui-primitives-hub/ui/src/components/Avatar.tsx";
 import { Skeleton } from "@/components/ui/skeleton.tsx";
-import { useParams } from "@tanstack/react-router";
 import { useCurrentPartParam } from "@/features/sidebar/hooks/useCurrentPartParam.tsx";
-import { useCurrentComponentStateParam } from "@/features/sidebar/hooks/useCurrentComponentStateParam.tsx";
-import { useComponent } from "@/components/component-provider.tsx";
-import { useHierarchy } from "@/components/hierarchy-provider.tsx";
-import { useStates } from "@/components/states-provider.tsx";
-import { useStyle } from "@/components/style-provider.tsx";
-import { useEffect } from "react";
-import { projectStore } from "@/store/project.store.ts";
-import { componentStore } from "@/store/component.store.ts";
-import { useComponentHierarchy } from "@/hooks/queries/useComponentHierarchy.ts";
-import { useParts } from "@/hooks/queries/useParts.ts";
-import { usePartStates } from "@/hooks/queries/usePartStates.ts";
-import { usePartStateStyle } from "@/hooks/queries/usePartStateStyle.ts";
+import { useComponentStore } from "@/hooks/store/component-store.ts";
+import { getClassName } from "@/lib/utils.ts";
 
 const AvatarPage = () => {
-  const { id } = useParams({
-    from: "/_authenticated/_canva-layout/$id/avatar",
-  });
-
   const [currentPart] = useCurrentPartParam();
-  const [currentState] = useCurrentComponentStateParam();
+  const parts = useComponentStore((state) => state.parts);
 
-  const { component, setComponent } = useComponent();
-  const { setHierarchy } = useHierarchy();
-  const { setStates } = useStates();
-  const { setStyleFromString } = useStyle();
-
-  const { data: hierarchy } = useComponentHierarchy(id, "avatar");
-  const { data: parts } = useParts(id, "avatar");
-  const { data: states } = usePartStates(id, currentPart, "avatar");
-  const { data: style } = usePartStateStyle(
-    id,
-    currentPart,
-    currentState,
-    "avatar",
-  );
-
-  useEffect(() => {
-    if (!parts) return;
-    setComponent(parts);
-  }, [parts]);
-
-  useEffect(() => {
-    if (!hierarchy) return;
-    setHierarchy(hierarchy);
-  }, [hierarchy]);
-
-  useEffect(() => {
-    if (!states) return;
-    setStates(states);
-  }, [states]);
-
-  useEffect(() => {
-    setStyleFromString(style);
-  }, [style]);
-
-  useEffect(() => {
-    projectStore.setState(() => id);
-    componentStore.setState(() => "avatar");
-  }, [id]);
-
-  if (!component)
+  if (!parts)
     return (
       <div className={"flex h-full w-full flex-col items-center gap-2 p-2"}>
         <Skeleton className={"h-full w-full"} />
@@ -75,21 +21,27 @@ const AvatarPage = () => {
       </div>
     );
 
-  const { root, image, fallback } = component;
+  const { root, image, fallback } = parts;
 
   return (
     <div className="h-full w-full">
       <Preview>
-        <AvatarRoot className={root}>
+        <AvatarRoot className={getClassName(root, "root" === currentPart)}>
           <AvatarImage
             src="https://images.unsplash.com/photo-1543610892-0b1f7e6d8ac1?w=128&h=128&dpr=2&q=80"
             width="48"
             height="48"
-            className={image}
+            className={getClassName(image, "image" === currentPart)}
           />
-          <AvatarFallback className={fallback}>LT</AvatarFallback>
+          <AvatarFallback
+            className={getClassName(fallback, "fallback" === currentPart)}
+          >
+            LT
+          </AvatarFallback>
         </AvatarRoot>
-        <AvatarRoot className={root}>LT</AvatarRoot>
+        <AvatarRoot className={getClassName(root, "root" === currentPart)}>
+          LT
+        </AvatarRoot>
       </Preview>
     </div>
   );

@@ -18,13 +18,14 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible.tsx";
-import { useStyle } from "@/components/style-provider";
 import InputComponentUnitSwitcher from "@/components/ui/input-component-unit-switcher.tsx";
 import { ColorSelect } from "@/components/ui/color-select.tsx";
+import { useStyleStore } from "@/hooks/store/style-store.ts";
 
 const NavTextEditor = () => {
-  const { style: currentStyle, handleStyle } = useStyle();
-
+  const style = useStyleStore((state) => state.style);
+  const handleStyle = useStyleStore((state) => state.handleStyle);
+  
   return (
     <Collapsible title={"Text properties"} className="group/collapsible">
       <SidebarGroup className={"p-0"}>
@@ -42,13 +43,13 @@ const NavTextEditor = () => {
                   placeholder={"font-size"}
                   character={"S"}
                   handleChange={(newValue) => handleStyle("fontSize", newValue)}
-                  value={currentStyle?.margin}
+                  value={style?.margin}
                 />
               </SidebarMenuItem>
               <SidebarMenuItem>
                 <InputComponentUnitSwitcher
                   placeholder={"font-weight"}
-                  value={currentStyle?.fontSize}
+                  value={style?.fontSize}
                   handleChange={(newValue) =>
                     handleStyle("fontWeight", newValue)
                   }
@@ -57,7 +58,7 @@ const NavTextEditor = () => {
               </SidebarMenuItem>
               <SidebarMenuItem>
                 <Select
-                  value={currentStyle?.textAlign}
+                  value={style?.textAlign}
                   onValueChange={(value) => {
                     handleStyle("textAlign", value);
                   }}
@@ -77,7 +78,7 @@ const NavTextEditor = () => {
               </SidebarMenuItem>
               <SidebarMenuItem>
                 <Select
-                  value={currentStyle?.textTransform}
+                  value={style?.textTransform}
                   onValueChange={(value) => {
                     handleStyle("textTransform", value);
                   }}
@@ -99,7 +100,7 @@ const NavTextEditor = () => {
               <SidebarMenuItem className={"flex gap-1"}>
                 <ColorSelect
                   placeholder={"Text color"}
-                  value={currentStyle?.color}
+                  value={style?.color}
                   handleChange={(newValue) => {
                     handleStyle("color", newValue);
                   }}
@@ -107,8 +108,8 @@ const NavTextEditor = () => {
                 {/*<ColorPicker*/}
                 {/*  hideContrastRatio={false}*/}
                 {/*  value={*/}
-                {/*    currentStyle?.color*/}
-                {/*      ? (currentStyle?.color as `#${string}`)*/}
+                {/*    style?.color*/}
+                {/*      ? (style?.color as `#${string}`)*/}
                 {/*      : "#FFFFFF"*/}
                 {/*  }*/}
                 {/*  label={"color"}*/}

@@ -213,6 +213,7 @@ export const styleToTailwind = (style: Style, prefix?: string): string => {
         `component { ${css} }`,
         {
             prefix: prefix,
+            useAllDefaultValues:true,
             customTheme: {
                 color: {
                     'var(--background)': 'text-[var(--background)]',

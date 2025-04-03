@@ -3,8 +3,8 @@ import crypto from "crypto";
 import * as dotenv from "dotenv";
 import {auth, db} from "../firebase.js";
 import { generatePKCE } from "../utils/pkce.js";
-import {User} from "../models/user.model.js";
 import {ProjectService} from "./project.service.js";
+import { User } from "@ui-primitives-hub/types";
 
 const DEVICE_CODES_REF = "deviceCodes";
 const CODE_EXPIRATION = 15 * 60 * 1000;

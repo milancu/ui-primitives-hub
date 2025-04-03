@@ -6,9 +6,7 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar.tsx";
 import { Link, useLocation, useParams } from "@tanstack/react-router";
-import { useStyle } from "@/components/style-provider.tsx";
-import { useCurrentComponentStateParam } from "@/features/sidebar/hooks/useCurrentComponentStateParam.tsx";
-import { useHierarchy } from "@/components/hierarchy-provider.tsx";
+import { useCurrenStateParam } from "@/features/sidebar/hooks/useCurrenStateParam.tsx";
 
 export function NavMain({
   items,
@@ -18,9 +16,7 @@ export function NavMain({
     url: string;
   }[];
 }) {
-  const { setStyle } = useStyle();
-  const { setHierarchy } = useHierarchy();
-  const [, setState] = useCurrentComponentStateParam();
+  const [, setState] = useCurrenStateParam();
   const { id } = useParams({ strict: false });
   const { pathname } = useLocation();
 
@@ -35,12 +31,10 @@ export function NavMain({
             <Link
               to={`/$id/${item.url}`}
               onClick={() => {
-                setStyle(undefined);
-                setState(null);
-                setHierarchy(undefined);
+                // setState(null);
               }}
               params={{
-                id:id!
+                id: id!,
               }}
             >
               <span>{item.title}</span>

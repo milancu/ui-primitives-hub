@@ -1,11 +1,17 @@
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Skeleton } from "@/components/ui/skeleton.tsx";
-import { useCurrentComponentStateParam } from "@/features/sidebar/hooks/useCurrentComponentStateParam.tsx";
-import { useStates } from "@/components/states-provider.tsx";
+import { useCurrenStateParam } from "@/features/sidebar/hooks/useCurrenStateParam.tsx";
+import { usePartStates } from "@/hooks/queries/usePartStates.ts";
+import { useCurrentPartParam } from "@/features/sidebar/hooks/useCurrentPartParam.tsx";
+import { useProjectStore } from "@/hooks/store/project-store.ts";
+import { useComponentStore } from "@/hooks/store/component-store.ts";
 
 const NavEditorHeader = () => {
-  const [state, setState] = useCurrentComponentStateParam();
-  const { states } = useStates();
+  const [state, setState] = useCurrenStateParam();
+  const [currentPart] = useCurrentPartParam();
+  const projectId = useProjectStore((state) => state.projectId);
+  const componentName = useComponentStore((state) => state.componentName);
+  const { data: states } = usePartStates(projectId, currentPart, componentName);
 
   if (!states) {
     return (

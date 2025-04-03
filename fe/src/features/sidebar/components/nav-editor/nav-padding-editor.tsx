@@ -15,12 +15,12 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu.tsx";
 import { Button } from "@/components/ui/button.tsx";
-import { useStyle } from "@/components/style-provider.tsx";
 import InputComponentUnitSwitcher from "@/components/ui/input-component-unit-switcher.tsx";
+import { useStyleStore } from "@/hooks/store/style-store.ts";
 
 const NavPaddingEditor = () => {
-  const { style: currentStyle, handleStyle } = useStyle();
-
+  const style = useStyleStore((state) => state.style);
+  const handleStyle = useStyleStore((state) => state.handleStyle);
   return (
     <SidebarGroup>
       <SidebarGroupLabel>Padding properties</SidebarGroupLabel>
@@ -31,8 +31,8 @@ const NavPaddingEditor = () => {
               placeholder={"padding"}
               character={"P"}
               handleChange={(newValue) => handleStyle("padding", newValue)}
-              value={currentStyle?.padding}
-              unit={'rem'}
+              value={style?.padding}
+              unit={"rem"}
             />
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -50,7 +50,7 @@ const NavPaddingEditor = () => {
                       handleChange={(newValue) =>
                         handleStyle("paddingLeft", newValue)
                       }
-                      value={currentStyle?.paddingLeft}
+                      value={style?.paddingLeft}
                     />
                   </DropdownMenuLabel>
                   <DropdownMenuLabel>
@@ -59,13 +59,13 @@ const NavPaddingEditor = () => {
                       handleChange={(newValue) =>
                         handleStyle("paddingTop", newValue)
                       }
-                      value={currentStyle?.paddingTop}
+                      value={style?.paddingTop}
                     />
                   </DropdownMenuLabel>
                   <DropdownMenuLabel>
                     <InputComponentUnitSwitcher
                       placeholder={"padding-right"}
-                      value={currentStyle?.paddingRight}
+                      value={style?.paddingRight}
                       handleChange={(newValue) =>
                         handleStyle("paddingRight", newValue)
                       }
@@ -77,7 +77,7 @@ const NavPaddingEditor = () => {
                       handleChange={(newValue) =>
                         handleStyle("paddingBottom", newValue)
                       }
-                      value={currentStyle?.paddingBottom}
+                      value={style?.paddingBottom}
                     />
                   </DropdownMenuLabel>
                   <DropdownMenuLabel>
@@ -86,7 +86,7 @@ const NavPaddingEditor = () => {
                       handleChange={(newValue) =>
                         handleStyle("paddingVertical", newValue)
                       }
-                      value={currentStyle?.paddingVertical}
+                      value={style?.paddingVertical}
                     />
                   </DropdownMenuLabel>
                   <DropdownMenuLabel>
@@ -95,7 +95,7 @@ const NavPaddingEditor = () => {
                       handleChange={(newValue) =>
                         handleStyle("paddingHorizontal", newValue)
                       }
-                      value={currentStyle?.paddingHorizontal}
+                      value={style?.paddingHorizontal}
                     />
                   </DropdownMenuLabel>
                 </DropdownMenuGroup>

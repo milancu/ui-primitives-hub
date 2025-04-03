@@ -1,14 +1,16 @@
 import { Frame, Layers } from "lucide-react";
 import { useCurrentPartParam } from "@/features/sidebar/hooks/useCurrentPartParam.tsx";
 import { ComponentHierarchy } from "@ui-primitives-hub/types";
-import { useCurrentComponentStateParam } from "@/features/sidebar/hooks/useCurrentComponentStateParam.tsx";
+import { useCurrenStateParam } from "@/features/sidebar/hooks/useCurrenStateParam.tsx";
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card.tsx";
-import { useHierarchy } from "@/components/hierarchy-provider";
+import { useComponentHierarchy } from "@/hooks/queries/useComponentHierarchy.ts";
+import { useProjectStore } from "@/hooks/store/project-store.ts";
+import { useComponentStore } from "@/hooks/store/component-store.ts";
 
 const ComponentTreeItem = ({
   component,
@@ -58,13 +60,16 @@ const ComponentTreeItem = ({
 };
 
 export default function ComponentLayers() {
-  const { hierarchy } = useHierarchy();
+  const projectId = useProjectStore((state) => state.projectId);
+  const componentName = useComponentStore((state) => state.componentName);
+  const { data: hierarchy } = useComponentHierarchy(projectId, componentName);
+
   const [partName, setPartName] = useCurrentPartParam();
-  const [, setCurrentState] = useCurrentComponentStateParam();
+  const [, setCurrentState] = useCurrenStateParam();
 
   const selectComponent = (component: ComponentHierarchy) => {
     setPartName(component.name);
-    setCurrentState("default");
+    // setCurrentState("default");
   };
 
   if (hierarchy === undefined) return null;

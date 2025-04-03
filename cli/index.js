@@ -31,8 +31,8 @@ async function getInstalledPackages(packageManager) {
 }
 
 program
-  .name("ui-primitives")
-  .version("1.1.1")
+  .name("ui-primitives-hub/cli")
+  .version("1.1.2")
   .description("UI Primitives Hub - Component Generation CLI");
 
 console.log(
@@ -129,7 +129,7 @@ program
       if (!(await config.exists())) {
         throw new Error(
           "Configuration not found. Please run " +
-          chalk.bold("ui-primitives init") + " first."
+          chalk.bold("@milancu/ui-primitives-hub init") + " first."
         );
       }
 

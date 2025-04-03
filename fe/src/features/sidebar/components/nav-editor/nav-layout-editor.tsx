@@ -17,12 +17,13 @@ import {
   StretchHorizontal,
   StretchVertical,
 } from "lucide-react";
-import { useStyle } from "@/components/style-provider";
 import InputComponentUnitSwitcher from "@/components/ui/input-component-unit-switcher.tsx";
 import { cn } from "@/lib/utils.ts";
+import { useStyleStore } from "@/hooks/store/style-store.ts";
 
 const NavLayoutEditor = () => {
-  const { style: currentStyle, handleStyle } = useStyle();
+  const style = useStyleStore((state) => state.style);
+  const handleStyle = useStyleStore((state) => state.handleStyle);
 
   return (
     <SidebarGroup>
@@ -35,7 +36,7 @@ const NavLayoutEditor = () => {
                 handleStyle("display", e);
               }}
               className="grid grid-cols-2 gap-1"
-              value={currentStyle?.display}
+              value={style?.display}
             >
               <label className="border-input has-[:focus-visible]:outline-ring/70 relative flex cursor-pointer flex-col items-center gap-3 rounded-lg border px-2 py-3 text-center shadow-sm shadow-black/5 outline-offset-2 transition-colors has-[:focus-visible]:outline-2 has-[[data-disabled]]:cursor-not-allowed has-[[data-disabled]]:opacity-50 has-[[data-state=checked]]:border-blue-500 has-[[data-state=checked]]:bg-blue-500/10 has-[[data-state=checked]]:text-blue-500">
                 <RadioGroupItem
@@ -56,13 +57,11 @@ const NavLayoutEditor = () => {
             </RadioGroup>
           </SidebarMenuItem>
           <SidebarMenuItem
-            className={cn(
-              currentStyle?.display === "flex" ? "block" : "hidden",
-            )}
+            className={cn(style?.display === "flex" ? "block" : "hidden")}
           >
             <RadioGroup
               className="grid grid-cols-2 gap-1"
-              value={currentStyle?.flexDirection}
+              value={style?.flexDirection}
               onValueChange={(e) => {
                 handleStyle("flexDirection", e);
               }}
@@ -86,13 +85,11 @@ const NavLayoutEditor = () => {
             </RadioGroup>
           </SidebarMenuItem>
           <SidebarMenuItem
-            className={cn(
-              currentStyle?.display === "flex" ? "block" : "hidden",
-            )}
+            className={cn(style?.display === "flex" ? "block" : "hidden")}
           >
             <RadioGroup
               className="grid grid-cols-2 gap-1"
-              value={currentStyle?.flexWrap}
+              value={style?.flexWrap}
               onValueChange={(e) => {
                 handleStyle("flexWrap", e);
               }}
@@ -114,9 +111,7 @@ const NavLayoutEditor = () => {
             </RadioGroup>
           </SidebarMenuItem>
           <SidebarMenuItem
-            className={cn(
-              currentStyle?.display === "flex" ? "block" : "hidden",
-            )}
+            className={cn(style?.display === "flex" ? "block" : "hidden")}
           >
             <fieldset className={"mt-2 space-y-1"}>
               <legend className={"text-sidebar-foreground/70 text-xs"}>
@@ -126,14 +121,12 @@ const NavLayoutEditor = () => {
                 placeholder={"gap"}
                 character={"G"}
                 handleChange={(newValue) => handleStyle("gap", newValue)}
-                value={currentStyle?.gap}
+                value={style?.gap}
               />
             </fieldset>
           </SidebarMenuItem>
           <SidebarMenuItem
-            className={cn(
-              currentStyle?.display === "flex" ? "block" : "hidden",
-            )}
+            className={cn(style?.display === "flex" ? "block" : "hidden")}
           >
             <fieldset className={"space-y-1"}>
               <legend className={"text-sidebar-foreground/70 text-xs"}>
@@ -141,7 +134,7 @@ const NavLayoutEditor = () => {
               </legend>
               <RadioGroup
                 className="grid grid-cols-3 gap-1"
-                value={currentStyle?.alignItems}
+                value={style?.alignItems}
                 onValueChange={(e) => {
                   handleStyle("alignItems", e);
                 }}
@@ -171,9 +164,7 @@ const NavLayoutEditor = () => {
             </fieldset>
           </SidebarMenuItem>
           <SidebarMenuItem
-            className={cn(
-              currentStyle?.display === "flex" ? "block" : "hidden",
-            )}
+            className={cn(style?.display === "flex" ? "block" : "hidden")}
           >
             <fieldset className={"space-y-1"}>
               <legend className={"text-sidebar-foreground/70 text-xs"}>
@@ -181,7 +172,7 @@ const NavLayoutEditor = () => {
               </legend>
               <RadioGroup
                 className="grid grid-cols-3 gap-1"
-                value={currentStyle?.justifyContent}
+                value={style?.justifyContent}
                 onValueChange={(e) => {
                   handleStyle("justifyContent", e);
                 }}
