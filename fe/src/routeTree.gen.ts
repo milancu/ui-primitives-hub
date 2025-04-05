@@ -21,12 +21,16 @@ import { Route as AuthenticatedDashboardLayoutImport } from './routes/_authentic
 import { Route as AuthenticatedCanvaLayoutImport } from './routes/_authenticated/_canva-layout'
 import { Route as AuthenticatedDashboardLayoutIndexImport } from './routes/_authenticated/_dashboard-layout/index'
 import { Route as AuthenticatedCanvaLayoutIdIndexImport } from './routes/_authenticated/_canva-layout/$id/index'
+import { Route as AuthenticatedCanvaLayoutIdSelectImport } from './routes/_authenticated/_canva-layout/$id/select'
+import { Route as AuthenticatedCanvaLayoutIdPopoverImport } from './routes/_authenticated/_canva-layout/$id/popover'
 import { Route as AuthenticatedCanvaLayoutIdNumberFieldImport } from './routes/_authenticated/_canva-layout/$id/number-field'
 import { Route as AuthenticatedCanvaLayoutIdMenuImport } from './routes/_authenticated/_canva-layout/$id/menu'
+import { Route as AuthenticatedCanvaLayoutIdInputImport } from './routes/_authenticated/_canva-layout/$id/input'
 import { Route as AuthenticatedCanvaLayoutIdFieldsetImport } from './routes/_authenticated/_canva-layout/$id/fieldset'
 import { Route as AuthenticatedCanvaLayoutIdFieldImport } from './routes/_authenticated/_canva-layout/$id/field'
 import { Route as AuthenticatedCanvaLayoutIdDialogImport } from './routes/_authenticated/_canva-layout/$id/dialog'
 import { Route as AuthenticatedCanvaLayoutIdColorCustomizerImport } from './routes/_authenticated/_canva-layout/$id/color-customizer'
+import { Route as AuthenticatedCanvaLayoutIdCollapsibleImport } from './routes/_authenticated/_canva-layout/$id/collapsible'
 import { Route as AuthenticatedCanvaLayoutIdAvatarImport } from './routes/_authenticated/_canva-layout/$id/avatar'
 import { Route as AuthenticatedCanvaLayoutIdAccordionImport } from './routes/_authenticated/_canva-layout/$id/accordion'
 
@@ -92,6 +96,20 @@ const AuthenticatedCanvaLayoutIdIndexRoute =
     getParentRoute: () => AuthenticatedCanvaLayoutRoute,
   } as any)
 
+const AuthenticatedCanvaLayoutIdSelectRoute =
+  AuthenticatedCanvaLayoutIdSelectImport.update({
+    id: '/$id/select',
+    path: '/$id/select',
+    getParentRoute: () => AuthenticatedCanvaLayoutRoute,
+  } as any)
+
+const AuthenticatedCanvaLayoutIdPopoverRoute =
+  AuthenticatedCanvaLayoutIdPopoverImport.update({
+    id: '/$id/popover',
+    path: '/$id/popover',
+    getParentRoute: () => AuthenticatedCanvaLayoutRoute,
+  } as any)
+
 const AuthenticatedCanvaLayoutIdNumberFieldRoute =
   AuthenticatedCanvaLayoutIdNumberFieldImport.update({
     id: '/$id/number-field',
@@ -103,6 +121,13 @@ const AuthenticatedCanvaLayoutIdMenuRoute =
   AuthenticatedCanvaLayoutIdMenuImport.update({
     id: '/$id/menu',
     path: '/$id/menu',
+    getParentRoute: () => AuthenticatedCanvaLayoutRoute,
+  } as any)
+
+const AuthenticatedCanvaLayoutIdInputRoute =
+  AuthenticatedCanvaLayoutIdInputImport.update({
+    id: '/$id/input',
+    path: '/$id/input',
     getParentRoute: () => AuthenticatedCanvaLayoutRoute,
   } as any)
 
@@ -131,6 +156,13 @@ const AuthenticatedCanvaLayoutIdColorCustomizerRoute =
   AuthenticatedCanvaLayoutIdColorCustomizerImport.update({
     id: '/$id/color-customizer',
     path: '/$id/color-customizer',
+    getParentRoute: () => AuthenticatedCanvaLayoutRoute,
+  } as any)
+
+const AuthenticatedCanvaLayoutIdCollapsibleRoute =
+  AuthenticatedCanvaLayoutIdCollapsibleImport.update({
+    id: '/$id/collapsible',
+    path: '/$id/collapsible',
     getParentRoute: () => AuthenticatedCanvaLayoutRoute,
   } as any)
 
@@ -229,6 +261,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedCanvaLayoutIdAvatarImport
       parentRoute: typeof AuthenticatedCanvaLayoutImport
     }
+    '/_authenticated/_canva-layout/$id/collapsible': {
+      id: '/_authenticated/_canva-layout/$id/collapsible'
+      path: '/$id/collapsible'
+      fullPath: '/$id/collapsible'
+      preLoaderRoute: typeof AuthenticatedCanvaLayoutIdCollapsibleImport
+      parentRoute: typeof AuthenticatedCanvaLayoutImport
+    }
     '/_authenticated/_canva-layout/$id/color-customizer': {
       id: '/_authenticated/_canva-layout/$id/color-customizer'
       path: '/$id/color-customizer'
@@ -257,6 +296,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedCanvaLayoutIdFieldsetImport
       parentRoute: typeof AuthenticatedCanvaLayoutImport
     }
+    '/_authenticated/_canva-layout/$id/input': {
+      id: '/_authenticated/_canva-layout/$id/input'
+      path: '/$id/input'
+      fullPath: '/$id/input'
+      preLoaderRoute: typeof AuthenticatedCanvaLayoutIdInputImport
+      parentRoute: typeof AuthenticatedCanvaLayoutImport
+    }
     '/_authenticated/_canva-layout/$id/menu': {
       id: '/_authenticated/_canva-layout/$id/menu'
       path: '/$id/menu'
@@ -269,6 +315,20 @@ declare module '@tanstack/react-router' {
       path: '/$id/number-field'
       fullPath: '/$id/number-field'
       preLoaderRoute: typeof AuthenticatedCanvaLayoutIdNumberFieldImport
+      parentRoute: typeof AuthenticatedCanvaLayoutImport
+    }
+    '/_authenticated/_canva-layout/$id/popover': {
+      id: '/_authenticated/_canva-layout/$id/popover'
+      path: '/$id/popover'
+      fullPath: '/$id/popover'
+      preLoaderRoute: typeof AuthenticatedCanvaLayoutIdPopoverImport
+      parentRoute: typeof AuthenticatedCanvaLayoutImport
+    }
+    '/_authenticated/_canva-layout/$id/select': {
+      id: '/_authenticated/_canva-layout/$id/select'
+      path: '/$id/select'
+      fullPath: '/$id/select'
+      preLoaderRoute: typeof AuthenticatedCanvaLayoutIdSelectImport
       parentRoute: typeof AuthenticatedCanvaLayoutImport
     }
     '/_authenticated/_canva-layout/$id/': {
@@ -286,12 +346,16 @@ declare module '@tanstack/react-router' {
 interface AuthenticatedCanvaLayoutRouteChildren {
   AuthenticatedCanvaLayoutIdAccordionRoute: typeof AuthenticatedCanvaLayoutIdAccordionRoute
   AuthenticatedCanvaLayoutIdAvatarRoute: typeof AuthenticatedCanvaLayoutIdAvatarRoute
+  AuthenticatedCanvaLayoutIdCollapsibleRoute: typeof AuthenticatedCanvaLayoutIdCollapsibleRoute
   AuthenticatedCanvaLayoutIdColorCustomizerRoute: typeof AuthenticatedCanvaLayoutIdColorCustomizerRoute
   AuthenticatedCanvaLayoutIdDialogRoute: typeof AuthenticatedCanvaLayoutIdDialogRoute
   AuthenticatedCanvaLayoutIdFieldRoute: typeof AuthenticatedCanvaLayoutIdFieldRoute
   AuthenticatedCanvaLayoutIdFieldsetRoute: typeof AuthenticatedCanvaLayoutIdFieldsetRoute
+  AuthenticatedCanvaLayoutIdInputRoute: typeof AuthenticatedCanvaLayoutIdInputRoute
   AuthenticatedCanvaLayoutIdMenuRoute: typeof AuthenticatedCanvaLayoutIdMenuRoute
   AuthenticatedCanvaLayoutIdNumberFieldRoute: typeof AuthenticatedCanvaLayoutIdNumberFieldRoute
+  AuthenticatedCanvaLayoutIdPopoverRoute: typeof AuthenticatedCanvaLayoutIdPopoverRoute
+  AuthenticatedCanvaLayoutIdSelectRoute: typeof AuthenticatedCanvaLayoutIdSelectRoute
   AuthenticatedCanvaLayoutIdIndexRoute: typeof AuthenticatedCanvaLayoutIdIndexRoute
 }
 
@@ -301,6 +365,8 @@ const AuthenticatedCanvaLayoutRouteChildren: AuthenticatedCanvaLayoutRouteChildr
       AuthenticatedCanvaLayoutIdAccordionRoute,
     AuthenticatedCanvaLayoutIdAvatarRoute:
       AuthenticatedCanvaLayoutIdAvatarRoute,
+    AuthenticatedCanvaLayoutIdCollapsibleRoute:
+      AuthenticatedCanvaLayoutIdCollapsibleRoute,
     AuthenticatedCanvaLayoutIdColorCustomizerRoute:
       AuthenticatedCanvaLayoutIdColorCustomizerRoute,
     AuthenticatedCanvaLayoutIdDialogRoute:
@@ -308,9 +374,14 @@ const AuthenticatedCanvaLayoutRouteChildren: AuthenticatedCanvaLayoutRouteChildr
     AuthenticatedCanvaLayoutIdFieldRoute: AuthenticatedCanvaLayoutIdFieldRoute,
     AuthenticatedCanvaLayoutIdFieldsetRoute:
       AuthenticatedCanvaLayoutIdFieldsetRoute,
+    AuthenticatedCanvaLayoutIdInputRoute: AuthenticatedCanvaLayoutIdInputRoute,
     AuthenticatedCanvaLayoutIdMenuRoute: AuthenticatedCanvaLayoutIdMenuRoute,
     AuthenticatedCanvaLayoutIdNumberFieldRoute:
       AuthenticatedCanvaLayoutIdNumberFieldRoute,
+    AuthenticatedCanvaLayoutIdPopoverRoute:
+      AuthenticatedCanvaLayoutIdPopoverRoute,
+    AuthenticatedCanvaLayoutIdSelectRoute:
+      AuthenticatedCanvaLayoutIdSelectRoute,
     AuthenticatedCanvaLayoutIdIndexRoute: AuthenticatedCanvaLayoutIdIndexRoute,
   }
 
@@ -363,12 +434,16 @@ export interface FileRoutesByFullPath {
   '/': typeof AuthenticatedDashboardLayoutIndexRoute
   '/$id/accordion': typeof AuthenticatedCanvaLayoutIdAccordionRoute
   '/$id/avatar': typeof AuthenticatedCanvaLayoutIdAvatarRoute
+  '/$id/collapsible': typeof AuthenticatedCanvaLayoutIdCollapsibleRoute
   '/$id/color-customizer': typeof AuthenticatedCanvaLayoutIdColorCustomizerRoute
   '/$id/dialog': typeof AuthenticatedCanvaLayoutIdDialogRoute
   '/$id/field': typeof AuthenticatedCanvaLayoutIdFieldRoute
   '/$id/fieldset': typeof AuthenticatedCanvaLayoutIdFieldsetRoute
+  '/$id/input': typeof AuthenticatedCanvaLayoutIdInputRoute
   '/$id/menu': typeof AuthenticatedCanvaLayoutIdMenuRoute
   '/$id/number-field': typeof AuthenticatedCanvaLayoutIdNumberFieldRoute
+  '/$id/popover': typeof AuthenticatedCanvaLayoutIdPopoverRoute
+  '/$id/select': typeof AuthenticatedCanvaLayoutIdSelectRoute
   '/$id': typeof AuthenticatedCanvaLayoutIdIndexRoute
 }
 
@@ -382,12 +457,16 @@ export interface FileRoutesByTo {
   '/': typeof AuthenticatedDashboardLayoutIndexRoute
   '/$id/accordion': typeof AuthenticatedCanvaLayoutIdAccordionRoute
   '/$id/avatar': typeof AuthenticatedCanvaLayoutIdAvatarRoute
+  '/$id/collapsible': typeof AuthenticatedCanvaLayoutIdCollapsibleRoute
   '/$id/color-customizer': typeof AuthenticatedCanvaLayoutIdColorCustomizerRoute
   '/$id/dialog': typeof AuthenticatedCanvaLayoutIdDialogRoute
   '/$id/field': typeof AuthenticatedCanvaLayoutIdFieldRoute
   '/$id/fieldset': typeof AuthenticatedCanvaLayoutIdFieldsetRoute
+  '/$id/input': typeof AuthenticatedCanvaLayoutIdInputRoute
   '/$id/menu': typeof AuthenticatedCanvaLayoutIdMenuRoute
   '/$id/number-field': typeof AuthenticatedCanvaLayoutIdNumberFieldRoute
+  '/$id/popover': typeof AuthenticatedCanvaLayoutIdPopoverRoute
+  '/$id/select': typeof AuthenticatedCanvaLayoutIdSelectRoute
   '/$id': typeof AuthenticatedCanvaLayoutIdIndexRoute
 }
 
@@ -404,12 +483,16 @@ export interface FileRoutesById {
   '/_authenticated/_dashboard-layout/': typeof AuthenticatedDashboardLayoutIndexRoute
   '/_authenticated/_canva-layout/$id/accordion': typeof AuthenticatedCanvaLayoutIdAccordionRoute
   '/_authenticated/_canva-layout/$id/avatar': typeof AuthenticatedCanvaLayoutIdAvatarRoute
+  '/_authenticated/_canva-layout/$id/collapsible': typeof AuthenticatedCanvaLayoutIdCollapsibleRoute
   '/_authenticated/_canva-layout/$id/color-customizer': typeof AuthenticatedCanvaLayoutIdColorCustomizerRoute
   '/_authenticated/_canva-layout/$id/dialog': typeof AuthenticatedCanvaLayoutIdDialogRoute
   '/_authenticated/_canva-layout/$id/field': typeof AuthenticatedCanvaLayoutIdFieldRoute
   '/_authenticated/_canva-layout/$id/fieldset': typeof AuthenticatedCanvaLayoutIdFieldsetRoute
+  '/_authenticated/_canva-layout/$id/input': typeof AuthenticatedCanvaLayoutIdInputRoute
   '/_authenticated/_canva-layout/$id/menu': typeof AuthenticatedCanvaLayoutIdMenuRoute
   '/_authenticated/_canva-layout/$id/number-field': typeof AuthenticatedCanvaLayoutIdNumberFieldRoute
+  '/_authenticated/_canva-layout/$id/popover': typeof AuthenticatedCanvaLayoutIdPopoverRoute
+  '/_authenticated/_canva-layout/$id/select': typeof AuthenticatedCanvaLayoutIdSelectRoute
   '/_authenticated/_canva-layout/$id/': typeof AuthenticatedCanvaLayoutIdIndexRoute
 }
 
@@ -425,12 +508,16 @@ export interface FileRouteTypes {
     | '/'
     | '/$id/accordion'
     | '/$id/avatar'
+    | '/$id/collapsible'
     | '/$id/color-customizer'
     | '/$id/dialog'
     | '/$id/field'
     | '/$id/fieldset'
+    | '/$id/input'
     | '/$id/menu'
     | '/$id/number-field'
+    | '/$id/popover'
+    | '/$id/select'
     | '/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -443,12 +530,16 @@ export interface FileRouteTypes {
     | '/'
     | '/$id/accordion'
     | '/$id/avatar'
+    | '/$id/collapsible'
     | '/$id/color-customizer'
     | '/$id/dialog'
     | '/$id/field'
     | '/$id/fieldset'
+    | '/$id/input'
     | '/$id/menu'
     | '/$id/number-field'
+    | '/$id/popover'
+    | '/$id/select'
     | '/$id'
   id:
     | '__root__'
@@ -463,12 +554,16 @@ export interface FileRouteTypes {
     | '/_authenticated/_dashboard-layout/'
     | '/_authenticated/_canva-layout/$id/accordion'
     | '/_authenticated/_canva-layout/$id/avatar'
+    | '/_authenticated/_canva-layout/$id/collapsible'
     | '/_authenticated/_canva-layout/$id/color-customizer'
     | '/_authenticated/_canva-layout/$id/dialog'
     | '/_authenticated/_canva-layout/$id/field'
     | '/_authenticated/_canva-layout/$id/fieldset'
+    | '/_authenticated/_canva-layout/$id/input'
     | '/_authenticated/_canva-layout/$id/menu'
     | '/_authenticated/_canva-layout/$id/number-field'
+    | '/_authenticated/_canva-layout/$id/popover'
+    | '/_authenticated/_canva-layout/$id/select'
     | '/_authenticated/_canva-layout/$id/'
   fileRoutesById: FileRoutesById
 }
@@ -524,12 +619,16 @@ export const routeTree = rootRoute
       "children": [
         "/_authenticated/_canva-layout/$id/accordion",
         "/_authenticated/_canva-layout/$id/avatar",
+        "/_authenticated/_canva-layout/$id/collapsible",
         "/_authenticated/_canva-layout/$id/color-customizer",
         "/_authenticated/_canva-layout/$id/dialog",
         "/_authenticated/_canva-layout/$id/field",
         "/_authenticated/_canva-layout/$id/fieldset",
+        "/_authenticated/_canva-layout/$id/input",
         "/_authenticated/_canva-layout/$id/menu",
         "/_authenticated/_canva-layout/$id/number-field",
+        "/_authenticated/_canva-layout/$id/popover",
+        "/_authenticated/_canva-layout/$id/select",
         "/_authenticated/_canva-layout/$id/"
       ]
     },
@@ -563,6 +662,10 @@ export const routeTree = rootRoute
       "filePath": "_authenticated/_canva-layout/$id/avatar.tsx",
       "parent": "/_authenticated/_canva-layout"
     },
+    "/_authenticated/_canva-layout/$id/collapsible": {
+      "filePath": "_authenticated/_canva-layout/$id/collapsible.tsx",
+      "parent": "/_authenticated/_canva-layout"
+    },
     "/_authenticated/_canva-layout/$id/color-customizer": {
       "filePath": "_authenticated/_canva-layout/$id/color-customizer.tsx",
       "parent": "/_authenticated/_canva-layout"
@@ -579,12 +682,24 @@ export const routeTree = rootRoute
       "filePath": "_authenticated/_canva-layout/$id/fieldset.tsx",
       "parent": "/_authenticated/_canva-layout"
     },
+    "/_authenticated/_canva-layout/$id/input": {
+      "filePath": "_authenticated/_canva-layout/$id/input.tsx",
+      "parent": "/_authenticated/_canva-layout"
+    },
     "/_authenticated/_canva-layout/$id/menu": {
       "filePath": "_authenticated/_canva-layout/$id/menu.tsx",
       "parent": "/_authenticated/_canva-layout"
     },
     "/_authenticated/_canva-layout/$id/number-field": {
       "filePath": "_authenticated/_canva-layout/$id/number-field.tsx",
+      "parent": "/_authenticated/_canva-layout"
+    },
+    "/_authenticated/_canva-layout/$id/popover": {
+      "filePath": "_authenticated/_canva-layout/$id/popover.tsx",
+      "parent": "/_authenticated/_canva-layout"
+    },
+    "/_authenticated/_canva-layout/$id/select": {
+      "filePath": "_authenticated/_canva-layout/$id/select.tsx",
       "parent": "/_authenticated/_canva-layout"
     },
     "/_authenticated/_canva-layout/$id/": {

@@ -6,14 +6,15 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar.tsx";
 import { Link, useLocation, useParams } from "@tanstack/react-router";
-import { useCurrenStateParam } from "@/features/sidebar/hooks/useCurrenStateParam.tsx";
+import { useCurrenStateParam } from "@/hooks/useCurrenStateParam.tsx";
+import { AppRoute } from "@/features/sidebar/components/sidebar-left.tsx";
 
 export function NavMain({
   items,
 }: {
   items: {
     title: string;
-    url: string;
+    url: AppRoute;
   }[];
 }) {
   const [, setState] = useCurrenStateParam();
@@ -30,11 +31,11 @@ export function NavMain({
           >
             <Link
               to={`/$id/${item.url}`}
-              onClick={() => {
-                // setState(null);
-              }}
               params={{
                 id: id!,
+              }}
+              onClick={() => {
+                setState(null);
               }}
             >
               <span>{item.title}</span>

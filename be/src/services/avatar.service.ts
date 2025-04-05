@@ -7,12 +7,15 @@ export class AvatarService {
   static getHierarchy(): ComponentHierarchy {
     return {
       name: "root",
+      isCustomizable: true,
       children: [
         {
           name: "image",
+          isCustomizable: true,
         },
         {
           name: "fallback",
+          isCustomizable: true,
         },
       ],
     }

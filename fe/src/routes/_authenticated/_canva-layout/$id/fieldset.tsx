@@ -7,7 +7,7 @@ import { useComponentStore } from "@/hooks/store/component-store.ts";
 export const Route = createFileRoute("/_authenticated/_canva-layout/$id/fieldset")({
   loader: async ({ params, context: { queryClient } }) => {
     const parts = await queryClient.ensureQueryData({
-      queryKey: [`${params.id}-fieldset`],
+      queryKey: ["projects", params.id, "components", "fieldset", "parts"],
       queryFn: () => fetchParts(params.id, "fieldset"),
     });
     useProjectStore.setState({

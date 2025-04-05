@@ -177,10 +177,15 @@
         top: 0;
         left: 0;
         z-index: 999;
-        outline: 1px solid #0059ff;
+        outline: 1.5px solid #4f8eff;
+        outline-offset: 1.5px;
         pointer-events: none;
-        animation: fadeOut 0.5s 2s forwards ease-out;
+        animation: fadeOut 0.2s 1s forwards ease-out;
         opacity: 1;
+    }
+
+    .Root {
+        isolation: isolate;
     }
 
     @keyframes fadeOut {

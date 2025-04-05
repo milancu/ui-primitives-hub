@@ -59,15 +59,19 @@ function InputComponentUnitSwitcher({
     );
   }, [inputValue, selectedUnit]);
 
-  useEffect(()=>{
-    if(typeof value === "string"){
+  useEffect(() => {
+    if (typeof value === "string") {
       const unitMatch = value.match(/(rem|px)$/);
-      if(unitMatch){
+      if (unitMatch) {
         setSelectedUnit(unitMatch[1] as "rem" | "px");
         setInputValue(parseFloat(value.replace(unitMatch[0], "")));
+      } else {
+        setInputValue(undefined);
       }
+    } else {
+      setInputValue(undefined);
     }
-  },[value])
+  }, [value]);
 
   return (
     <div className="space-y-2">

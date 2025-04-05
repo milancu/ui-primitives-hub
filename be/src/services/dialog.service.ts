@@ -7,27 +7,35 @@ export class DialogService {
   static getHierarchy(): ComponentHierarchy {
     return {
       name: "root",
+      isCustomizable: false,
       children: [
         {
           name: "trigger",
+          isCustomizable: true,
         },
         {
           name: "portal",
+          isCustomizable: false,
           children: [
             {
               name: "backdrop",
+              isCustomizable: false,
             },
             {
               name: "popup",
+              isCustomizable: true,
               children: [
                 {
                   name: "title",
+                  isCustomizable: true,
                 },
                 {
                   name: "description",
+                  isCustomizable: true,
                 },
                 {
                   name: "close",
+                  isCustomizable: true,
                 },
               ],
             },

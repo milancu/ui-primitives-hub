@@ -34,7 +34,7 @@ const NavBackgroundEditor = () => {
               <SidebarMenuItem className={"flex gap-1"}>
                 <ColorSelect
                   placeholder={"Background color"}
-                  value={style?.background}
+                  value={style?.background ?? ""}
                   handleChange={(newValue) =>
                     handleStyle("background", newValue)
                   }

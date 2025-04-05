@@ -1,5 +1,5 @@
 import { createFileRoute, Outlet } from "@tanstack/react-router";
-import { useCurrentPartParam } from "@/features/sidebar/hooks/useCurrentPartParam.tsx";
+import { useCurrentPartParam } from "@/hooks/useCurrentPartParam.tsx";
 import { useProjectTabs } from "@/hooks/use-project-tabs.ts";
 import {
   SidebarInset,

@@ -5,7 +5,6 @@ import {
   SidebarMenu,
   SidebarMenuItem,
 } from "@/components/ui/sidebar.tsx";
-import InputWithIcon from "@/components/ui/input-with-icon.tsx";
 import {
   Collapsible,
   CollapsibleContent,
@@ -13,6 +12,7 @@ import {
 } from "@/components/ui/collapsible.tsx";
 import { Plus } from "lucide-react";
 import { useStyleStore } from "@/hooks/store/style-store.ts";
+import InputComponentUnitSwitcher from "@/components/ui/input-component-unit-switcher.tsx";
 
 const NavSizeEditor = () => {
   const style = useStyleStore((state) => state.style);
@@ -30,35 +30,39 @@ const NavSizeEditor = () => {
           <SidebarGroupContent>
             <SidebarMenu>
               <SidebarMenuItem>
-                <InputWithIcon
+                <InputComponentUnitSwitcher
+                  value={style?.width}
+                  handleChange={(newValue) => handleStyle("width", newValue)}
                   placeholder={"width"}
                   character={"W"}
-                  handleChange={(newValue) => handleStyle("width", newValue)}
-                  value={style?.width}
+                  unit={"px"}
                 />
               </SidebarMenuItem>
               <SidebarMenuItem>
-                <InputWithIcon
+                <InputComponentUnitSwitcher
+                  value={style?.minWidth}
+                  handleChange={(newValue) => handleStyle("minWidth", newValue)}
                   placeholder={"min-width"}
                   character={"W"}
-                  handleChange={(newValue) => handleStyle("minWidth", newValue)}
-                  value={style?.minWidth}
+                  unit={"px"}
                 />
               </SidebarMenuItem>
               <SidebarMenuItem>
-                <InputWithIcon
+                <InputComponentUnitSwitcher
+                  value={style?.maxWidth}
+                  handleChange={(newValue) => handleStyle("maxWidth", newValue)}
                   placeholder={"max-width"}
                   character={"W"}
-                  handleChange={(newValue) => handleStyle("maxWidth", newValue)}
-                  value={style?.maxWidth}
+                  unit={"px"}
                 />
               </SidebarMenuItem>
               <SidebarMenuItem>
-                <InputWithIcon
+                <InputComponentUnitSwitcher
+                  value={style?.height}
+                  handleChange={(newValue) => handleStyle("height", newValue)}
                   placeholder={"height"}
                   character={"H"}
-                  handleChange={(newValue) => handleStyle("height", newValue)}
-                  value={style?.height}
+                  unit={"px"}
                 />
               </SidebarMenuItem>
             </SidebarMenu>

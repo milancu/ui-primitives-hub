@@ -10,6 +10,7 @@ export type Component = {
 export type ComponentHierarchy = {
   name: string;
   children?: ComponentHierarchy[];
+  isCustomizable: boolean
 };
 
 export type Tab = {

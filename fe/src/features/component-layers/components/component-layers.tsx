@@ -1,7 +1,6 @@
 import { Frame, Layers } from "lucide-react";
-import { useCurrentPartParam } from "@/features/sidebar/hooks/useCurrentPartParam.tsx";
+import { useCurrentPartParam } from "@/hooks/useCurrentPartParam.tsx";
 import { ComponentHierarchy } from "@ui-primitives-hub/types";
-import { useCurrenStateParam } from "@/features/sidebar/hooks/useCurrenStateParam.tsx";
 import {
   Card,
   CardContent,
@@ -11,6 +10,7 @@ import {
 import { useComponentHierarchy } from "@/hooks/queries/useComponentHierarchy.ts";
 import { useProjectStore } from "@/hooks/store/project-store.ts";
 import { useComponentStore } from "@/hooks/store/component-store.ts";
+import { cn } from "@/lib/utils.ts";
 
 const ComponentTreeItem = ({
   component,
@@ -29,7 +29,13 @@ const ComponentTreeItem = ({
   return (
     <div>
       <div
-        className={`m-2 flex items-center rounded-lg p-2 text-sm ${isSelected ? "border border-blue-500 bg-blue-500/10 text-blue-500" : "hover:bg-blue-500/10"} cursor-pointer`}
+        className={cn(
+          "m-2 cursor-pointer items-center rounded-lg p-2 text-sm",
+          isSelected
+            ? "border border-blue-500 bg-blue-500/10 text-blue-500"
+            : "hover:bg-blue-500/10",
+          component.isCustomizable ? "flex" : "hidden",
+        )}
         style={{ paddingLeft: `${depth * 12 + 8}px` }}
         onClick={() => {
           selectComponent(component);
@@ -65,11 +71,9 @@ export default function ComponentLayers() {
   const { data: hierarchy } = useComponentHierarchy(projectId, componentName);
 
   const [partName, setPartName] = useCurrentPartParam();
-  const [, setCurrentState] = useCurrenStateParam();
 
   const selectComponent = (component: ComponentHierarchy) => {
     setPartName(component.name);
-    // setCurrentState("default");
   };
 
   if (hierarchy === undefined) return null;

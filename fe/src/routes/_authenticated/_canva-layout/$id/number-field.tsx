@@ -9,7 +9,7 @@ export const Route = createFileRoute(
 )({
   loader: async ({ params, context: { queryClient } }) => {
     const parts = await queryClient.ensureQueryData({
-      queryKey: [`${params.id}-numberfield`],
+      queryKey: ["projects", params.id, "components", "numberfield", "parts"],
       queryFn: () => fetchParts(params.id, "numberfield"),
     });
     useProjectStore.setState({

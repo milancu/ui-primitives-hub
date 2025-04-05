@@ -11,9 +11,10 @@ import {
   MenuSeparator,
   MenuTrigger,
 } from "@ui-primitives-hub/ui/src/components/Menu.tsx";
-import { useCurrentPartParam } from "@/features/sidebar/hooks/useCurrentPartParam.tsx";
+import { useCurrentPartParam } from "@/hooks/useCurrentPartParam.tsx";
 import { useComponentStore } from "@/hooks/store/component-store.ts";
 import { getClassName } from "@/lib/utils.ts";
+import { getRawTailwindClasses } from "@ui-primitives-hub/common/src/main.ts";
 
 const MenuPage = () => {
   const [currentPart] = useCurrentPartParam();
@@ -27,7 +28,15 @@ const MenuPage = () => {
       </div>
     );
 
-  const { trigger, positioner, popup, arrow, item, separator } = parts;
+  const tailwind = Object.keys(parts).reduce(
+    (acc: Record<string, string>, key) => {
+      acc[key] = getRawTailwindClasses(parts[key]);
+      return acc;
+    },
+    {},
+  );
+
+  const { trigger, positioner, popup, arrow, item, separator } = tailwind;
 
   return (
     <div className="h-full w-full">

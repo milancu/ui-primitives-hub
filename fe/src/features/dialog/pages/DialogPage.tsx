@@ -10,9 +10,10 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@ui-primitives-hub/ui/src/components/Dialog.tsx";
-import { useCurrentPartParam } from "@/features/sidebar/hooks/useCurrentPartParam.tsx";
+import { useCurrentPartParam } from "@/hooks/useCurrentPartParam.tsx";
 import { useComponentStore } from "@/hooks/store/component-store.ts";
 import { getClassName } from "@/lib/utils.ts";
+import { getRawTailwindClasses } from "@ui-primitives-hub/common/src/main.ts";
 
 const DialogPage = () => {
   const [currentPart] = useCurrentPartParam();
@@ -26,7 +27,15 @@ const DialogPage = () => {
       </div>
     );
 
-  const { trigger, backdrop, popup, title, description, close } = parts;
+  const tailwind = Object.keys(parts).reduce(
+    (acc: Record<string, string>, key) => {
+      acc[key] = getRawTailwindClasses(parts[key]);
+      return acc;
+    },
+    {},
+  );
+
+  const { trigger, backdrop, popup, title, description, close } = tailwind;
 
   return (
     <div className="h-full w-full">

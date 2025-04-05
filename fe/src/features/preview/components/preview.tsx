@@ -1,13 +1,10 @@
 import React, { PropsWithChildren, useCallback } from "react";
 import { cn } from "@/lib/utils.ts";
 import { useGetProjectColors } from "@/features/color-customizer/hooks/queries/useGetProjectColors.ts";
-import { useStore } from "@tanstack/react-store";
-import { projectStore } from "@/store/project.store.ts";
 import { ColorScheme } from "../../../../../packages/types";
 import { GridPattern } from "@/components/magicui/grid-pattern.tsx";
 import { TabsContent } from "@/components/ui/tabs.tsx";
 import { useCode } from "@/features/preview/hooks/queries/useCode.ts";
-import { componentStore } from "@/store/component.store.ts";
 import ComponentCode from "@/features/preview/components/component-code.tsx";
 import { useProjectStore } from "@/hooks/store/project-store.ts";
 import { useComponentStore } from "@/hooks/store/component-store.ts";
@@ -70,8 +67,8 @@ const ThemePreviewBlock = ({
 };
 
 export function Preview({ children }: PropsWithChildren) {
-  const projectId = useProjectStore(state => state.projectId);
-  const componentName = useComponentStore(state => state.componentName);
+  const projectId = useProjectStore((state) => state.projectId);
+  const componentName = useComponentStore((state) => state.componentName);
   const { data: colors, isLoading, isError } = useGetProjectColors(projectId);
   const { data: code } = useCode(projectId, componentName);
 
@@ -93,7 +90,7 @@ export function Preview({ children }: PropsWithChildren) {
   return (
     <>
       <TabsContent value="preview" className={"relative z-0 h-full"}>
-        <div className="flex h-full flex-col">
+        <div className="Root flex h-full flex-col">
           <ThemePreviewBlock theme="light" colors={colors}>
             {children}
           </ThemePreviewBlock>
@@ -102,7 +99,7 @@ export function Preview({ children }: PropsWithChildren) {
           </ThemePreviewBlock>
         </div>
       </TabsContent>
-      <TabsContent value="code" className={'p-2'}>
+      <TabsContent value="code" className={"p-2"}>
         {code && <ComponentCode code={code} />}
       </TabsContent>
     </>

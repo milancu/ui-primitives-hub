@@ -10,9 +10,10 @@ import {
   NumberFieldScrubArea,
   NumberFieldScrubAreaCursor,
 } from "@ui-primitives-hub/ui/src/components/NumberField.tsx";
-import { useCurrentPartParam } from "@/features/sidebar/hooks/useCurrentPartParam.tsx";
+import { useCurrentPartParam } from "@/hooks/useCurrentPartParam.tsx";
 import { useComponentStore } from "@/hooks/store/component-store.ts";
 import { getClassName } from "@/lib/utils.ts";
+import { getRawTailwindClasses } from "@ui-primitives-hub/common/src/main.ts";
 
 const NumberFieldPage = () => {
   const id = "number-field";
@@ -27,6 +28,14 @@ const NumberFieldPage = () => {
       </div>
     );
 
+  const tailwind = Object.keys(parts).reduce(
+    (acc: Record<string, string>, key) => {
+      acc[key] = getRawTailwindClasses(parts[key]);
+      return acc;
+    },
+    {},
+  );
+
   const {
     root,
     scrubarea,
@@ -35,7 +44,7 @@ const NumberFieldPage = () => {
     decrement,
     input,
     increment,
-  } = parts;
+  } = tailwind;
 
   return (
     <div className="h-full w-full">

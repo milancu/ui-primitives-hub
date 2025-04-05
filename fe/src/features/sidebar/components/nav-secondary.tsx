@@ -6,7 +6,7 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar.tsx";
 import { Link, useLocation, useParams } from "@tanstack/react-router";
-import { useCurrenStateParam } from "@/features/sidebar/hooks/useCurrenStateParam.tsx";
+import { useCurrenStateParam } from "@/hooks/useCurrenStateParam.tsx";
 
 export function NavSecondary() {
   const [, setState] = useCurrenStateParam();
@@ -21,10 +21,13 @@ export function NavSecondary() {
           isActive={pathname === `/${id}/color-customizer`}
         >
           <Link
-            to={`${id}/color-customizer`}
+            to={`/$id/color-customizer`}
             activeProps={{ className: `font-bold` }}
             onClick={() => {
-              // setState(null);
+              setState(null);
+            }}
+            params={{
+              id: id!,
             }}
           >
             <span>Color Customizer</span>

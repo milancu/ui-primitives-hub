@@ -1,0 +1,47 @@
+import {ComponentHierarchy} from "@ui-primitives-hub/types";
+import path from "path";
+import fs from "fs";
+import {getRawTailwindClasses} from "@ui-primitives-hub/common";
+
+export class CollapsibleService {
+  static getHierarchy(): ComponentHierarchy {
+    return {
+      name: "root",
+      isCustomizable: true,
+      children: [
+        {
+          name: "trigger",
+          isCustomizable: true,
+        },
+        {
+          name: "panel",
+          isCustomizable: true,
+        },
+      ],
+    }
+  }
+
+  static getCode(components: Record<string, string>): string {
+    const componentsRawClasses = Object.keys(components).reduce((acc: Record<string, string>, key) => {
+      acc[key] = getRawTailwindClasses(components[key])
+      return acc;
+    }, {})
+
+    const {root, trigger, panel} = componentsRawClasses;
+
+    const modulePath = path.resolve(
+      "node_modules",
+      "@ui-primitives-hub/ui/src/components",
+      "Collapsible.tsx"
+    );
+
+    let template = fs.readFileSync(modulePath, "utf-8");
+
+    template = template
+      .replace(/__ROOT_CLASSNAME__/g, root || "")
+      .replace(/__TRIGGER_CLASSNAME__/g, trigger || "")
+      .replace(/__PANEL_CLASSNAME__/g, panel || "")
+
+    return template
+  }
+}

@@ -7,9 +7,11 @@ export class FieldsetService {
   static getHierarchy(): ComponentHierarchy {
     return {
       name: "root",
+      isCustomizable: true,
       children: [
         {
           name: "legend",
+          isCustomizable: true,
         },
       ],
     }

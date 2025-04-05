@@ -1,18 +1,20 @@
 import {ComponentHierarchy} from "@ui-primitives-hub/types";
 import path from "path";
 import fs from "fs";
-import { getRawTailwindClasses } from "@ui-primitives-hub/common";
+import {getRawTailwindClasses} from "@ui-primitives-hub/common";
 
 export class AccordionService {
   static getHierarchy(): ComponentHierarchy {
     return {
       name: "root",
+      isCustomizable: true,
       children: [
         {
           name: "item",
+          isCustomizable: true,
           children: [
-            {name: "header", children: [{name: "trigger"}]},
-            {name: "panel"},
+            {name: "header", isCustomizable: true, children: [{name: "trigger", isCustomizable: true}]},
+            {name: "panel", isCustomizable: true},
           ],
         },
       ],

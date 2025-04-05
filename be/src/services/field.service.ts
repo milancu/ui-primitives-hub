@@ -7,21 +7,27 @@ export class FieldService {
   static getHierarchy(): ComponentHierarchy {
     return {
       name: "root",
+      isCustomizable: true,
       children: [
         {
           name: "label",
+          isCustomizable: true,
         },
         {
           name: "control",
+          isCustomizable: true,
         },
         {
           name: "description",
+          isCustomizable: true,
         },
         {
           name: "error",
+          isCustomizable: true,
         },
         {
           name: "validity",
+          isCustomizable: true,
         },
       ],
     }

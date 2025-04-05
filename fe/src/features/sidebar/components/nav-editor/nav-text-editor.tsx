@@ -43,16 +43,17 @@ const NavTextEditor = () => {
                   placeholder={"font-size"}
                   character={"S"}
                   handleChange={(newValue) => handleStyle("fontSize", newValue)}
-                  value={style?.margin}
+                  value={style?.fontSize}
                 />
               </SidebarMenuItem>
               <SidebarMenuItem>
                 <InputComponentUnitSwitcher
                   placeholder={"font-weight"}
-                  value={style?.fontSize}
+                  value={style?.fontWeight}
                   handleChange={(newValue) =>
                     handleStyle("fontWeight", newValue)
                   }
+                  unit={'px'}
                   character={"W"}
                 />
               </SidebarMenuItem>

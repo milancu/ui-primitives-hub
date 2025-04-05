@@ -11,9 +11,10 @@ import {
 } from "@ui-primitives-hub/ui/src/components/Fieldset.tsx";
 import { useParts } from "@/hooks/queries/useParts.ts";
 import { useParams } from "@tanstack/react-router";
-import { useCurrentPartParam } from "@/features/sidebar/hooks/useCurrentPartParam.tsx";
+import { useCurrentPartParam } from "@/hooks/useCurrentPartParam.tsx";
 import { useComponentStore } from "@/hooks/store/component-store.ts";
 import { getClassName } from "@/lib/utils.ts";
+import { getRawTailwindClasses } from "@ui-primitives-hub/common/src/main.ts";
 
 const FieldsetPage = () => {
   const { id } = useParams({
@@ -32,8 +33,24 @@ const FieldsetPage = () => {
       </div>
     );
 
-  const { root: fieldRoot, label, control } = field;
-  const { root: fieldsetRoot, legend } = parts;
+  const tailwind = Object.keys(parts).reduce(
+    (acc: Record<string, string>, key) => {
+      acc[key] = getRawTailwindClasses(parts[key]);
+      return acc;
+    },
+    {},
+  );
+
+  const field_tailwind = Object.keys(field).reduce(
+    (acc: Record<string, string>, key) => {
+      acc[key] = getRawTailwindClasses(field[key]);
+      return acc;
+    },
+    {},
+  );
+
+  const { root: fieldRoot, label, control } = field_tailwind;
+  const { root: fieldsetRoot, legend } = tailwind;
 
   return (
     <div className="h-full w-full">

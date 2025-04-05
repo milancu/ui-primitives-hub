@@ -7,16 +7,12 @@ import {
   AccordionRoot,
   AccordionTrigger,
 } from "@ui-primitives-hub/ui/src/components/Accordion.tsx";
-import { useCurrentPartParam } from "@/features/sidebar/hooks/useCurrentPartParam.tsx";
+import { useCurrentPartParam } from "@/hooks/useCurrentPartParam.tsx";
 import { getClassName } from "@/lib/utils.ts";
 import { useComponentStore } from "@/hooks/store/component-store.ts";
 import { getRawTailwindClasses } from "@ui-primitives-hub/common/src/main.ts";
 
-type AccordionPageProps = {
-  projectId: string;
-};
-
-const AccordionPage = ({ projectId }: AccordionPageProps) => {
+const AccordionPage = () => {
   const [currentPart] = useCurrentPartParam();
   const parts = useComponentStore((state) => state.parts);
 

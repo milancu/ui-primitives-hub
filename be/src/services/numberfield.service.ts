@@ -1,5 +1,5 @@
 import {ComponentHierarchy} from "@ui-primitives-hub/types";
-import { getRawTailwindClasses } from "@ui-primitives-hub/common";
+import {getRawTailwindClasses} from "@ui-primitives-hub/common";
 import path from "path";
 import fs from "fs";
 
@@ -7,23 +7,25 @@ export class NumberfieldService {
   static getHierarchy(): ComponentHierarchy {
     return {
       name: "root",
+      isCustomizable: true,
       children: [
         {
-          name: "scrub-area",
+          name: "scrub-area", isCustomizable: true,
           children: [
             {
-              name: "scrub-area-cursor",
+              name: "scrub-area-cursor", isCustomizable: true,
             },
           ]
         },
         {
-          name: "group",
+          name: "group", isCustomizable: true,
           children: [
             {
-              name: "decrement"
+              name: "decrement",
+              isCustomizable: true,
             },
-            {name: "input"},
-            {name: "increment"}
+            {name: "input", isCustomizable: true,},
+            {name: "increment", isCustomizable: true,}
           ]
         }
       ],

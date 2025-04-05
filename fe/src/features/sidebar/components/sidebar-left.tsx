@@ -13,38 +13,65 @@ import { Separator } from "@/components/ui/separator";
 import ComponentLayers from "@/features/component-layers/components/component-layers.tsx";
 import { NavSecondary } from "@/features/sidebar/components/nav-secondary.tsx";
 
-const data = {
-  navMain: [
-    {
-      title: "Accordion",
-      url: "accordion",
-    },
-    {
-      title: "Avatar",
-      url: "avatar",
-    },
-    {
-      title: "Dialog",
-      url: "dialog",
-    },
-    {
-      title: "Field",
-      url: `field`,
-    },
-    {
-      title: "Fieldset",
-      url: "fieldset",
-    },
-    {
-      title: "Menu",
-      url: "menu",
-    },
-    {
-      title: "Number field",
-      url: "number-field",
-    },
-  ],
-};
+export type AppRoute =
+  | "accordion"
+  | "avatar"
+  | "collapsible"
+  | "dialog"
+  | "field"
+  | "fieldset"
+  | "input"
+  | "menu"
+  | "number-field"
+  | "popover"
+  | "select";
+
+const navMain = [
+  {
+    title: "Accordion",
+    url: "accordion",
+  },
+  // {
+  //   title: "Avatar",
+  //   url: "avatar",
+  // },
+  {
+    title: "Collapsible",
+    url: "collapsible",
+  },
+  {
+    title: "Dialog",
+    url: "dialog",
+  },
+  {
+    title: "Field",
+    url: `field`,
+  },
+  {
+    title: "Fieldset",
+    url: "fieldset",
+  },
+  {
+    title: "Input",
+    url: "input",
+  },
+  {
+    title: "Menu",
+    url: "menu",
+  },
+  {
+    title: "Number field",
+    url: "number-field",
+  },
+  {
+    title: "Popover",
+    url: "popover",
+  },
+  {
+    title: "Select",
+    url: "select",
+  },
+] satisfies Array<{ title: string; url: AppRoute }>;
 
 export function SidebarLeft({
   ...props
@@ -56,7 +83,7 @@ export function SidebarLeft({
       variant={"inset"}
     >
       <SidebarHeader>
-        <NavMain items={data.navMain} />
+        <NavMain items={navMain} />
       </SidebarHeader>
       <Separator />
       <SidebarContent>

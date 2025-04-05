@@ -1,6 +1,6 @@
 import express from "express";
-import { authenticate } from "../middleware/auth.js";
-import { ComponentService } from "../services/component.service.js";
+import {authenticate} from "../middleware/auth.js";
+import {ComponentService} from "../services/component.service.js";
 
 const router = express.Router();
 
@@ -23,6 +23,21 @@ router.put('/:projectId/components/:component/:part/:state', async (req, res) =>
     res.status(400).json({error: `Component update failed, ${error.message}`});
   }
 });
+
+router.post('/:projectId/components/:component/:part/:state/reset', async (req, res) => {
+  try {
+    const updated = await ComponentService.resetComponentPartStateStyle(
+      (req as any).user.uid,
+      req.params.projectId,
+      req.params.component,
+      req.params.part,
+      req.params.state,
+    );
+    res.json(updated);
+  } catch (error: any) {
+    res.status(400).json({error: `Component reset failed, ${error.message}`});
+  }
+})
 
 router.get('/:projectId/components/:component/hierarchy', async (req, res) => {
   try {

@@ -1,8 +1,8 @@
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Skeleton } from "@/components/ui/skeleton.tsx";
-import { useCurrenStateParam } from "@/features/sidebar/hooks/useCurrenStateParam.tsx";
+import { useCurrenStateParam } from "@/hooks/useCurrenStateParam.tsx";
 import { usePartStates } from "@/hooks/queries/usePartStates.ts";
-import { useCurrentPartParam } from "@/features/sidebar/hooks/useCurrentPartParam.tsx";
+import { useCurrentPartParam } from "@/hooks/useCurrentPartParam.tsx";
 import { useProjectStore } from "@/hooks/store/project-store.ts";
 import { useComponentStore } from "@/hooks/store/component-store.ts";
 

@@ -7,7 +7,7 @@ import { useComponentStore } from "@/hooks/store/component-store.ts";
 export const Route = createFileRoute("/_authenticated/_canva-layout/$id/menu")({
   loader: async ({ params, context: { queryClient } }) => {
     const parts = await queryClient.ensureQueryData({
-      queryKey: [`${params.id}-menu`],
+      queryKey: ["projects", params.id, "components", "menu", "parts"],
       queryFn: () => fetchParts(params.id, "menu"),
     });
     useProjectStore.setState({

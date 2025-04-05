@@ -34,73 +34,73 @@ const NavMarginEditor = () => {
               handleChange={(newValue) => handleStyle("margin", newValue)}
               value={style?.margin}
             />
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="outline" size={"icon"}>
-                  <Scan />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="mr-4 w-56">
-                <DropdownMenuLabel>Margin details</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuGroup>
-                  <DropdownMenuLabel>
-                    <InputComponentUnitSwitcher
-                      placeholder={"margin-left"}
-                      handleChange={(newValue) =>
-                        handleStyle("marginLeft", newValue)
-                      }
-                      value={style?.marginLeft}
-                    />
-                  </DropdownMenuLabel>
-                  <DropdownMenuLabel>
-                    <InputComponentUnitSwitcher
-                      placeholder={"margin-top"}
-                      handleChange={(newValue) =>
-                        handleStyle("marginTop", newValue)
-                      }
-                      value={style?.marginTop}
-                    />
-                  </DropdownMenuLabel>
-                  <DropdownMenuLabel>
-                    <InputComponentUnitSwitcher
-                      placeholder={"margin-right"}
-                      handleChange={(newValue) =>
-                        handleStyle("marginRight", newValue)
-                      }
-                      value={style?.marginRight}
-                    />
-                  </DropdownMenuLabel>
-                  <DropdownMenuLabel>
-                    <InputComponentUnitSwitcher
-                      placeholder={"margin-bottom"}
-                      handleChange={(newValue) =>
-                        handleStyle("marginBottom", newValue)
-                      }
-                      value={style?.marginBottom}
-                    />
-                  </DropdownMenuLabel>
-                  <DropdownMenuLabel>
-                    <InputComponentUnitSwitcher
-                      placeholder={"margin-vertical"}
-                      handleChange={(newValue) =>
-                        handleStyle("marginVertical", newValue)
-                      }
-                      value={style?.marginVertical}
-                    />
-                  </DropdownMenuLabel>
-                  <DropdownMenuLabel>
-                    <InputComponentUnitSwitcher
-                      placeholder={"margin-horizontal"}
-                      handleChange={(newValue) =>
-                        handleStyle("marginHorizontal", newValue)
-                      }
-                      value={style?.marginHorizontal}
-                    />
-                  </DropdownMenuLabel>
-                </DropdownMenuGroup>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            {/*<DropdownMenu>*/}
+            {/*  <DropdownMenuTrigger asChild>*/}
+            {/*    <Button variant="outline" size={"icon"}>*/}
+            {/*      <Scan />*/}
+            {/*    </Button>*/}
+            {/*  </DropdownMenuTrigger>*/}
+            {/*  <DropdownMenuContent className="mr-4 w-56">*/}
+            {/*    <DropdownMenuLabel>Margin details</DropdownMenuLabel>*/}
+            {/*    <DropdownMenuSeparator />*/}
+            {/*    <DropdownMenuGroup>*/}
+            {/*      <DropdownMenuLabel>*/}
+            {/*        <InputComponentUnitSwitcher*/}
+            {/*          placeholder={"margin-left"}*/}
+            {/*          handleChange={(newValue) =>*/}
+            {/*            handleStyle("marginLeft", newValue)*/}
+            {/*          }*/}
+            {/*          value={style?.marginLeft}*/}
+            {/*        />*/}
+            {/*      </DropdownMenuLabel>*/}
+            {/*      <DropdownMenuLabel>*/}
+            {/*        <InputComponentUnitSwitcher*/}
+            {/*          placeholder={"margin-top"}*/}
+            {/*          handleChange={(newValue) =>*/}
+            {/*            handleStyle("marginTop", newValue)*/}
+            {/*          }*/}
+            {/*          value={style?.marginTop}*/}
+            {/*        />*/}
+            {/*      </DropdownMenuLabel>*/}
+            {/*      <DropdownMenuLabel>*/}
+            {/*        <InputComponentUnitSwitcher*/}
+            {/*          placeholder={"margin-right"}*/}
+            {/*          handleChange={(newValue) =>*/}
+            {/*            handleStyle("marginRight", newValue)*/}
+            {/*          }*/}
+            {/*          value={style?.marginRight}*/}
+            {/*        />*/}
+            {/*      </DropdownMenuLabel>*/}
+            {/*      <DropdownMenuLabel>*/}
+            {/*        <InputComponentUnitSwitcher*/}
+            {/*          placeholder={"margin-bottom"}*/}
+            {/*          handleChange={(newValue) =>*/}
+            {/*            handleStyle("marginBottom", newValue)*/}
+            {/*          }*/}
+            {/*          value={style?.marginBottom}*/}
+            {/*        />*/}
+            {/*      </DropdownMenuLabel>*/}
+            {/*      <DropdownMenuLabel>*/}
+            {/*        <InputComponentUnitSwitcher*/}
+            {/*          placeholder={"margin-vertical"}*/}
+            {/*          handleChange={(newValue) =>*/}
+            {/*            handleStyle("marginVertical", newValue)*/}
+            {/*          }*/}
+            {/*          value={style?.marginVertical}*/}
+            {/*        />*/}
+            {/*      </DropdownMenuLabel>*/}
+            {/*      <DropdownMenuLabel>*/}
+            {/*        <InputComponentUnitSwitcher*/}
+            {/*          placeholder={"margin-horizontal"}*/}
+            {/*          handleChange={(newValue) =>*/}
+            {/*            handleStyle("marginHorizontal", newValue)*/}
+            {/*          }*/}
+            {/*          value={style?.marginHorizontal}*/}
+            {/*        />*/}
+            {/*      </DropdownMenuLabel>*/}
+            {/*    </DropdownMenuGroup>*/}
+            {/*  </DropdownMenuContent>*/}
+            {/*</DropdownMenu>*/}
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarGroupContent>

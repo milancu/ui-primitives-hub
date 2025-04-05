@@ -1,5 +1,5 @@
 import {ComponentHierarchy} from "@ui-primitives-hub/types";
-import { getRawTailwindClasses } from "@ui-primitives-hub/common";
+import {getRawTailwindClasses} from "@ui-primitives-hub/common";
 import path from "path";
 import fs from "fs";
 
@@ -7,49 +7,63 @@ export class MenuService {
   static getHierarchy(): ComponentHierarchy {
     return {
       name: "root",
+      isCustomizable: false,
       children: [
         {
           name: "trigger",
+          isCustomizable: true,
         },
         {
           name: "portal",
+          isCustomizable: false,
           children: [
             {
               name: "backdrop",
+              isCustomizable: false,
             },
             {
               name: "positioner",
+              isCustomizable: false,
               children: [
                 {
                   name: "popup",
+                  isCustomizable: true,
                   children: [
                     {
                       name: "arrow",
+                      isCustomizable: true,
                     },
                     {
                       name: "item",
+                      isCustomizable: true,
                     },
                     {
                       name: "separator",
+                      isCustomizable: true,
                     },
                     {
                       name: "group",
+                      isCustomizable: true,
                       children: [
                         {
                           name: "group-label",
+                          isCustomizable: true,
                         },
                       ]
                     },
                     {
                       name: "radio-group",
+                      isCustomizable: true,
                       children: [
                         {
                           name: "radio-item",
+                          isCustomizable: true,
                         },
                       ]
                     },
                     {
                       name: "checkbox-item",
+                      isCustomizable: true,
                     },
                   ],
                 },

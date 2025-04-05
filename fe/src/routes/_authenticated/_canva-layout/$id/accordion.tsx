@@ -29,7 +29,5 @@ export const Route = createFileRoute(
 });
 
 function RouteComponent() {
-  const { id } = Route.useLoaderData();
-
-  return <AccordionPage projectId={id} />;
+  return <AccordionPage />;
 }

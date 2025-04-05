@@ -7,7 +7,7 @@ import { useComponentStore } from "@/hooks/store/component-store.ts";
 export const Route = createFileRoute("/_authenticated/_canva-layout/$id/dialog")({
   loader: async ({ params, context: { queryClient } }) => {
     const parts = await queryClient.ensureQueryData({
-      queryKey: [`${params.id}-dialog`],
+      queryKey: ["projects", params.id, "components", "dialog", "parts"],
       queryFn: () => fetchParts(params.id, "dialog"),
     });
     useProjectStore.setState({

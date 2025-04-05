@@ -121,7 +121,7 @@ const NavLayoutEditor = () => {
                 placeholder={"gap"}
                 character={"G"}
                 handleChange={(newValue) => handleStyle("gap", newValue)}
-                value={style?.gap}
+                value={style?.gap ?? ""}
               />
             </fieldset>
           </SidebarMenuItem>
