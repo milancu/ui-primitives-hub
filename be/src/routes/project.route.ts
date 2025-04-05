@@ -31,6 +31,17 @@ router.get('/', async (req, res) => {
   }
 });
 
+router.get('/search', async (req, res) => {
+  try {
+    const userId = (req as any).user.uid
+    const searchTerm = req.query.q as string || ''
+    const projects = await ProjectService.searchProjects(userId, searchTerm);
+    res.json(projects);
+  } catch (error) {
+    res.status(400).json({error: `Failed to search projects, ${error}`});
+  }
+})
+
 router.get('/:projectId/colors', async (req, res) => {
   const projectId = req.params.projectId
   const userId = (req as any).user.uid

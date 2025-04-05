@@ -134,6 +134,17 @@ const NavBorderOutlineEditor = () => {
             {/*  </DropdownMenuContent>*/}
             {/*</DropdownMenu>*/}
           </SidebarMenuItem>
+          <SidebarMenuItem>
+            <InputComponentUnitSwitcher
+              handleChange={(value) => {
+                handleStyle("borderBottomWidth", value);
+              }}
+              placeholder={"border bottom width"}
+              character={"B"}
+              value={style?.borderBottomWidth}
+              unit={"px"}
+            />
+          </SidebarMenuItem>
           <SidebarMenuItem className={"flex gap-1"}>
             <InputComponentUnitSwitcher
               handleChange={(value) => {

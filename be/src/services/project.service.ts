@@ -1,4 +1,4 @@
-import { db } from "../firebase.js";
+import {db} from "../firebase.js";
 import {DEFAULT_COLORS, DEFAULT_COMPONENTS} from "../default-components.js";
 import {Color, ColorScheme, Project, ProjectMetadata} from "@ui-primitives-hub/types";
 
@@ -156,5 +156,25 @@ export class ProjectService {
         ...project.metadata
       }))
       .sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
+  }
+
+  static async searchProjects(userId: string, searchTerm: string): Promise<ProjectMetadata[]> {
+    try {
+      const projects = await this.listProjects(userId);
+      return this.filterProjects(projects, searchTerm);
+    } catch (error: any) {
+      console.error(error);
+      throw new Error(error.message);
+
+    }
+  }
+
+  static filterProjects(projects: ProjectMetadata[], searchTerm: string): ProjectMetadata[] {
+    const normalizedSearch = searchTerm.toLowerCase().trim();
+    if (!normalizedSearch) return projects;
+
+    return projects.filter(project =>
+      project.name.toLowerCase().includes(normalizedSearch)
+    );
   }
 }
