@@ -12,36 +12,45 @@ type InputComponentUnitSwitcher = React.ComponentProps<typeof Input> & {
 };
 
 function InputComponentUnitSwitcher({
-                                      icon: IconComponent,
-                                      character,
-                                      handleChange,
-                                      className,
-                                      value = "",
-                                      unit = "rem",
-                                      ...props
-                                    }: InputComponentUnitSwitcher) {
-  const [inputValue, setInputValue] = useState<number | string>(value ? parseFloat(value.replace(/[a-zA-Z]+$/, "")) : "");
+  icon: IconComponent,
+  character,
+  handleChange,
+  className,
+  value = "",
+  unit = "rem",
+  ...props
+}: InputComponentUnitSwitcher) {
+  const [inputValue, setInputValue] = useState<number | string>(
+    value ? parseFloat(value.replace(/[a-zA-Z]+$/, "")) : "",
+  );
   const [selectedUnit, setSelectedUnit] = useState<"rem" | "px">(unit);
 
   const updateValue = (newInputValue: number | string) => {
+    if (isNaN(Number(newInputValue))) return;
     const newValue = `${newInputValue}${selectedUnit}`;
+    console.log(newValue);
     handleChange(newValue);
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newInputValue = e.target.value === "" ? "" : parseFloat(e.target.value);
-    setInputValue(newInputValue);
+    const newInputValue = e.target.value && parseFloat(e.target.value);
+    if (newInputValue) {
+      setInputValue(newInputValue);
+    }
   };
 
   const handleUnitChange = (newUnit: "rem" | "px") => {
-    if (typeof inputValue === "number") {
+    if (typeof inputValue === "number" && !isNaN(inputValue)) {
       let convertedValue = inputValue;
       if (selectedUnit === "rem" && newUnit === "px") {
         convertedValue = inputValue * 16;
       } else if (selectedUnit === "px" && newUnit === "rem") {
         convertedValue = inputValue / 16;
       }
-      setInputValue(convertedValue);
+      // Avoid NaN
+      if (!isNaN(convertedValue)) {
+        setInputValue(convertedValue);
+      }
     }
     setSelectedUnit(newUnit);
   };
@@ -49,14 +58,16 @@ function InputComponentUnitSwitcher({
   useEffect(() => {
     if (value) {
       const valueWithoutUnit = parseFloat(value.replace(/[a-zA-Z]+$/, ""));
-      setInputValue(valueWithoutUnit);
+      if (!isNaN(valueWithoutUnit)) {
+        setInputValue(valueWithoutUnit);
+      }
       const unitMatch = value.match(/(rem|px)$/);
       setSelectedUnit(unitMatch ? (unitMatch[1] as "rem" | "px") : "rem");
     }
   }, [value]);
 
   useEffect(() => {
-    if (selectedUnit !== undefined) {
+    if (selectedUnit !== undefined && inputValue !== "") {
       updateValue(inputValue);
     }
   }, [inputValue, selectedUnit]);
@@ -86,7 +97,9 @@ function InputComponentUnitSwitcher({
           type="number"
           min={0}
           onChange={handleInputChange}
-          value={inputValue !== "" ? inputValue : ""}
+          value={
+            inputValue !== "" && !isNaN(Number(inputValue)) ? inputValue : ""
+          }
         />
         <div className="relative inline-flex">
           <select

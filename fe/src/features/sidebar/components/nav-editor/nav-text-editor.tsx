@@ -27,7 +27,7 @@ const NavTextEditor = () => {
   const handleStyle = useStyleStore((state) => state.handleStyle);
   
   return (
-    <Collapsible title={"Text properties"} className="group/collapsible">
+    <Collapsible title={"Text properties"} className="group/collapsible" >
       <SidebarGroup className={"p-0"}>
         <SidebarGroupLabel asChild className="group/label">
           <CollapsibleTrigger>

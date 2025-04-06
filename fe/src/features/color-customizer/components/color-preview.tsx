@@ -6,7 +6,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Switch } from "@/components/ui/switch";
 import { Input } from "@/components/ui/input";
 import React from "react";
@@ -28,22 +28,16 @@ const ThemeDemoComponents = () => (
         <TabsTrigger value="tab1">Tab 1</TabsTrigger>
         <TabsTrigger value="tab2">Tab 2</TabsTrigger>
       </TabsList>
-      <TabsContent value="tab1" className="mt-2 rounded-md border p-4">
-        <p className="text-muted-foreground text-sm">Tab content 1</p>
-      </TabsContent>
-      <TabsContent value="tab2" className="mt-2 rounded-md border p-4">
-        <p className="text-muted-foreground text-sm">Tab content 2</p>
-      </TabsContent>
     </Tabs>
 
     <div className="flex items-center gap-4">
       <div className="flex items-center space-x-2">
-        <Switch id="switch1" />
+        <Switch id="switch1" className={"data-[state=unchecked]:bg-muted"} />
         <label htmlFor="switch1" className="text-sm">
           Switch
         </label>
       </div>
-      <Input placeholder="Input field" />
+      <Input placeholder="Input field" className={"border-border"} />
     </div>
 
     <ColorGrid />
@@ -61,10 +55,10 @@ const ColorGrid = () => (
       { className: "bg-accent text-accent-foreground", label: "Accent" },
       { className: "bg-muted text-muted-foreground", label: "Muted" },
       {
-        className: "bg-destructive text-destructive-foreground",
+        className: "bg-destructive text-[var(--destructive-foreground)]",
         label: "Destructive",
       },
-      { className: "border-border border", label: "Border" },
+      { className: "bg-[var(--success)] text-foreground", label: "Success" },
     ].map(({ className, label }) => (
       <div key={label} className={`${className} rounded-md p-1 text-center`}>
         {label}
@@ -81,7 +75,8 @@ const ThemePreviewBlock = ({
   style?: React.CSSProperties;
 }) => (
   <div
-    className={`${theme} bg-background text-foreground relative w-full flex-1`}
+    style={style}
+    className={`bg-background text-foreground relative w-full flex-1`}
   >
     <GridPattern
       width={30}
@@ -95,14 +90,14 @@ const ThemePreviewBlock = ({
     />
     <div data-theme={theme} className="relative flex h-full flex-col">
       <div className="relative flex h-full items-center justify-center p-4">
-        <Card>
+        <Card className={"bg-background text-foreground border-border"}>
           <CardHeader>
             <CardTitle>Theme Preview</CardTitle>
             <CardDescription>
               This shows how your theme will look
             </CardDescription>
           </CardHeader>
-          <div style={style}>
+          <div>
             <ThemeDemoComponents />
           </div>
         </Card>

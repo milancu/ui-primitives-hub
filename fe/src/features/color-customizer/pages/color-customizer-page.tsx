@@ -10,7 +10,6 @@ import { ColorCard } from "@/features/color-customizer/components/color-card.tsx
 import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card.tsx";
 import { useGetProjectColors } from "@/features/color-customizer/hooks/queries/useGetProjectColors.ts";
-import { useParams } from "@tanstack/react-router";
 import { Skeleton } from "@/components/ui/skeleton.tsx";
 import { useUpdateProjectColors } from "@/features/color-customizer/hooks/mutations/useUpdateProjectColors.ts";
 import { Button } from "@/components/ui/button.tsx";
@@ -82,7 +81,7 @@ type ColorCustomizerPageProps = {
   projectId: string;
 };
 
-const ColorCustomizerPage = ({projectId}:ColorCustomizerPageProps) => {
+const ColorCustomizerPage = ({ projectId }: ColorCustomizerPageProps) => {
   const { data } = useGetProjectColors(projectId);
   const { mutateAsync, isPending } = useUpdateProjectColors();
   const [lightColors, setLightColors] =
@@ -112,7 +111,7 @@ const ColorCustomizerPage = ({projectId}:ColorCustomizerPageProps) => {
 
     const currentColors = selectedTheme === "light" ? lightColors : darkColors;
     mutateAsync({
-      id:projectId,
+      id: projectId,
       theme: selectedTheme,
       color: selectedColor,
       value: currentColors[selectedColor],
@@ -136,7 +135,7 @@ const ColorCustomizerPage = ({projectId}:ColorCustomizerPageProps) => {
   }
 
   return (
-    <div className="grid h-full w-full grid-cols-1 items-start gap-4 p-4 lg:grid-cols-2">
+    <div className="grid h-full w-full grid-cols-1 items-start gap-4 p-4 lg:grid-cols-2 container mx-auto">
       <div className="flex h-full flex-col gap-4">
         <HexColorPicker
           style={{
@@ -188,11 +187,14 @@ const ColorCustomizerPage = ({projectId}:ColorCustomizerPageProps) => {
 
       <TabsContent
         value="preview"
-        className="overflow-hidden rounded-md border"
+        className="h-full overflow-hidden rounded-md border"
       >
         <ColorPreview lightColors={lightColors} darkColors={darkColors} />
       </TabsContent>
-      <TabsContent value="code" className="overflow-hidden rounded-md border">
+      <TabsContent
+        value="code"
+        className="h-full overflow-hidden rounded-md border"
+      >
         <CssPreview lightSchema={lightColors} darkSchema={darkColors} />
       </TabsContent>
     </div>
