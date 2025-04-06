@@ -46,17 +46,17 @@ const NavTextEditor = () => {
                   value={style?.fontSize}
                 />
               </SidebarMenuItem>
-              <SidebarMenuItem>
-                <InputComponentUnitSwitcher
-                  placeholder={"font-weight"}
-                  value={style?.fontWeight}
-                  handleChange={(newValue) =>
-                    handleStyle("fontWeight", newValue)
-                  }
-                  unit={'px'}
-                  character={"W"}
-                />
-              </SidebarMenuItem>
+              {/*<SidebarMenuItem>*/}
+              {/*  <InputComponentUnitSwitcher*/}
+              {/*    placeholder={"font-weight"}*/}
+              {/*    value={style?.fontWeight}*/}
+              {/*    handleChange={(newValue) =>*/}
+              {/*      handleStyle("fontWeight", newValue)*/}
+              {/*    }*/}
+              {/*    unit={'px'}*/}
+              {/*    character={"W"}*/}
+              {/*  />*/}
+              {/*</SidebarMenuItem>*/}
               <SidebarMenuItem>
                 <Select
                   value={style?.textAlign}

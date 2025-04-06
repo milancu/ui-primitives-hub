@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, useCallback } from "react";
+import React, { PropsWithChildren } from "react";
 import { cn } from "@/lib/utils.ts";
 import { useGetProjectColors } from "@/features/color-customizer/hooks/queries/useGetProjectColors.ts";
 import { ColorScheme } from "../../../../../packages/types";
@@ -22,24 +22,24 @@ const ThemePreviewBlock = ({
     dark: ColorScheme;
   };
 }>) => {
-  const createThemeStyle = useCallback(
-    (theme: ThemeType) => {
-      const themeColors = colors?.[theme];
-      if (!themeColors) return {};
+  const createStyleObject = () => {
+    return Object.fromEntries(
+      Object.entries(colors[theme]).map(([key, value]) => {
+        const cssVarName = `--${key.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase()}`;
+        return [cssVarName, `oklch(${value.l} ${value.c} ${value.h})`];
+      }),
+    ) as React.CSSProperties;
+  };
 
-      return Object.fromEntries(
-        Object.entries(themeColors).map(([key, value]) => [
-          `--${key}`,
-          `oklch(${value.l} ${value.c} ${value.h})`,
-        ]),
-      ) as React.CSSProperties;
-    },
-    [colors],
-  );
+  console.log(createStyleObject());
 
   return (
     <div
-      className={`${theme} bg-background text-foreground relative w-full flex-1`}
+      style={
+        createStyleObject()
+      }
+      data-theme={theme}
+      className={`bg-background text-foreground relative w-full flex-1`}
     >
       <GridPattern
         width={30}
@@ -56,7 +56,7 @@ const ThemePreviewBlock = ({
           {theme.charAt(0).toUpperCase() + theme.slice(1)} preview
         </div>
         <div
-          style={createThemeStyle(theme)}
+          style={createStyleObject()}
           className="relative flex h-full items-center justify-center p-4"
         >
           {children}

@@ -25,7 +25,6 @@ export function SidebarRight({
   const projectId = useProjectStore((state) => state.projectId);
   const componentName = useComponentStore((state) => state.componentName);
   const initializeStyle = useStyleStore((state) => state.initializeStyle);
-  const setStyle = useStyleStore((state) => state.setStyle);
 
   const handleResetStyle = useCallback(() => {
     if (!currentPart || !componentName || !projectId) return;
@@ -35,8 +34,7 @@ export function SidebarRight({
       projectId: projectId,
       state: state,
     }).then((res) => {
-      initializeStyle(res[state])
-      // setStyle({});
+      initializeStyle(res[state]);
     });
   }, [mutateAsync, currentPart, projectId, state, componentName]);
 

@@ -9,7 +9,7 @@ const CollapsibleRoot = React.forwardRef<
   <CollapsiblePrimitives.Root
     ref={ref}
     {...props}
-    className={cn("flex min-h-36 w-56 flex-col justify-center text-gray-900", className, "__ROOT_CLASSNAME__")}
+    className={cn("min-h-36", className, "__ROOT_CLASSNAME__")}
   />
 ));
 
@@ -21,7 +21,7 @@ const CollapsibleTrigger = React.forwardRef<
     ref={ref}
     {...props}
     className={cn(
-      "group flex items-center gap-2 rounded-sm bg-gray-100 px-2 py-1 text-sm font-medium hover:bg-gray-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-800 active:bg-gray-200",
+      "group focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-800 active:bg-gray-200",
       className,
       "__TRIGGER_CLASSNAME__"
     )}
@@ -36,7 +36,7 @@ const CollapsiblePanel = React.forwardRef<
     ref={ref}
     {...props}
     className={cn(
-      "flex h-[var(--collapsible-panel-height)] flex-col justify-end overflow-hidden text-sm transition-all ease-out data-[ending-style]:h-0 data-[starting-style]:h-0",
+      "h-[var(--collapsible-panel-height)] transition-all ease-out data-[ending-style]:h-0 data-[starting-style]:h-0",
       className,
       "__PANEL_CLASSNAME__"
     )}

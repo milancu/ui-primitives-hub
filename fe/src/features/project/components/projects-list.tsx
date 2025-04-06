@@ -1,4 +1,4 @@
-import { Project } from "@ui-primitives-hub/types";
+import { ProjectMetadata } from "@ui-primitives-hub/types";
 import { Skeleton } from "@/components/ui/skeleton.tsx";
 import ProjectCard from "@/features/project/components/project-card.tsx";
 import { UpdateProjectFormDialog } from "@/features/project/components/update-project-form-dialog.tsx";
@@ -8,7 +8,7 @@ import { useCallback, useState } from "react";
 import { useUpdateProject } from "@/features/project/hooks/mutations/useUpdateProject.ts";
 
 type ProjectsListProps = {
-  projects?: Project[];
+  projects?: ProjectMetadata[];
 };
 
 const ProjectsList = ({ projects }: ProjectsListProps) => {
@@ -58,11 +58,7 @@ const ProjectsList = ({ projects }: ProjectsListProps) => {
     );
 
   return (
-    <div
-      className={
-        "grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4"
-      }
-    >
+    <div className={"grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4"}>
       {projects.map((project, index) => (
         <ProjectCard
           project={project}

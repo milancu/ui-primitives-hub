@@ -20,12 +20,12 @@ import {
   Trash2,
 } from "lucide-react";
 import { Link } from "@tanstack/react-router";
-import { Project } from "@ui-primitives-hub/types";
+import { ProjectMetadata } from "@ui-primitives-hub/types";
 import { cn } from "@/lib/utils.ts";
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard.ts";
 
 type ProjectCardProps = {
-  project: Project;
+  project: ProjectMetadata;
   handleDelete: (id: string) => void;
   triggerUpdate: (id: string, name: string) => void;
 };
@@ -41,7 +41,7 @@ const ProjectCard = ({
 
   return (
     <Card
-      className={`transition-all duration-200 ${isHovered ? "shadow-md" : "shadow-sm"} overflow-hidden flex flex-col`}
+      className={`transition-all duration-200 ${isHovered ? "shadow-md" : "shadow-sm"} flex flex-col overflow-hidden`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -56,7 +56,7 @@ const ProjectCard = ({
                 aria-hidden="true"
               />
             </div>
-            <Link to={`${id}`} className={"text-lg truncate"}>
+            <Link to={`${id}`} className={"truncate text-lg"}>
               {name}
             </Link>
           </div>

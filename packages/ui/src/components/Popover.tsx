@@ -12,7 +12,7 @@ const PopoverTrigger = React.forwardRef<
     ref={ref}
     {...props}
     className={cn(
-      "flex size-10 items-center justify-center rounded-md border border-gray-200 bg-gray-50 text-gray-900 select-none hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-1 focus-visible:outline-blue-800 active:bg-gray-100 data-[popup-open]:bg-gray-100",
+      "size-10 select-none hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-1 focus-visible:outline-blue-800 active:bg-gray-100 data-[popup-open]:bg-gray-100",
       className,
       "__TRIGGER_CLASSNAME__"
     )}
@@ -40,7 +40,7 @@ const PopoverPopup = React.forwardRef<
     ref={ref}
     {...props}
     className={cn(
-      "origin-[var(--transform-origin)] rounded-lg bg-[canvas] px-6 py-4 text-gray-900 shadow-lg shadow-gray-200 outline outline-1 outline-gray-200 transition-[transform,scale,opacity] data-[ending-style]:scale-90 data-[ending-style]:opacity-0 data-[starting-style]:scale-90 data-[starting-style]:opacity-0 dark:shadow-none dark:-outline-offset-1 dark:outline-gray-300",
+      "origin-[var(--transform-origin)] bg-[canvas] outline outline-1 outline-gray-200 transition-[transform,scale,opacity] data-[ending-style]:scale-90 data-[ending-style]:opacity-0 data-[starting-style]:scale-90 data-[starting-style]:opacity-0 dark:shadow-none dark:-outline-offset-1 dark:outline-gray-300",
       className,
       "__GROUP_CLASSNAME__"
     )}
@@ -69,7 +69,7 @@ const PopoverTitle = React.forwardRef<
   <PopoverPrimitives.Title
     ref={ref}
     {...props}
-    className={cn("text-base font-medium", className, "__TITLE_CLASSNAME__")}
+    className={cn(className, "__TITLE_CLASSNAME__")}
   />
 ));
 
@@ -80,7 +80,7 @@ const PopoverDescription = React.forwardRef<
   <PopoverPrimitives.Description
     ref={ref}
     {...props}
-    className={cn("text-base text-gray-600", className, "__DESCRIPTION_CLASSNAME__")}
+    className={cn(className, "__DESCRIPTION_CLASSNAME__")}
   />
 ));
 

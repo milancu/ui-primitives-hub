@@ -6,20 +6,20 @@ export const DEFAULT_COMPONENTS: any = {
       "hover": "bg-blue-700"
     },
     "item": {
-      "default": "border-b border-gray-200",
+      "default": "p-4 border border-[var(--border)] bg-[var(--background)] text-[var(--foreground)]",
       "disabled": "",
       "open": ""
     },
     "panel": {
-      "default": "overflow-hidden text-base text-gray-600 transition-[height] ease-out",
+      "default": "overflow-hidden text-[1rem] leading-6 text-[var(--destructiveForeground)] ease-out",
       "ending-style": "h-[var(--accordion-panel-height)]",
       "starting-style": "h-[0]"
     },
     "root": {
-      "default": "flex w-96 max-w-[calc(100vw-8rem)] flex-col justify-center text-gray-900"
+      "default": "flex flex-col justify-center w-96 text-[#111827] max-w-[calc(100vw-8rem)]"
     },
     "trigger": {
-      "default": "group flex w-full cursor-pointer items-baseline justify-between gap-4 py-2 text-left font-medium focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-800"
+      "default": "flex pt-2 pb-2 gap-4 justify-between items-baseline w-full font-medium text-left cursor-pointer text-[var(--foreground)]"
     }
   },
   "avatar": {
@@ -40,10 +40,10 @@ export const DEFAULT_COMPONENTS: any = {
       "starting-style": "opacity-0"
     },
     "close": {
-      "default": "flex h-10 items-center justify-center rounded-md border border-gray-200 bg-gray-50 px-3.5 text-base font-medium text-gray-900 select-none hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-1 focus-visible:outline-blue-800 active:bg-gray-100"
+      "default": "flex pr-3.5 pl-3.5 justify-center items-center h-10 normal-case select-none bg-[var(--destructive)] text-[var(--background)] rounded"
     },
     "description": {
-      "default": "mb-6 text-base text-gray-600"
+      "default": "mb-6 leading-6 text-[var(--destructive-foreground)]"
     },
     "popup": {
       "default": "fixed top-1/2 left-1/2 -mt-8 w-96 max-w-[calc(100vw-3rem)] -translate-x-1/2 -translate-y-1/2 rounded-lg bg-gray-50 p-6 text-gray-900 outline outline-1 outline-gray-200 transition-all duration-150 dark:outline-gray-300",
@@ -54,21 +54,21 @@ export const DEFAULT_COMPONENTS: any = {
       "default": "-mt-1.5 mb-1 text-lg font-medium"
     },
     "trigger": {
-      "default": "flex h-10 items-center justify-center rounded-md border border-gray-200 bg-gray-50 px-3.5 text-base font-medium text-gray-900 select-none hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-1 focus-visible:outline-blue-800 active:bg-gray-10"
+      "default": "flex pr-3.5 pl-3.5 justify-center items-center rounded-md border h-10 font-medium leading-6 select-none border-[var(--border)] text-[var(--secondary-foreground)] bg-[var(--secondary)]"
     }
   },
   "field": {
     "control": {
-      "default": "h-10 w-full rounded-md border border-gray-200 pl-3.5 text-base text-gray-900 focus:outline focus:outline-2 focus:-outline-offset-1 focus:outline-blue-800"
+      "default": "pl-3.5 rounded-md border w-full h-10 leading-6 border-[var(--border)] text-[var(--foreground)] bg-[var(--background)]"
     },
     "description": {
-      "default": "text-sm text-gray-600"
+      "default": "leading-5 text-[0.8rem]"
     },
     "error": {
       "default": "text-sm text-red-800"
     },
     "label": {
-      "default": "text-sm font-medium text-gray-900"
+      "default": "text-[1rem] leading-5 font-medium text-[var(--foreground)]"
     },
     "root": {
       "default": "flex w-full max-w-64 flex-col items-start gap-1"
@@ -76,10 +76,10 @@ export const DEFAULT_COMPONENTS: any = {
   },
   "fieldset": {
     "legend": {
-      "default": "border-b border-gray-200 pb-3 text-lg font-medium text-gray-900"
+      "default": "pb-3 border-b leading-7 border-[var(--border)] text-[var(--foreground)] text-[1.5rem]"
     },
     "root": {
-      "default": "flex w-full max-w-64 flex-col gap-4"
+      "default": "flex p-4 flex-col gap-4 rounded-2xl border-2 w-[px] bg-[var(--background)] border-[var(--border)] max-w-[px] h-[px]"
     }
   },
   "menu": {
@@ -127,19 +127,25 @@ export const DEFAULT_COMPONENTS: any = {
   },
   "numberfield": {
     "decrement": {
-      "default": "flex size-10 items-center justify-center rounded-tl-md rounded-bl-md border border-gray-200 bg-gray-50 bg-clip-padding text-gray-900 select-none hover:bg-gray-100 active:bg-gray-100"
+      "default": "flex justify-center items-center rounded-full rounded-tl-md rounded-bl-md border bg-clip-padding select-none border-[var(--border)] text-[var(--destructive-foreground)] bg-[var(--destructive)] w-[40px] max-w-[px] h-[px]"
     },
     "group": {
-      "default": "flex"
+      "default": "flex gap-4"
     },
     "increment": {
-      "default": "flex size-10 items-center justify-center rounded-tr-md rounded-br-md border border-gray-200 bg-gray-50 bg-clip-padding text-gray-900 select-none hover:bg-gray-100 active:bg-gray-100"
+      "default": "flex justify-center items-center rounded-full rounded-tr-md rounded-br-md border bg-clip-padding select-none border-[var(--border)] text-[var(--foreground)] w-[40px] bg-[var(--success)]"
     },
     "input": {
-      "default": "h-10 w-24 border-t border-b border-gray-200 text-center text-base text-gray-900 tabular-nums focus:z-1 focus:outline focus:outline-2 focus:-outline-offset-1 focus:outline-blue-800"
+      "default": "border-t-[px] border-b-[px] w-24 h-10 tabular-nums leading-6 text-center border-[var(--border)] bg-[var(--background)] border border-l-[px] border-r-[px] rounded-full"
     },
     "root": {
-      "default": "flex flex-col items-start gap-1"
+      "default": "flex flex-col gap-1 items-start text-[var(--foreground)]"
+    },
+    "scrub-area": {
+      "default": "text-[var(--foreground)]"
+    },
+    "scrub-area-cursor": {
+      "default": ""
     },
     "scrubarea": {
       "default": "cursor-ew-resize"
@@ -178,25 +184,8 @@ export const DEFAULT_COMPONENTS: any = {
     }
   },
   "select": {
-    "trigger": {
-      "default": "flex h-10 min-w-36 items-center justify-between gap-3 rounded-md border border-gray-200 pr-3 pl-3.5 text-base text-gray-900 select-none hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-1 focus-visible:outline-blue-800 active:bg-gray-100",
-      "data-popup-open": "bg-gray-100"
-    },
     "icon": {
       "default": "flex"
-    },
-    "positioner": {
-      "default": "outline-none"
-    },
-    "scrollUpArrow": {
-      "default": "top-0 z-[1] flex h-4 w-full cursor-default items-center justify-center rounded-md bg-[canvas] text-center text-xs before:absolute before:top-[-100%] before:left-0 before:h-full before:w-full before:content-['']",
-      "data-direction-down": "bottom-0 before:bottom-[-100%]"
-    },
-    "popup": {
-      "default": "group [max-height:var(--available-height)] origin-[var(--transform-origin)] overflow-y-auto rounded-md bg-[canvas] py-1 text-gray-900 shadow-lg shadow-gray-200 outline outline-1 outline-gray-200 transition-[transform,scale,opacity] dark:shadow-none dark:-outline-offset-1 dark:outline-gray-300",
-      "data-ending-style": "scale-90 opacity-0 transition-none",
-      "data-starting-style": "scale-90 opacity-0",
-      "data-side-none": "data-[starting-style]:scale-100 data-[starting-style]:opacity-100 data-[starting-style]:transition-none"
     },
     "item": {
       "default": "grid min-w-[var(--anchor-width)] cursor-default grid-cols-[0.75rem_1fr] items-center gap-2 py-2 pr-4 pl-2.5 text-sm leading-4 outline-none select-none group-data-[side=none]:min-w-[calc(var(--anchor-width)+1rem)] group-data-[side=none]:pr-12 group-data-[side=none]:text-base group-data-[side=none]:leading-4",
@@ -208,36 +197,55 @@ export const DEFAULT_COMPONENTS: any = {
     "itemText": {
       "default": "col-start-2"
     },
+    "popup": {
+      "default": "group [max-height:var(--available-height)] origin-[var(--transform-origin)] overflow-y-auto rounded-md bg-[canvas] py-1 text-gray-900 shadow-lg shadow-gray-200 outline outline-1 outline-gray-200 transition-[transform,scale,opacity] dark:shadow-none dark:-outline-offset-1 dark:outline-gray-300",
+      "data-ending-style": "scale-90 opacity-0 transition-none",
+      "data-side-none": "data-[starting-style]:scale-100 data-[starting-style]:opacity-100 data-[starting-style]:transition-none",
+      "data-starting-style": "scale-90 opacity-0"
+    },
+    "portal": {
+      "default": ""
+    },
+    "positioner": {
+      "default": "outline-none"
+    },
     "scrollDownArrow": {
       "default": "bottom-0 z-[1] flex h-4 w-full cursor-default items-center justify-center rounded-md bg-[canvas] text-center text-xs before:absolute before:top-[-100%] before:left-0 before:h-full before:w-full before:content-['']",
       "data-direction-down": "bottom-0 before:bottom-[-100%]"
     },
-    "portal": {
-      "default": ""
+    "scrollUpArrow": {
+      "default": "top-0 z-[1] flex h-4 w-full cursor-default items-center justify-center rounded-md bg-[canvas] text-center text-xs before:absolute before:top-[-100%] before:left-0 before:h-full before:w-full before:content-['']",
+      "data-direction-down": "bottom-0 before:bottom-[-100%]"
+    },
+    "trigger": {
+      "default": "flex pr-3 pl-3.5 gap-3 justify-between items-center rounded-md border border-[var(--border)] h-10 text-[1rem] leading-6 text-[var(--foreground)] select-none bg-[var(--background)]",
+      "data-popup-open": "bg-gray-100"
     },
     "value": {
       "default": ""
     }
   },
   "collapsible": {
+    "panel": {
+      "default": "flex overflow-hidden flex-col justify-end leading-5 duration-300 text-[var(--foreground)] h-[var(--collapsible-panel-height)] bg-[var(--muted)] rounded-lg ml-[rem] mt-4 mr-[rem] mb-[rem]",
+      "data-ending-style": "h-0",
+      "data-starting-style": "h-0"
+    },
     "root": {
-      "default": "flex min-h-36 w-56 flex-col justify-center text-gray-900"
+      "default": "flex flex-col justify-center w-56 text-[#111827]"
     },
     "trigger": {
-      "default": "group flex items-center gap-2 rounded-sm bg-gray-100 px-2 py-1 text-sm font-medium hover:bg-gray-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-800 active:bg-gray-200"
+      "default": "flex pt-1 pb-1 pl-2 pr-2 gap-2 items-center rounded-sm text-[0.875rem] leading-5 font-medium bg-[#F3F4F6] bg-[var(--muted)] text-[var(--muted-foreground)]"
     },
     "triggerIcon": {
       "default": "size-3 transition-all ease-out",
       "data-panel-open": "rotate-90"
-    },
-    "panel": {
-      "default": "flex h-[var(--collapsible-panel-height)] flex-col justify-end overflow-hidden text-sm transition-all ease-out",
-      "data-ending-style": "h-0",
-      "data-starting-style": "h-0"
     }
   },
   "input": {
-    "input": "h-10 w-full max-w-64 rounded-md border border-gray-200 pl-3.5 text-base text-gray-900 focus:outline focus:outline-2 focus:-outline-offset-1 focus:outline-blue-800"
+    "input": {
+      "default":"bg-[var(--background)] text-[rem] text-[var(--foreground)] focus:outline focus:outline-2 focus:-outline-offset-1 focus:outline-blue-800"
+    }
   }
 };
 

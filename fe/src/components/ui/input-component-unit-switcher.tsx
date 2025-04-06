@@ -21,14 +21,13 @@ function InputComponentUnitSwitcher({
   ...props
 }: InputComponentUnitSwitcher) {
   const [inputValue, setInputValue] = useState<number | string>(
-    value ? parseFloat(value.replace(/[a-zA-Z]+$/, "")) : "",
+    typeof value === "string" ? (value ? parseFloat(value.replace(/[a-zA-Z]+$/, "")) : "") : ""
   );
   const [selectedUnit, setSelectedUnit] = useState<"rem" | "px">(unit);
 
   const updateValue = (newInputValue: number | string) => {
     if (isNaN(Number(newInputValue))) return;
     const newValue = `${newInputValue}${selectedUnit}`;
-    console.log(newValue);
     handleChange(newValue);
   };
 
@@ -36,6 +35,8 @@ function InputComponentUnitSwitcher({
     const newInputValue = e.target.value && parseFloat(e.target.value);
     if (newInputValue) {
       setInputValue(newInputValue);
+    } else {
+      setInputValue("");
     }
   };
 
@@ -50,13 +51,15 @@ function InputComponentUnitSwitcher({
       // Avoid NaN
       if (!isNaN(convertedValue)) {
         setInputValue(convertedValue);
+      } else {
+        setInputValue("");
       }
     }
     setSelectedUnit(newUnit);
   };
 
   useEffect(() => {
-    if (value) {
+    if (typeof value === "string" && value) {
       const valueWithoutUnit = parseFloat(value.replace(/[a-zA-Z]+$/, ""));
       if (!isNaN(valueWithoutUnit)) {
         setInputValue(valueWithoutUnit);
@@ -69,6 +72,8 @@ function InputComponentUnitSwitcher({
   useEffect(() => {
     if (selectedUnit !== undefined && inputValue !== "") {
       updateValue(inputValue);
+    } else {
+      updateValue("");
     }
   }, [inputValue, selectedUnit]);
 

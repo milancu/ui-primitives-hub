@@ -215,19 +215,22 @@ export const styleToTailwind = (style: Style, prefix?: string): string => {
             prefix: prefix,
             useAllDefaultValues:true,
             customTheme: {
+                background:{
+                    'var(--destructiveForeground)': 'bg-[var(--destructive-foreground)]',
+                },
                 color: {
                     'var(--background)': 'text-[var(--background)]',
                     'var(--foreground)': 'text-[var(--foreground)]',
                     'var(--primary)': 'text-[var(--primary)]',
-                    'var(--primaryForeground)': 'text-[var(--primaryForeground)]',
+                    'var(--primaryForeground)': 'text-[var(--primary-foreground)]',
                     'var(--secondary)': 'text-[var(--secondary)]',
-                    'var(--secondaryForeground)': 'text-[var(--secondaryForeground)]',
+                    'var(--secondaryForeground)': 'text-[var(--secondary-foreground)]',
                     'var(--muted)': 'text-[var(--muted)]',
-                    'var(--mutedForeground)': 'text-[var(--mutedForeground)]',
+                    'var(--mutedForeground)': 'text-[var(--muted-foreground)]',
                     'var(--accent)': 'text-[var(--accent)]',
-                    'var(--accentForeground)': 'text-[var(--accentForeground)]',
+                    'var(--accentForeground)': 'text-[var(--accent-foreground)]',
                     'var(--destructive)': 'text-[var(--destructive)]',
-                    'var(--destructiveForeground)': 'text-[var(--destructiveForeground)]',
+                    'var(--destructiveForeground)': 'text-[var(--destructive-foreground)]',
                     'var(--success)': 'text-[var(--success)]',
                     'var(--warning)': 'text-[var(--warning)]',
                     'var(--border)': 'text-[var(--border)]',
@@ -236,15 +239,15 @@ export const styleToTailwind = (style: Style, prefix?: string): string => {
                     'var(--background)': 'border-[var(--background)]',
                     'var(--foreground)': 'border-[var(--foreground)]',
                     'var(--primary)': 'border-[var(--primary)]',
-                    'var(--primaryForeground)': 'border-[var(--primaryForeground)]',
+                    'var(--primaryForeground)': 'border-[var(--primary-foreground)]',
                     'var(--secondary)': 'border-[var(--secondary)]',
-                    'var(--secondaryForeground)': 'border-[var(--secondaryForeground)]',
+                    'var(--secondaryForeground)': 'border-[var(--secondary-foreground)]',
                     'var(--muted)': 'border-[var(--muted)]',
-                    'var(--mutedForeground)': 'border-[var(--mutedForeground)]',
+                    'var(--mutedForeground)': 'border-[var(--muted-foreground)]',
                     'var(--accent)': 'border-[var(--accent)]',
-                    'var(--accentForeground)': 'border-[var(--accentForeground)]',
+                    'var(--accentForeground)': 'border-[var(--accent-foreground)]',
                     'var(--destructive)': 'border-[var(--destructive)]',
-                    'var(--destructiveForeground)': 'border-[var(--destructiveForeground)]',
+                    'var(--destructiveForeground)': 'border-[var(--destructive-foreground)]',
                     'var(--success)': 'border-[var(--success)]',
                     'var(--warning)': 'border-[var(--warning)]',
                     'var(--border)': 'border-[var(--border)]',
@@ -256,6 +259,7 @@ export const styleToTailwind = (style: Style, prefix?: string): string => {
     // if (!conversionResult.data?.[0]?.resultVal) {
     //   throw new Error("Invalid CSS conversion");
     // }
+
 
     return conversionResult.data[0].resultVal;
 };
