@@ -11,7 +11,7 @@ import {
   MenuSeparator,
   MenuTrigger,
 } from "@ui-primitives-hub/ui/src/components/Menu.tsx";
-import { useCurrentPartParam } from "@/hooks/useCurrentPartParam.tsx";
+import { useCurrentPartParam } from "@/hooks/use-current-part-param.tsx";
 import { useComponentStore } from "@/hooks/store/component-store.ts";
 import { getClassName } from "@/lib/utils.ts";
 import { getRawTailwindClasses } from "@ui-primitives-hub/common/src/main.ts";

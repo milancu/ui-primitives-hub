@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import ColorCustomizerPage from "@/features/color-customizer/pages/color-customizer-page.tsx";
 import { fetchProjectColors } from "@/features/color-customizer/api/queries";
+import { useComponentStore } from "@/hooks/store/component-store.ts";
 
 export const Route = createFileRoute(
   "/_authenticated/_canva-layout/$id/color-customizer",
@@ -10,6 +11,7 @@ export const Route = createFileRoute(
       queryKey: [params.id],
       queryFn: () => fetchProjectColors(params.id),
     });
+    useComponentStore.setState({ componentName: undefined });
     return { id: params.id };
   },
   pendingComponent: () => <div>Loading...</div>,

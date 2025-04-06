@@ -5,12 +5,21 @@ import {
   SidebarMenu,
   SidebarMenuItem,
 } from "@/components/ui/sidebar.tsx";
-import { SquareRoundCorner } from "lucide-react";
+import { Scan, SquareRoundCorner } from "lucide-react";
 import InputComponentUnitSwitcher from "@/components/ui/input-component-unit-switcher.tsx";
 import { ColorSelect } from "@/components/ui/color-select.tsx";
 import { useStyleStore } from "@/hooks/store/style-store.ts";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { cn } from "@/lib/utils.ts";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
 
 const NavBorderOutlineEditor = () => {
   const style = useStyleStore((state) => state.style);
@@ -84,66 +93,6 @@ const NavBorderOutlineEditor = () => {
               placeholder={"border radius"}
               icon={SquareRoundCorner}
             />
-            {/*<DropdownMenu>*/}
-            {/*  <DropdownMenuTrigger asChild>*/}
-            {/*    <Button variant="outline" size={"icon"}>*/}
-            {/*      <Scan />*/}
-            {/*    </Button>*/}
-            {/*  </DropdownMenuTrigger>*/}
-            {/*  <DropdownMenuContent className="mr-4 w-56">*/}
-            {/*    <DropdownMenuLabel>Border radius details</DropdownMenuLabel>*/}
-            {/*    <DropdownMenuSeparator />*/}
-            {/*    <DropdownMenuGroup>*/}
-            {/*      <DropdownMenuLabel>*/}
-            {/*        <InputComponentUnitSwitcher*/}
-            {/*          placeholder={"left-top"}*/}
-            {/*          handleChange={(value) => {*/}
-            {/*            handleStyle("borderRadiusTopLeft", value);*/}
-            {/*          }}*/}
-            {/*          value={style?.borderRadiusTopLeft}*/}
-            {/*        />*/}
-            {/*      </DropdownMenuLabel>*/}
-            {/*      <DropdownMenuLabel>*/}
-            {/*        <InputComponentUnitSwitcher*/}
-            {/*          placeholder={"right-top"}*/}
-            {/*          handleChange={(value) => {*/}
-            {/*            handleStyle("borderRadiusTopRight", value);*/}
-            {/*          }}*/}
-            {/*          value={style?.borderRadiusTopRight}*/}
-            {/*        />*/}
-            {/*      </DropdownMenuLabel>*/}
-            {/*      <DropdownMenuLabel>*/}
-            {/*        <InputComponentUnitSwitcher*/}
-            {/*          placeholder={"left-bottom"}*/}
-            {/*          handleChange={(value) => {*/}
-            {/*            handleStyle("borderRadiusBottomLeft", value);*/}
-            {/*          }}*/}
-            {/*          value={style?.borderRadiusBottomLeft}*/}
-            {/*        />*/}
-            {/*      </DropdownMenuLabel>*/}
-            {/*      <DropdownMenuLabel>*/}
-            {/*        <InputComponentUnitSwitcher*/}
-            {/*          placeholder={"right-bottom"}*/}
-            {/*          handleChange={(value) => {*/}
-            {/*            handleStyle("borderRadiusBottomRight", value);*/}
-            {/*          }}*/}
-            {/*          value={style?.borderRadiusBottomRight}*/}
-            {/*        />*/}
-            {/*      </DropdownMenuLabel>*/}
-            {/*    </DropdownMenuGroup>*/}
-            {/*  </DropdownMenuContent>*/}
-            {/*</DropdownMenu>*/}
-          </SidebarMenuItem>
-          <SidebarMenuItem>
-            <InputComponentUnitSwitcher
-              handleChange={(value) => {
-                handleStyle("borderBottomWidth", value);
-              }}
-              placeholder={"border bottom width"}
-              character={"B"}
-              value={style?.borderBottomWidth}
-              unit={"px"}
-            />
           </SidebarMenuItem>
           <SidebarMenuItem className={"flex gap-1"}>
             <InputComponentUnitSwitcher
@@ -155,59 +104,59 @@ const NavBorderOutlineEditor = () => {
               value={style?.borderWidth}
               unit={"px"}
             />
-            {/*<DropdownMenu>*/}
-            {/*  <DropdownMenuTrigger asChild>*/}
-            {/*    <Button variant="outline" size={"icon"}>*/}
-            {/*      <Scan />*/}
-            {/*    </Button>*/}
-            {/*  </DropdownMenuTrigger>*/}
-            {/*  <DropdownMenuContent className="mr-4 w-56">*/}
-            {/*    <DropdownMenuLabel>Border width details</DropdownMenuLabel>*/}
-            {/*    <DropdownMenuSeparator />*/}
-            {/*    <DropdownMenuGroup>*/}
-            {/*      <DropdownMenuLabel>*/}
-            {/*        <InputComponentUnitSwitcher*/}
-            {/*          placeholder={"left"}*/}
-            {/*          value={style?.borderLeftWidth ?? ""}*/}
-            {/*          handleChange={(value) => {*/}
-            {/*            handleStyle("borderLeftWidth", value);*/}
-            {/*          }}*/}
-            {/*          unit={"px"}*/}
-            {/*        />*/}
-            {/*      </DropdownMenuLabel>*/}
-            {/*      <DropdownMenuLabel>*/}
-            {/*        <InputComponentUnitSwitcher*/}
-            {/*          placeholder={"top"}*/}
-            {/*          value={style?.borderTopWidth ?? ""}*/}
-            {/*          handleChange={(value) => {*/}
-            {/*            handleStyle("borderTopWidth", value);*/}
-            {/*          }}*/}
-            {/*          unit={"px"}*/}
-            {/*        />*/}
-            {/*      </DropdownMenuLabel>*/}
-            {/*      <DropdownMenuLabel>*/}
-            {/*        <InputComponentUnitSwitcher*/}
-            {/*          placeholder={"bottom"}*/}
-            {/*          value={style?.borderBottomWidth ?? ""}*/}
-            {/*          handleChange={(value) => {*/}
-            {/*            handleStyle("borderBottomWidth", value);*/}
-            {/*          }}*/}
-            {/*          unit={"px"}*/}
-            {/*        />*/}
-            {/*      </DropdownMenuLabel>*/}
-            {/*      <DropdownMenuLabel>*/}
-            {/*        <InputComponentUnitSwitcher*/}
-            {/*          placeholder={"right"}*/}
-            {/*          value={style?.borderRightWidth ?? ""}*/}
-            {/*          handleChange={(value) => {*/}
-            {/*            handleStyle("borderRightWidth", value);*/}
-            {/*          }}*/}
-            {/*          unit={"px"}*/}
-            {/*        />*/}
-            {/*      </DropdownMenuLabel>*/}
-            {/*    </DropdownMenuGroup>*/}
-            {/*  </DropdownMenuContent>*/}
-            {/*</DropdownMenu>*/}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" size={"icon"}>
+                  <Scan />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="mr-4 w-56">
+                <DropdownMenuLabel>Border width details</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuGroup>
+                  <DropdownMenuLabel>
+                    <InputComponentUnitSwitcher
+                      placeholder={"left"}
+                      value={style?.borderLeftWidth}
+                      handleChange={(value) => {
+                        handleStyle("borderLeftWidth", value);
+                      }}
+                      unit={"px"}
+                    />
+                  </DropdownMenuLabel>
+                  <DropdownMenuLabel>
+                    <InputComponentUnitSwitcher
+                      placeholder={"top"}
+                      value={style?.borderTopWidth}
+                      handleChange={(value) => {
+                        handleStyle("borderTopWidth", value);
+                      }}
+                      unit={"px"}
+                    />
+                  </DropdownMenuLabel>
+                  <DropdownMenuLabel>
+                    <InputComponentUnitSwitcher
+                      placeholder={"bottom"}
+                      value={style?.borderBottomWidth}
+                      handleChange={(value) => {
+                        handleStyle("borderBottomWidth", value);
+                      }}
+                      unit={"px"}
+                    />
+                  </DropdownMenuLabel>
+                  <DropdownMenuLabel>
+                    <InputComponentUnitSwitcher
+                      placeholder={"right"}
+                      value={style?.borderRightWidth}
+                      handleChange={(value) => {
+                        handleStyle("borderRightWidth", value);
+                      }}
+                      unit={"px"}
+                    />
+                  </DropdownMenuLabel>
+                </DropdownMenuGroup>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </SidebarMenuItem>
           <SidebarMenuItem>
             <ColorSelect
@@ -218,34 +167,6 @@ const NavBorderOutlineEditor = () => {
               }}
             />
           </SidebarMenuItem>
-          {/*<SidebarMenuItem>*/}
-          {/*  <InputComponentUnitSwitcher*/}
-          {/*    value={style?.outlineWidth}*/}
-          {/*    handleChange={(value) => {*/}
-          {/*      handleStyle("outlineWidth", value);*/}
-          {/*    }}*/}
-          {/*    placeholder={"outline width"}*/}
-          {/*    character={"O"}*/}
-          {/*  />*/}
-          {/*</SidebarMenuItem>*/}
-          {/*<SidebarMenuItem>*/}
-          {/*  <ColorSelect*/}
-          {/*    placeholder={"Outline color"}*/}
-          {/*    value={style?.outlineColor}*/}
-          {/*    handleChange={(newValue) => {*/}
-          {/*      handleStyle("outlineColor", newValue);*/}
-          {/*    }}*/}
-          {/*  />*/}
-          {/*</SidebarMenuItem>*/}
-          {/*<SidebarMenuItem>*/}
-          {/*  <Input*/}
-          {/*    placeholder={"outline style"}*/}
-          {/*    type={"text"}*/}
-          {/*    onChange={(e) => {*/}
-          {/*      handleStyle("outlineStyle", e.target.value);*/}
-          {/*    }}*/}
-          {/*  />*/}
-          {/*</SidebarMenuItem>*/}
         </SidebarMenu>
       </SidebarGroupContent>
     </SidebarGroup>

@@ -1,6 +1,6 @@
 import { Skeleton } from "@/components/ui/skeleton";
 import Preview from "@/features/preview/components/preview.tsx";
-import { useCurrentPartParam } from "@/hooks/useCurrentPartParam.tsx";
+import { useCurrentPartParam } from "@/hooks/use-current-part-param.tsx";
 import { useComponentStore } from "@/hooks/store/component-store.ts";
 import { getRawTailwindClasses } from "@ui-primitives-hub/common/src/main.ts";
 import {

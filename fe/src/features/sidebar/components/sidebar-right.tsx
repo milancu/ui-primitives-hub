@@ -10,8 +10,8 @@ import NavEditor from "@/features/sidebar/components/nav-editor/nav-editor.tsx";
 import NavEditorHeader from "@/features/sidebar/components/nav-editor/nav-editor-header.tsx";
 import { Button } from "@/components/ui/button.tsx";
 import { useResetStyle } from "@/hooks/mutations/useResetStyle.ts";
-import { useCurrentPartParam } from "@/hooks/useCurrentPartParam.tsx";
-import { useCurrenStateParam } from "@/hooks/useCurrenStateParam.tsx";
+import { useCurrentPartParam } from "@/hooks/use-current-part-param.tsx";
+import { useCurrentStateParam } from "@/hooks/use-current-state-param.tsx";
 import { useProjectStore } from "@/hooks/store/project-store.ts";
 import { useComponentStore } from "@/hooks/store/component-store.ts";
 import { useStyleStore } from "@/hooks/store/style-store";
@@ -21,7 +21,7 @@ export function SidebarRight({
 }: React.ComponentProps<typeof Sidebar>) {
   const { mutateAsync, isPending } = useResetStyle();
   const [currentPart] = useCurrentPartParam();
-  const [state] = useCurrenStateParam();
+  const [state] = useCurrentStateParam();
   const projectId = useProjectStore((state) => state.projectId);
   const componentName = useComponentStore((state) => state.componentName);
   const initializeStyle = useStyleStore((state) => state.initializeStyle);

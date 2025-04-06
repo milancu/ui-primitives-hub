@@ -2,11 +2,8 @@ import {Select as SelectPrimitives} from "@base-ui-components/react/select";
 import React from "react";
 import {cn} from "../lib/utils.ts";
 
-const SelectRoot = React.forwardRef((props) => (
-  <SelectPrimitives.Root
-    {...props}
-  />
-)) as typeof SelectPrimitives.Root;
+const SelectRoot = SelectPrimitives.Root
+
 
 const SelectTrigger = React.forwardRef<
   React.ElementRef<typeof SelectPrimitives.Trigger>,
@@ -163,7 +160,6 @@ const SelectSeparator = React.forwardRef<
     {...props}
   />
 ));
-
 
 
 function ChevronUpDownIcon(props: React.ComponentProps<'svg'>) {

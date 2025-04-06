@@ -2,11 +2,7 @@ import {Popover as PopoverPrimitives} from "@base-ui-components/react/popover";
 import React from "react";
 import {cn} from "../lib/utils.ts";
 
-const PopoverRoot = React.forwardRef((props) => (
-  <PopoverPrimitives.Root
-    {...props}
-  />
-)) as typeof PopoverPrimitives.Root;
+const PopoverRoot = PopoverPrimitives.Root
 
 const PopoverTrigger = React.forwardRef<
   React.ElementRef<typeof PopoverPrimitives.Trigger>,

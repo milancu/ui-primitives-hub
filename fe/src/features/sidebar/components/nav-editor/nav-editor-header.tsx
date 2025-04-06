@@ -1,13 +1,13 @@
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Skeleton } from "@/components/ui/skeleton.tsx";
-import { useCurrenStateParam } from "@/hooks/useCurrenStateParam.tsx";
+import { useCurrentStateParam } from "@/hooks/use-current-state-param.tsx";
 import { usePartStates } from "@/hooks/queries/usePartStates.ts";
-import { useCurrentPartParam } from "@/hooks/useCurrentPartParam.tsx";
+import { useCurrentPartParam } from "@/hooks/use-current-part-param.tsx";
 import { useProjectStore } from "@/hooks/store/project-store.ts";
 import { useComponentStore } from "@/hooks/store/component-store.ts";
 
 const NavEditorHeader = () => {
-  const [state, setState] = useCurrenStateParam();
+  const [state, setState] = useCurrentStateParam();
   const [currentPart] = useCurrentPartParam();
   const projectId = useProjectStore((state) => state.projectId);
   const componentName = useComponentStore((state) => state.componentName);

@@ -1,5 +1,5 @@
 import { createFileRoute, Outlet } from "@tanstack/react-router";
-import { useCurrentPartParam } from "@/hooks/useCurrentPartParam.tsx";
+import { useCurrentPartParam } from "@/hooks/use-current-part-param.tsx";
 import { useProjectTabs } from "@/hooks/use-project-tabs.ts";
 import {
   SidebarInset,
@@ -12,8 +12,14 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs.tsx";
 import { Separator } from "@/components/ui/separator.tsx";
 import AppBreadcrumb from "@/features/breadcrumb/components/app-breadcrumb.tsx";
 import { SidebarRight } from "@/features/sidebar/components/sidebar-right.tsx";
+import { useProjectStore } from "@/hooks/store/project-store.ts";
 
 export const Route = createFileRoute("/_authenticated/_canva-layout")({
+  loader: ({ params }:{params:any}) => {
+    useProjectStore.setState({
+      projectId: params.id,
+    });
+  },
   component: RouteComponent,
 });
 

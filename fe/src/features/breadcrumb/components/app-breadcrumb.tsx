@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/breadcrumb.tsx";
 import { useEffect, useState } from "react";
 import { useLocation } from "@tanstack/react-router";
-import { useCurrentPartParam } from "@/hooks/useCurrentPartParam.tsx";
+import { useCurrentPartParam } from "@/hooks/use-current-part-param.tsx";
 
 const AppBreadcrumb = () => {
   const location = useLocation();

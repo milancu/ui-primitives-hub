@@ -21,8 +21,12 @@ export const useStyleStore = create<StyleStore>((set) => ({
     set({ style: newStyle });
   },
   handleStyle: (key, value) => {
-    set((state) => ({
-      style: { ...(state.style || {}), [key]: value },
-    }));
+    set((state) => {
+      const current = state.style?.[key];
+      if (current === value) return state;
+      return {
+        style: { ...(state.style || {}), [key]: value },
+      };
+    });
   },
 }));

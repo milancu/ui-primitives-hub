@@ -41,7 +41,7 @@ const ProjectTabList = () => {
 
   return (
     <>
-      <div className={"flex h-full items-center"}>
+      <div className={"flex h-full items-center overflow-auto"}>
         {tabs.map((tab: Tab) => (
           <ProjectTab
             id={tab.id}

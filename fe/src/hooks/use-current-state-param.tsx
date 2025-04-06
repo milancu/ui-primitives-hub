@@ -1,7 +1,8 @@
 import { useQueryState } from "nuqs";
 
-export const useCurrenStateParam = () => {
+export const useCurrentStateParam = () => {
   return useQueryState("state", {
     defaultValue: "default",
+    history: 'push',
   });
 };

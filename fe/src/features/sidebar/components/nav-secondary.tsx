@@ -6,10 +6,10 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar.tsx";
 import { Link, useLocation, useParams } from "@tanstack/react-router";
-import { useCurrenStateParam } from "@/hooks/useCurrenStateParam.tsx";
+import { useCurrentStateParam } from "@/hooks/use-current-state-param.tsx";
 
 export function NavSecondary() {
-  const [, setState] = useCurrenStateParam();
+  const [, setState] = useCurrentStateParam();
   const { pathname } = useLocation();
   const { id } = useParams({ strict: false });
 

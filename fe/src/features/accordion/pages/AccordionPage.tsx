@@ -7,7 +7,7 @@ import {
   AccordionRoot,
   AccordionTrigger,
 } from "@ui-primitives-hub/ui/src/components/Accordion.tsx";
-import { useCurrentPartParam } from "@/hooks/useCurrentPartParam.tsx";
+import { useCurrentPartParam } from "@/hooks/use-current-part-param.tsx";
 import { getClassName } from "@/lib/utils.ts";
 import { useComponentStore } from "@/hooks/store/component-store.ts";
 import { getRawTailwindClasses } from "@ui-primitives-hub/common/src/main.ts";

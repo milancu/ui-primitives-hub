@@ -1,5 +1,5 @@
 import { Frame, Layers } from "lucide-react";
-import { useCurrentPartParam } from "@/hooks/useCurrentPartParam.tsx";
+import { useCurrentPartParam } from "@/hooks/use-current-part-param.tsx";
 import { ComponentHierarchy } from "@ui-primitives-hub/types";
 import {
   Card,

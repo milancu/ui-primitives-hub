@@ -9,8 +9,8 @@ import NavTextEditor from "@/features/sidebar/components/nav-editor/nav-text-edi
 import NavOtherPropertiesEditor from "@/features/sidebar/components/nav-editor/nav-other-properties-editor.tsx";
 import { useEffect } from "react";
 import { useProjectStore } from "@/hooks/store/project-store";
-import { useCurrentPartParam } from "@/hooks/useCurrentPartParam.tsx";
-import { useCurrenStateParam } from "@/hooks/useCurrenStateParam.tsx";
+import { useCurrentPartParam } from "@/hooks/use-current-part-param.tsx";
+import { useCurrentStateParam } from "@/hooks/use-current-state-param.tsx";
 import { useComponentStore } from "@/hooks/store/component-store.ts";
 import { useStyleStore } from "@/hooks/store/style-store.ts";
 import { styleToTailwind } from "@ui-primitives-hub/common/src/main.ts";
@@ -28,7 +28,7 @@ const NavEditor = () => {
   const initializeStyle = useStyleStore((state) => state.initializeStyle);
 
   const [currentPart] = useCurrentPartParam();
-  const [currentState] = useCurrenStateParam();
+  const [currentState] = useCurrentStateParam();
 
   const { mutate } = useUpdateStyle();
   const debouncedMutate = useDebouncedCallback(mutate, 1000);

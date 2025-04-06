@@ -57,8 +57,6 @@ const ColorSelect = ({
     return null;
   }
 
-  console.log(value);
-
   return (
     <Select
       value={value || ""}
@@ -76,23 +74,23 @@ const ColorSelect = ({
           const darkValue = darkColorScheme[key];
           return (
             <SelectItem key={key} value={`var(--${key})`}>
-          <span className="flex items-center gap-2">
-            <ColorDot
-              className={`text-[var(--${key})]`}
-              style={{
-                [`--${key}`]: `oklch(${value.l} ${value.c} ${value.h})`,
-              }}
-            />
-            <ColorDot
-              className={`text-[var(--${key})]`}
-              style={{
-                [`--${key}`]: `oklch(${darkValue.l} ${darkValue.c} ${darkValue.h})`,
-              }}
-            />
-            <span className="truncate">
-              <strong>{formatColorKey(key)}</strong>
-            </span>
-          </span>
+              <span className="flex items-center gap-2">
+                <ColorDot
+                  className={`text-[var(--${key})]`}
+                  style={{
+                    [`--${key}`]: `oklch(${value.l} ${value.c} ${value.h})`,
+                  }}
+                />
+                <ColorDot
+                  className={`text-[var(--${key})]`}
+                  style={{
+                    [`--${key}`]: `oklch(${darkValue.l} ${darkValue.c} ${darkValue.h})`,
+                  }}
+                />
+                <span className="truncate">
+                  <strong>{formatColorKey(key)}</strong>
+                </span>
+              </span>
             </SelectItem>
           );
         })}
