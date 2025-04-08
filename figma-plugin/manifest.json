@@ -1,20 +1,8 @@
 {
-  "name": "figma-plugin",
+  "name": "UI Primitives Hub Plugin",
   "id": "1491137782600255222",
   "api": "1.0.0",
   "main": "dist/code.js",
   "ui": "dist/ui.html",
-  "capabilities": [],
-  "enableProposedApi": false,
-  "documentAccess": "dynamic-page",
-  "editorType": [
-    "figma",
-    "figjam",
-    "slides"
-  ],
-  "networkAccess": {
-    "allowedDomains": [
-      "none"
-    ]
-  }
+  "editorType": ["figma"]
 }

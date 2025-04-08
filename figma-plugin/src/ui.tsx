@@ -1,19 +1,11 @@
 import * as React from 'react';
-import {App} from './App';
-import 'react-figma/rpc';
-import {render} from 'react-figma';
-import {ClientApp} from './ClientApp';
-import {createRoot} from "react-dom/client";
+import { createRoot } from 'react-dom/client';
+import { ClientApp } from './ClientApp';
 
-
-render(
-  <App/>
-);
-
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', () => {
   const container = document.getElementById('react-page');
   if (container) {
     const root = createRoot(container);
-    root.render(<ClientApp/>);
+    root.render(<ClientApp />);
   }
 });

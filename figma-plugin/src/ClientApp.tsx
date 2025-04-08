@@ -1,15 +1,31 @@
 import * as React from 'react';
+import {render} from "react-figma";
+import {Accordion} from "./Accordion";
+import {Collapsible} from "./Collapsible";
 
 export const ClientApp = () => {
+  const generateComponent = (componentName: string) => {
+    switch (componentName) {
+      case "accordion":
+        return render(
+            <Accordion/>
+        );
+      case "collapsible":
+        return render(
+            <Collapsible/>
+        );
+    }
+
+  };
 
   return (
     <div>
       <div>
-        <button aria-label="Increment value">
-          Increment
+        <button onClick={() => generateComponent('accordion')}>
+          Generate Accordion
         </button>
-        <button aria-label="Decrement value">
-          Decrement
+        <button onClick={() => generateComponent('collapsible')}>
+          Generate Collapsible
         </button>
       </div>
     </div>
