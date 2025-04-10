@@ -9,10 +9,7 @@ import cors from "cors";
 dotenv.config();
 
 const app = express();
-app.use(express.json(), cors({
-  origin: process.env.FRONTEND_URL,
-  credentials: true
-}));
+app.use(express.json(), cors());
 
 app.use("/auth", [authRouter, verifyRoute]);
 app.use('/projects', [projectsRouter, componentsRouter])

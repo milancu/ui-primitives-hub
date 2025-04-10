@@ -2,9 +2,9 @@ import axios from "axios";
 import crypto from "crypto";
 import * as dotenv from "dotenv";
 import {auth, db} from "../firebase.js";
-import { generatePKCE } from "../utils/pkce.js";
+import {generatePKCE} from "../utils/pkce.js";
 import {ProjectService} from "./project.service.js";
-import { User } from "@ui-primitives-hub/types";
+import {User} from "@ui-primitives-hub/types";
 
 const DEVICE_CODES_REF = "deviceCodes";
 const CODE_EXPIRATION = 15 * 60 * 1000;
@@ -37,7 +37,7 @@ export class AuthService {
 
     await db.ref(`${DEVICE_CODES_REF}/${deviceCode}`).update({
       status: "approved",
-      token:token,
+      token: token,
     });
   }
 
@@ -144,9 +144,18 @@ export class AuthService {
   };
 
   static generateFrontendRedirectUrl = async (uid: string) => {
-    const firebaseToken = await auth.createCustomToken(uid);
+    const firebaseToken = this.generateToken(uid);
     return `${process.env.FRONTEND_URL}/auth/callback?token=${firebaseToken}`;
   };
+
+  static generateToken = async (uid: string) => {
+    return await auth.createCustomToken(uid);
+  };
+
+  static async getFigmaUser(id: string): Promise<any> {
+    const uid = `figma:${id}`;
+    return await auth.getUser(uid);
+  }
 
   static async getOrCreateUser(figmaUser: any): Promise<User> {
     const uid = `figma:${figmaUser.id}`;

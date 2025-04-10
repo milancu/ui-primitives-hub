@@ -1,5 +1,5 @@
 import express from "express";
-import { AuthService } from "../services/auth.service.js";
+import {AuthService} from "../services/auth.service.js";
 
 const router = express.Router();
 
@@ -29,6 +29,22 @@ router.get("/figma", (req, res) => {
   const url = AuthService.buildFigmaAuthUrl();
   res.redirect(url);
 });
+
+router.get('/figma/token', async (req, res) => {
+  try {
+    const {figmaId} = req.query;
+    if (!figmaId) {
+      res.status(400).json({error: 'Missing figmaId'});
+    }
+    const user = await AuthService.getFigmaUser(figmaId as string)
+    const token = await  AuthService.generateToken(user.uid)
+    console.log(token)
+    res.json(token)
+  } catch (error: any) {
+    console.error('Get token error:', error.message);
+    res.status(500).json({error: error.message});
+  }
+})
 
 router.get("/figma/callback", async (req: any, res: any) => {
   const {code, state} = req.query;
