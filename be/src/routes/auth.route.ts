@@ -37,8 +37,7 @@ router.get('/figma/token', async (req, res) => {
       res.status(400).json({error: 'Missing figmaId'});
     }
     const user = await AuthService.getFigmaUser(figmaId as string)
-    const token = await  AuthService.generateToken(user.uid)
-    console.log(token)
+    const token = await AuthService.generateToken(user.uid)
     res.json(token)
   } catch (error: any) {
     console.error('Get token error:', error.message);

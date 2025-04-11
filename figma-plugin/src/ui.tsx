@@ -1,22 +1,26 @@
 import * as React from 'react';
-import {createRoot} from 'react-dom/client';
-import {ClientApp} from './ClientApp';
+import { createRoot } from 'react-dom/client';
+import { ClientApp } from './ClientApp';
 
 function AppWrapper() {
-  const [currentUser, setCurrentUser] = React.useState<any | null>(null);
+  const [data, setData] = React.useState<any | null>(null);
 
   React.useEffect(() => {
-    window.onmessage = (event) => {
-      const message = event.data.pluginMessage;
-      if (message?.type === 'INIT_DATA') {
-        setCurrentUser(message.payload.foo);
+    const handleMessage = (event: MessageEvent) => {
+      const msg = event.data.pluginMessage;
+      if (msg?.type === 'INIT_DATA') {
+        setData(msg.payload.foo);
       }
     };
+
+    window.addEventListener('message', handleMessage);
+
+    return () => window.removeEventListener('message', handleMessage);
   }, []);
 
-  if (currentUser === null) return <div>Loading…</div>;
+  if (data === null) return <div>Loading...</div>;
 
-  return <ClientApp currentUser={currentUser} />;
+  return <ClientApp currentUser={data} />;
 }
 
 document.addEventListener('DOMContentLoaded', () => {

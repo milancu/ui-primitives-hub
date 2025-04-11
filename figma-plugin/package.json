@@ -15,6 +15,7 @@
   "devDependencies": {
     "@figma/eslint-plugin-figma-plugins": "*",
     "@figma/plugin-typings": "^1.109.0",
+    "@types/chroma-js": "^3.1.1",
     "@types/react": "^19.1.0",
     "@types/react-dom": "^19.1.1",
     "@typescript-eslint/eslint-plugin": "^8.29.1",
@@ -27,8 +28,14 @@
     "webpack-cli": "^3.3.12"
   },
   "dependencies": {
+    "@ui-primitives-hub/common": "workspace:*",
+    "@ui-primitives-hub/types": "workspace:*",
+    "chroma-js": "^3.1.2",
+    "dotenv": "^16.4.7",
+    "firebase": "^11.4.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-figma": "^0.31.0"
+    "react-figma": "^0.31.0",
+    "zustand": "^5.0.3"
   }
 }

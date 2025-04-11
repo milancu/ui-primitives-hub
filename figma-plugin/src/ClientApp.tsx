@@ -10,6 +10,15 @@ import {Menu} from "./Menu";
 import {NumberField} from "./NumberField";
 import {Popover} from "./Popover";
 import {Select} from './Select';
+import {signInWithCustomToken} from "firebase/auth";
+import {auth} from "./firebase";
+import {useProjectStore} from "./project-store";
+import {useAuthStore} from "./auth-store";
+import dotenv from "dotenv";
+import {useComponentStore} from "./component-store";
+import chroma from 'chroma-js';
+
+dotenv.config();
 
 const components = [
   'accordion',
@@ -32,10 +41,16 @@ interface ClientAppProps {
 }
 
 export const ClientApp = ({currentUser}: ClientAppProps) => {
-  const [token, setToken] = React.useState<string | null>("eyJhbGciOiJSUzI1NiIsImtpZCI6IjMwYjIyMWFiNjU2MTdiY2Y4N2VlMGY4NDYyZjc0ZTM2NTIyY2EyZTQiLCJ0eXAiOiJKV1QifQ.eyJuYW1lIjoiUGh1b25nIERvbmcgQ3UiLCJwaWN0dXJlIjoiaHR0cHM6Ly93d3cuZ3JhdmF0YXIuY29tL2F2YXRhci8xMWY5NmNiYzk0YjlhYTQ1MDhmNDJlYTg2YTM0M2FhNj9zaXplPTI0MCZkZWZhdWx0PWh0dHBzJTNBJTJGJTJGczMtYWxwaGEuZmlnbWEuY29tJTJGc3RhdGljJTJGdXNlcl9wX3YyLnBuZyIsImlzcyI6Imh0dHBzOi8vc2VjdXJldG9rZW4uZ29vZ2xlLmNvbS9kYi1jb21wb25lbnRzLTU4ZjA2IiwiYXVkIjoiZGItY29tcG9uZW50cy01OGYwNiIsImF1dGhfdGltZSI6MTc0MzA4MTc1MCwidXNlcl9pZCI6ImZpZ21hOjEwNDE4MjgzNzUwMjEwMzMzMDQiLCJzdWIiOiJmaWdtYToxMDQxODI4Mzc1MDIxMDMzMzA0IiwiaWF0IjoxNzQzMDkwODY3LCJleHAiOjE3NDMwOTQ0NjcsImVtYWlsIjoicGh1b25nLmRvbmcuY3VAZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJmaXJlYmFzZSI6eyJpZGVudGl0aWVzIjp7ImVtYWlsIjpbInBodW9uZy5kb25nLmN1QGdtYWlsLmNvbSJdfSwic2lnbl9pbl9wcm92aWRlciI6ImN1c3RvbSJ9fQ.oZCB-Zg3u_tuu9fUc4ixYSVyLIMbmxhoVruTALDf-ZWE-DLAsen5piiwx1GYwZxKiCTsaWH4Y9H6fCuXHlWXW5w2-z3XxtwzQi65X90a4uIUzGGcvGEj51hOfkBcb6zn_JF397ck9GligaoU-MozEKnt0AyYgXZ14zuz4_8IR5__tFdVp3Qyr9-EVRw47woPw3DQA36Knva41xl-2rGSll7V56BKV_3HIBlkHWg7aRETI78ptSsVTWL8iozVeh8JT9YPUso_nOb34LYq-P8sxzdl75AvmwRb7a13pTDAOT-x4hTecIXVofWOe9n0jNcY7VYEir_fLfCXlNFU7YXzeA")
-  const [authInProgress, setAuthInProgress] = React.useState(false);
+  const [token, setToken] = React.useState<string | null>()
   const [error, setError] = React.useState<string | null>(null);
-  // const token = 'eyJhbGciOiJSUzI1NiIsImtpZCI6IjcxMTE1MjM1YTZjNjE0NTRlZmRlZGM0NWE3N2U0MzUxMzY3ZWViZTAiLCJ0eXAiOiJKV1QifQ.eyJuYW1lIjoiUGh1b25nIERvbmcgQ3UiLCJwaWN0dXJlIjoiaHR0cHM6Ly93d3cuZ3JhdmF0YXIuY29tL2F2YXRhci8xMWY5NmNiYzk0YjlhYTQ1MDhmNDJlYTg2YTM0M2FhNj9zaXplPTI0MCZkZWZhdWx0PWh0dHBzJTNBJTJGJTJGczMtYWxwaGEuZmlnbWEuY29tJTJGc3RhdGljJTJGdXNlcl9wX3YyLnBuZyIsImlzcyI6Imh0dHBzOi8vc2VjdXJldG9rZW4uZ29vZ2xlLmNvbS9kYi1jb21wb25lbnRzLTU4ZjA2IiwiYXVkIjoiZGItY29tcG9uZW50cy01OGYwNiIsImF1dGhfdGltZSI6MTc0MzY4NjkwNywidXNlcl9pZCI6ImZpZ21hOjEwNDE4MjgzNzUwMjEwMzMzMDQiLCJzdWIiOiJmaWdtYToxMDQxODI4Mzc1MDIxMDMzMzA0IiwiaWF0IjoxNzQ0MzE3MDU1LCJleHAiOjE3NDQzMjA2NTUsImVtYWlsIjoicGh1b25nLmRvbmcuY3VAZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJmaXJlYmFzZSI6eyJpZGVudGl0aWVzIjp7ImVtYWlsIjpbInBodW9uZy5kb25nLmN1QGdtYWlsLmNvbSJdfSwic2lnbl9pbl9wcm92aWRlciI6ImN1c3RvbSJ9fQ.RIl0GaBHK9t4KNPfvxYm5-rosaQDbYRhgLDvMs8VIygxSeCOJX3Qspa1ZJE2uquCxfKI_-qyNAfl5U3TzYK-1HB0WTmtrF21eG-2a5Ie3hEwdvANj-rv56VZnCWDztB3t-Kuthg4cpGtq4QJ-2lx9xzbHaHLUz11by-Bqjrb4u3q9ZASJUxFaILavkvxoRf9gM7jssTrf0XPzruqQcf4t4COQQVOvOIRcnA4AuwQPqzAEOdDMEN2suRr-A2CJZWXSkloTlZ7Q2US_GZnl9GjbwW4upbZ80cVeS1GNbo1TLMiMd7yYjiPFV0-9JoFJvgIdPKscSnHN8FWEhvS33dWJg'
+  const [projects, setProjects] = React.useState<any[]>([]);
+  const projectId = useProjectStore((state) => state.projectId);
+  const setProjectId = useProjectStore((state) => state.setProjectId);
+  const accessToken = useAuthStore((state) => state.accessToken);
+  const setAccessToken = useAuthStore((state) => state.setAccessToken);
+  const setParts = useComponentStore((state) => state.setParts);
+  const setColors = useComponentStore((state) => state.setColors);
+
 
   const generateComponent = (componentName: string) => {
     switch (componentName) {
@@ -84,7 +99,7 @@ export const ClientApp = ({currentUser}: ClientAppProps) => {
 
   React.useEffect(() => {
     if (!currentUser) return;
-    fetch(`https://ui-primitives-hub-be.onrender.com/auth/figma/token?figmaId=${currentUser.id}`)
+    fetch(`${process.env.BACKEND_API_URL}/auth/figma/token?figmaId=${currentUser.id}`)
       .then(response => {
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
@@ -104,25 +119,96 @@ export const ClientApp = ({currentUser}: ClientAppProps) => {
   React.useEffect(() => {
     if (!token) return;
 
-    fetch('https://ui-primitives-hub-be.onrender.com/projects', {
+    signInWithCustomToken(auth, token)
+      .then((r) => {
+        setAccessToken((r.user as any).accessToken)
+      })
+      .catch((error) => {
+        console.error("Authentication error:", error);
+        const errorMessage =
+          error.code === "auth/invalid-custom-token"
+            ? "Invalid token"
+            : "Authentication failed";
+        setError(errorMessage);
+      });
+  }, [token])
+
+  React.useEffect(() => {
+    if (!accessToken) return;
+    fetch(`${process.env.BACKEND_API_URL}/projects`, {
       method: 'GET',
       headers: {
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${accessToken}`
       }
     }).then(r => r.json()).then(data =>
-      console.log(data)
+      setProjects(data)
     )
-  }, [token])
+  }, [accessToken])
+
+
+  React.useEffect(() => {
+    if (!projectId || !accessToken) return;
+    fetch(`${process.env.BACKEND_API_URL}/projects/${projectId}/components/accordion/parts`, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${accessToken}`
+      }
+    }).then(r => r.json()).then(data => {
+        setParts(data)
+      }
+    )
+  }, [projectId, accessToken])
+
+  React.useEffect(() => {
+    if (!projectId || !accessToken) return;
+    fetch(`${process.env.BACKEND_API_URL}/projects/${projectId}/colors`, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${accessToken}`
+      }
+    }).then(r => r.json())
+      .then(data => {
+        const colors = data.light;
+        const colorHexes: Record<string, string> = {};
+
+
+        Object.keys(colors).forEach(key => {
+          const colorValues = colors[key];
+          if (colorValues.c !== undefined && colorValues.h !== undefined && colorValues.l !== undefined) {
+            const color = chroma.oklch(colorValues.l, colorValues.c, colorValues.h);
+            colorHexes[key] = color.hex();
+          } else {
+            console.log(`Invalid data for ${key}`);
+          }
+        });
+
+        setColors(colorHexes);
+      })
+      .catch(error => console.error("Error:", error));
+  }, [projectId, accessToken])
 
   return (
     <div>
-      <div>
-        {components.map(component => (
-          <button key={component} onClick={() => generateComponent(component)}>{component}</button>
+      Please select a project:
+      <select onChange={e => setProjectId(e.target.value)} defaultValue={projectId}>
+        {projects.map(project => (
+          <option key={project.id} value={project.id}>{project.name}</option>
         ))}
+      </select>
+      <div>
+        {projectId && <div>
+          Selected project: {projectId}
+        </div>}
       </div>
+      {projectId && <div>
+        Component:
+        <div>
+          {components.map(component => (
+            <button key={component} onClick={() => generateComponent(component)}>{component}</button>
+          ))}
+        </div>
+      </div>}
       <div className="container">
-        <h1>Connect to Service</h1>
         {error && <div className="error">{error}</div>}
       </div>
     </div>

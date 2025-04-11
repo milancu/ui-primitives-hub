@@ -144,7 +144,7 @@ export class AuthService {
   };
 
   static generateFrontendRedirectUrl = async (uid: string) => {
-    const firebaseToken = this.generateToken(uid);
+    const firebaseToken = await this.generateToken(uid);
     return `${process.env.FRONTEND_URL}/auth/callback?token=${firebaseToken}`;
   };
 
