@@ -1,5 +1,8 @@
 import * as React from 'react';
 import {Frame, Page, Svg, Text} from 'react-figma';
+import {useComponentStore} from "./component-store";
+import {convertStringToStyle, getRawTailwindClasses} from "@ui-primitives-hub/common/src/main";
+import {transformStyle} from "./utils";
 
 const PlusIcon = () => (
   <Svg source={` <svg
@@ -33,72 +36,102 @@ const MinusIcon = () => (
 export const NumberField = () => {
   const [value, setValue] = React.useState(100);
 
+  const parts = useComponentStore.getState().parts;
+  const colors = useComponentStore.getState().colors;
+
+  if (!parts || !colors)
+    return (
+      <Text>
+        Loading...
+      </Text>
+    );
+
+  const tailwind = Object.keys(parts).reduce(
+    (acc: Record<string, { layout: Record<string, any>; text: Record<string, any> }>, key) => {
+      const tailwind = getRawTailwindClasses(parts[key])
+      const style = convertStringToStyle(tailwind);
+      acc[key] = transformStyle(style, colors);
+      return acc;
+    },
+    {},
+  );
+
+  console.log(tailwind)
+  console.log(parts)
+
+  const {decrement, increment, input, group, root} = tailwind;
+
+
   return (
     <Page isCurrent>
-      <Frame style={{
-      }}>
-        <Frame name={'root'} style={{
-          alignSelf: 'stretch',
-          flexDirection: 'column'
-        }}>
-          <Frame name={'label'}>
+      <Frame name={'root'} layoutMode={'VERTICAL'}
+             primaryAxisSizingMode={'AUTO'}
+             itemSpacing={root.layout.gap}
+      >
+        <Frame name={'label'}>
+          <Text style={{
+            color: '#676767',
+            fontSize: 10,
+            fontWeight: '500',
+            marginBottom: 4,
+            ...root.text
+          }}>
+            Amount
+          </Text>
+        </Frame>
+        <Frame name={'group'}
+               layoutMode={'HORIZONTAL'}
+               itemSpacing={group.layout.gap}
+        >
+          <Frame name={'decrement'} onSelectionEnter={() => setValue(prevState => prevState - 1)} style={{
+            width: 30,
+            height: 30,
+            backgroundColor: '#939393',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            // borderTopLeftRadius: 4,
+            // borderBottomLeftRadius: 4,
+            borderWidth: 1,
+            borderColor: '#6e6e6e',
+            ...decrement.layout
+          }}>
+            <MinusIcon/>
+          </Frame>
+          <Frame name={'input'} style={{
+            height: 30,
+            width: 60,
+            borderWidth: 1,
+            borderColor: '#6e6e6e',
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center',
+            paddingHorizontal: 8,
+            ...input.layout
+          }}>
             <Text style={{
               color: '#676767',
-              fontSize: 10,
-              fontWeight: '500',
-              marginBottom: 4,
+              textAlign: 'left',
+              // ...input.text,
             }}>
-              Amount
+              {value}
             </Text>
           </Frame>
-          <Frame name={'group'} style={{
-            flexDirection: 'row',
-            alignItems: 'center'
-          }}>
-            <Frame name={'decrement'} onSelectionEnter={() => setValue(prevState => prevState - 1)} style={{
-              width: 30,
-              height: 30,
-              backgroundColor: '#939393',
-              flexDirection: 'column',
-              alignItems: 'center',
-              justifyContent: 'center',
-              borderTopLeftRadius: 4,
-              borderBottomLeftRadius: 4,
-              borderWidth: 1,
-              borderColor: '#6e6e6e'
-            }}>
-              <MinusIcon/>
-            </Frame>
-            <Frame name={'input'} style={{
-              height: 30,
-              width: 60,
-              borderWidth: 1,
-              borderColor: '#6e6e6e',
-              flexDirection: 'row',
-              alignItems: 'center',
-              paddingHorizontal: 8
-            }}>
-              <Text style={{
-                color: '#676767',
-              }}>
-                {value}
-              </Text>
-            </Frame>
-            <Frame name={'increment'} onSelectionEnter={() => setValue(prevState => prevState + 1)} style={{
-              width: 30,
-              height: 30,
-              backgroundColor: '#939393',
-              flexDirection: 'column',
-              alignItems: 'center',
-              justifyContent: 'center',
-              borderTopRightRadius: 4,
-              borderBottomRightRadius: 4,
-              borderWidth: 1,
-              borderColor: '#6e6e6e'
-            }}
-            >
-              <PlusIcon/>
-            </Frame>
+          <Frame name={'increment'} onSelectionEnter={() => setValue(prevState => prevState + 1)} style={{
+            width: 30,
+            height: 30,
+            backgroundColor: '#939393',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            // borderTopRightRadius: 4,
+            // borderBottomRightRadius: 4,
+            borderWidth: 1,
+            borderColor: '#6e6e6e',
+            ...increment.layout
+          }}
+          >
+            <PlusIcon/>
           </Frame>
         </Frame>
       </Frame>

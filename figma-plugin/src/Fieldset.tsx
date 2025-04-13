@@ -1,22 +1,52 @@
 import * as React from 'react';
 import {Frame, Page, Text} from 'react-figma';
+import {useComponentStore} from "./component-store";
+import {convertStringToStyle, getRawTailwindClasses} from "@ui-primitives-hub/common/src/main";
+import {transformStyle} from "./utils";
 
 
 export const Fieldset = () => {
+  const parts = useComponentStore.getState().parts;
+  const colors = useComponentStore.getState().colors;
+
+  if (!parts || !colors)
+    return (
+      <Text>
+        Loading...
+      </Text>
+    );
+
+  const tailwind = Object.keys(parts).reduce(
+    (acc: Record<string, { layout: Record<string, any>; text: Record<string, any> }>, key) => {
+      const tailwind = getRawTailwindClasses(parts[key])
+      const style = convertStringToStyle(tailwind);
+      acc[key] = transformStyle(style, colors);
+      return acc;
+    },
+    {},
+  );
+
+  console.log(parts)
+  console.log(tailwind)
+
+  const {root, legend} = tailwind;
+
 
   return (
     <Page isCurrent>
       <Frame style={{
-        width: 200
+        width: 200,
       }}>
         <Frame name={'root'}
-               layoutMode={'VERTICAL'}
-               itemSpacing={8}
                style={{
+                 flexDirection: 'column',
                  alignSelf: 'stretch',
+                 ...root.layout
                }}
         >
-          <Frame name={'legend'}>
+          <Frame name={'legend'} style={{
+            ...legend.layout,
+          }}>
             <Text style={{
               fontSize: 16,
               fontWeight: '500',
@@ -29,6 +59,7 @@ export const Fieldset = () => {
           <Frame layoutMode={'VERTICAL'}
                  itemSpacing={2} style={{
             alignSelf: 'stretch',
+            marginTop: root.layout.gap
           }}>
             <Frame name={'label'} style={{
               alignSelf: 'stretch',
@@ -55,6 +86,7 @@ export const Fieldset = () => {
           <Frame layoutMode={'VERTICAL'}
                  itemSpacing={2} style={{
             alignSelf: 'stretch',
+            marginTop: root.layout.gap
           }}>
             <Frame name={'label'} style={{
               alignSelf: 'stretch',

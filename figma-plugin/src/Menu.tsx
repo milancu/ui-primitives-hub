@@ -1,5 +1,8 @@
 import * as React from 'react';
 import {Frame, Page, Svg, Text} from 'react-figma';
+import {useComponentStore} from "./component-store";
+import {convertStringToStyle, getRawTailwindClasses} from "@ui-primitives-hub/common/src/main";
+import {transformStyle} from "./utils";
 
 
 const ArrowSvg = () => (
@@ -11,7 +14,7 @@ const ArrowSvg = () => (
        locked={true} source={`<svg width="20" height="10" viewBox="0 0 20 10" fill="none">
     <path
       d="M9.66437 2.60207L4.80758 6.97318C4.07308 7.63423 3.11989 8 2.13172 8H0V10H20V8H18.5349C17.5468 8 16.5936 7.63423 15.8591 6.97318L11.0023 2.60207C10.622 2.2598 10.0447 2.25979 9.66437 2.60207Z"
-      fill="#1c1b22" stroke-width="1"
+      fill="white" stroke-width="1"
     />
     <path
       d="M8.99542 1.85876C9.75604 1.17425 10.9106 1.17422 11.6713 1.85878L16.5281 6.22989C17.0789 6.72568 17.7938 7.00001 18.5349 7.00001L15.89 7L11.0023 2.60207C10.622 2.2598 10.0447 2.2598 9.66436 2.60207L4.77734 7L2.13171 7.00001C2.87284 7.00001 3.58774 6.72568 4.13861 6.22989L8.99542 1.85876Z"
@@ -32,11 +35,12 @@ const ChevronRightIcon = () => (
 )
 
 
-const MenuItem = ({item}: { item: string }) => {
+const MenuItem = ({item, style}: { item: string, style?: any }) => {
   return (
-    <Frame name={'item'} style={{padding: 8}}>
+    <Frame name={'item'} style={{padding: 8, ...style.layout}}>
       <Text style={{
-        color: 'white'
+        color: 'black',
+        ...style.text,
       }}>
         {item}
       </Text>
@@ -46,6 +50,31 @@ const MenuItem = ({item}: { item: string }) => {
 
 export const Menu = () => {
   const [isOpen, setIsOpen] = React.useState(false);
+  const parts = useComponentStore.getState().parts;
+  const colors = useComponentStore.getState().colors;
+
+  if (!parts || !colors)
+    return (
+      <Text>
+        Loading...
+      </Text>
+    );
+
+  const tailwind = Object.keys(parts).reduce(
+    (acc: Record<string, { layout: Record<string, any>; text: Record<string, any> }>, key) => {
+      const tailwind = getRawTailwindClasses(parts[key])
+      const style = convertStringToStyle(tailwind);
+      acc[key] = transformStyle(style, colors);
+      return acc;
+    },
+    {},
+  );
+
+  console.log(tailwind);
+  console.log(parts);
+
+  const {item, popup, separator, trigger} = tailwind;
+
 
   return (
     <Page isCurrent>
@@ -69,11 +98,13 @@ export const Menu = () => {
                    borderWidth: 1,
                    borderColor: '#454545',
                    backgroundColor: '#1a1b1b',
-                   borderRadius: 4
+                   borderRadius: 4,
+                   ...trigger.layout
                  }}>
             <Text style={{
               marginRight: 8,
               color: 'white',
+              ...trigger.text
             }}>
               Song
             </Text>
@@ -91,12 +122,13 @@ export const Menu = () => {
               backgroundColor: '#1c1b22',
               borderWidth: 2,
               borderColor: '#4c4c4c',
-              borderRadius: 8
+              borderRadius: 8,
+              ...popup.layout
             }}>
               <ArrowSvg/>
-              <MenuItem item={'Add to Library'}/>
-              <MenuItem item={'Add to Playlist'}/>
-              <MenuItem item={'Play Next'}/>
+              <MenuItem item={'Add to Library'} style={item}/>
+              <MenuItem item={'Add to Playlist'} style={item}/>
+              <MenuItem item={'Play Next'} style={item}/>
             </Frame>
           </Frame>
         </Frame>

@@ -1,5 +1,8 @@
 import * as React from 'react';
 import {Frame, Svg, Text} from "react-figma";
+import {useComponentStore} from "./component-store";
+import {convertStringToStyle} from "@ui-primitives-hub/common/src/main";
+import {transformStyle} from "./utils";
 
 const ChevronUpDownIcon = () => (
   <Svg source={`<svg
@@ -58,6 +61,32 @@ export const Select = () => {
   const [value, setValue] = React.useState<string>('Serif');
   const [isOpen, setIsOpen] = React.useState(false);
   const [offset, setOffset] = React.useState(1);
+
+  const parts = useComponentStore.getState().parts;
+  const colors = useComponentStore.getState().colors;
+
+  if (!parts || !colors)
+    return (
+      <Text>
+        Loading...
+      </Text>
+    );
+
+  const tailwind = Object.keys(parts).reduce(
+    (acc: Record<string, { layout: Record<string, any>; text: Record<string, any> }>, key) => {
+      const tailwind = parts[key]['default']
+      const style = convertStringToStyle(tailwind);
+      acc[key] = transformStyle(style, colors);
+      return acc;
+    },
+    {},
+  );
+
+
+  console.log(tailwind)
+  console.log(parts)
+
+  const {item, itemText, popup, trigger} = tailwind;
 
   return (
     <Frame name={'root'}>

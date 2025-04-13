@@ -19,35 +19,33 @@ const ChevronIcon = ({isOpen}: { isOpen: boolean }) => (
 
 export const Collapsible = () => {
   const [isOpen, setIsOpen] = React.useState(false);
-    const parts = useComponentStore.getState().parts;
-    const colors = useComponentStore.getState().colors;
+  const parts = useComponentStore.getState().parts;
+  const colors = useComponentStore.getState().colors;
 
-    if (!parts || !colors) return (
-        <Text>
-            Loading...
-        </Text>
-    );
+  if (!parts || !colors) return (
+    <Text>
+      Loading...
+    </Text>
+  );
 
-    const tailwind = Object.keys(parts).reduce(
-        (acc: Record<string, { layout: Record<string, any>; text: Record<string, any> }>, key) => {
-            const tailwind = getRawTailwindClasses(parts[key])
-            const style = convertStringToStyle(tailwind);
-            acc[key] = transformStyle(style, colors);
-            return acc;
-        },
-        {},
-    );
+  const tailwind = Object.keys(parts).reduce(
+    (acc: Record<string, { layout: Record<string, any>; text: Record<string, any> }>, key) => {
+      const tailwind = getRawTailwindClasses(parts[key])
+      const style = convertStringToStyle(tailwind);
+      acc[key] = transformStyle(style, colors);
+      return acc;
+    },
+    {},
+  );
 
-    const {root, trigger, panel} = tailwind;
-    console.log(parts)
-    console.log(tailwind)
+  const {root, trigger, panel} = tailwind;
 
 
-    return (
+  return (
     <Page isCurrent>
       <Frame name={'root'} style={{
-          width: 150,
-          ...root.layout,
+        width: 150,
+        ...root.layout,
       }}>
         <Frame name={'trigger'}
                onSelectionEnter={() => setIsOpen(prev => !prev)}
@@ -55,19 +53,19 @@ export const Collapsible = () => {
                  flexDirection: 'row',
                  alignSelf: 'stretch',
                  alignItems: 'center',
-                   // backgroundColor: '#838383',
-                   // borderRadius: 4,
-                   // paddingHorizontal: 8,
-                   // paddingVertical: 4,
-                   ...trigger.layout
+                 // backgroundColor: '#838383',
+                 // borderRadius: 4,
+                 // paddingHorizontal: 8,
+                 // paddingVertical: 4,
+                 ...trigger.layout
                }}>
           <ChevronIcon isOpen={isOpen}/>
           <Text style={{
-              // fontSize: 12,
-              // fontWeight: '500',
-              // color: 'white',
-              marginLeft: 4,
-              ...trigger.text
+            // fontSize: 12,
+            // fontWeight: '500',
+            // color: 'white',
+            marginLeft: 4,
+            ...trigger.text
           }}>
             Recovery keys
           </Text>
@@ -75,8 +73,8 @@ export const Collapsible = () => {
         <Frame name={'panel'} visible={isOpen}
                style={{
                  alignSelf: 'stretch',
-                   height: '100%',
-                   ...panel.layout,
+                 height: '100%',
+                 ...panel.layout,
 
                }}>
           <Frame layoutMode={'VERTICAL'}
@@ -87,18 +85,18 @@ export const Collapsible = () => {
             <Text style={{
               fontSize: 10,
               color: 'white',
-                ...panel.text
+              ...panel.text
             }}>alien-bean-pasta</Text>
             <Text style={{
               fontSize: 10,
               color: 'white',
-                marginVertical: 4,
-                ...panel.text
+              marginVertical: 4,
+              ...panel.text
             }}>wild-irish-burrito</Text>
             <Text style={{
               fontSize: 10,
               color: 'white',
-                ...panel.text
+              ...panel.text
             }}>horse-battery-staple</Text>
           </Frame>
         </Frame>

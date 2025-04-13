@@ -29,7 +29,7 @@ const components = [
   'fieldset',
   'input',
   'menu',
-  'number-field',
+  'numberfield',
   'popover',
   'select'
 ]
@@ -91,7 +91,7 @@ export const ClientApp = ({currentUser}: ClientAppProps) => {
               return render(
                   <Menu/>
               )
-            case "number-field":
+            case "numberfield":
               return render(
                   <NumberField/>
               )

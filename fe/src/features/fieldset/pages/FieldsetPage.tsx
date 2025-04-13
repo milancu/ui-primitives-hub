@@ -65,8 +65,7 @@ const FieldsetPage = () => {
           </FieldsetLegend>
 
           <FieldRoot className={fieldRoot}>
-            <FieldLabel className={label}>Name</FieldLabel>
-            Company
+            <FieldLabel className={label}>Company</FieldLabel>
             <FieldControl
               placeholder="Enter company name"
               className={control}
@@ -74,8 +73,7 @@ const FieldsetPage = () => {
           </FieldRoot>
 
           <FieldRoot className={fieldRoot}>
-            <FieldLabel className={label}>Name</FieldLabel>
-            Tax ID
+            <FieldLabel className={label}>Tax ID</FieldLabel>
             <FieldControl
               placeholder="Enter fiscal number"
               className={control}

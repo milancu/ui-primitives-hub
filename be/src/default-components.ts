@@ -188,7 +188,7 @@ export const DEFAULT_COMPONENTS: any = {
       "default": "flex"
     },
     "item": {
-      "default": "grid min-w-[var(--anchor-width)] cursor-default grid-cols-[0.75rem_1fr] items-center gap-2 py-2 pr-4 pl-2.5 text-sm leading-4 outline-none select-none group-data-[side=none]:min-w-[calc(var(--anchor-width)+1rem)] group-data-[side=none]:pr-12 group-data-[side=none]:text-base group-data-[side=none]:leading-4",
+      "default": "min-w-[var(--anchor-width)] cursor-default items-center gap-2 py-2 pr-4 pl-2.5 text-sm leading-4 outline-none select-none",
       "data-highlighted": "relative z-0 text-gray-50 before:absolute before:inset-x-1 before:inset-y-0 before:z-[-1] before:rounded-sm before:bg-gray-900"
     },
     "itemIndicator": {
