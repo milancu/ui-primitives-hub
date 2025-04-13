@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { createRoot } from 'react-dom/client';
 import { ClientApp } from './ClientApp';
+import './index.css';
 
 function AppWrapper() {
   const [currentUser, setCurrentUser] = React.useState<any | null>(null);

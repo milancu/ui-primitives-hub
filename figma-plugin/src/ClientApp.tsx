@@ -17,6 +17,7 @@ import {useAuthStore} from "./auth-store";
 import dotenv from "dotenv";
 import {useComponentStore} from "./component-store";
 import chroma from 'chroma-js';
+import Logo from "./Logo";
 
 dotenv.config();
 
@@ -184,23 +185,36 @@ export const ClientApp = ({currentUser}: ClientAppProps) => {
   }, [projectId, accessToken])
 
   return (
-    <div>
-      Please select a project:
-      <select onChange={e => setProjectId(e.target.value)} defaultValue={projectId}>
-        {projects.map(project => (
+      <div style={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 10,
+      }}>
+        <Logo/>
+        <div>
+          <label style={{
+            marginBottom: 10,
+            fontWeight: 500,
+          }}>
+            Please select a project:
+            <div className={'select-wrapper'} style={{marginTop: 8}}>
+              <select id={'project'} onChange={e => setProjectId(e.target.value)} defaultValue={""}>
+                <option value="" disabled>Select your project</option>
+                {projects.map(project => (
           <option key={project.id} value={project.id}>{project.name}</option>
         ))}
       </select>
-      <div>
-        {projectId && <div>
-          Selected project: {projectId}
-        </div>}
+            </div>
+          </label>
       </div>
       {projectId && <div>
         Component:
-        <div>
+        <div className={'component-list'}>
           {components.map(component => (
-            <button key={component} onClick={() => generateComponent(component)}>{component}</button>
+              <div className={'component-item'} key={component}>
+                {component}
+                <button onClick={() => generateComponent(component)}>generate</button>
+              </div>
           ))}
         </div>
       </div>}

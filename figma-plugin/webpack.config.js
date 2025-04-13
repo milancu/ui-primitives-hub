@@ -13,6 +13,11 @@ module.exports = configure({
     ui: './src/ui.tsx', // The entry point for your UI code
     code: './src/code.tsx' // The entry point for your plugin code
   },
+  module: {
+    rules: [
+      {test: /\.(png|jpg|gif|webp|svg)$/, loader: 'url-loader'},
+    ],
+  },
   plugins: [
     new webpack.DefinePlugin(envKeys),
   ],
