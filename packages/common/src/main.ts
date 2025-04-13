@@ -217,6 +217,10 @@ export const styleToTailwind = (style: Style, prefix?: string): string => {
             customTheme: {
                 background:{
                     'var(--destructiveForeground)': 'bg-[var(--destructive-foreground)]',
+                    'var(--primaryForeground)': 'bg-[var(--primary-foreground)]',
+                    'var(--secondaryForeground)': 'bg-[var(--secondary-foreground)]',
+                    'var(--mutedForeground)': 'bg-[var(--muted-foreground)]',
+                    'var(--accentForeground)': 'bg-[var(--accent-foreground)]',
                 },
                 color: {
                     'var(--background)': 'text-[var(--background)]',

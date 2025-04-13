@@ -3,27 +3,36 @@ import { createRoot } from 'react-dom/client';
 import { ClientApp } from './ClientApp';
 
 function AppWrapper() {
-  const [data, setData] = React.useState<any | null>(null);
+  const [currentUser, setCurrentUser] = React.useState<any | null>(null);
 
   React.useEffect(() => {
-    const handleMessage = (event: MessageEvent) => {
-      const msg = event.data.pluginMessage;
-      if (msg?.type === 'INIT_DATA') {
-        setData(msg.payload.foo);
+    const handler = (event: MessageEvent) => {
+      const message = event.data.pluginMessage;
+      if (message?.type === 'INIT_DATA') {
+        setCurrentUser(message.payload.foo);
       }
     };
 
-    window.addEventListener('message', handleMessage);
+    window.addEventListener('message', handler);
 
-    return () => window.removeEventListener('message', handleMessage);
+    // check if the message already exists on window (fallback)
+    if ((window as any).__INIT_DATA__) {
+      setCurrentUser((window as any).__INIT_DATA__);
+    }
+
+    return () => {
+      window.removeEventListener('message', handler);
+    };
   }, []);
 
-  if (data === null) return <div>Loading...</div>;
+  if (currentUser === null) return <div>Loading…</div>;
 
-  return <ClientApp currentUser={data} />;
+  return <ClientApp currentUser={currentUser} />;
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+  window.parent.postMessage({ pluginMessage: { type: 'READY_FOR_DATA' } }, '*');
+
   const container = document.getElementById('react-page');
   if (container) {
     const root = createRoot(container);

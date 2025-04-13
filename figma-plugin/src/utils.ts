@@ -7,8 +7,6 @@ export function getColorFromVariable(colorMap: Record<string, string>, variable?
 }
 
 export function parseToPx(value?: string | number, baseFontSize: number = 16): number {
-  console.log('Received value:', value);
-
   if (typeof value === 'number') {
     return value;
   }
@@ -33,88 +31,50 @@ export function parseToPx(value?: string | number, baseFontSize: number = 16): n
 
   return parseFloat(value);
 }
-export function transformStyle(style: Style, colorMap: Record<string, string>): Record<string, any> {
-  const transformedStyle: Record<string, any> = {};
 
-  if (style.width) {
-    transformedStyle['width'] = parseToPx(style.width);
-  }
-  if (style.minWidth) {
-    transformedStyle['minWidth'] = parseToPx(style.minWidth);
-  }
-  if (style.height) {
-    transformedStyle['height'] = typeof style.height === 'string' ? style.height : parseToPx(style.height);
-  }
-  if (style.gap) {
-    transformedStyle['gap'] = parseToPx(style.gap);
-  }
-  if (style.borderRadius) {
-    transformedStyle['borderRadius'] = parseToPx(style.borderRadius);
-  }
-  if (style.borderWidth) {
-    transformedStyle['borderWidth'] = parseToPx(style.borderWidth);
-  }
-  if (style.borderBottomWidth) {
-    transformedStyle['borderBottomWidth'] = parseToPx(style.borderBottomWidth);
-  }
-  if (style.borderTopWidth) {
-    transformedStyle['borderTopWidth'] = parseToPx(style.borderTopWidth);
-  }
-  if (style.borderLeftWidth) {
-    transformedStyle['borderLeftWidth'] = parseToPx(style.borderLeftWidth);
-  }
-  if (style.borderRightWidth) {
-    transformedStyle['borderRightWidth'] = parseToPx(style.borderRightWidth);
-  }
-  if (style.outlineWidth) {
-    transformedStyle['outlineWidth'] = parseToPx(style.outlineWidth);
-  }
-  if (style.padding) {
-    transformedStyle['padding'] = parseToPx(style.padding);
-  }
-  if (style.paddingTop) {
-    transformedStyle['paddingTop'] = parseToPx(style.paddingTop);
-  }
-  if (style.paddingRight) {
-    transformedStyle['paddingRight'] = parseToPx(style.paddingRight);
-  }
-  if (style.paddingBottom) {
-    transformedStyle['paddingBottom'] = parseToPx(style.paddingBottom);
-  }
-  if (style.paddingLeft) {
-    transformedStyle['paddingLeft'] = parseToPx(style.paddingLeft);
-  }
-  if (style.margin) {
-    transformedStyle['margin'] = parseToPx(style.margin);
-  }
-  if (style.marginTop) {
-    transformedStyle['marginTop'] = parseToPx(style.marginTop);
-  }
-  if (style.marginRight) {
-    transformedStyle['marginRight'] = parseToPx(style.marginRight);
-  }
-  if (style.marginBottom) {
-    transformedStyle['marginBottom'] = parseToPx(style.marginBottom);
-  }
-  if (style.marginLeft) {
-    transformedStyle['marginLeft'] = parseToPx(style.marginLeft);
-  }
+export function transformStyle(
+    style: Style,
+    colorMap: Record<string, string>
+): { layout: Record<string, any>; text: Record<string, any> } {
+  const layout: Record<string, any> = {};
+  const text: Record<string, any> = {};
 
-  if (style.background) {
-    transformedStyle['backgroundColor'] = getColorFromVariable(colorMap, style.background);
-  }
-  if (style.borderColor) {
-    transformedStyle['borderColor'] = getColorFromVariable(colorMap, style.borderColor);
-  }
-  if (style.color) {
-    transformedStyle['color'] = getColorFromVariable(colorMap, style.color);
-  }
+  const layoutProps = new Set([
+    'width', 'minWidth', 'height', 'gap',
+    'borderRadius', 'borderWidth', 'borderBottomWidth', 'borderTopWidth',
+    'borderLeftWidth', 'borderRightWidth', 'outlineWidth',
+    'padding', 'paddingTop', 'paddingRight', 'paddingBottom', 'paddingLeft',
+    'margin', 'marginTop', 'marginRight', 'marginBottom', 'marginLeft',
+    'background', 'borderColor',
+  ]);
+
+  const textProps = new Set([
+    'fontSize', 'textAlign', 'textDecoration', 'textTransform', 'color'
+  ]);
 
   for (const [key, value] of Object.entries(style)) {
-    if (!(key in transformedStyle)) {
-      transformedStyle[key] = value;
+    const val = typeof value === 'string' || typeof value === 'number' ? value : undefined;
+    if (val == null) continue;
+
+    const pxValue = typeof val === 'number' ? val : parseToPx(val);
+
+    if (layoutProps.has(key)) {
+      if (key === 'background') {
+        layout['backgroundColor'] = getColorFromVariable(colorMap, val as string);
+      } else if (key === 'borderColor') {
+        layout['borderColor'] = getColorFromVariable(colorMap, val as string);
+      } else {
+        layout[key] = pxValue;
+      }
+    } else if (textProps.has(key)) {
+      if (key === 'color') {
+        text['color'] = getColorFromVariable(colorMap, val as string);
+      } else {
+        text[key] = pxValue;
+      }
+    } else {
     }
   }
 
-  return transformedStyle;
+  return {layout, text};
 }

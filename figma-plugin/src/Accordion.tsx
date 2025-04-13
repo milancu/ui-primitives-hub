@@ -2,9 +2,7 @@ import * as React from 'react';
 import {Component, Frame, Page, Svg, Text} from 'react-figma';
 import dotenv from "dotenv";
 import {useComponentStore} from "./component-store";
-import {getRawTailwindClasses} from "../../packages/utils/dist";
-import {convertStringToStyle} from "@ui-primitives-hub/common/src/main";
-import {Style} from '@ui-primitives-hub/types';
+import {convertStringToStyle, getRawTailwindClasses} from "@ui-primitives-hub/common/src/main";
 import {parseToPx, transformStyle} from "./utils";
 
 dotenv.config();
@@ -31,10 +29,9 @@ export const Accordion = () => {
     );
 
   const tailwind = Object.keys(parts).reduce(
-    (acc: Record<string, Style>, key) => {
+      (acc: Record<string, { layout: Record<string, any>; text: Record<string, any> }>, key) => {
       const tailwind = getRawTailwindClasses(parts[key])
       const style = convertStringToStyle(tailwind);
-      console.log(tailwind, style)
       acc[key] = transformStyle(style, colors);
       return acc;
     },
@@ -42,44 +39,41 @@ export const Accordion = () => {
   );
 
   const {root, item, header, trigger, panel} = tailwind;
-  console.log(tailwind)
-
 
   return (
     <Page>
       <Frame name={'root'} style={{
-        flexDirection: 'column',
-        width: parseToPx(root.width),
+          ...root.layout,
+          flexDirection: 'column',
         height: '100%',
       }}>
         <Component name={'item'}
-                   itemSpacing={parseToPx(item.gap)}
+                   itemSpacing={parseToPx(item.layout.gap)}
                    layoutMode={'VERTICAL'}
-                   verticalPadding={parseToPx(item.padding)}
-                   horizontalPadding={parseToPx(item.padding)}
+                   verticalPadding={parseToPx(item.layout.padding)}
+                   horizontalPadding={parseToPx(item.layout.padding)}
                    style={{
-                     // padding: parseToPx(item.padding),
+                       ...item.layout,
+                       alignSelf: 'stretch',
                      width: '100%',
-                     // borderRadius: parseToPx(item.borderRadius),
-                     // borderWidth: parseToPx(item.borderWidth),
-                     // borderColor: getColorFromVariable(colors, item.borderColor),
-                     // backgroundColor: getColorFromVariable(colors, item.background),
-                     ...item
                    }}>
           <Frame
             name={'header'}
             style={{
               width: '100%',
+                ...header.layout
             }}
           >
             <Frame name={'trigger'}
                    style={{
-                     width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',
+                       ...trigger.layout,
+                       width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',
+                       alignSelf: 'stretch',
                    }}
                    onSelectionEnter={() => setIsOpen(prev => !prev)}
             >
               <Text style={{
-                fontSize: 14,
+                  ...trigger.text
               }}>
                 What is Base UI?
               </Text>
@@ -88,10 +82,11 @@ export const Accordion = () => {
           </Frame>
           <Frame visible={isOpen} name={'panel'} style={{
             width: '100%',
+              ...panel.layout
           }}>
             <Text style={{
               width: '100%',
-              color: "#989898",
+                ...panel.text
             }} name={'content'}>
               Base UI is a library of high-quality unstyled React components for design systems and web apps.
 

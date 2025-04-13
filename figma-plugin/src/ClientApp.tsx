@@ -53,48 +53,58 @@ export const ClientApp = ({currentUser}: ClientAppProps) => {
 
 
   const generateComponent = (componentName: string) => {
-    switch (componentName) {
-      case "accordion":
-        return render(
-          <Accordion/>
-        );
-      case "collapsible":
-        return render(
-          <Collapsible/>
-        );
-      case "dialog":
-        return render(
-          <Dialog/>
-        )
-      case "field":
-        return render(
-          <Field/>
-        )
-      case "fieldset":
-        return render(
-          <Fieldset/>
-        )
-      case "input":
-        return render(
-          <Input/>
-        )
-      case "menu":
-        return render(
-          <Menu/>
-        )
-      case "number-field":
-        return render(
-          <NumberField/>
-        )
-      case "popover":
-        return render(
-          <Popover/>
-        )
-      case "select":
-        return render(
-          <Select/>
-        )
-    }
+    if (!projectId || !accessToken || !componentName) return;
+    fetch(`${process.env.BACKEND_API_URL}/projects/${projectId}/components/${componentName}/parts`, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${accessToken}`
+      }
+    }).then(r => r.json()).then(data => {
+          setParts(data)
+          switch (componentName) {
+            case "accordion":
+              return render(
+                  <Accordion/>
+              );
+            case "collapsible":
+              return render(
+                  <Collapsible/>
+              );
+            case "dialog":
+              return render(
+                  <Dialog/>
+              )
+            case "field":
+              return render(
+                  <Field/>
+              )
+            case "fieldset":
+              return render(
+                  <Fieldset/>
+              )
+            case "input":
+              return render(
+                  <Input/>
+              )
+            case "menu":
+              return render(
+                  <Menu/>
+              )
+            case "number-field":
+              return render(
+                  <NumberField/>
+              )
+            case "popover":
+              return render(
+                  <Popover/>
+              )
+            case "select":
+              return render(
+                  <Select/>
+              )
+          }
+        }
+    )
   };
 
   React.useEffect(() => {
@@ -144,20 +154,6 @@ export const ClientApp = ({currentUser}: ClientAppProps) => {
       setProjects(data)
     )
   }, [accessToken])
-
-
-  React.useEffect(() => {
-    if (!projectId || !accessToken) return;
-    fetch(`${process.env.BACKEND_API_URL}/projects/${projectId}/components/accordion/parts`, {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${accessToken}`
-      }
-    }).then(r => r.json()).then(data => {
-        setParts(data)
-      }
-    )
-  }, [projectId, accessToken])
 
   React.useEffect(() => {
     if (!projectId || !accessToken) return;
