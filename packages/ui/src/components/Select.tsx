@@ -13,7 +13,7 @@ const SelectTrigger = React.forwardRef<
     ref={ref}
     className={cn(
       "__TRIGGER_CLASSNAME__",
-      "hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-1 focus-visible:outline-blue-800 active:bg-gray-100 data-[popup-open]:bg-gray-100",
+      "hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-1 focus-visible:outline-blue-800",
       className
     )}
     {...props}
