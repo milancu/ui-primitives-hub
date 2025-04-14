@@ -21,7 +21,7 @@ const NumberFieldScrubArea = React.forwardRef<
   <NumberFieldPrimitives.ScrubArea
     ref={ref}
     {...props}
-    className={cn(className, "__SCRUBAREA_CLASSNAME__")}
+    className={cn(className, "__SCRUBAREA_CLASSNAME__", 'cursor-ew-resize')}
   />
 ));
 
@@ -32,7 +32,7 @@ const NumberFieldScrubAreaCursor = React.forwardRef<
   <NumberFieldPrimitives.ScrubAreaCursor
     ref={ref}
     {...props}
-    className={cn(className, "__SCRUBAREA_CURSOR_CLASSNAME__")}
+    className={cn(className, "__SCRUBAREA_CURSOR_CLASSNAME__", "drop-shadow-[0_1px_1px_#0008] filter")}
   />
 ))
 

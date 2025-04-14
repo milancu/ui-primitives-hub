@@ -83,46 +83,18 @@ export const DEFAULT_COMPONENTS: any = {
     }
   },
   "menu": {
-    "arrow": {
-      "default": "",
-      "side=bottom": "top-[-8px]",
-      "side=left": "right-[-13px] rotate-90",
-      "side=right": "left-[-13px] rotate-90",
-      "side=top": "bottom-[-8px] rotate-180"
-    },
-    "checkboxitem": {
-      "default": " "
-    },
-    "group": {
-      "default": " "
-    },
-    "grouplabel": {
-      "default": " "
-    },
     "item": {
       "default": "flex cursor-default py-2 pr-8 pl-4 text-sm leading-4 outline-none select-none",
-      "highlighted": "relative z-0 text-gray-50 before:absolute before:inset-x-1 before:inset-y-0 before:z-[-1] before:rounded-sm before:bg-gray-900"
     },
     "popup": {
-      "default": "origin-[var(--transform-origin)] rounded-md bg-[canvas] py-1 text-gray-900 shadow-lg shadow-gray-200 outline outline-1 outline-gray-200",
-      "ending-style": "scale-90 pacity-0",
-      "starting-style": "scale-90 opacity-0"
-    },
-    "positioner": {
-      "default": "outline-none"
-    },
-    "radiogroup": {
-      "default": " "
-    },
-    "radioitem": {
-      "default": " "
+      "default": "rounded-md bg-[var(--primary)] py-1 text-[var(--muted)]",
     },
     "separator": {
-      "default": "mx-4 my-1.5 h-px bg-gray-200"
+      "default": "mx-4 my-1.5 h-px bg-[var(--primary)]"
     },
     "trigger": {
-      "default": "flex h-10 items-center justify-center gap-1.5 rounded-md border border-gray-200 bg-gray-50 px-3.5 text-base font-medium text-gray-900 select-none hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-1 focus-visible:outline-blue-800 active:bg-gray-100",
-      "popup-open": "bg-gray-100"
+      "default": "flex h-10 items-center justify-center gap-1.5 rounded-md border border-[var(--border)] bg-[var(--primary)] px-3.5 text-base font-medium text-[var(--primary-foreground)] select-none",
+      "popup-open": "bg-[var(--primary)]"
     }
   },
   "numberfield": {
@@ -144,15 +116,6 @@ export const DEFAULT_COMPONENTS: any = {
     "scrub-area": {
       "default": "text-[var(--foreground)]"
     },
-    "scrub-area-cursor": {
-      "default": ""
-    },
-    "scrubarea": {
-      "default": "cursor-ew-resize"
-    },
-    "scrubareacursor": {
-      "default": "drop-shadow-[0_1px_1px_#0008] filter"
-    }
   },
   "popover": {
     "trigger": {
@@ -161,14 +124,6 @@ export const DEFAULT_COMPONENTS: any = {
     },
     "popup": {
       "default": "origin-[var(--transform-origin)] rounded-lg bg-[canvas] px-6 py-4 text-gray-900 shadow-lg shadow-gray-200 outline outline-1 outline-gray-200 transition-[transform,scale,opacity] dark:shadow-none dark:-outline-offset-1 dark:outline-gray-300",
-      "data-ending-style": "scale-90 opacity-0",
-      "data-starting-style": "scale-90 opacity-0"
-    },
-    "arrow": {
-      "data-side-bottom": "top-[-8px]",
-      "data-side-left": "right-[-13px] rotate-90",
-      "data-side-right": "left-[-13px] -rotate-90",
-      "data-side-top": "bottom-[-8px] rotate-180"
     },
     "title": {
       "default": "text-base font-medium"
@@ -176,17 +131,8 @@ export const DEFAULT_COMPONENTS: any = {
     "description": {
       "default": "text-base text-gray-600"
     },
-    "portal": {
-      "default": ""
-    },
-    "positioner": {
-      "default": ""
-    }
   },
   "select": {
-    "icon": {
-      "default": "flex"
-    },
     "item": {
       "default": "min-w-[var(--anchor-width)] cursor-default items-center gap-2 py-2 pr-4 pl-2.5 text-sm leading-4 outline-none select-none",
       "data-highlighted": "relative z-0 text-gray-50 before:absolute before:inset-x-1 before:inset-y-0 before:z-[-1] before:rounded-sm before:bg-gray-900"
@@ -199,31 +145,11 @@ export const DEFAULT_COMPONENTS: any = {
     },
     "popup": {
       "default": "group [max-height:var(--available-height)] origin-[var(--transform-origin)] overflow-y-auto rounded-md bg-[canvas] py-1 text-gray-900 shadow-lg shadow-gray-200 outline outline-1 outline-gray-200 transition-[transform,scale,opacity] dark:shadow-none dark:-outline-offset-1 dark:outline-gray-300",
-      "data-ending-style": "scale-90 opacity-0 transition-none",
-      "data-side-none": "data-[starting-style]:scale-100 data-[starting-style]:opacity-100 data-[starting-style]:transition-none",
-      "data-starting-style": "scale-90 opacity-0"
-    },
-    "portal": {
-      "default": ""
-    },
-    "positioner": {
-      "default": "outline-none"
-    },
-    "scrollDownArrow": {
-      "default": "bottom-0 z-[1] flex h-4 w-full cursor-default items-center justify-center rounded-md bg-[canvas] text-center text-xs before:absolute before:top-[-100%] before:left-0 before:h-full before:w-full before:content-['']",
-      "data-direction-down": "bottom-0 before:bottom-[-100%]"
-    },
-    "scrollUpArrow": {
-      "default": "top-0 z-[1] flex h-4 w-full cursor-default items-center justify-center rounded-md bg-[canvas] text-center text-xs before:absolute before:top-[-100%] before:left-0 before:h-full before:w-full before:content-['']",
-      "data-direction-down": "bottom-0 before:bottom-[-100%]"
     },
     "trigger": {
       "default": "flex pr-3 pl-3.5 gap-3 justify-between items-center rounded-md border border-[var(--border)] h-10 text-[1rem] leading-6 text-[var(--foreground)] select-none bg-[var(--background)]",
       "data-popup-open": "bg-gray-100"
     },
-    "value": {
-      "default": ""
-    }
   },
   "collapsible": {
     "panel": {

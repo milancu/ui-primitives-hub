@@ -31,7 +31,7 @@ export class MenuService {
                   children: [
                     {
                       name: "arrow",
-                      isCustomizable: true,
+                      isCustomizable: false,
                     },
                     {
                       name: "item",
@@ -43,27 +43,27 @@ export class MenuService {
                     },
                     {
                       name: "group",
-                      isCustomizable: true,
+                      isCustomizable: false,
                       children: [
                         {
                           name: "group-label",
-                          isCustomizable: true,
+                          isCustomizable: false,
                         },
                       ]
                     },
                     {
                       name: "radio-group",
-                      isCustomizable: true,
+                      isCustomizable: false,
                       children: [
                         {
                           name: "radio-item",
-                          isCustomizable: true,
+                          isCustomizable: false,
                         },
                       ]
                     },
                     {
                       name: "checkbox-item",
-                      isCustomizable: true,
+                      isCustomizable: false,
                     },
                   ],
                 },

@@ -13,7 +13,7 @@ export class NumberfieldService {
           name: "scrub-area", isCustomizable: true,
           children: [
             {
-              name: "scrub-area-cursor", isCustomizable: true,
+              name: "scrub-area-cursor", isCustomizable: false,
             },
           ]
         },

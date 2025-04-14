@@ -14,7 +14,7 @@ const MenuTrigger = React.forwardRef<
   <MenuPrimitives.Trigger
     ref={ref}
     {...props}
-    className={cn(className, "__TRIGGER_CLASSNAME__")}
+    className={cn(className, "__TRIGGER_CLASSNAME__", 'hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-1 focus-visible:outline-blue-800 active:bg-gray-100')}
   />
 ));
 
@@ -49,7 +49,7 @@ const MenuPopup = React.forwardRef<
   <MenuPrimitives.Popup
     ref={ref}
     {...props}
-    className={cn(className, "__POPUP_CLASSNAME__", "transition-[transform,scale,opacity] dark:shadow-none dark:-outline-offset-1 dark:outline-gray-300")}
+    className={cn(className, "__POPUP_CLASSNAME__", "origin-[var(--transform-origin)]  shadow-lg shadow-gray-200 outline outline-1 outline-gray-200 transition-[transform,scale,opacity] data-[ending-style]:scale-90 data-[ending-style]:opacity-0 data-[starting-style]:scale-90 data-[starting-style]:opacity-0 dark:shadow-none dark:-outline-offset-1 dark:outline-gray-300")}
   />
 ))
 
@@ -60,7 +60,7 @@ const MenuArrow = React.forwardRef<
   <MenuPrimitives.Arrow
     ref={ref}
     {...props}
-    className={cn(className, "__ARROW_CLASSNAME__")}
+    className={cn(className, "__ARROW_CLASSNAME__", 'data-[side=bottom]:top-[-8px] data-[side=left]:right-[-13px] data-[side=left]:rotate-90 data-[side=right]:left-[-13px] data-[side=right]:-rotate-90 data-[side=top]:bottom-[-8px] data-[side=top]:rotate-180')}
   />
 ))
 
@@ -71,7 +71,7 @@ const MenuItem = React.forwardRef<
   <MenuPrimitives.Item
     ref={ref}
     {...props}
-    className={cn(className, "__ITEM_CLASSNAME__")}
+    className={cn(className, "__ITEM_CLASSNAME__", 'outline-none select-none data-[highlighted]:relative data-[highlighted]:z-0 data-[highlighted]:text-gray-50 data-[highlighted]:before:absolute data-[highlighted]:before:inset-x-1 data-[highlighted]:before:inset-y-0 data-[highlighted]:before:z-[-1] data-[highlighted]:before:rounded-sm data-[highlighted]:before:bg-gray-900')}
   />
 ))
 

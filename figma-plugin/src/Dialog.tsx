@@ -76,7 +76,7 @@ export const Dialog = () => {
                    width: 800,
                    height: 400,
                    backgroundColor: 'rgba(0,0,0,0.4)',
-                   ...backdrop.layout
+                   // ...backdrop.layout
                  }}/>
           <Frame name={'popup'} style={{
             backgroundColor: 'white',

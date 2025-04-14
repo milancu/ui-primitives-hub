@@ -24,9 +24,9 @@ export class SelectService {
             {name: "backdrop", isCustomizable: false},
             {
               name: "positioner",
-              isCustomizable: true,
+              isCustomizable: false,
               children: [
-                {name: "scrollUpArrow", isCustomizable: true},
+                {name: "scrollUpArrow", isCustomizable: false},
                 {
                   name: "popup",
                   isCustomizable: true,
@@ -38,10 +38,10 @@ export class SelectService {
                       children: [{name: "itemText", isCustomizable: true}, {name: "itemIndicator", isCustomizable: false}]
                     },
                     {name: "separator", isCustomizable: false},
-                    {name: "group", isCustomizable: true, children: [{name: "groupLabel", isCustomizable: true}]},
+                    {name: "group", isCustomizable: false, children: [{name: "groupLabel", isCustomizable: false}]},
                   ],
                 },
-                {name: "scrollDownArrow", isCustomizable: true},
+                {name: "scrollDownArrow", isCustomizable: false},
               ],
             },
           ],
