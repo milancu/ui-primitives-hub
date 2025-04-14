@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Frame, Page, Text} from 'react-figma';
+import {Frame, Text} from 'react-figma';
 import {useComponentStore} from "./component-store";
 import {convertStringToStyle, getRawTailwindClasses} from "@ui-primitives-hub/common/src/main";
 import {transformStyle} from "./utils";
@@ -33,58 +33,56 @@ export const Field = () => {
   console.log(tailwind)
 
   return (
-    <Page isCurrent>
-      <Frame style={{
-        width: 200
-      }}>
-        <Frame name={'root'}
-               layoutMode={'VERTICAL'}
-               itemSpacing={4}
-               style={{
-                 alignSelf: 'stretch',
-                 ...root.layout
-               }}
-        >
-          <Frame name={'label'} style={{
-            alignSelf: 'stretch',
-            justifyContent: 'center',
-            ...label.layout
+    <Frame style={{
+      width: 200
+    }}>
+      <Frame name={'root'}
+             layoutMode={'VERTICAL'}
+             itemSpacing={4}
+             style={{
+               alignSelf: 'stretch',
+               ...root.layout
+             }}
+      >
+        <Frame name={'label'} style={{
+          alignSelf: 'stretch',
+          justifyContent: 'center',
+          ...label.layout
+        }}>
+          <Text style={{
+            ...label.text
           }}>
-            <Text style={{
-              ...label.text
-            }}>
-              Name
-            </Text>
-          </Frame>
-          <Frame name={'control'} style={{
-            padding: 8,
-            borderRadius: 4,
-            borderWidth: 1,
-            borderColor: '#9e9e9e',
-            alignSelf: 'stretch',
-            justifyContent: 'center',
-            ...control.layout
+            Name
+          </Text>
+        </Frame>
+        <Frame name={'control'} style={{
+          padding: 8,
+          borderRadius: 4,
+          borderWidth: 1,
+          borderColor: '#9e9e9e',
+          alignSelf: 'stretch',
+          justifyContent: 'center',
+          ...control.layout
+        }}>
+          <Text style={{
+            color: '#676767',
+            ...control.text
           }}>
-            <Text style={{
-              color: '#676767',
-              ...control.text
-            }}>
-              Required
-            </Text>
-          </Frame>
-          <Frame name={'description'} style={{
-            width: '100%',
-            ...description.layout
+            Required
+          </Text>
+        </Frame>
+        <Frame name={'description'} style={{
+          width: '100%',
+          ...description.layout
+        }}>
+          <Text style={{
+            color: '#9e9e9e',
+            ...description.text
           }}>
-            <Text style={{
-              color: '#9e9e9e',
-              ...description.text
-            }}>
-              Your name
-            </Text>
-          </Frame>
+            Your name
+          </Text>
         </Frame>
       </Frame>
-    </Page>
+    </Frame>
   );
 };

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Component, Frame, Page, Svg, Text} from 'react-figma';
+import {Component, Frame, Svg, Text} from 'react-figma';
 import dotenv from "dotenv";
 import {useComponentStore} from "./component-store";
 import {convertStringToStyle, getRawTailwindClasses} from "@ui-primitives-hub/common/src/main";
@@ -29,7 +29,7 @@ export const Accordion = () => {
     );
 
   const tailwind = Object.keys(parts).reduce(
-      (acc: Record<string, { layout: Record<string, any>; text: Record<string, any> }>, key) => {
+    (acc: Record<string, { layout: Record<string, any>; text: Record<string, any> }>, key) => {
       const tailwind = getRawTailwindClasses(parts[key])
       const style = convertStringToStyle(tailwind);
       acc[key] = transformStyle(style, colors);
@@ -41,59 +41,57 @@ export const Accordion = () => {
   const {root, item, header, trigger, panel} = tailwind;
 
   return (
-    <Page>
-      <Frame name={'root'} style={{
-          ...root.layout,
-          flexDirection: 'column',
-        height: '100%',
-      }}>
-        <Component name={'item'}
-                   itemSpacing={parseToPx(item.layout.gap)}
-                   layoutMode={'VERTICAL'}
-                   verticalPadding={parseToPx(item.layout.padding)}
-                   horizontalPadding={parseToPx(item.layout.padding)}
-                   style={{
-                       ...item.layout,
-                       alignSelf: 'stretch',
-                     width: '100%',
-                   }}>
-          <Frame
-            name={'header'}
-            style={{
-              width: '100%',
-                ...header.layout
-            }}
-          >
-            <Frame name={'trigger'}
-                   style={{
-                       ...trigger.layout,
-                       width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',
-                       alignSelf: 'stretch',
-                   }}
-                   onSelectionEnter={() => setIsOpen(prev => !prev)}
-            >
-              <Text style={{
-                  ...trigger.text
-              }}>
-                What is Base UI?
-              </Text>
-              <PlusIcon/>
-            </Frame>
-          </Frame>
-          <Frame visible={isOpen} name={'panel'} style={{
+    <Frame name={'root'} style={{
+      ...root.layout,
+      flexDirection: 'column',
+      height: '100%',
+    }}>
+      <Component name={'item'}
+                 itemSpacing={parseToPx(item.layout.gap)}
+                 layoutMode={'VERTICAL'}
+                 verticalPadding={parseToPx(item.layout.padding)}
+                 horizontalPadding={parseToPx(item.layout.padding)}
+                 style={{
+                   ...item.layout,
+                   alignSelf: 'stretch',
+                   width: '100%',
+                 }}>
+        <Frame
+          name={'header'}
+          style={{
             width: '100%',
-              ...panel.layout
-          }}>
+            ...header.layout
+          }}
+        >
+          <Frame name={'trigger'}
+                 style={{
+                   ...trigger.layout,
+                   width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',
+                   alignSelf: 'stretch',
+                 }}
+                 onSelectionEnter={() => setIsOpen(prev => !prev)}
+          >
             <Text style={{
-              width: '100%',
-                ...panel.text
-            }} name={'content'}>
-              Base UI is a library of high-quality unstyled React components for design systems and web apps.
-
+              ...trigger.text
+            }}>
+              What is Base UI?
             </Text>
+            <PlusIcon/>
           </Frame>
-        </Component>
-      </Frame>
-    </Page>
+        </Frame>
+        <Frame visible={isOpen} name={'panel'} style={{
+          width: '100%',
+          ...panel.layout
+        }}>
+          <Text style={{
+            width: '100%',
+            ...panel.text
+          }} name={'content'}>
+            Base UI is a library of high-quality unstyled React components for design systems and web apps.
+
+          </Text>
+        </Frame>
+      </Component>
+    </Frame>
   );
 };

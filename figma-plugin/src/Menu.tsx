@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Frame, Page, Svg, Text} from 'react-figma';
+import {Frame, Svg, Text} from 'react-figma';
 import {useComponentStore} from "./component-store";
 import {convertStringToStyle, getRawTailwindClasses} from "@ui-primitives-hub/common/src/main";
 import {transformStyle} from "./utils";
@@ -77,62 +77,60 @@ export const Menu = () => {
 
 
   return (
-    <Page isCurrent>
-      <Frame style={{
-        width: 200
+    <Frame style={{
+      width: 200
+    }}>
+      <Frame name={'root'} style={{
+        width: '100%',
+        height: '100%',
+        position: 'relative',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
       }}>
-        <Frame name={'root'} style={{
-          width: '100%',
-          height: '100%',
-          position: 'relative',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}>
-          <Frame name={'trigger'}
-                 onSelectionEnter={() => setIsOpen(prev => !prev)}
-                 style={{
-                   flexDirection: 'row',
-                   alignItems: 'center',
-                   padding: 8,
-                   borderWidth: 1,
-                   borderColor: '#454545',
-                   backgroundColor: '#1a1b1b',
-                   borderRadius: 4,
-                   ...trigger.layout
-                 }}>
-            <Text style={{
-              marginRight: 8,
-              color: 'white',
-              ...trigger.text
-            }}>
-              Song
-            </Text>
-            <ChevronRightIcon/>
-          </Frame>
-          <Frame name={'portal'}
-                 visible={isOpen}
-                 style={{
-                   marginTop: 10,
-                   flexDirection: 'column'
-                 }}>
-            <Frame name={'popup'} style={{
-              padding: 2,
-              alignItems: 'center',
-              backgroundColor: '#1c1b22',
-              borderWidth: 2,
-              borderColor: '#4c4c4c',
-              borderRadius: 8,
-              ...popup.layout
-            }}>
-              <ArrowSvg/>
-              <MenuItem item={'Add to Library'} style={item}/>
-              <MenuItem item={'Add to Playlist'} style={item}/>
-              <MenuItem item={'Play Next'} style={item}/>
-            </Frame>
+        <Frame name={'trigger'}
+               onSelectionEnter={() => setIsOpen(prev => !prev)}
+               style={{
+                 flexDirection: 'row',
+                 alignItems: 'center',
+                 padding: 8,
+                 borderWidth: 1,
+                 borderColor: '#454545',
+                 backgroundColor: '#1a1b1b',
+                 borderRadius: 4,
+                 ...trigger.layout
+               }}>
+          <Text style={{
+            marginRight: 8,
+            color: 'white',
+            ...trigger.text
+          }}>
+            Song
+          </Text>
+          <ChevronRightIcon/>
+        </Frame>
+        <Frame name={'portal'}
+               visible={isOpen}
+               style={{
+                 marginTop: 10,
+                 flexDirection: 'column'
+               }}>
+          <Frame name={'popup'} style={{
+            padding: 2,
+            alignItems: 'center',
+            backgroundColor: '#1c1b22',
+            borderWidth: 2,
+            borderColor: '#4c4c4c',
+            borderRadius: 8,
+            ...popup.layout
+          }}>
+            <ArrowSvg/>
+            <MenuItem item={'Add to Library'} style={item}/>
+            <MenuItem item={'Add to Playlist'} style={item}/>
+            <MenuItem item={'Play Next'} style={item}/>
           </Frame>
         </Frame>
       </Frame>
-    </Page>
+    </Frame>
   );
 };

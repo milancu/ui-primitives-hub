@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Frame, Page, Svg, Text, View} from 'react-figma';
+import {Frame, Svg, Text, View} from 'react-figma';
 import {useComponentStore} from "./component-store";
 import {convertStringToStyle, getRawTailwindClasses} from "@ui-primitives-hub/common/src/main";
 import {transformStyle} from "./utils";
@@ -58,69 +58,67 @@ export const Popover = () => {
 
 
   return (
-    <Page isCurrent>
-      <Frame name={'root'} style={{
-        position: 'relative',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}>
-        <Frame name={'trigger'}
-               onSelectionEnter={() => setIsOpen(prev => !prev)}
-               style={{
-                 flexDirection: 'row',
-                 alignItems: 'center',
-                 padding: 8,
-                 borderWidth: 1,
-                 borderColor: '#454545',
-                 backgroundColor: '#ffffff',
-                 borderRadius: 4,
-                 ...trigger.layout
-               }}>
-          <BellIcon/>
-        </Frame>
-        <Frame name={'portal'}
-               visible={isOpen}
-               style={{
-                 height: isOpen ? '' : 0,
-                 marginTop: 10,
-                 flexDirection: 'column'
-               }}>
-          <Frame name={'popup'} style={{
-            paddingVertical: 12,
-            paddingHorizontal: 20,
-            alignItems: 'center',
-            backgroundColor: '#1c1b22',
-            borderWidth: 2,
-            borderColor: '#4c4c4c',
-            borderRadius: 8,
-            ...popup.layout
+    <Frame name={'root'} style={{
+      position: 'relative',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+    }}>
+      <Frame name={'trigger'}
+             onSelectionEnter={() => setIsOpen(prev => !prev)}
+             style={{
+               flexDirection: 'row',
+               alignItems: 'center',
+               padding: 8,
+               borderWidth: 1,
+               borderColor: '#454545',
+               backgroundColor: '#ffffff',
+               borderRadius: 4,
+               ...trigger.layout
+             }}>
+        <BellIcon/>
+      </Frame>
+      <Frame name={'portal'}
+             visible={isOpen}
+             style={{
+               height: isOpen ? '' : 0,
+               marginTop: 10,
+               flexDirection: 'column'
+             }}>
+        <Frame name={'popup'} style={{
+          paddingVertical: 12,
+          paddingHorizontal: 20,
+          alignItems: 'center',
+          backgroundColor: '#1c1b22',
+          borderWidth: 2,
+          borderColor: '#4c4c4c',
+          borderRadius: 8,
+          ...popup.layout
+        }}>
+          <ArrowSvg/>
+          <View style={{
+            alignSelf: 'stretch',
+            ...title.layout
           }}>
-            <ArrowSvg/>
-            <View style={{
-              alignSelf: 'stretch',
-              ...title.layout
-            }}>
-              <Text name={'title'} style={{
-                color: 'black',
-                fontSize: 14,
-                marginBottom: 4,
-                textAlign: 'left',
-                ...title.text
-              }}>Notifications</Text>
-            </View>
-            <View style={{
-              ...description.layout,
-            }}>
-              <Text name={'description'} style={{
-                color: '#a8a8a8',
-                fontSize: 12,
-                ...description.text
-              }}>You are all caught up. Good job!</Text>
-            </View>
-          </Frame>
+            <Text name={'title'} style={{
+              color: 'black',
+              fontSize: 14,
+              marginBottom: 4,
+              textAlign: 'left',
+              ...title.text
+            }}>Notifications</Text>
+          </View>
+          <View style={{
+            ...description.layout,
+          }}>
+            <Text name={'description'} style={{
+              color: '#a8a8a8',
+              fontSize: 12,
+              ...description.text
+            }}>You are all caught up. Good job!</Text>
+          </View>
         </Frame>
       </Frame>
-    </Page>
+    </Frame>
   );
 };

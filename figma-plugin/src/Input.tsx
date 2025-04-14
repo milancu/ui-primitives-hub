@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Frame, Page, Text} from 'react-figma';
+import {Frame, Text} from 'react-figma';
 import {useComponentStore} from "./component-store";
 import {convertStringToStyle, getRawTailwindClasses} from "@ui-primitives-hub/common/src/main";
 import {transformStyle} from "./utils";
@@ -30,25 +30,23 @@ export const Input = () => {
 
 
   return (
-    <Page isCurrent>
-      <Frame style={{
-        width: 200,
+    <Frame style={{
+      width: 200,
+    }}>
+      <Frame name={'input'} style={{
+        padding: 8,
+        borderRadius: 4,
+        borderWidth: 1,
+        borderColor: '#9e9e9e',
+        alignSelf: 'stretch',
+        ...input.layout
       }}>
-        <Frame name={'input'} style={{
-          padding: 8,
-          borderRadius: 4,
-          borderWidth: 1,
-          borderColor: '#9e9e9e',
-          alignSelf: 'stretch',
-          ...input.layout
+        <Text style={{
+          color: '#676767',
         }}>
-          <Text style={{
-            color: '#676767',
-          }}>
-            Name
-          </Text>
-        </Frame>
+          Name
+        </Text>
       </Frame>
-    </Page>
+    </Frame>
   );
 };

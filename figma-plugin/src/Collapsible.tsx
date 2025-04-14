@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Frame, Page, Svg, Text} from 'react-figma';
+import {Frame, Svg, Text} from 'react-figma';
 import {useComponentStore} from "./component-store";
 import {convertStringToStyle, getRawTailwindClasses} from "@ui-primitives-hub/common/src/main";
 import {transformStyle} from "./utils";
@@ -42,65 +42,63 @@ export const Collapsible = () => {
 
 
   return (
-    <Page isCurrent>
-      <Frame name={'root'} style={{
-        width: 150,
-        ...root.layout,
-      }}>
-        <Frame name={'trigger'}
-               onSelectionEnter={() => setIsOpen(prev => !prev)}
-               style={{
-                 flexDirection: 'row',
-                 alignSelf: 'stretch',
-                 alignItems: 'center',
-                 // backgroundColor: '#838383',
-                 // borderRadius: 4,
-                 // paddingHorizontal: 8,
-                 // paddingVertical: 4,
-                 ...trigger.layout
-               }}>
-          <ChevronIcon isOpen={isOpen}/>
-          <Text style={{
-            // fontSize: 12,
-            // fontWeight: '500',
-            // color: 'white',
-            marginLeft: 4,
-            ...trigger.text
-          }}>
-            Recovery keys
-          </Text>
-        </Frame>
-        <Frame name={'panel'} visible={isOpen}
-               style={{
-                 alignSelf: 'stretch',
-                 height: '100%',
-                 ...panel.layout,
+    <Frame name={'root'} style={{
+      width: 150,
+      ...root.layout,
+    }}>
+      <Frame name={'trigger'}
+             onSelectionEnter={() => setIsOpen(prev => !prev)}
+             style={{
+               flexDirection: 'row',
+               alignSelf: 'stretch',
+               alignItems: 'center',
+               // backgroundColor: '#838383',
+               // borderRadius: 4,
+               // paddingHorizontal: 8,
+               // paddingVertical: 4,
+               ...trigger.layout
+             }}>
+        <ChevronIcon isOpen={isOpen}/>
+        <Text style={{
+          // fontSize: 12,
+          // fontWeight: '500',
+          // color: 'white',
+          marginLeft: 4,
+          ...trigger.text
+        }}>
+          Recovery keys
+        </Text>
+      </Frame>
+      <Frame name={'panel'} visible={isOpen}
+             style={{
+               alignSelf: 'stretch',
+               height: '100%',
+               ...panel.layout,
 
-               }}>
-          <Frame layoutMode={'VERTICAL'}
-                 itemSpacing={6}
-                 paddingLeft={16}
-                 verticalPadding={8}
-          >
-            <Text style={{
-              fontSize: 10,
-              color: 'white',
-              ...panel.text
-            }}>alien-bean-pasta</Text>
-            <Text style={{
-              fontSize: 10,
-              color: 'white',
-              marginVertical: 4,
-              ...panel.text
-            }}>wild-irish-burrito</Text>
-            <Text style={{
-              fontSize: 10,
-              color: 'white',
-              ...panel.text
-            }}>horse-battery-staple</Text>
-          </Frame>
+             }}>
+        <Frame layoutMode={'VERTICAL'}
+               itemSpacing={6}
+               paddingLeft={16}
+               verticalPadding={8}
+        >
+          <Text style={{
+            fontSize: 10,
+            color: 'white',
+            ...panel.text
+          }}>alien-bean-pasta</Text>
+          <Text style={{
+            fontSize: 10,
+            color: 'white',
+            marginVertical: 4,
+            ...panel.text
+          }}>wild-irish-burrito</Text>
+          <Text style={{
+            fontSize: 10,
+            color: 'white',
+            ...panel.text
+          }}>horse-battery-staple</Text>
         </Frame>
       </Frame>
-    </Page>
+    </Frame>
   );
 };

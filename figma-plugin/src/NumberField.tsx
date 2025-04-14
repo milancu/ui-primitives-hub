@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Frame, Page, Svg, Text} from 'react-figma';
+import {Frame, Svg, Text} from 'react-figma';
 import {useComponentStore} from "./component-store";
 import {convertStringToStyle, getRawTailwindClasses} from "@ui-primitives-hub/common/src/main";
 import {transformStyle} from "./utils";
@@ -63,78 +63,76 @@ export const NumberField = () => {
 
 
   return (
-    <Page isCurrent>
-      <Frame name={'root'} layoutMode={'VERTICAL'}
-             primaryAxisSizingMode={'AUTO'}
-             itemSpacing={root.layout.gap}
+    <Frame name={'root'} layoutMode={'VERTICAL'}
+           primaryAxisSizingMode={'AUTO'}
+           itemSpacing={root.layout.gap}
+    >
+      <Frame name={'label'}>
+        <Text style={{
+          color: '#676767',
+          fontSize: 10,
+          fontWeight: '500',
+          marginBottom: 4,
+          ...root.text
+        }}>
+          Amount
+        </Text>
+      </Frame>
+      <Frame name={'group'}
+             layoutMode={'HORIZONTAL'}
+             itemSpacing={group.layout.gap}
       >
-        <Frame name={'label'}>
+        <Frame name={'decrement'} onSelectionEnter={() => setValue(prevState => prevState - 1)} style={{
+          width: 30,
+          height: 30,
+          backgroundColor: '#939393',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          // borderTopLeftRadius: 4,
+          // borderBottomLeftRadius: 4,
+          borderWidth: 1,
+          borderColor: '#6e6e6e',
+          ...decrement.layout
+        }}>
+          <MinusIcon/>
+        </Frame>
+        <Frame name={'input'} style={{
+          height: 30,
+          width: 60,
+          borderWidth: 1,
+          borderColor: '#6e6e6e',
+          flexDirection: 'row',
+          justifyContent: 'center',
+          alignItems: 'center',
+          paddingHorizontal: 8,
+          ...input.layout
+        }}>
           <Text style={{
             color: '#676767',
-            fontSize: 10,
-            fontWeight: '500',
-            marginBottom: 4,
-            ...root.text
+            textAlign: 'left',
+            // ...input.text,
           }}>
-            Amount
+            {value}
           </Text>
         </Frame>
-        <Frame name={'group'}
-               layoutMode={'HORIZONTAL'}
-               itemSpacing={group.layout.gap}
+        <Frame name={'increment'} onSelectionEnter={() => setValue(prevState => prevState + 1)} style={{
+          width: 30,
+          height: 30,
+          backgroundColor: '#939393',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          // borderTopRightRadius: 4,
+          // borderBottomRightRadius: 4,
+          borderWidth: 1,
+          borderColor: '#6e6e6e',
+          ...increment.layout
+        }}
         >
-          <Frame name={'decrement'} onSelectionEnter={() => setValue(prevState => prevState - 1)} style={{
-            width: 30,
-            height: 30,
-            backgroundColor: '#939393',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            // borderTopLeftRadius: 4,
-            // borderBottomLeftRadius: 4,
-            borderWidth: 1,
-            borderColor: '#6e6e6e',
-            ...decrement.layout
-          }}>
-            <MinusIcon/>
-          </Frame>
-          <Frame name={'input'} style={{
-            height: 30,
-            width: 60,
-            borderWidth: 1,
-            borderColor: '#6e6e6e',
-            flexDirection: 'row',
-            justifyContent: 'center',
-            alignItems: 'center',
-            paddingHorizontal: 8,
-            ...input.layout
-          }}>
-            <Text style={{
-              color: '#676767',
-              textAlign: 'left',
-              // ...input.text,
-            }}>
-              {value}
-            </Text>
-          </Frame>
-          <Frame name={'increment'} onSelectionEnter={() => setValue(prevState => prevState + 1)} style={{
-            width: 30,
-            height: 30,
-            backgroundColor: '#939393',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            // borderTopRightRadius: 4,
-            // borderBottomRightRadius: 4,
-            borderWidth: 1,
-            borderColor: '#6e6e6e',
-            ...increment.layout
-          }}
-          >
-            <PlusIcon/>
-          </Frame>
+          <PlusIcon/>
         </Frame>
       </Frame>
-    </Page>
+    </Frame>
   );
 };
