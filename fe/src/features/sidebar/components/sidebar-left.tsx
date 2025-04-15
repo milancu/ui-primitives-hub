@@ -12,6 +12,7 @@ import {
 import { Separator } from "@/components/ui/separator";
 import ComponentLayers from "@/features/component-layers/components/component-layers.tsx";
 import { NavSecondary } from "@/features/sidebar/components/nav-secondary.tsx";
+import ProjectSettings from "@/features/sidebar/components/project-settings.tsx";
 
 export type AppRoute =
   | "accordion"
@@ -78,24 +79,21 @@ export function SidebarLeft({
 }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar
-      className="top-[--header-height] mt-auto !h-[calc(100svh-var(--header-height))] border-r-0"
+      className="top-[--header-height] mt-auto !h-[calc(100svh-var(--header-height))] border-r-0 overflow-auto"
       {...props}
       variant={"inset"}
     >
       <SidebarHeader>
+        <ProjectSettings />
+        <Separator />
         <NavMain items={navMain} />
       </SidebarHeader>
       <Separator />
-      <SidebarContent>
+      <SidebarContent className={'flex-shrink-0 overflow-auto'}>
         <NavSecondary />
       </SidebarContent>
       <SidebarFooter>
         <ComponentLayers />
-        {/*<SidebarMenu>*/}
-        {/*  <SidebarMenuItem>*/}
-        {/*    <NavUser />*/}
-        {/*  </SidebarMenuItem>*/}
-        {/*</SidebarMenu>*/}
       </SidebarFooter>
     </Sidebar>
   );
