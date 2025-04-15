@@ -12,9 +12,9 @@ import { useState } from "react";
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard.ts";
 
 const commands = {
-  pnpm: `pnpm dlx @milancu/ui-primitives-hub add`,
-  npm: `npx @milancu/ui-primitives-hub add`,
-  yarn: `npx @milancu/ui-primitives-hub add`,
+  pnpm: `pnpm dlx @milancu/ui-primitives-hub add -c`,
+  npm: `npx @milancu/ui-primitives-hub add -c`,
+  yarn: `npx @milancu/ui-primitives-hub add -c`,
 };
 
 type CommandCopyProps = {
@@ -44,7 +44,7 @@ const CommandCopy = ({ componentName }: CommandCopyProps) => {
         <Button
           size="icon"
           className="ml-auto cursor-pointer"
-          onClick={() => copy(commands[packageManager])}
+          onClick={() => copy(`${commands[packageManager]} ${componentName}`)}
         >
           <div
             className={cn(
