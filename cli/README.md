@@ -6,30 +6,20 @@ A CLI tool for generating UI components from your project on [UI Primitives Hub]
 
 ## 📦 Installation
 
-Install globally (recommended):
+Install (recommended):
 
 ```bash
-npm i -g @milancu/ui-primitives-hub
+npx @milancu/ui-primitives-hub
 # or
 pnpm dlx @milancu/ui-primitives-hub
 ```
 
 ---
 
-## 🔐 Login
-
-```bash
-ui-primitives-hub login
-```
-
-Starts the authentication flow and stores your access token.
-
----
-
 ## ⚙️ Initialize Project
 
 ```bash
-ui-primitives-hub init
+npx ui-primitives-hub init
 ```
 
 Interactive setup will configure:
@@ -95,8 +85,7 @@ Contains:
 ## 🧪 Quick Start
 
 ```bash
-pnpm dlx @milancu/ui-primitives-hub login
-pnpm dlx @milancu/ui-primitives-hub init -p <PROJECT_ID>
+pnpm dlx @milancu/ui-primitives-hub init
 pnpm dlx @milancu/ui-primitives-hub add -c Accordion
 ```
 

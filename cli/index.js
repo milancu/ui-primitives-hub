@@ -32,7 +32,7 @@ async function getInstalledPackages(packageManager) {
 
 program
   .name("ui-primitives-hub/cli")
-  .version("1.1.4")
+  .version("1.1.5")
   .description("UI Primitives Hub - Component Generation CLI");
 
 console.log(
