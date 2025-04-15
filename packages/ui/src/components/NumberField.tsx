@@ -97,3 +97,27 @@ export {
   NumberFieldDecrement,
   NumberFieldIncrement,
 }
+
+// <NumberFieldRoot id={id} defaultValue={100}>
+//   <NumberFieldScrubArea>
+//     <label
+//       htmlFor={id}
+//       className="text-sm font-medium text-gray-900"
+//     >
+//       Amount
+//     </label>
+//     <NumberFieldScrubAreaCursor>
+//       <CursorGrowIcon />
+//     </NumberFieldScrubAreaCursor>
+//   </NumberFieldScrubArea>
+//
+//   <NumberFieldGroup>
+//     <NumberFieldDecrement>
+//       <MinusIcon />
+//     </NumberFieldDecrement>
+//     <NumberFieldInput />
+//     <NumberFieldIncrement>
+//       <PlusIcon />
+//     </NumberFieldIncrement>
+//   </NumberFieldGroup>
+// </NumberFieldRoot>

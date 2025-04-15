@@ -62,3 +62,18 @@ export {
   ChevronIcon
 };
 
+// <CollapsibleRoot>
+//   <CollapsibleTrigger>
+//     <ChevronIcon />
+//     Recovery keys
+//   </CollapsibleTrigger>
+//
+//   <CollapsiblePanel>
+//     <div>
+//       <div>alien-bean-pasta</div>
+//       <div>wild-irish-burrito</div>
+//       <div>horse-battery-staple</div>
+//     </div>
+//   </CollapsiblePanel>
+// </CollapsibleRoot>
+

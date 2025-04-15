@@ -32,3 +32,17 @@ export {
   FieldsetRoot,
   FieldsetLegend,
 }
+
+// <FieldsetRoot>
+//   <FieldsetLegend>Billing details</FieldsetLegend>
+//
+//   <FieldRoot>
+//     <FieldLabel>Company</FieldLabel>
+//     <FieldControl placeholder="Enter company name" />
+//   </FieldRoot>
+//
+//   <FieldRoot>
+//     <FieldLabel>Tax ID</FieldLabel>
+//     <FieldControl placeholder="Enter fiscal number" />
+//   </FieldRoot>
+// </FieldsetRoot>

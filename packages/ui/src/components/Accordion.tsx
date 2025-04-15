@@ -84,3 +84,48 @@ export {
   AccordionPanel,
   PlusIcon
 };
+
+
+// <AccordionRoot>
+//   <AccordionItem>
+//     <AccordionHeader>
+//       <AccordionTrigger>
+//         What is Base UI?
+//       </AccordionTrigger>
+//     </AccordionHeader>
+//     <AccordionPanel>
+//       <div>
+//         Base UI is a library of high-quality unstyled React components for design
+//         systems and web apps.
+//       </div>
+//     </AccordionPanel>
+//   </AccordionItem>
+//
+//   <AccordionItem>
+//     <AccordionHeader>
+//       <AccordionTrigger>
+//         How do I get started?
+//       </AccordionTrigger>
+//     </AccordionHeader>
+//     <AccordionPanel>
+//       <div>
+//         Head to the “Quick start” guide in the docs. If you’ve used unstyled
+//         libraries before, you’ll feel at home.
+//       </div>
+//     </AccordionPanel>
+//   </AccordionItem>
+//
+//   <AccordionItem>
+//     <AccordionHeader>
+//       <AccordionTrigger>
+//         Can I use it for my project?
+//       </AccordionTrigger>
+//     </AccordionHeader>
+//     <AccordionPanel>
+//       <div>
+//         Of course! Base UI is free and open source.
+//       </div>
+//     </AccordionPanel>
+//   </AccordionItem>
+// </AccordionRoot>
+

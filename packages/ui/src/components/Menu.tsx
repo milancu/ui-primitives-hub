@@ -166,3 +166,28 @@ export {
   MenuRadioItem,
   MenuCheckboxItem,
 }
+
+// <MenuRoot>
+//   <MenuTrigger>
+//     Song <ChevronDownIcon />
+//   </MenuTrigger>
+//
+//   <MenuPortal>
+//     <MenuPositioner sideOffset={8}>
+//       <MenuPopup>
+//         <MenuArrow>
+//           <ArrowSvg />
+//         </MenuArrow>
+//
+//         <MenuItem>Add to Library</MenuItem>
+//         <MenuItem>Add to Playlist</MenuItem>
+//         <MenuSeparator />
+//         <MenuItem>Play Next</MenuItem>
+//         <MenuItem>Play Last</MenuItem>
+//         <MenuSeparator />
+//         <MenuItem>Favorite</MenuItem>
+//         <MenuItem>Share</MenuItem>
+//       </MenuPopup>
+//     </MenuPositioner>
+//   </MenuPortal>
+// </MenuRoot>

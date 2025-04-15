@@ -127,3 +127,25 @@ export {
   ArrowSvg,
   BellIcon,
 };
+
+
+// <PopoverRoot>
+//   <PopoverTrigger>
+//     <BellIcon aria-label="Notifications" />
+//   </PopoverTrigger>
+//   <PopoverPortal>
+//     <PopoverPositioner sideOffset={8}>
+//       <PopoverPopup>
+//         <PopoverArrow>
+//           <ArrowSvg />
+//         </PopoverArrow>
+//         <PopoverTitle>
+//           Notifications
+//         </PopoverTitle>
+//         <PopoverDescription>
+//           You are all caught up. Good job!
+//         </PopoverDescription>
+//       </PopoverPopup>
+//     </PopoverPositioner>
+//   </PopoverPortal>
+// </PopoverRoot>

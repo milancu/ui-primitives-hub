@@ -221,3 +221,38 @@ export {
   SelectGroupLabel,
   SelectSeparator
 };
+
+// <SelectRoot defaultValue="sans">
+//   <SelectTrigger>
+//     <SelectValue placeholder="Sans-serif" />
+//     <SelectIcon>
+//       <ChevronUpDownIcon />
+//     </SelectIcon>
+//   </SelectTrigger>
+//
+//   <SelectPortal>
+//     <SelectPositioner sideOffset={8}>
+//       <SelectScrollUpArrow />
+//       <SelectPopup>
+//         <SelectItem value="sans">
+//           <SelectItemIndicator>
+//             <CheckIcon />
+//           </SelectItemIndicator>
+//           <SelectItemText>Sans-serif</SelectItemText>
+//         </SelectItem>
+//         <SelectItem value="serif">
+//           <SelectItemIndicator>
+//             <CheckIcon />
+//           </SelectItemIndicator>
+//           <SelectItemText>Serif</SelectItemText>
+//         </SelectItem>
+//         <SelectItem value="mono">
+//           <SelectItemIndicator>
+//             <CheckIcon />
+//           </SelectItemIndicator>
+//           <SelectItemText>Monospace</SelectItemText>
+//         </SelectItem>
+//       </SelectPopup>
+//     </SelectPositioner>
+//   </SelectPortal>
+// </SelectRoot>
