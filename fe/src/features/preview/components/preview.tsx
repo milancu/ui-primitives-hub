@@ -31,7 +31,6 @@ const ThemePreviewBlock = ({
     ) as React.CSSProperties;
   };
 
-  console.log(createStyleObject());
 
   return (
     <div

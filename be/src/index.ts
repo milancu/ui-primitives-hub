@@ -8,8 +8,11 @@ import cors from "cors";
 
 dotenv.config();
 
-const app = express();
-app.use(express.json(), cors());
+export const app = express();
+app.use(express.json(), cors({
+  origin: process.env.FRONTEND_URL,
+  credentials: true,
+}));
 
 app.use("/auth", [authRouter, verifyRoute]);
 app.use('/projects', [projectsRouter, componentsRouter])
@@ -22,3 +25,4 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
+

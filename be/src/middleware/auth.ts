@@ -14,8 +14,6 @@ export const authenticate = async (
       return;
     }
 
-    // Verify the token
-    // Attach user to request
     (req as any).user = await auth.verifyIdToken(token);
 
     next();
